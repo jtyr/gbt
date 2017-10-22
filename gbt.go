@@ -1,0 +1,158 @@
+package main
+
+import (
+    "flag"
+    "fmt"
+    "os"
+    "regexp"
+
+    customCar    "github.com/jtyr/gbt/gbt/cars/custom"
+    dirCar       "github.com/jtyr/gbt/gbt/cars/dir"
+    exectimeCar  "github.com/jtyr/gbt/gbt/cars/exectime"
+    gitCar       "github.com/jtyr/gbt/gbt/cars/git"
+    hostnameCar  "github.com/jtyr/gbt/gbt/cars/hostname"
+    osCar        "github.com/jtyr/gbt/gbt/cars/os"
+    pyvirtenvCar "github.com/jtyr/gbt/gbt/cars/pyvirtenv"
+    signCar      "github.com/jtyr/gbt/gbt/cars/sign"
+    statusCar    "github.com/jtyr/gbt/gbt/cars/status"
+    timeCar      "github.com/jtyr/gbt/gbt/cars/time"
+
+    "github.com/jtyr/gbt/gbt/core/car"
+    "github.com/jtyr/gbt/gbt/core/utils"
+)
+
+type Cars interface {
+    Init()
+    Format() string
+    GetColor(string, bool) string
+    DecorateElement(element, bg, fg, fm, text string) string
+    GetModel() map[string]car.ModelElement
+    GetDisplay() bool
+    GetSep() string
+    GetWrap() bool
+}
+
+func printCars(cars []Cars, right bool) {
+    prevBg := "\000"
+    prevDisplay := true
+
+    separator := utils.GetEnv("GBT_SEPARATOR", "")
+
+    if right {
+        separator = utils.GetEnv("GBT_RSEPARATOR", "")
+    }
+
+    if ! right && utils.GetEnv("GBT_BEGINNING_TEXT", "") != "" {
+        fakeCar := car.Car{}
+
+        fmt.Print(
+            fakeCar.DecorateElement(
+                "",
+                fakeCar.GetColor(utils.GetEnv("GBT_BEGINNING_BG", "default"), false),
+                fakeCar.GetColor(utils.GetEnv("GBT_BEGINNING_FG", "default"), true),
+                fakeCar.GetColor(utils.GetEnv("GBT_BEGINNING_FM", "none"), false),
+                utils.GetEnv("GBT_BEGINNING_TEXT", "")))
+    }
+
+    for _, c := range cars {
+        c.Init()
+
+        cModel := c.GetModel()
+        cDisplay := c.GetDisplay()
+        cSep := c.GetSep()
+        cWrap := c.GetWrap()
+
+        if cSep != "\000" {
+            separator = cSep
+        }
+
+        if cDisplay {
+            if prevBg != "\000" && prevDisplay {
+                bg := c.GetColor(cModel["root"].Bg, false)
+                fg := c.GetColor(cModel["root"].Bg, true)
+
+                if cWrap {
+                    bg = c.GetColor("default", false)
+                    fg = c.GetColor("default", true)
+                }
+
+                if right {
+                    fmt.Print(
+                        c.DecorateElement(
+                            "",
+                            c.GetColor(prevBg, false),
+                            fg,
+                            "",
+                            separator))
+                } else {
+                    fmt.Print(
+                        c.DecorateElement(
+                            "",
+                            bg,
+                            c.GetColor(prevBg, true),
+                            "",
+                            separator))
+                }
+
+                if cWrap {
+                    fmt.Print("\n")
+                }
+            }
+
+            prevBg = cModel["root"].Bg
+            prevDisplay = cDisplay
+
+            fmt.Print(c.Format())
+        }
+    }
+
+    fmt.Print(car.DecorateShell("\x1b[0m"))
+}
+
+func main() {
+    var argsHelp, argsVersion, argsRight bool
+
+    flag.BoolVar(&argsHelp, "help", false, "show this help message and exit")
+    flag.BoolVar(&argsVersion, "version", false, "show version and exit")
+    flag.BoolVar(&argsRight, "right", false, "compose right hand site prompt")
+    flag.Parse()
+
+    if argsHelp {
+        flag.PrintDefaults()
+        os.Exit(0)
+    }
+    if argsVersion {
+        fmt.Println("GBT v1.0.0")
+        os.Exit(0)
+    }
+
+    carsStr := utils.GetEnv("GBT_CARS", "Status, Os, Hostname, Dir, Git, Sign")
+
+    if argsRight {
+        carsStr = utils.GetEnv("GBT_RCARS", "Time")
+    }
+
+    reCarSplit := regexp.MustCompile(`\s*,\s*`)
+    carsNames := reCarSplit.Split(carsStr, -1)
+    carsFactory := map[string]Cars{
+        "Custom":    &customCar.Car{},
+        "Dir":       &dirCar.Car{},
+        "ExecTime":  &exectimeCar.Car{},
+        "Git":       &gitCar.Car{},
+        "Hostname":  &hostnameCar.Car{},
+        "Os":        &osCar.Car{},
+        "PyVirtEnv": &pyvirtenvCar.Car{},
+        "Sign":      &signCar.Car{},
+        "Status":    &statusCar.Car{},
+        "Time":      &timeCar.Car{},
+    }
+    cars := []Cars{}
+
+    for _, cn := range carsNames {
+        if val, ok := carsFactory[cn]; ok {
+            cars = append(cars, val)
+        }
+    }
+
+    printCars(cars, argsRight)
+}
