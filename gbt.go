@@ -24,6 +24,7 @@ import (
 type Cars interface {
     Init()
     Format() string
+    SetParamStr(string, string)
     GetColor(string, bool) string
     DecorateElement(element, bg, fg, fm, text string) string
     GetModel() map[string]car.ModelElement
@@ -150,6 +151,10 @@ func main() {
 
     for _, cn := range carsNames {
         if val, ok := carsFactory[cn]; ok {
+            if cn == "Status" && len(flag.Args()) > 0 {
+                val.SetParamStr("args", flag.Args()[0])
+            }
+
             cars = append(cars, val)
         }
     }

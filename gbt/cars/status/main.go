@@ -1,8 +1,6 @@
 package status
 
 import (
-    "os"
-
     "github.com/jtyr/gbt/gbt/core/car"
     "github.com/jtyr/gbt/gbt/core/utils"
 )
@@ -13,8 +11,10 @@ type Car struct {
 }
 
 // Checks for the return code.
-func isOk() (ret bool) {
-    if len(os.Args) == 1 || (len(os.Args) > 1 && os.Args[1] == "0") {
+func isOk(c *Car) (ret bool) {
+    _, argsExist := c.Params["args"]
+
+    if ! argsExist || c.Params["args"] == "0" {
         ret = true
     } else {
         ret = false
@@ -44,11 +44,11 @@ func (c *Car) Init() {
     defaultSymbolFormat := "{{ Error }}"
     defaultCodeText := "?"
 
-    if len(os.Args) > 1 {
-        defaultCodeText = os.Args[1]
+    if val, ok := c.Params["args"]; ok {
+        defaultCodeText = val.(string)
     }
 
-    if isOk() {
+    if isOk(c) {
         defaultRootBg = utils.GetEnv("GBT_CAR_BG", defaultOkBg)
         defaultRootFg = utils.GetEnv("GBT_CAR_FG", defaultOkFg)
         defaultRootFm = utils.GetEnv("GBT_CAR_FM", defaultOkFm)
@@ -120,7 +120,7 @@ func (c *Car) Init() {
         },
     }
 
-    if isOk() {
+    if isOk(c) {
         c.Display = utils.GetEnvBool("GBT_CAR_STATUS_DISPLAY", false)
     } else {
         c.Display = utils.GetEnvBool("GBT_CAR_STATUS_DISPLAY", true)

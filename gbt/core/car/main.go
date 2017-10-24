@@ -23,6 +23,7 @@ type Car struct {
     Display bool
     Sep string
     Wrap bool
+    Params map[string]interface{}
 }
 
 // Shell type.
@@ -46,6 +47,15 @@ var colors = map[string]string {
     "light_magenta": "13",
     "light_cyan":    "14",
     "white":         "15",
+}
+
+// SetParamStr sets string value to a parameter.
+func (c *Car) SetParamStr(name, value string) {
+    if c.Params == nil {
+        c.Params = make(map[string]interface{})
+    }
+
+    c.Params[name] = value
 }
 
 // GetModel returns the Model value.
