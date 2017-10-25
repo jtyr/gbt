@@ -1255,7 +1255,7 @@ END
 # Then we can tell SSH to execute remote command which consists of locally
 # generated GBT output, which is written into a file on the remote server, and
 # the Bash command which loads that generated file as its RC file:
-ssh $@ -t "echo \"PS1='$(source ~/.gbt.ssh; gbt)'\" > ~/.myprompt; bash --rcfile ~/.myprompt -i"
+ssh myserver -t "echo \"PS1='$(source ~/.gbt.ssh; gbt)'\" > ~/.myprompt; bash --rcfile ~/.myprompt -i"
 ```
 
 
