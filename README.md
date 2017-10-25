@@ -369,6 +369,19 @@ custom text.
 
   Whether to display this car if it's in the list of cars (`GBT_CARS`).
 
+- `GBT_CAR_CUSTOM_DISPLAY_CMD`
+
+  Command which gets executed in order to evaluate whether the car should be
+  displayed or not. Content of the `GBT_CAR_CUSTOM_DISPLAY` variable takes
+  precedence over this variable.
+
+  ```shell
+  # Show percentage of used disk space of the root partition
+  export GBT_CAR_CUSTOM_TEXT_CMD="df -h --output=pcent / | tail -n1 | sed -re 's/\s//g' -e 's/%/%%/'"
+  # Display the car only if the percentage is above 90%
+  export GBT_CAR_CUSTOM_DISPLAY_CMD="[[ $(df -h --output=pcent / | tail -n1 | sed -re 's/\s//g' -e 's/%//') -gt 70 ]] && echo YES"
+  ```
+
 - `GBT_CAR_CUSTOM_WRAP="0"`
 
   Whether to wrap the prompt line in front of this car.
@@ -1171,10 +1184,14 @@ Car that displays current date and time.
 
   Formatting of the `{{ Date }}` element.
 
-- `GBT_CAR_TIME_DATE_FORMAT="%a %d %b"`
+- `GBT_CAR_TIME_DATE_FORMAT="Mon 02 Jan"`
 
-  Format of the `{{ Date }}` element. The format is using sequences known from
-  the `date` command.
+  Format of the `{{ Date }}` element. The format is using placeholders as
+  described in the [`time.Format()`](https://golang.org/src/time/format.go#L87)
+  Go function. For example `January` is a placeholder for current full month
+  name and `PM` is a placeholder `AM` if the current time is before noon or
+  `PM` if the current time is after noon. So in order to display date in the
+  format of `YYYY-MM-DD`, the value of this variable should be `2006-01-02`.
 
 - `GBT_CAR_TIME_TIME_BG`
 
@@ -1188,10 +1205,12 @@ Car that displays current date and time.
 
   Formatting of the `{{ Host }}` element.
 
-- `GBT_CAR_TIME_TIME_FORMAT="%H:%M:%S"`
+- `GBT_CAR_TIME_TIME_FORMAT="15:04:05"`
 
-  Text content of the `{{ Host }}` element. The format is using sequences known
-  from the `date` command.
+  Text content of the `{{ Host }}` element. The format principles are the same
+  like in the case of the `GBT_CAR_TIME_DATE_FORMAT` variable above. So in
+  order to display time in the 12h format, the value of this variable should be
+  `03:04:05 PM`.
 
 - `GBT_CAR_TIME_DISPLAY="1"`
 
