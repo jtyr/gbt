@@ -23,8 +23,12 @@ type iconColor struct {
 
 // List of names and symbols.
 var symbols = map[string]iconColor {
+    "amzn":       { icon: "", color: "208",   },
+    "android":    { icon: "", color: "113",   },
     "arch":       { icon: "", color: "25",    },
+    "archarm":    { icon: "", color: "125",   },
     "centos":     { icon: "", color: "27",    },
+    "cloud":      { icon: "", color: "39",    },
     "coreos":     { icon: "", color: "white", },
     "darwin":     { icon: "", color: "white", },
     "debian":     { icon: "", color: "88",    },
