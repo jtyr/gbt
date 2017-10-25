@@ -3,6 +3,7 @@ package hostname
 import (
     "os"
     "os/user"
+    "strings"
 
     "github.com/jtyr/gbt/gbt/core/car"
     "github.com/jtyr/gbt/gbt/core/utils"
@@ -30,6 +31,7 @@ func (c *Car) Init() {
 
     curUser, _ := user.Current()
     hostname, _ := os.Hostname()
+    hostname = strings.Split(hostname, ".")[0]
 
     c.Model = map[string]car.ModelElement {
         "root": {
