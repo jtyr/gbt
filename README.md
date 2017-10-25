@@ -801,10 +801,14 @@ Car that displays icon of the operating system.
 - `GBT_CAR_OS_NAME`
 
   The name of the symbol to display. Default value is selected by the system
-  the shell runs at. Possible names and their icons are:
+  the shell runs at. Possible names and their symbols are:
 
+  - `amzn` 
+  - `android` 
   - `arch` 
+  - `archarm` 
   - `centos` 
+  - `cloud` 
   - `coreos` 
   - `darwin` 
   - `debian` 
