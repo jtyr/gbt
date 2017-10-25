@@ -150,27 +150,32 @@ var reRgbTriplet = regexp.MustCompile(`^\d{1,3};\d{1,3};\d{1,3}$`)
 func (c *Car) GetColor(name string, isFg bool) (ret string) {
     kind := 4
     seq := ""
+    esc := "\x1b"
 
     if isFg {
         kind = 3
     }
 
+    if Shell == "_bash" {
+        esc = "\\e"
+    }
+
     if name == "default" {
         // Default
-        seq = fmt.Sprintf("\x1b[%d9m", kind)
+        seq = fmt.Sprintf("%s[%d9m", esc, kind)
     } else {
         if val, ok := colors[name]; ok {
             // Named color
-            seq = fmt.Sprintf("\x1b[%d8;5;%sm", kind, val)
+            seq = fmt.Sprintf("%s[%d8;5;%sm", esc, kind, val)
         } else if match := reColorNumber.MatchString(name); match {
             // Color number
-            seq = fmt.Sprintf("\x1b[%d8;5;%sm", kind, name)
+            seq = fmt.Sprintf("%s[%d8;5;%sm", esc, kind, name)
         } else if match := reRgbTriplet.MatchString(name); match {
             // RGB color
-            seq = fmt.Sprintf("\x1b[%d8;2;%sm", kind, name)
+            seq = fmt.Sprintf("%s[%d8;2;%sm", esc, kind, name)
         } else {
             // If anything else, use default
-            seq = fmt.Sprintf("\x1b[%d9m", kind)
+            seq = fmt.Sprintf("%s[%d9m", esc, kind)
         }
     }
 
@@ -183,21 +188,26 @@ func (c *Car) GetColor(name string, isFg bool) (ret string) {
 func (c *Car) GetFormat(name string, end bool) (ret string) {
     seq := ""
     kind := 0
+    esc := "\x1b"
 
     if end {
         kind = 2
     }
 
+    if Shell == "_bash" {
+        esc = "\\e"
+    }
+
     if strings.Contains(name, "bold") {
-        seq += fmt.Sprintf("\x1b[%d1m", kind)
+        seq += fmt.Sprintf("%s[%d1m", esc, kind)
     }
 
     if strings.Contains(name, "underline") {
-        seq += fmt.Sprintf("\x1b[%d4m", kind)
+        seq += fmt.Sprintf("%s[%d4m", esc, kind)
     }
 
     if strings.Contains(name, "blink") {
-        seq += fmt.Sprintf("\x1b[%d5m", kind)
+        seq += fmt.Sprintf("%s[%d5m", esc, kind)
     }
 
     ret = DecorateShell(seq)
@@ -209,6 +219,8 @@ func (c *Car) GetFormat(name string, end bool) (ret string) {
 func DecorateShell(seq string) (ret string) {
     if Shell == "zsh" {
         ret = fmt.Sprintf("%%{%s%%}", seq)
+    } else if Shell == "_bash" {
+        ret = fmt.Sprintf("\\[%s\\]", seq)
     } else {
         ret = fmt.Sprintf("\001%s\002", seq)
     }
