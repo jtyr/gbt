@@ -31,6 +31,7 @@ Table of contents
     - [`Sign` car](#sign-car)
     - [`Status` car](#status-car)
     - [`Time` car](#time-car)
+- [Prompt forwarding via SSH](#prompt-forwarding-via-ssh)
 - [Author](#author)
 - [License](#license)
 
@@ -1223,6 +1224,39 @@ Car that displays current date and time.
 - `GBT_CAR_TIME_SEP`
 
   Custom separator string for this car.
+
+
+Prompt forwarding via SSH
+-------------------------
+
+It's possible to use GBT to generate prompt string and forward it to remote
+server via SSH so we can have GBT-like prompt also in the remote shell. The
+main limitation is that the text of the cars can only be dynamic if only prompt
+[escape sequences](http://www.tldp.org/HOWTO/Bash-Prompt-HOWTO/bash-prompt-escape-sequences.html)
+recognized by the remote shell are used.
+
+As most of the remote servers have Bash as their default shell, we need to
+create Bash-compatible `PS1` string.
+
+```shell
+# Create file which we will use to configure the output of locally executed GBT
+# as the `PS1` for the remote server. Notice that we are using Bash escape
+# sequences as the text content of the cars (e.g. \u for the user name).
+cat <<END > ~/.gbt.ssh
+export GBT_CARS='Os, Time, Hostname, Dir, Sign'
+export GBT_CAR_OS_NAME='cloud'
+export GBT_CAR_TIME_FORMAT=' \t '
+export GBT_CAR_HOSTNAME_USER_TEXT='\u'
+export GBT_CAR_HOSTNAME_HOST_TEXT='\h'
+export GBT_CAR_DIR_DIR_TEXT='\W'
+export GBT_CAR_SIGN_SYMBOL_FORMAT='\\\$'
+export GBT_SHELL='_bash'
+END
+# Then we can tell SSH to execute remote command which consists of locally
+# generated GBT output, which is written into a file on the remote server, and
+# the Bash command which loads that generated file as its RC file:
+ssh $@ -t "echo \"PS1='$(source ~/.gbt.ssh; gbt)'\" > ~/.myprompt; bash --rcfile ~/.myprompt -i"
+```
 
 
 Author
