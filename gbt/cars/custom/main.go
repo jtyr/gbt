@@ -1,6 +1,8 @@
 package custom
 
 import (
+    "fmt"
+
     "github.com/jtyr/gbt/gbt/core/car"
     "github.com/jtyr/gbt/gbt/core/utils"
 )
@@ -19,28 +21,37 @@ func (c *Car) Init() {
     defaultTextFg := defaultRootFg
     defaultTextFm := defaultRootFm
 
+    prefix := fmt.Sprintf("GBT_CAR_CUSTOM%s", c.Params["name"].(string))
+    defaultTextText := "?"
+    defaultTextCmd := utils.GetEnv(fmt.Sprintf("%s_TEXT_CMD", prefix), "")
+
+    if defaultTextCmd != "" {
+        _, defaultTextText, _ = utils.Run([]string{"sh", "-c", defaultTextCmd})
+    }
+
     c.Model = map[string]car.ModelElement {
         "root": {
-            Bg: utils.GetEnv("GBT_CAR_CUSTOM_BG", defaultRootBg),
-            Fg: utils.GetEnv("GBT_CAR_CUSTOM_FG", defaultRootFg),
-            Fm: utils.GetEnv("GBT_CAR_CUSTOM_FM", defaultRootFm),
-            Text: utils.GetEnv("GBT_CAR_CUSTOM_FORMAT", " {{ Text }} "),
+            Bg: utils.GetEnv(fmt.Sprintf("%s_BG", prefix), defaultRootBg),
+            Fg: utils.GetEnv(fmt.Sprintf("%s_FG", prefix), defaultRootFg),
+            Fm: utils.GetEnv(fmt.Sprintf("%s_FM", prefix), defaultRootFm),
+            Text: utils.GetEnv(fmt.Sprintf("%s_FORMAT", prefix), " {{ Text }} "),
         },
         "Text": {
             Bg: utils.GetEnv(
-                "GBT_CAR_CUSTOM_DIR_BG", utils.GetEnv(
-                    "GBT_CAR_CUSTOM_BG", defaultTextBg)),
+                fmt.Sprintf("%s_TEXT_BG", prefix), utils.GetEnv(
+                    fmt.Sprintf("%s_BG", prefix), defaultTextBg)),
             Fg: utils.GetEnv(
-                "GBT_CAR_CUSTOM_DIR_FG", utils.GetEnv(
-                    "GBT_CAR_CUSTOM_FG", defaultTextFg)),
+                fmt.Sprintf("%s_TEXT_FG", prefix), utils.GetEnv(
+                    fmt.Sprintf("%s_FG", prefix), defaultTextFg)),
             Fm: utils.GetEnv(
-                "GBT_CAR_CUSTOM_DIR_FM", utils.GetEnv(
-                    "GBT_CAR_CUSTOM_FM", defaultTextFm)),
-            Text: utils.GetEnv("GBT_CAR_CUSTOM_DIR_TEXT", "?"),
+                fmt.Sprintf("%s_TEXT_FM", prefix), utils.GetEnv(
+                    fmt.Sprintf("%s_FM", prefix), defaultTextFm)),
+            Text: utils.GetEnv(
+                fmt.Sprintf("%s_TEXT_TEXT", prefix), defaultTextText),
         },
     }
 
-    c.Display = utils.GetEnvBool("GBT_CAR_CUSTOM_DISPLAY", true)
-    c.Wrap = utils.GetEnvBool("GBT_CAR_CUSTOM_WRAP", false)
-    c.Sep = utils.GetEnv("GBT_CAR_CUSTOM_SEP", "\000")
+    c.Display = utils.GetEnvBool(fmt.Sprintf("%s_DISPLAY", prefix), true)
+    c.Wrap = utils.GetEnvBool(fmt.Sprintf("%s_WRAP", prefix), false)
+    c.Sep = utils.GetEnv(fmt.Sprintf("%s_SEP", prefix), "\000")
 }

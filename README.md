@@ -354,6 +354,17 @@ custom text.
 
   Text content of the `{{ Text }}` element.
 
+- `GBT_CAR_CUSTOM_TEXT_CMD`
+
+  The `{{ Text }}` element will be replaced by standard output of the command
+  specified in this variable. Content of the `GBT_CAR_CUSTOM_TEXT_TEXT` variable
+  takes precedence over this variable.
+
+  ```shell
+  # Show 1 minute loadavg as the content of the Text element
+  export GBT_CAR_CUSTOM_CMD="uptime | sed --e 's/.*load average: //' -e 's/,.*//'"
+  ```
+
 - `GBT_CAR_CUSTOM_DISPLAY="1"`
 
   Whether to display this car if it's in the list of cars (`GBT_CARS`).
@@ -365,6 +376,21 @@ custom text.
 - `GBT_CAR_CUSTOM_SEP`
 
   Custom separator string for this car.
+
+Multiple `Custom` cars can be used in the `GBT_CARS` variable. Just add some
+identifier behind the car name. To set properties of the new car, just add the
+same identifier into the environment variable:
+
+```shell
+# Adding Custom and Custo1 car
+export GBT_CARS="Status, Os, Custom, Custom1, Hostname, Dir, Git, Sign"
+# The text of the default Custom car
+export GBT_CAR_CUSTOM_TEXT_TEXT="default"
+# The text of the Custom1 car
+export GBT_CAR_CUSTOM1_TEXT_TEXT="1"
+# Set different background color for the Custom1 car
+export GBT_CAR_CUSTOM1_BG="magenta"
+```
 
 
 #### `Dir` car

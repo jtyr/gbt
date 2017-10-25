@@ -150,9 +150,19 @@ func main() {
     cars := []Cars{}
 
     for _, cn := range carsNames {
+        custom := "\000"
+
+        if len(cn) >= 6 && cn[:6] == "Custom" {
+            custom = cn[6:]
+            cn = cn[:6]
+        }
+
         if val, ok := carsFactory[cn]; ok {
             if cn == "Status" && len(flag.Args()) > 0 {
                 val.SetParamStr("args", flag.Args()[0])
+            } else if custom != "\000" {
+                val = &customCar.Car{}
+                val.SetParamStr("name", custom)
             }
 
             cars = append(cars, val)
