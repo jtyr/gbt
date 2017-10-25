@@ -24,9 +24,19 @@ func (c *Car) Init() {
     prefix := fmt.Sprintf("GBT_CAR_CUSTOM%s", c.Params["name"].(string))
     defaultTextText := "?"
     defaultTextCmd := utils.GetEnv(fmt.Sprintf("%s_TEXT_CMD", prefix), "")
+    defaultDisplayCmd := utils.GetEnv(fmt.Sprintf("%s_DISPLAY_CMD", prefix), "")
+    defaultDisplay := true
 
     if defaultTextCmd != "" {
         _, defaultTextText, _ = utils.Run([]string{"sh", "-c", defaultTextCmd})
+    }
+
+    if defaultDisplayCmd != "" {
+        _, defaultDisplayOutput, _ := utils.Run([]string{"sh", "-c", defaultDisplayCmd})
+
+        if ! utils.IsTrue(defaultDisplayOutput) {
+            defaultDisplay = false
+        }
     }
 
     c.Model = map[string]car.ModelElement {
@@ -51,7 +61,7 @@ func (c *Car) Init() {
         },
     }
 
-    c.Display = utils.GetEnvBool(fmt.Sprintf("%s_DISPLAY", prefix), true)
+    c.Display = utils.GetEnvBool(fmt.Sprintf("%s_DISPLAY", prefix), defaultDisplay)
     c.Wrap = utils.GetEnvBool(fmt.Sprintf("%s_WRAP", prefix), false)
     c.Sep = utils.GetEnv(fmt.Sprintf("%s_SEP", prefix), "\000")
 }
