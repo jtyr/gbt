@@ -36,6 +36,7 @@ type Cars interface {
 func printCars(cars []Cars, right bool) {
     prevBg := "\000"
     prevDisplay := true
+    fakeCar := car.Car{}
 
     separator := utils.GetEnv("GBT_SEPARATOR", "")
 
@@ -44,8 +45,6 @@ func printCars(cars []Cars, right bool) {
     }
 
     if ! right && utils.GetEnv("GBT_BEGINNING_TEXT", "") != "" {
-        fakeCar := car.Car{}
-
         fmt.Print(
             fakeCar.DecorateElement(
                 "",
@@ -107,7 +106,7 @@ func printCars(cars []Cars, right bool) {
         }
     }
 
-    fmt.Print(car.DecorateShell("\x1b[0m"))
+    fmt.Print(fakeCar.GetColor("ALLOFF", false))
 }
 
 func main() {
@@ -123,7 +122,7 @@ func main() {
         os.Exit(0)
     }
     if argsVersion {
-        fmt.Println("GBT v1.0.0")
+        fmt.Println("GBT v1.1.0")
         os.Exit(0)
     }
 

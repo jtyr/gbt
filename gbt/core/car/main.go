@@ -160,7 +160,9 @@ func (c *Car) GetColor(name string, isFg bool) (ret string) {
         esc = "\\e"
     }
 
-    if name == "default" {
+    if name == "ALLOFF" {
+        seq = fmt.Sprintf("%s[0m", esc)
+    } else if name == "default" {
         // Default
         seq = fmt.Sprintf("%s[%d9m", esc, kind)
     } else {
