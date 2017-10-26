@@ -160,7 +160,7 @@ func (c *Car) GetColor(name string, isFg bool) (ret string) {
         esc = "\\e"
     }
 
-    if name == "ALLOFF" {
+    if name == "RESETALL" {
         seq = fmt.Sprintf("%s[0m", esc)
     } else if name == "default" {
         // Default

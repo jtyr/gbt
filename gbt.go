@@ -67,6 +67,8 @@ func printCars(cars []Cars, right bool) {
         }
 
         if cDisplay {
+            fmt.Print(fakeCar.GetColor("RESETALL", false))
+
             if prevBg != "\000" && prevDisplay {
                 bg := c.GetColor(cModel["root"].Bg, false)
                 fg := c.GetColor(cModel["root"].Bg, true)
@@ -106,7 +108,7 @@ func printCars(cars []Cars, right bool) {
         }
     }
 
-    fmt.Print(fakeCar.GetColor("ALLOFF", false))
+    fmt.Print(fakeCar.GetColor("RESETALL", false))
 }
 
 func main() {
