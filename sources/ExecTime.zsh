@@ -1,13 +1,18 @@
+# Allow to override the date command (e.g. by 'gdate' on Mac)
+if [[ -z "$GBT_CAR_EXECTIME__DATE" ]]; then
+    export GBT_CAR_EXECTIME__DATE='date'
+fi
+
 # Function executed before every command run by the shell
 function gbt_exectime_pre() {
-    export GBT_CAR_EXECTIME_SECS=$(date '+%s.%N')
+    export GBT_CAR_EXECTIME_SECS=$($GBT_CAR_EXECTIME__DATE '+%s.%N')
     GBT_CAR_EXECTIME__TMP=1
 }
 
 # Function executed after every command run by the shell
 function gbt_exectime_post() {
     if [ -z $GBT_CAR_EXECTIME__TMP ]; then
-        export GBT_CAR_EXECTIME_SECS=$(date '+%s.%N')
+        export GBT_CAR_EXECTIME_SECS=$($GBT_CAR_EXECTIME__DATE '+%s.%N')
     else
         # This "else" part is only necessary if you want to ring the system
         # bell if the command is taking more that GBT_CAR_EXECTIME_BELL

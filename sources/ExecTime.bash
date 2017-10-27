@@ -1,12 +1,17 @@
+# Allow to override the date command (e.g. by 'gdate' on Mac)
+if [[ -z "$GBT_CAR_EXECTIME__DATE" ]]; then
+    export GBT_CAR_EXECTIME__DATE='date'
+fi
+
 # Function executed before every command run by the shell
 function gbt_exectime_pre() {
     if [ -z $GBT_CAR_EXECTIME__TMP ]; then
-      return
+        return
     fi
 
     unset GBT_CAR_EXECTIME__TMP
 
-    export GBT_CAR_EXECTIME_SECS=$(date '+%s.%N')
+    export GBT_CAR_EXECTIME_SECS=$($GBT_CAR_EXECTIME__DATE '+%s.%N')
 }
 
 # Function executed after every command run by the shell
@@ -19,7 +24,7 @@ function gbt_exectime_post() {
     local BELL=${GBT_CAR_EXECTIME_BELL:-0}
 
     if (( $(echo "$SECS > 0" | bc) )) && (( $BELL > 0 )); then
-        local EXECS=$(echo "$(date '+%s.%N') - $GBT_CAR_EXECTIME_SECS" | bc)
+        local EXECS=$(echo "$(GBT_CAR_EXECTIME__DATE '+%s.%N') - $GBT_CAR_EXECTIME_SECS" | bc)
 
         if (( $(echo "$EXECS > $BELL" | bc) )); then
             echo -en '\a'
