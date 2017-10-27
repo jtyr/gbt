@@ -50,32 +50,26 @@ func (c *Car) Init() {
         "Date": {
             Bg: utils.GetEnv(
                 "GBT_CAR_TIME_DATE_BG", utils.GetEnv(
-                    "GBT_CAR_TIME_DATE_BG", utils.GetEnv(
-                        "GBT_CAR_TIME_BG", defaultDateBg))),
+                    "GBT_CAR_TIME_BG", defaultDateBg)),
             Fg: utils.GetEnv(
                 "GBT_CAR_TIME_DATE_FG", utils.GetEnv(
-                    "GBT_CAR_TIME_DATE_FG", utils.GetEnv(
-                        "GBT_CAR_TIME_FG", defaultDateFg))),
+                    "GBT_CAR_TIME_FG", defaultDateFg)),
             Fm: utils.GetEnv(
                 "GBT_CAR_TIME_DATE_FM", utils.GetEnv(
-                    "GBT_CAR_TIME_DATE_FM", utils.GetEnv(
-                        "GBT_CAR_TIME_FM", defaultDateFm))),
+                    "GBT_CAR_TIME_FM", defaultDateFm)),
             Text: time.Now().Format(
                 utils.GetEnv("GBT_CAR_TIME_DATE_FORMAT", "Mon 02 Jan")),
         },
         "Time": {
             Bg: utils.GetEnv(
                 "GBT_CAR_TIME_TIME_BG", utils.GetEnv(
-                    "GBT_CAR_TIME_TIME_BG", utils.GetEnv(
-                        "GBT_CAR_TIME_BG", defaultTimeBg))),
+                    "GBT_CAR_TIME_BG", defaultTimeBg)),
             Fg: utils.GetEnv(
                 "GBT_CAR_TIME_TIME_FG", utils.GetEnv(
-                    "GBT_CAR_TIME_TIME_FG", utils.GetEnv(
-                        "GBT_CAR_TIME_FG", defaultTimeFg))),
+                    "GBT_CAR_TIME_FG", defaultTimeFg)),
             Fm: utils.GetEnv(
                 "GBT_CAR_TIME_TIME_FM", utils.GetEnv(
-                    "GBT_CAR_TIME_TIME_FM", utils.GetEnv(
-                        "GBT_CAR_TIME_FM", defaultTimeFm))),
+                    "GBT_CAR_TIME_FM", defaultTimeFm)),
             Text: time.Now().Format(
                 utils.GetEnv("GBT_CAR_TIME_TIME_FORMAT", "15:04:05")),
         },
