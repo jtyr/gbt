@@ -37,11 +37,10 @@ func printCars(cars []Cars, right bool) {
     prevBg := "\000"
     prevDisplay := true
     fakeCar := car.Car{}
-
-    separator := utils.GetEnv("GBT_SEPARATOR", "")
+    defaultSeparator := utils.GetEnv("GBT_SEPARATOR", "")
 
     if right {
-        separator = utils.GetEnv("GBT_RSEPARATOR", "")
+        defaultSeparator = utils.GetEnv("GBT_RSEPARATOR", "")
     }
 
     if ! right && utils.GetEnv("GBT_BEGINNING_TEXT", "") != "" {
@@ -61,6 +60,8 @@ func printCars(cars []Cars, right bool) {
         cDisplay := c.GetDisplay()
         cSep := c.GetSep()
         cWrap := c.GetWrap()
+
+        separator := defaultSeparator
 
         if cSep != "\000" {
             separator = cSep
