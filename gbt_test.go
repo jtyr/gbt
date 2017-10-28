@@ -12,7 +12,7 @@ func TestMain(t *testing.T) {
         ran = true
     }
 
-    os.Args[1] = "-help"
+    os.Args = append(os.Args, "-help")
 
     main()
 
