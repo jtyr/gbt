@@ -1,0 +1,16 @@
+language: go
+
+go:
+  - 1.x
+
+matrix:
+  fast_finish: true
+
+before_install:
+  #- if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash dist/build.sh; fi
+  - go get github.com/golang/lint/golint
+
+before_script:
+  - golint ./...
+  - go vet ./...
+  - go test ./...
