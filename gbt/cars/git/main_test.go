@@ -4,10 +4,6 @@ import (
     "testing"
 )
 
-func compareRemote(display bool, ahead bool) bool {
-    return true
-}
-
 func TestInit(t *testing.T) {
     car := Car{}
 
