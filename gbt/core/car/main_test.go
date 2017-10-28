@@ -75,7 +75,7 @@ func TestGetDisplay(t *testing.T) {
         output := car.GetDisplay()
 
         if output != test.expectedOutput {
-            t.Errorf("%sExpected %x, found %x.", testPrefix, test.expectedOutput, output)
+            t.Errorf("%sExpected %t, found %t.", testPrefix, test.expectedOutput, output)
         }
     }
 }
@@ -120,7 +120,7 @@ func TestGetWrap(t *testing.T) {
         output := car.GetWrap()
 
         if output != test.expectedOutput {
-            t.Errorf("%sExpected %x, found %x.", testPrefix, test.expectedOutput, output)
+            t.Errorf("%sExpected %t, found %t.", testPrefix, test.expectedOutput, output)
         }
     }
 }

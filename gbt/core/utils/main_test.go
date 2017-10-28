@@ -32,7 +32,7 @@ func TestIsTrue(t *testing.T) {
         output := IsTrue(test.input)
 
         if output != test.expectedOutput {
-            t.Errorf("%sExpected '%s', found '%s'.", testPrefix, test.expectedOutput, output)
+            t.Errorf("%sExpected '%t', found '%t'.", testPrefix, test.expectedOutput, output)
         }
     }
 }
@@ -103,7 +103,7 @@ func TestGetEnvBool(t *testing.T) {
         val := GetEnvBool(test.name, test.fallback)
 
         if val != test.expectedVal {
-            t.Errorf("%sExpected '%s', found '%s'.", testPrefix, test.expectedVal, val)
+            t.Errorf("%sExpected '%t', found '%t'.", testPrefix, test.expectedVal, val)
         }
 
         if test.set {
@@ -135,7 +135,7 @@ func TestGetEnvInt(t *testing.T) {
         val := GetEnvInt(test.name, test.fallback)
 
         if val != test.expectedVal {
-            t.Errorf("%sExpected '%s', found '%s'.", testPrefix, test.expectedVal, val)
+            t.Errorf("%sExpected '%d', found '%d'.", testPrefix, test.expectedVal, val)
         }
 
         if test.set {
@@ -167,7 +167,7 @@ func TestGetEnvFloat(t *testing.T) {
         val := GetEnvFloat(test.name, test.fallback)
 
         if val != test.expectedVal {
-            t.Errorf("%sExpected '%s', found '%s'.", testPrefix, test.expectedVal, val)
+            t.Errorf("%sExpected '%f', found '%f'.", testPrefix, test.expectedVal, val)
         }
 
         if test.set {
