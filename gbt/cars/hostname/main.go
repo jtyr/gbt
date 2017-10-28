@@ -63,18 +63,6 @@ func (c *Car) Init() {
             Text: utils.GetEnv(
                 "GBT_CAR_HOSTNAME_USERHOST_FORMAT", fmt.Sprintf("%s@{{ Host }}", uaFormat)),
         },
-        "User": {
-            Bg: utils.GetEnv(
-                "GBT_CAR_HOSTNAME_USER_BG", utils.GetEnv(
-                    "GBT_CAR_HOSTNAME_BG", defaultUserBg)),
-            Fg: utils.GetEnv(
-                "GBT_CAR_HOSTNAME_USER_FG", utils.GetEnv(
-                    "GBT_CAR_HOSTNAME_FG", defaultUserFg)),
-            Fm: utils.GetEnv(
-                "GBT_CAR_HOSTNAME_USER_FM", utils.GetEnv(
-                    "GBT_CAR_HOSTNAME_FM", defaultUserFm)),
-            Text: utils.GetEnv("GBT_CAR_HOSTNAME_USER_TEXT", curUser.Username),
-        },
         "Admin": {
             Bg: utils.GetEnv(
                 "GBT_CAR_HOSTNAME_ADMIN_BG", utils.GetEnv(
@@ -86,6 +74,18 @@ func (c *Car) Init() {
                 "GBT_CAR_HOSTNAME_ADMIN_FM", utils.GetEnv(
                     "GBT_CAR_HOSTNAME_FM", defaultAdminFm)),
             Text: utils.GetEnv("GBT_CAR_HOSTNAME_ADMIN_TEXT", curUser.Username),
+        },
+        "User": {
+            Bg: utils.GetEnv(
+                "GBT_CAR_HOSTNAME_USER_BG", utils.GetEnv(
+                    "GBT_CAR_HOSTNAME_BG", defaultUserBg)),
+            Fg: utils.GetEnv(
+                "GBT_CAR_HOSTNAME_USER_FG", utils.GetEnv(
+                    "GBT_CAR_HOSTNAME_FG", defaultUserFg)),
+            Fm: utils.GetEnv(
+                "GBT_CAR_HOSTNAME_USER_FM", utils.GetEnv(
+                    "GBT_CAR_HOSTNAME_FM", defaultUserFm)),
+            Text: utils.GetEnv("GBT_CAR_HOSTNAME_USER_TEXT", curUser.Username),
         },
         "Host": {
             Bg: utils.GetEnv(
