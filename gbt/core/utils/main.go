@@ -9,16 +9,6 @@ import (
     "syscall"
 )
 
-// GetEnv returns the value of the environment variable or provided fallback
-// value if the environment variable is not defined.
-func GetEnv(key string, fallback string) string {
-    if value, ok := os.LookupEnv(key); ok {
-        return value
-    }
-
-    return fallback
-}
-
 // IsTrue returns true if the string value is one of the true strings.
 func IsTrue(value string) (ret bool) {
     ret = false
@@ -40,6 +30,16 @@ func IsTrue(value string) (ret bool) {
     }
 
     return
+}
+
+// GetEnv returns the value of the environment variable or provided fallback
+// value if the environment variable is not defined.
+func GetEnv(key string, fallback string) string {
+    if value, ok := os.LookupEnv(key); ok {
+        return value
+    }
+
+    return fallback
 }
 
 // GetEnvBool is the same like GetEnv but for boolean values.
