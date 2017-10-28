@@ -10,6 +10,8 @@ Train](https://github.com/caiogondim/bullet-train.zsh) theme.
 Works well on Linux (Terminator, Konsole, Gnome Terminal) and Mac (Terminal,
 iTerm). It has no other dependencies than Go and its standard libraries.
 
+[![Build Status](https://travis-ci.org/jtyr/gbt.svg?branch=master)](https://travis-ci.org/jtyr/gbt)
+
 
 Table of contents
 -----------------
