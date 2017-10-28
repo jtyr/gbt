@@ -1,4 +1,4 @@
-package status
+package sign
 
 import (
     "os/user"
