@@ -1,3 +1,5 @@
+---
+
 language: go
 
 go:
@@ -7,10 +9,31 @@ matrix:
   fast_finish: true
 
 before_install:
-  #- if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash dist/build.sh; fi
   - go get github.com/golang/lint/golint
 
 before_script:
   - golint ./...
   - go vet ./...
-  - go test ./...
+
+after_script:
+  - go install
+  - $GOPATH/bin/gbt -version
+
+before_deploy:
+  - dist/build.sh
+
+deploy:
+  provider: releases
+  api_key:
+    secure: T4S4Ea82+QpI0CNHYHZTKRe9L4lJ6TKEb2zsvAwvd8fdmR58L6N+0WhNQ6f6zczBl5ufeAvWlmYdLVCViFMzZVHOYkgT+ehSuT1wTh1sSpPpxATzN9nl53bsDxH1pSL0uht+os7HYXDZDsIr1Kpn6NbFeCJKdXhqb+0HgXyNc+k5jFMNSBkJsCY8aeegr9e6W7l6QvGwaAzqm4MNGgXeIw6uqMf5r0H4OqswudfaQ3/SOz1eTn1GvGNOCYmyM519Jd0hPvvLANzAqwC4M93yVdZm/fahZbY20HvELNbO2mXJUND4ojw/GcXRMjfx1c9TcvhFeBQNZPwHNGPc1ygoKo+BrRf7ZhY2WcwL580mT4yEbvtSbYUFqGNW1J+HiVr2BdYzOLK5jIEuaRrc1ex/BUUvyLGyd2b74NtHATYynG1Bjfu9LwDiVoo5zzpDfCPf00jIH8oC91zS41K7PrlC3kVchijU5wJDQ05dabThxb3RQ5lumrqZYEajG+hpm1+9DEQ3M1jJBSRY/frc8Gr3PTlfrc+INZXrp3vaFFjmISQYuEy1qFpoSTwnBK7eGzFL/B5jfPveJcjpHlINqGGQ3ilv2RLkSRh3ima0xHhtyDmUSF9cT26VrfPfOeytFtMwWHIFToiZtnqFd8VZk3DUyCDsTXWMtF+OMyhipd2MD4s=
+  file_glob: true
+  file:
+    - /tmp/gbt/*.tar.gz
+    - /tmp/gbt/*.txt
+  skip_cleanup: true
+  on:
+    tags: true
+    repo: jtyr/gbt
+
+notifications:
+  email: false
