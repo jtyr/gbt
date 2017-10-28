@@ -112,6 +112,9 @@ func printCars(cars []Cars, right bool) {
     fmt.Print(fakeCar.GetColor("RESETALL", false))
 }
 
+// For the test
+var run = flag.PrintDefaults
+
 func main() {
     var argsHelp, argsVersion, argsRight bool
 
@@ -121,7 +124,8 @@ func main() {
     flag.Parse()
 
     if argsHelp {
-        flag.PrintDefaults()
+        fmt.Printf("Usage of %s:\n", os.Args[0])
+        run()
         os.Exit(0)
     }
     if argsVersion {
