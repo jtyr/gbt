@@ -148,12 +148,12 @@ var reRgbTriplet = regexp.MustCompile(`^\d{1,3};\d{1,3};\d{1,3}$`)
 
 // GetColor returns color sequence based on the color name or code.
 func (c *Car) GetColor(name string, isFg bool) (ret string) {
-    kind := 4
+    kind := "4"
     seq := ""
     esc := "\x1b"
 
     if isFg {
-        kind = 3
+        kind = "3"
     }
 
     if Shell == "_bash" {
@@ -164,24 +164,24 @@ func (c *Car) GetColor(name string, isFg bool) (ret string) {
         seq = fmt.Sprintf("%s[0m", esc)
     } else if name == "default" {
         // Default
-        seq = fmt.Sprintf("%s[%d9m", esc, kind)
+        seq = fmt.Sprintf("%s[%s9m", esc, kind)
     } else {
         if val, ok := colors[name]; ok {
             // Named color
-            seq = fmt.Sprintf("%s[%d8;5;%sm", esc, kind, val)
+            seq = fmt.Sprintf("%s[%s8;5;%sm", esc, kind, val)
         } else if match := reColorNumber.MatchString(name); match {
             // Color number
-            seq = fmt.Sprintf("%s[%d8;5;%sm", esc, kind, name)
+            seq = fmt.Sprintf("%s[%s8;5;%sm", esc, kind, name)
         } else if match := reRgbTriplet.MatchString(name); match {
             // RGB color
-            seq = fmt.Sprintf("%s[%d8;2;%sm", esc, kind, name)
+            seq = fmt.Sprintf("%s[%s8;2;%sm", esc, kind, name)
         } else {
             // If anything else, use default
-            seq = fmt.Sprintf("%s[%d9m", esc, kind)
+            seq = fmt.Sprintf("%s[%s9m", esc, kind)
         }
     }
 
-    ret = DecorateShell(seq)
+    ret = decorateShell(seq)
 
     return
 }
@@ -189,11 +189,11 @@ func (c *Car) GetColor(name string, isFg bool) (ret string) {
 // GetFormat returns formatting sequence based on the format name.
 func (c *Car) GetFormat(name string, end bool) (ret string) {
     seq := ""
-    kind := 0
+    kind := ""
     esc := "\x1b"
 
     if end {
-        kind = 2
+        kind = "2"
     }
 
     if Shell == "_bash" {
@@ -201,24 +201,24 @@ func (c *Car) GetFormat(name string, end bool) (ret string) {
     }
 
     if strings.Contains(name, "bold") {
-        seq += fmt.Sprintf("%s[%d1m", esc, kind)
+        seq += fmt.Sprintf("%s[%s1m", esc, kind)
     }
 
     if strings.Contains(name, "underline") {
-        seq += fmt.Sprintf("%s[%d4m", esc, kind)
+        seq += fmt.Sprintf("%s[%s4m", esc, kind)
     }
 
     if strings.Contains(name, "blink") {
-        seq += fmt.Sprintf("%s[%d5m", esc, kind)
+        seq += fmt.Sprintf("%s[%s5m", esc, kind)
     }
 
-    ret = DecorateShell(seq)
+    ret = decorateShell(seq)
 
     return
 }
 
-// DecorateShell decorates the string with shell-specific closure.
-func DecorateShell(seq string) (ret string) {
+// decorateShell decorates the string with shell-specific closure.
+func decorateShell(seq string) (ret string) {
     if Shell == "zsh" {
         ret = fmt.Sprintf("%%{%s%%}", seq)
     } else if Shell == "_bash" {
