@@ -83,7 +83,6 @@ func compareRemote(display bool, ahead bool) bool {
     return ret
 }
 
-
 // Init initializes the car.
 func (c *Car) Init() {
     defaultRootBg := utils.GetEnv("GBT_CAR_BG", "light_gray")
