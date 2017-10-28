@@ -21,6 +21,7 @@ import (
     "github.com/jtyr/gbt/gbt/core/utils"
 )
 
+// Cars interface for methods from the core.car package.
 type Cars interface {
     Init()
     Format() string
