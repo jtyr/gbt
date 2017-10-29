@@ -14,8 +14,9 @@ before_install:
 before_script:
   - golint ./...
   - go vet ./...
+  - go test -v -cover ./...
 
-after_script:
+script:
   - go install
   - $GOPATH/bin/gbt -version
 
