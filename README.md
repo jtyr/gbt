@@ -33,7 +33,7 @@ Table of contents
     - [`Sign` car](#sign-car)
     - [`Status` car](#status-car)
     - [`Time` car](#time-car)
-- [Prompt forwarding via SSH](#prompt-forwarding-via-ssh)
+- [Prompt forwarding via SSH and SUDO](#prompt-forwarding-via-ssh-and-sudo)
 - [Author](#author)
 - [License](#license)
 
@@ -268,7 +268,7 @@ Formatting is done via `_FM` variables. The possible values are:
 
 - `GBT_RSEPARATOR=""`
 
-  The same like `GBT_SEPARATOR` but for the righ hand side prompt.
+  The same like `GBT_SEPARATOR` but for the right hand side prompt.
 
 - `GBT_CAR_BG`
 
@@ -729,9 +729,27 @@ local machine.
 
   Formatting of the `{{ UserHost }}` element.
 
-- `GBT_CAR_HOSTNAME_USERHOST_FORMAT="{{ User }}@{{ Host }}"`
+- `GBT_CAR_HOSTNAME_USERHOST_FORMAT`
 
-  Format of the `{{ UserHost }}` element.
+  Format of the `{{ UserHost }}` element. The value is either
+  `{{ Admin }}@{{ Host }}` if the user is `root` or `{{ User }}@{{ Host }}`
+  if the user is a normal user.
+
+- `GBT_CAR_HOSTNAME_ADMIN_BG`
+
+  Background color of the `{{ Admin }}` element.
+
+- `GBT_CAR_HOSTNAME_ADMIN_FG`
+
+  Foreground color of the `{{ Admin }}` element.
+
+- `GBT_CAR_HOSTNAME_ADMIN_FM`
+
+  Formatting of the `{{ Admin }}` element.
+
+- `GBT_CAR_HOSTNAME_ADMIN_TEXT`
+
+  Text content of the `{{ Admin }}` element. The user name.
 
 - `GBT_CAR_HOSTNAME_USER_BG`
 
@@ -1026,7 +1044,7 @@ train.
 
 Car that visualizes return code of every command. By default, this car is
 displayed only when the return code is non-zero. If you want to display it even
-when if the return code is zere, set the following variable:
+if the return code is zero, set the following variable:
 
 ```shell
 export GBT_CAR_STATUS_DISPLAY="1"
@@ -1228,23 +1246,24 @@ Car that displays current date and time.
   Custom separator string for this car.
 
 
-Prompt forwarding via SSH
--------------------------
+Prompt forwarding via SSH and SUDO
+----------------------------------
 
 It's possible to use GBT to generate prompt string and forward it to remote
 server via SSH so we can have GBT-like prompt also in the remote shell. The
 main limitation is that the text of the cars can only be dynamic if only prompt
 [escape sequences](http://www.tldp.org/HOWTO/Bash-Prompt-HOWTO/bash-prompt-escape-sequences.html)
-recognized by the remote shell are used.
+recognized by the remote shell are used. As most of the remote servers have
+Bash as their default shell, we need to create Bash-compatible `PS1` string.
 
-As most of the remote servers have Bash as their default shell, we need to
-create Bash-compatible `PS1` string.
+The principle is that we need to create a file which we will use to configure
+the output of locally executed GBT as the `PS1` for the remote server. This
+configuration also re-definition the `TEXT` fields form certain cars to use
+Bash escape sequences instead (e.g. `\u` for the user name). We write this
+configuration into the `~/.gbt.theme` file like this:
 
 ```shell
-# Create file which we will use to configure the output of locally executed GBT
-# as the `PS1` for the remote server. Notice that we are using Bash escape
-# sequences as the text content of the cars (e.g. \u for the user name).
-cat <<END > ~/.gbt.ssh
+cat <<END > ~/.gbt.theme
 export GBT_CARS='Os, Time, Hostname, Dir, Sign'
 export GBT_CAR_OS_NAME='cloud'
 export GBT_CAR_TIME_FORMAT=' \t '
@@ -1254,11 +1273,28 @@ export GBT_CAR_DIR_DIR_TEXT='\W'
 export GBT_CAR_SIGN_SYMBOL_FORMAT='\\\$'
 export GBT_SHELL='_bash'
 END
-# Then we can tell SSH to execute remote command which consists of locally
-# generated GBT output, which is written into a file on the remote server, and
-# the Bash command which loads that generated file as its RC file:
-ssh myserver -t "echo \"PS1='$(source ~/.gbt.ssh; gbt)'\" > ~/.myprompt; bash --rcfile ~/.myprompt -i"
 ```
+
+Then we can tell SSH to execute remote command which consists of locally
+generated GBT output, which is written into a file on the remote server, and
+the Bash command which loads that generated file as its RC file:
+
+```shell
+ssh myserver -t "echo \"PS1='$(source ~/.gbt.theme; gbt)'\" > ~/.gbt; bash --rcfile ~/.gbt"
+```
+
+More complete implementation of the above, including passing the `PS1` string
+even via `sudo`, is available as part of this repo. You can start using it by
+doing the following:
+
+```
+ln -s /usr/share/gbt/sources/ssh_prompt.local ~/.gbt.sh
+ln -s /usr/share/gbt/themes/ssh_prompt ~/.gbt.theme
+source /usr/share/gbt/sources/ssh_prompt.remote
+```
+
+Then just to SSH to some remote server and you should get GBT-like looking
+prompt.
 
 
 Author
