@@ -7,6 +7,7 @@ import (
 func TestInit(t *testing.T) {
     car := Car{}
 
+    car.Display = true
     car.Init()
 
     if car.Wrap != false {
