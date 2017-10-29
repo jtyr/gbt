@@ -1,0 +1,29 @@
+# The following two blocks are to create the status bit
+export GBT_CAR_CUSTOM_BG='default'
+export GBT_CAR_CUSTOM_FG='default'
+export GBT_CAR_CUSTOM_FORMAT='\$( [ "\$?" != "0" ] && echo -en \$GBT__STATUS )'
+
+export GBT_CAR_CUSTOM1_BG='235'
+export GBT_CAR_CUSTOM1_FG='default'
+export GBT_CAR_CUSTOM1_FORMAT=''
+
+# The following is to create the rest of the remote shell
+export GBT_CARS='Custom, Os, Time, Hostname, Dir, Sign'
+
+export GBT_CAR_OS_SEP=''
+export GBT_CAR_OS_NAME='cloud'
+export GBT_CAR_OS_SYMBOL_TEXT='\$(echo -en \$GBT__OS)'
+
+export GBT_CAR_TIME_FORMAT=' \t '
+
+export GBT_CAR_HOSTNAME_USER_TEXT='\$(echo -en \$GBT__USER)'
+export GBT_CAR_HOSTNAME_HOST_TEXT='\h'
+export GBT_CAR_HOSTNAME_HOST_FG='white'
+export GBT_CAR_HOSTNAME_HOST_FM='bold'
+
+export GBT_CAR_DIR_DIR_TEXT='\W'
+
+export GBT_CAR_SIGN_SYMBOL_FORMAT='\$(echo -en \$GBT__SIGN)'
+export GBT_CAR_SIGN_SYMBOL_FG='default'
+
+export GBT_SHELL='_bash'
