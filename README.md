@@ -5,7 +5,7 @@ Highly configurable prompt decoration for ZSH and Bash written in Go. It's
 inspired by the [Oh My ZSH](https://github.com/robbyrussell/oh-my-zsh) [Bullet
 Train](https://github.com/caiogondim/bullet-train.zsh) theme.
 
-![Screenshot](https://raw.githubusercontent.com/jtyr/gbt/master/images/screenshot01.png "Screenshot")
+![Demo](https://raw.githubusercontent.com/jtyr/gbt/master/images/demo.gif "Demo")
 
 Works well on Linux (Terminator, Konsole, Gnome Terminal) and Mac (Terminal,
 iTerm). It has no other dependencies than Go and its standard libraries.
@@ -108,7 +108,7 @@ cd ~
 # Add the Time car into the train
 export GBT_CARS="Status, Os, Time, Hostname, Dir, Sign"
 # Set 12h format
-export GBT_CAR_TIME_TIME_FORMAT="%I:%M:%S %p"
+export GBT_CAR_TIME_TIME_FORMAT="03:04:05 PM"
 # Change background color of the all car
 export GBT_CAR_TIME_BG="yellow"
 # Change color of Date part
