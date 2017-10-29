@@ -1280,17 +1280,25 @@ generated GBT output, which is written into a file on the remote server, and
 the Bash command which loads that generated file as its RC file:
 
 ```shell
-ssh myserver -t "echo \"PS1='$(source ~/.gbt.theme; gbt)'\" > ~/.gbt; bash --rcfile ~/.gbt"
+ssh myserver -t "echo \"PS1='$(source ~/.gbt.theme; gbt)'\" > /tmp/.gbt; bash --rcfile /tmp/.gbt"
 ```
 
-More complete implementation of the above, including passing the `PS1` string
-even via `sudo`, is available as part of this repo. You can start using it by
-doing the following:
+Similar principle is used to get the `PS1` through the run of `sudo` command.
+We just need to run Bash command which loads that generated file as its RC
+file:
+
+```shell
+sudo su -c 'bash --rcfile /tmp/.gbt' - myuser
+```
+
+More complete implementation of the above, including the passing of the `PS1`
+string via `sudo`, is available as a part of this repo. You can start using it
+by doing the following:
 
 ```
-ln -s /usr/share/gbt/sources/ssh_prompt.local ~/.gbt.sh
+ln -s /usr/share/gbt/sources/ssh_prompt.remote ~/.gbt.sh
 ln -s /usr/share/gbt/themes/ssh_prompt ~/.gbt.theme
-source /usr/share/gbt/sources/ssh_prompt.remote
+source /usr/share/gbt/sources/ssh_prompt.local
 ```
 
 Then just to SSH to some remote server and you should get GBT-like looking
