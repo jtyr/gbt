@@ -5,26 +5,26 @@
 function ssh() {
   local GBT__SSH_FOUND='0'
 
-  if [[ -z "$GBT__SSH_BIN" ]]; then
+  if [ -z "$GBT__SSH_BIN" ]; then
     GBT__SSH_BIN='/usr/bin/ssh'
   fi
 
-  if [[ -z "$GBT__THEME" ]]; then
+  if [ -z "$GBT__THEME" ]; then
     GBT__THEME="$HOME/.gbt.theme"
   fi
 
-  if [[ -z "$GBT__SH" ]]; then
+  if [ -z "$GBT__SH" ]; then
     GBT__SH="$HOME/.gbt.sh"
   fi
 
   for N in "$GBT__SSH_IGNORE"; do
-    if [[ "$N" == "${@: -1}" ]]; then
+    if [ "$N" = "${@: -1}" ]; then
       GBT__SSH_FOUND='1'
       break
     fi
   done
 
-  if [[ "$GBT__SSH_FOUND" == '1' ]]; then
+  if [ "$GBT__SSH_FOUND" = '1' ]; then
     $GBT__SSH_BIN $@
   else
     $GBT__SSH_BIN -t $@ "

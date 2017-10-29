@@ -1,5 +1,5 @@
 # Allow to override the date command (e.g. by 'gdate' on Mac)
-if [[ -z "$GBT_CAR_EXECTIME__DATE" ]]; then
+if [ -z "$GBT_CAR_EXECTIME__DATE" ]; then
     export GBT_CAR_EXECTIME__DATE='date'
 fi
 
