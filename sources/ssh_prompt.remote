@@ -25,46 +25,54 @@ export GBT__OS=${GBT__SYMBOLS[$([ "$(uname -s)" = "Linux" ] && . /etc/os-release
 
 # Change the Sign depending on the user
 if [ "$UID" = '0' ]; then
-  export GBT__SIGN='\001\x1b[38;5;1m\002#'
-  export GBT__USER="\001\x1b[38;5;9m\002$USER"
+    export GBT__SIGN='\001\x1b[38;5;1m\002#'
+    export GBT__USER="\001\x1b[38;5;9m\002$USER"
 else
-  export GBT__SIGN='\001\x1b[38;5;10m\002$'
-  export GBT__USER="\001\x1b[38;5;11m\002$USER"
+    export GBT__SIGN='\001\x1b[38;5;10m\002$'
+    export GBT__USER="\001\x1b[38;5;11m\002$USER"
 fi
 
 function sudo() {
-  # Search for the sudo command
-  if [ -e /usr/bin/sudo ]; then
-    local SUDO='/usr/bin/sudo'
-  elif [ -e /bin/sudo ]; then
-    local SUDO='/bin/sudo'
-  else
-    echo 'Cannot find sudo.'
-    return
-  fi
+    # Search for the sudo command
+    if [ -e /usr/bin/sudo ]; then
+        local SUDO='/usr/bin/sudo'
+    elif [ -e /bin/sudo ]; then
+        local SUDO='/bin/sudo'
+    else
+        echo 'Cannot find sudo.'
+        return
+    fi
 
-  local MYARGS=''
+    local MYARGS=''
 
-  if [ "$1" = 'su' ]; then
-    I=0
+    if [ "$1" = 'su' ]; then
+        I=0
 
-    for N in $@; do
-      # Strip out the "su" from the list of arguments
-      if [ "$I" = 0 ]; then
-        I=1
-      else
-        MYARGS="$MYARGS $N"
-      fi
-    done
-  elif [ "${1:0:1}" = '-' ]; then
-    MYARGS="$@"
-  fi
+        for N in $@; do
+            # Strip out the "su" from the list of arguments
+            if [ "$I" = 0 ]; then
+                I=1
+            else
+                MYARGS="$MYARGS $N"
+            fi
+        done
+    elif [ "${1:0:1}" = '-' ]; then
+        MYARGS="$@"
+    fi
 
-  if [ -n "$1" ] && [ "$1" != 'su' ] && [ "$MYARGS" = '' ]; then
-    $SUDO $@
-  else
-    # Run modified sudo command to load the tmp file
-    $SUDO su -c "bash --rcfile $GBT__CONF" $MYARGS
-  fi
+    if [ -n "$1" ] && [ "$1" != 'su' ] && [ "$MYARGS" = '' ]; then
+        $SUDO $@
+    else
+        # Run modified sudo command to load the tmp file
+        $SUDO su -c "bash --rcfile $GBT__CONF" $MYARGS
+    fi
+}
+
+function ssh() {
+    /usr/bin/ssh -t $@ "
+        cat /etc/motd 2>/dev/null;
+        echo \"$(base64 $GBT__CONF | tr -d '\r\n')\" | base64 -d > $GBT__CONF &&
+        bash --rcfile $GBT__CONF;
+        rm -f $GBT__CONF"
 }
 
