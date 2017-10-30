@@ -1302,8 +1302,7 @@ ln -s /usr/share/gbt/themes/ssh_prompt ~/.gbt.theme
 source /usr/share/gbt/sources/ssh_prompt.local
 ```
 
-Then just to SSH to some remote server and you should get GBT-like looking
-prompt:
+Then just SSH to some remote server and you should get GBT-like looking prompt:
 
 ![SSH and SUDO demo](https://raw.githubusercontent.com/jtyr/gbt/master/images/ssh_sudo.gif "SSH and SUDO demo")
 
