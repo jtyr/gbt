@@ -1,6 +1,6 @@
 # Use the following variable to define a space-separated list of machines which
 # should use the normal SSH.
-#GBT__SSH_IGNORE=""
+#export GBT__SSH_IGNORE=()
 
 function ssh() {
     local GBT__SSH_FOUND='0'
@@ -17,7 +17,7 @@ function ssh() {
         GBT__SH="$HOME/.gbt.sh"
     fi
 
-    for N in "$GBT__SSH_IGNORE"; do
+    for N in $GBT__SSH_IGNORE; do
         if [ "$N" = "${@: -1}" ]; then
             GBT__SSH_FOUND='1'
             break
