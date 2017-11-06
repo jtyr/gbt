@@ -6,6 +6,7 @@ GBT__SYMBOLS[centos]='\001\e[38;5;27m\002'
 GBT__SYMBOLS[coreos]='\001\e[38;5;15m\002'
 GBT__SYMBOLS[darwin]='\001\e[38;5;15m\002'
 GBT__SYMBOLS[debian]='\001\e[38;5;88m\002'
+GBT__SYMBOLS[docker]='\001\e[38;5;26m\002'
 GBT__SYMBOLS[elementary]='\001\e[38;5;33m\002'
 GBT__SYMBOLS[fedora]='\001\e[38;5;32m\002'
 GBT__SYMBOLS[freebsd]='\001\e[38;5;1m\002'
@@ -21,7 +22,22 @@ GBT__SYMBOLS[sabayon]='\001\e[38;5;15m\002'
 GBT__SYMBOLS[slackware]='\001\e[38;5;15m\002'
 GBT__SYMBOLS[ubuntu]='\001\e[38;5;166m\002'
 
-export GBT__OS=${GBT__SYMBOLS[$([ "$(uname -s)" = "Linux" ] && . /etc/os-release && echo $ID || uname -s | tr '[:upper:]' '[:lower:]')]}
+function gbt__get_os() {
+    local ret
+
+    if [[ ! $(cat /proc/1/sched | head -n 1 | egrep '(init|systemd)') ]]; then
+        ret='docker'
+    elif [ "$(uname -s)" = 'Linux' ]; then
+        source /etc/os-release
+        ret="$ID"
+    else
+        ret=$(uname -s)
+    fi
+
+    echo $ret | tr '[:upper:]' '[:lower:]'
+}
+
+export GBT__OS=${GBT__SYMBOLS[$(gbt__get_os)]}
 
 # Change the Sign depending on the user
 if [ "$UID" = '0' ]; then
@@ -74,5 +90,16 @@ function ssh() {
         echo \"$(base64 $GBT__CONF | tr -d '\r\n')\" | base64 -d > $GBT__CONF &&
         bash --rcfile $GBT__CONF;
         rm -f $GBT__CONF"
+}
+
+function docker() {
+    if [ "$1" != 'shell' ]; then
+        /usr/bin/docker $@
+    else
+        local GBT__CONTAINER_ID="$2"
+
+        /usr/bin/docker cp $GBT__CONF $GBT__CONTAINER_ID:$(dirname $GBT__CONF)
+        /usr/bin/docker exec -it $GBT__CONTAINER_ID /bin/bash --rcfile $GBT__CONF
+    fi
 }
 

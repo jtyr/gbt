@@ -1,0 +1,40 @@
+function docker() {
+    if [ -z "$GBT__DOCKER_BIN" ]; then
+        GBT__DOCKER_BIN='/usr/bin/docker'
+    fi
+
+    if [ -z "$GBT__THEME" ]; then
+        GBT__THEME="$HOME/.gbt.theme"
+    fi
+
+    if [ -z "$GBT__SH" ]; then
+        GBT__SH="$HOME/.gbt.sh"
+    fi
+
+    if [ "$1" != 'shell' ]; then
+        $GBT__DOCKER_BIN $@
+    else
+        local GBT__CONTAINER_ID="$2"
+
+        if [ -z "$GBT__CONF" ]; then
+            export GBT__CONF="/tmp/.gbt.$RANDOM"
+        fi
+
+        (
+            cat $GBT__SH;
+            echo "export GBT__CONF='$GBT__CONF'";
+            echo "export GBT__STATUS='$(source $GBT__THEME; GBT_SHELL='bash' GBT_CARS='Status, Custom1' gbt 1)'";
+            echo -n "PS1='";
+            source $GBT__THEME;
+            gbt | sed 's/\\\$/$/g';
+            echo "'"
+        ) > $GBT__CONF
+
+        $GBT__DOCKER_BIN cp $GBT__CONF $GBT__CONTAINER_ID:$(dirname $GBT__CONF)
+        $GBT__DOCKER_BIN exec -it $GBT__CONTAINER_ID /bin/bash --rcfile $GBT__CONF
+
+        rm -f $GBT__CONF
+        unset GBT__CONF
+    fi
+}
+
