@@ -16,7 +16,7 @@ export GBT_CAR_OS_SYMBOL_TEXT='\$(echo -en \$GBT__OS)'
 
 export GBT_CAR_TIME_FORMAT=' \t '
 
-export GBT_CAR_HOSTNAME_USER_TEXT='\$(echo -en \$GBT__USER)'
+export GBT_CAR_HOSTNAME_USER_TEXT='\$(echo -en \$GBT__USER)\u'
 export GBT_CAR_HOSTNAME_HOST_TEXT='\h'
 export GBT_CAR_HOSTNAME_HOST_FG='white'
 export GBT_CAR_HOSTNAME_HOST_FM='bold'

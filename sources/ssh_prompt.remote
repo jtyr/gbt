@@ -26,10 +26,10 @@ export GBT__OS=${GBT__SYMBOLS[$([ "$(uname -s)" = "Linux" ] && . /etc/os-release
 # Change the Sign depending on the user
 if [ "$UID" = '0' ]; then
     export GBT__SIGN='\001\x1b[38;5;1m\002#'
-    export GBT__USER="\001\x1b[38;5;9m\002$USER"
+    export GBT__USER="\001\x1b[38;5;9m\002"
 else
     export GBT__SIGN='\001\x1b[38;5;10m\002$'
-    export GBT__USER="\001\x1b[38;5;11m\002$USER"
+    export GBT__USER="\001\x1b[38;5;11m\002"
 fi
 
 function sudo() {
