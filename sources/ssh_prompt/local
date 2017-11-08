@@ -3,26 +3,59 @@
 function gbt__err() { echo "$@" >&2; }
 
 function gbt_ssh() {
-    [ -z "$GBT__PROFILE" ] && GBT__PROFILE="$HOME/.gbt_profile_remote"
-    [ -z "$GBT__SSH_BIN" ] && GBT__SSH_BIN=$(which ${GBT__WHICH_OPTS} ssh 2>/dev/null)
-    [ -z "$GBT__THEME" ]   && GBT__THEME="$HOME/.gbt_theme_remote"
+    [ -z "$GBT__HOME$GBT__PROFILE" ] && gbt__err "'GBT__HOME' not defined" && return 1
+    [ -z "$GBT__HOME$GBT__THEME" ] && gbt__err "'GBT__HOME' not defined" && return 1
+    [ -z "$GBT__PROFILE" ] && GBT__PROFILE="$GBT__HOME/sources/ssh_prompt/remote"
+    [ -z "$GBT__THEME" ] && GBT__THEME="$GBT__HOME/themes/ssh_prompt"
 
-    $GBT__SSH_BIN -t $@ "
-        cat /etc/motd 2>/dev/null;
-        GBT__CONF=\"/tmp/.gbt.$RANDOM\" &&
-        echo \"$(base64 $GBT__PROFILE | tr -d '\r\n')\" | base64 -d > \$GBT__CONF &&
-        echo \"$(alias | awk '/gbt_/ {sub(/^alias /,"", $0); print "alias "$0}')\" >> \$GBT__CONF &&
-        echo \"export GBT__STATUS='$(source $GBT__THEME; GBT_SHELL='bash' GBT_CARS='Status, Custom1' gbt 1)'\" >> \$GBT__CONF &&
-        echo \"export GBT__CONF='\$GBT__CONF'\" >> \$GBT__CONF &&
-        echo \"PS1='$(source $GBT__THEME; gbt)'\" >> \$GBT__CONF &&
-        bash --rcfile \$GBT__CONF;
-        rm -f \$GBT__CONF"
+    local SSH_BIN=$(which ${GBT__WHICH_OPTS} ssh 2>/dev/null)
+    [ $? -ne 0 ] && gbt__err "'ssh' not found" && return 1
+
+    if [[ " ${GBT__SSH_IGNORE[*]} " == *" ${@: -1} "* ]]; then
+        $SSH_BIN $@
+    else
+        $SSH_BIN -t $@ "
+            cat /etc/motd 2>/dev/null;
+            GBT__CONF=\"/tmp/.gbt.$RANDOM\" &&
+            echo \"$(base64 $GBT__PROFILE | tr -d '\r\n')\" | base64 -d > \$GBT__CONF &&
+            echo \"$(alias | awk '/gbt_/ {sub(/^(alias )?(gbt___)?/, "", $0); print "alias "$0}')\" >> \$GBT__CONF &&
+            echo \"export GBT__STATUS='$(source $GBT__THEME; GBT_SHELL='bash' GBT_CARS='Status, Custom1' gbt 1)'\" >> \$GBT__CONF &&
+            echo \"export GBT__CONF='\$GBT__CONF'\" >> \$GBT__CONF &&
+            echo \"PS1='$(source $GBT__THEME; gbt)'\" >> \$GBT__CONF &&
+            bash --rcfile \$GBT__CONF;
+            rm -f \$GBT__CONF"
+    fi
+}
+
+function gbt_vagrant() {
+    [ -z "$GBT__HOME$GBT__PROFILE" ] && gbt__err "'GBT__HOME' not defined" && return 1
+    [ -z "$GBT__HOME$GBT__THEME" ] && gbt__err "'GBT__HOME' not defined" && return 1
+    [ -z "$GBT__PROFILE" ] && GBT__PROFILE="$GBT__HOME/sources/ssh_prompt/remote"
+    [ -z "$GBT__THEME" ] && GBT__THEME="$GBT__HOME/themes/ssh_prompt"
+
+    local VAGRANT_BIN=$(which ${GBT__WHICH_OPTS} vagrant 2>/dev/null)
+    [ $? -ne 0 ] && gbt__err "'vagrant' not found" && return 1
+
+    if [ "$1" != 'ssh' ]; then
+        $VAGRANT_BIN $@
+    else
+        $VAGRANT_BIN ssh --command "
+            cat /etc/motd 2>/dev/null;
+            GBT__CONF=\"/tmp/.gbt.$RANDOM\" &&
+            echo \"$(base64 $GBT__PROFILE | tr -d '\r\n')\" | base64 -d > \$GBT__CONF &&
+            echo \"$(alias | awk '/gbt_/ {sub(/^(alias |)(gbt___|)/,"", $0); print "alias "$0}')\" >> \$GBT__CONF &&
+            echo \"export GBT__STATUS='$(source $GBT__THEME; GBT_SHELL='bash' GBT_CARS='Status, Custom1' gbt 1)'\" >> \$GBT__CONF &&
+            echo \"export GBT__CONF='\$GBT__CONF'\" >> \$GBT__CONF &&
+            echo \"PS1='$(source $GBT__THEME; gbt)'\" >> \$GBT__CONF &&
+            bash --rcfile \$GBT__CONF;
+            rm -f \$GBT__CONF"
+    fi
 }
 
 function gbt_sudo() {
-    SU_BIN=$(which ${GBT__WHICH_OPTS} su 2>/dev/null)
+    local SU_BIN=$(which ${GBT__WHICH_OPTS} su 2>/dev/null)
     [ $? -ne 0 ] &&  gbt__err "'su' not found" && return 1
-    SUDO_BIN=$(which ${GBT__WHICH_OPTS} sudo 2>/dev/null)
+    local SUDO_BIN=$(which ${GBT__WHICH_OPTS} sudo 2>/dev/null)
     [ $? -ne 0 ] && gbt__err "'sudo' not found" && return 1
 
     if [ "$1" != 'su' ]; then
@@ -31,4 +64,11 @@ function gbt_sudo() {
         shift
         $SUDO_BIN $SU_BIN -c "bash --rcfile $GBT__CONF" $@
     fi
+}
+
+function gbt_su() {
+    local SU_BIN=$(which ${GBT__WHICH_OPTS} su 2>/dev/null)
+    [ $? -ne 0 ] &&  gbt__err "'su' not found" && return 1
+
+    $SU_BIN -c "bash --rcfile $GBT__CONF" $@
 }

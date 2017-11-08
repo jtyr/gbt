@@ -1,7 +1,7 @@
 Go Bullet Train (GBT)
 =====================
 
-Highly configurable prompt decoration for ZSH and Bash written in Go. It's
+Highly configurable prompt builder for Bash and ZSH written in Go. It's
 inspired by the [Oh My ZSH](https://github.com/robbyrussell/oh-my-zsh) [Bullet
 Train](https://github.com/caiogondim/bullet-train.zsh) theme.
 
@@ -34,7 +34,7 @@ Table of contents
     - [`Sign` car](#sign-car)
     - [`Status` car](#status-car)
     - [`Time` car](#time-car)
-- [Prompt forwarding via SSH and SUDO](#prompt-forwarding-via-ssh-and-sudo)
+- [Prompt forwarding](#prompt-forwarding)
 - [Author](#author)
 - [License](#license)
 
@@ -1247,8 +1247,10 @@ Car that displays current date and time.
   Custom separator string for this car.
 
 
-Prompt forwarding via SSH and SUDO
-----------------------------------
+Prompt forwarding
+-----------------
+
+### SSH
 
 It's possible to use GBT to generate prompt string and forward it to remote
 server via SSH so we can have GBT-like prompt also in the remote shell. The
@@ -1284,25 +1286,65 @@ the Bash command which loads that generated file as its RC file:
 ssh myserver -t "echo \"PS1='$(source ~/.gbt.theme; gbt)'\" > /tmp/.gbt; bash --rcfile /tmp/.gbt"
 ```
 
-Similar principle is used to get the `PS1` through the run of `sudo` command.
-We just need to run Bash command which loads that generated file as its RC
-file:
+
+### SU and SUDO
+
+Similar principle is used to get the `PS1` through the run of `su` command.
+We just need to run Bash command which loads the generated file as its RC file:
+
+```shell
+su -c 'bash --rcfile /tmp/.gbt' - myuser
+```
+
+The same principle can be used for `sudo` command:
 
 ```shell
 sudo su -c 'bash --rcfile /tmp/.gbt' - myuser
 ```
 
-More complete implementation of the above, including the passing of the `PS1`
-string via `sudo`, is available as a part of this repo. You can start using it
-by doing the following:
 
-```
-ln -s /usr/share/gbt/sources/ssh_prompt.remote ~/.gbt.sh
-ln -s /usr/share/gbt/themes/ssh_prompt ~/.gbt.theme
-source /usr/share/gbt/sources/ssh_prompt.local
+### Docker
+
+To get GBT-like prompt inside a Docker container, we need to copy the generated
+file into the container and then execute Bash like in the case of `su` or
+`sudo`:
+
+```shell
+docker cp /tmp/.gbt pensive_pasteur:/tmp
+docker exec -it pensive_pasteur /bin/bash --rcfile /tmp/.gbt
 ```
 
-Then just SSH to some remote server and you should get GBT-like looking prompt:
+
+### Vagrant
+
+To get GBT-like prompt inside a Vagrant when running `vagrant ssh`, we can use
+the same approach like for SSH above:
+
+```shell
+vagrant ssh --command "echo \"PS1='$(source ~/.gbt.theme; gbt)'\" > /tmp/.gbt; bash --rcfile /tmp/.gbt"
+```
+
+
+### Seamless implementation
+
+More complete and seamless implementation of the above, including the passing
+of the `PS1` string via `su`, `sudo`, `docker` and `vagrant` commands, is
+available as a part of this repo. You can start using it by doing the
+following:
+
+```shell
+export GBT__HOME="/usr/share/gbt"
+source "$GBT__HOME/sources/docker_prompt"
+source "$GBT__HOME/sources/ssh_prompt/local"
+alias docker="gbt_docker"
+alias ssh="gbt_ssh"
+alias su="gbt_su"
+alias sudo="gbt_sudo"
+alias vagrant="gbt_vagrant"
+```
+
+Then just SSH to some remote server or enter some Docker container or Vagrant
+box and you should get GBT-like looking prompt:
 
 ![SSH and SUDO demo](https://raw.githubusercontent.com/jtyr/gbt/master/images/ssh_sudo.gif "SSH and SUDO demo")
 

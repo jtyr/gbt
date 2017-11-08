@@ -55,6 +55,13 @@ function gbt_sudo() {
     fi
 }
 
+function gbt_su() {
+    local SU_BIN=$(which ${GBT__WHICH_OPTS} su 2>/dev/null)
+    [ $? -ne 0 ] &&  gbt__err "'su' not found" && return 1
+
+    $SU_BIN -c "bash --rcfile $GBT__CONF" $@
+}
+
 function gbt_ssh() {
     local SSH_BIN=$(which ${GBT__WHICH_OPTS} ssh 2>/dev/null)
     [ $? -ne 0 ] && gbt__err "'ssh' not found" && return 1
@@ -81,6 +88,21 @@ function gbt_docker() {
     fi
 }
 
+function gbt_vagrant() {
+    local VAGRNAT_BIN=$(which ${GBT__WHICH_OPTS} vagrant 2>/dev/null)
+    [ $? -ne 0 ] && gbt__err "'vagrant' not found" && return 1
+
+    if [ "$1" != 'ssh' ]; then
+        $VAGRANT_BIN $@
+    else
+        $VAGRANT_BIN ssh --command "
+            cat /etc/motd 2>/dev/null;
+            echo \"$(base64 $GBT__CONF | tr -d '\r\n')\" | base64 -d > $GBT__CONF &&
+            bash --rcfile $GBT__CONF;
+            rm -f $GBT__CONF"
+    fi
+}
+
 # Change the Sign depending on the user
 if [ "$UID" = '0' ]; then
     export GBT__SIGN='\001\x1b[38;5;1m\002#'
@@ -91,3 +113,4 @@ else
 fi
 
 export GBT__OS=${GBT__SYMBOLS[$(gbt__get_os)]}
+
