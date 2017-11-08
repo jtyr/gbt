@@ -1,27 +1,19 @@
-function docker() {
-    if [ -z "$GBT__DOCKER_BIN" ]; then
-        GBT__DOCKER_BIN='/usr/bin/docker'
-    fi
+[ ${SHELL##*/} = "zsh" ] && local GBT__WHICH_OPTS='-p'
 
-    if [ -z "$GBT__THEME" ]; then
-        GBT__THEME="$HOME/.gbt.theme"
-    fi
-
-    if [ -z "$GBT__SH" ]; then
-        GBT__SH="$HOME/.gbt.sh"
-    fi
+function gbt_docker() {
+    [ -z "$GBT__DOCKER_BIN" ] && GBT__DOCKER_BIN=$(which ${GBT__WHICH_OPTS} docker 2>/dev/null)
+    [ -z "$GBT__PROFILE"] && GBT__PROFILE="$HOME/.gbt_profile"
+    [ -z "$GBT__THEME" ] && GBT__THEME="$HOME/.gbt_theme"
 
     if [ "$1" != 'shell' ]; then
         $GBT__DOCKER_BIN $@
     else
         local GBT__CONTAINER_ID="$2"
 
-        if [ -z "$GBT__CONF" ]; then
-            export GBT__CONF="/tmp/.gbt.$RANDOM"
-        fi
+        [ -z "$GBT__CONF" ] && export GBT__CONF="/tmp/.gbt.$RANDOM"
 
         (
-            cat $GBT__SH;
+            cat $GBT__PROFILE;
             echo "export GBT__CONF='$GBT__CONF'";
             echo "export GBT__STATUS='$(source $GBT__THEME; GBT_SHELL='bash' GBT_CARS='Status, Custom1' gbt 1)'";
             echo -n "PS1='";
