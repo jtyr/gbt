@@ -1,9 +1,7 @@
 #!/bin/bash
 
 declare -a PLATFORMS=(
-    'darwin/386'
     'darwin/amd64'
-    'linux/386'
     'linux/amd64'
 )
 
@@ -18,7 +16,7 @@ for P in "${PLATFORMS[@]}"; do
     ARCH="${P#*/}"
 
     mkdir -p "$PTMP"
-    GOOS="$OS" GOARCH="$ARCH" CGO_ENABLED=0 go build -o "$PTMP/gbt"
+    GOOS="$OS" GOARCH="$ARCH" CGO_ENABLED=0 go build -ldflags='-s -w' -o "$PTMP/gbt"
 
     (
         cp -r "$TRAVIS_BUILD_DIR"/{README.md,LICENSE,themes,sources} "$PTMP"
