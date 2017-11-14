@@ -10,6 +10,8 @@ matrix:
 
 before_install:
   - go get github.com/golang/lint/golint
+  - if [ -n "$TRAVIS_TAG" ]; then sudo apt-get install -y rpm; fi
+  - type dpkg-buildpackage
 
 before_script:
   - golint ./...
