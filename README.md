@@ -52,6 +52,35 @@ PROMPT='$(gbt $?)'
 PS1='$(gbt $?)'
 ```
 
+or on CentOS/RHEL:
+
+```shell
+cat > /etc/yum.repos.d/gbt.repo <<END
+[gbt]
+name=GBT YUM repo
+baseurl=https://packagecloud.io/jtyr/gbt/el/7/\$basearch
+gpgcheck=0
+END
+yum install gbt
+# For ZSH
+PROMPT='$(gbt $?)'
+# For Bash
+PS1='$(gbt $?)'
+```
+
+or on Ubuntu/Debian:
+
+```shell
+curl -L https://packagecloud.io/jtyr/gbt/gpgkey | apt-key add -
+echo 'deb https://packagecloud.io/jtyr/gbt/ubuntu/ xenial main' > /etc/apt/sources.list.d/gbt.list
+apt-get update
+apt-get install gbt
+# For ZSH
+PROMPT='$(gbt $?)'
+# For Bash
+PS1='$(gbt $?)'
+```
+
 or on Mac via [`brew`](https://brew.sh/):
 
 ```shell

@@ -10,8 +10,7 @@ matrix:
 
 before_install:
   - go get github.com/golang/lint/golint
-  - if [ -n "$TRAVIS_TAG" ]; then sudo apt-get install -y rpm; fi
-  - type dpkg-buildpackage
+  - if [ -n "$TRAVIS_TAG" ]; then sudo apt-get install -y rpm build-essential fakeroot; fi
 
 before_script:
   - golint ./...
@@ -22,22 +21,48 @@ before_script:
 script:
   - go install
   - $GOPATH/bin/gbt -version
-
-before_deploy:
-  - dist/build.sh
+  - if [ -n "$TRAVIS_TAG" ]; then dist/build.sh; fi
 
 deploy:
-  provider: releases
-  api_key:
-    secure: T4S4Ea82+QpI0CNHYHZTKRe9L4lJ6TKEb2zsvAwvd8fdmR58L6N+0WhNQ6f6zczBl5ufeAvWlmYdLVCViFMzZVHOYkgT+ehSuT1wTh1sSpPpxATzN9nl53bsDxH1pSL0uht+os7HYXDZDsIr1Kpn6NbFeCJKdXhqb+0HgXyNc+k5jFMNSBkJsCY8aeegr9e6W7l6QvGwaAzqm4MNGgXeIw6uqMf5r0H4OqswudfaQ3/SOz1eTn1GvGNOCYmyM519Jd0hPvvLANzAqwC4M93yVdZm/fahZbY20HvELNbO2mXJUND4ojw/GcXRMjfx1c9TcvhFeBQNZPwHNGPc1ygoKo+BrRf7ZhY2WcwL580mT4yEbvtSbYUFqGNW1J+HiVr2BdYzOLK5jIEuaRrc1ex/BUUvyLGyd2b74NtHATYynG1Bjfu9LwDiVoo5zzpDfCPf00jIH8oC91zS41K7PrlC3kVchijU5wJDQ05dabThxb3RQ5lumrqZYEajG+hpm1+9DEQ3M1jJBSRY/frc8Gr3PTlfrc+INZXrp3vaFFjmISQYuEy1qFpoSTwnBK7eGzFL/B5jfPveJcjpHlINqGGQ3ilv2RLkSRh3ima0xHhtyDmUSF9cT26VrfPfOeytFtMwWHIFToiZtnqFd8VZk3DUyCDsTXWMtF+OMyhipd2MD4s=
-  file_glob: true
-  file:
-    - /tmp/gbt/*.tar.gz
-    - /tmp/gbt/*.txt
-  skip_cleanup: true
-  on:
-    tags: true
-    repo: jtyr/gbt
+  - provider: releases
+    api_key:
+      secure: T4S4Ea82+QpI0CNHYHZTKRe9L4lJ6TKEb2zsvAwvd8fdmR58L6N+0WhNQ6f6zczBl5ufeAvWlmYdLVCViFMzZVHOYkgT+ehSuT1wTh1sSpPpxATzN9nl53bsDxH1pSL0uht+os7HYXDZDsIr1Kpn6NbFeCJKdXhqb+0HgXyNc+k5jFMNSBkJsCY8aeegr9e6W7l6QvGwaAzqm4MNGgXeIw6uqMf5r0H4OqswudfaQ3/SOz1eTn1GvGNOCYmyM519Jd0hPvvLANzAqwC4M93yVdZm/fahZbY20HvELNbO2mXJUND4ojw/GcXRMjfx1c9TcvhFeBQNZPwHNGPc1ygoKo+BrRf7ZhY2WcwL580mT4yEbvtSbYUFqGNW1J+HiVr2BdYzOLK5jIEuaRrc1ex/BUUvyLGyd2b74NtHATYynG1Bjfu9LwDiVoo5zzpDfCPf00jIH8oC91zS41K7PrlC3kVchijU5wJDQ05dabThxb3RQ5lumrqZYEajG+hpm1+9DEQ3M1jJBSRY/frc8Gr3PTlfrc+INZXrp3vaFFjmISQYuEy1qFpoSTwnBK7eGzFL/B5jfPveJcjpHlINqGGQ3ilv2RLkSRh3ima0xHhtyDmUSF9cT26VrfPfOeytFtMwWHIFToiZtnqFd8VZk3DUyCDsTXWMtF+OMyhipd2MD4s=
+    file_glob: true
+    file:
+      - /tmp/gbt/*.tar.gz
+      - /tmp/gbt/*.deb
+      - /tmp/gbt/*.rpm
+      - /tmp/gbt/*.txt
+    skip_cleanup: true
+    on:
+      tags: true
+      repo: jtyr/gbt
+
+  - provider: packagecloud
+    repository: gbt
+    username: jtyr
+    token:
+      secure: 2pEkYy8r52+w2vaYT2rNq26fO2EUZfFe+ra7ZVCOyNzVRQ0EgIm0bsL6AidhQM4ab5rT1RyEvVyLDkYp3HhtD/GckklVehjWZvvkUscYRZPkaaEHZ0OzifusPdD6IQYB8wjN6rPnpC4FTPRgk+Uu3KOGXUAJwjsPOoYrZOM3yM+kxgmE5pDNUw6SpCrft4XcCQ0pIXdYuYdkG9rzWiTST4FFmDYbCkFz4516+0MNwBfL6LnwQ7ynL8tXaRo99J6fvTxlsiBt2T51yzaMUM6m2KGB67y49iMxGJ76ZH/roLFPSlzvRADgB5UCEhIOevp1HkhEUb4njxS/hZr0lv01FOo2XBoor7U08r/uZv0LFk3Da3ldzyXYscBUirmVvLRE8jxSrZ7r9gtPj0wUOSdDJSqSHhq3dhhcOisbmxepo3cRlxEo+9B05i1kfyjHLckyEvd5cp5FTvAPNIN16mwrdc8YwXdUarhbZPzhOT75cNt+Fj4P9h8zyhi/0GE49UL3Ns38BEXfUYdqwwlzvhskqYssEdH1ettwZ+0X0EY84a/5tpn61MsHIJg9D9QYffYaQcI+kSB/Qfeo7vkhKG3oW/OpoB8uNTrIu/eRZqZ/JoTrarZ+iXTKfK57X2RybRv4QE3XOv6O0B9ie3/1qZU31UewgZ83knU6v5xgsaexv98=
+    dist: ubuntu/xenial
+    skip_cleanup: true
+    local-dir: /tmp/gbt
+    package_glob: "*.deb"
+    on:
+      tags: true
+      repo: jtyr/gbt
+
+  - provider: packagecloud
+    repository: gbt
+    username: jtyr
+    token:
+      secure: 2pEkYy8r52+w2vaYT2rNq26fO2EUZfFe+ra7ZVCOyNzVRQ0EgIm0bsL6AidhQM4ab5rT1RyEvVyLDkYp3HhtD/GckklVehjWZvvkUscYRZPkaaEHZ0OzifusPdD6IQYB8wjN6rPnpC4FTPRgk+Uu3KOGXUAJwjsPOoYrZOM3yM+kxgmE5pDNUw6SpCrft4XcCQ0pIXdYuYdkG9rzWiTST4FFmDYbCkFz4516+0MNwBfL6LnwQ7ynL8tXaRo99J6fvTxlsiBt2T51yzaMUM6m2KGB67y49iMxGJ76ZH/roLFPSlzvRADgB5UCEhIOevp1HkhEUb4njxS/hZr0lv01FOo2XBoor7U08r/uZv0LFk3Da3ldzyXYscBUirmVvLRE8jxSrZ7r9gtPj0wUOSdDJSqSHhq3dhhcOisbmxepo3cRlxEo+9B05i1kfyjHLckyEvd5cp5FTvAPNIN16mwrdc8YwXdUarhbZPzhOT75cNt+Fj4P9h8zyhi/0GE49UL3Ns38BEXfUYdqwwlzvhskqYssEdH1ettwZ+0X0EY84a/5tpn61MsHIJg9D9QYffYaQcI+kSB/Qfeo7vkhKG3oW/OpoB8uNTrIu/eRZqZ/JoTrarZ+iXTKfK57X2RybRv4QE3XOv6O0B9ie3/1qZU31UewgZ83knU6v5xgsaexv98=
+    dist: el/7
+    skip_cleanup: true
+    local-dir: /tmp/gbt
+    package_glob: "*.rpm"
+    on:
+      tags: true
+      repo: jtyr/gbt
 
 notifications:
   email: false

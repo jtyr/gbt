@@ -25,6 +25,29 @@ for P in "${PLATFORMS[@]}"; do
         cp -r "$TRAVIS_BUILD_DIR"/{README.md,LICENSE,themes,sources} "$PTMP"
         tar -C "$PTMP/.." -czf "$TMP/$PKG" ./
         cd "$TMP"
-        sha256sum "$PKG" >> "$TMP/$NAME-$VER-checksums.txt"
     )
+
+    if [ "$OS" = 'linux' ]; then
+        # DEB
+        (
+            cd "$TRAVIS_BUILD_DIR/contrib"
+            ln -s "$PTMP" "$TRAVIS_BUILD_DIR/contrib/$NAME"
+            m4 -DVER="$VER" -DDATE="$(date '+%a, %d %b %Y %H:%M:%S %z')" debian/changelog.m4 > debian/changelog
+            dpkg-buildpackage -us -uc -tc -b
+        )
+        mv "$TRAVIS_BUILD_DIR"/*.deb $TMP
+
+        # RPM
+        mkdir -p ~/rpmbuild/SOURCES
+        ln -s "$TMP/$PKG" ~/rpmbuild/SOURCES/
+        (
+            cd "$TRAVIS_BUILD_DIR/contrib/redhat"
+            m4 -DVER="$VER" gbt.spec.m4 > gbt.spec
+            rpmbuild -bb gbt.spec
+        )
+        mv ~/rpmbuild/RPMS/x86_64/*.rpm "$TMP"
+    fi
 done
+
+cd "$TMP"
+sha256sum *.tar.gz *.deb *.rpm > "$NAME-$VER-checksums.txt"

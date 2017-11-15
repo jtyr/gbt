@@ -1,0 +1,41 @@
+#!/usr/bin/make -f
+
+define checkdir
+    @test -f debian/rules || \
+    (echo Not in correct source directory; exit 1)
+endef
+
+define checkroot
+    @test $$(id -u) = 0 || (echo need root priviledges; exit 1)
+endef
+
+PACKAGE = gbt
+TOP_DIR := $(shell if [ "$$PWD" != "" ]; then echo $$PWD; else pwd; fi)
+SRC_DIR = $(TOP_DIR)/$(PACKAGE)
+DEST_DIR = $(TOP_DIR)/debian/$(PACKAGE)
+BIN_DIR = $(DEST_DIR)/usr/bin
+DOCS_DIR = $(DEST_DIR)/usr/share/doc/$(PACKAGE)
+SHARE_DIR = $(DEST_DIR)/usr/share/$(PACKAGE)
+
+build:
+
+binary:
+	$(checkdir)
+	$(checkroot)
+	mkdir -p $(DEST_DIR)/DEBIAN $(BIN_DIR) $(DOCS_DIR) $(SHARE_DIR)
+	install -Dm755 $(SRC_DIR)/$(PACKAGE) -t $(BIN_DIR)
+	install -Dm644 $(SRC_DIR)/LICENSE -t $(DOCS_DIR)
+	install -Dm644 $(SRC_DIR)/README.md -t $(DOCS_DIR)
+	cp -r $(SRC_DIR)/sources $(SHARE_DIR)
+	cp -r $(SRC_DIR)/themes $(SHARE_DIR)
+	dpkg-gencontrol -P$(DEST_DIR)
+	cd $(DEST_DIR) && find . -type f ! -regex '.*DEBIAN/.*' -printf '%P\0' | xargs -r0 md5sum > DEBIAN/md5sums
+	dpkg-deb -b $(DEST_DIR) ../
+
+clean:
+	$(checkdir)
+	-rm -rf debian/$(PACKAGE)
+	-rm -f debian/files
+	-rm -f debian/substvars
+
+.PHONY: binary clean
