@@ -1,5 +1,5 @@
 Name:           gbt
-Summary:        Highly configurable prompt builder for Bash and ZSH written in Go.
+Summary:        Highly configurable prompt builder for Bash and ZSH written in Go
 Version:        VER
 Release:        1%{?dist}
 License:        MIT
@@ -33,5 +33,5 @@ Highly configurable prompt builder for Bash and ZSH written in Go.
 %{_bindir}/%{name}
 
 %changelog
-* Mon Nov 14 2017 Jiri Tyr <jiri.tyr@gmail.com> 1.1.0-1
-- Initial build.
+* DATE Jiri Tyr <jiri.tyr@gmail.com> VER-1
+- Version bump to VER-1.
