@@ -7,4 +7,4 @@ Homepage: https://github.com/jtyr/gbt
 
 Package: gbt
 Architecture: any
-Description: Highly configurable prompt builder for Bash and ZSH written in Go.
+Description: Highly configurable prompt builder for Bash and ZSH written in Go
