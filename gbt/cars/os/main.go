@@ -77,7 +77,8 @@ func getOsName() string {
             line := scanner.Text()
 
             if len(line) > 3 && line[:3] == "ID=" {
-                osName = line[3:]
+                osName = strings.Replace(
+                    strings.Replace(line[3:], "\"", "", -1), "'", "", -1)
             }
         }
     }
