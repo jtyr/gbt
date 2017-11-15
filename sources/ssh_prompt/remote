@@ -22,7 +22,7 @@ GBT__SYMBOLS[sabayon]='\001\e[38;5;15m\002'
 GBT__SYMBOLS[slackware]='\001\e[38;5;15m\002'
 GBT__SYMBOLS[ubuntu]='\001\e[38;5;166m\002'
 
-[ ${SHELL##*/} = "zsh" ] && local GBT__WHICH_OPTS='-p'
+[ ${SHELL##*/} = 'zsh' ] && export GBT__WHICH_OPTS='-p'
 
 function gbt__err() { echo "$@" >&2; }
 
@@ -42,9 +42,9 @@ function gbt__get_os() {
 }
 
 function gbt_sudo() {
-    local SU_BIN=$(which ${GBT__WHICH_OPTS} su 2>/dev/null)
+    local SU_BIN=$(which $GBT__WHICH_OPTS su 2>/dev/null)
     [ $? -ne 0 ] &&  gbt__err "'su' not found" && return 1
-    local SUDO_BIN=$(which ${GBT__WHICH_OPTS} sudo 2>/dev/null)
+    local SUDO_BIN=$(which $GBT__WHICH_OPTS sudo 2>/dev/null)
     [ $? -ne 0 ] && gbt__err "'sudo' not found" && return 1
 
     if [ "$1" != 'su' ]; then
@@ -56,14 +56,14 @@ function gbt_sudo() {
 }
 
 function gbt_su() {
-    local SU_BIN=$(which ${GBT__WHICH_OPTS} su 2>/dev/null)
+    local SU_BIN=$(which $GBT__WHICH_OPTS su 2>/dev/null)
     [ $? -ne 0 ] &&  gbt__err "'su' not found" && return 1
 
     $SU_BIN -c "bash --rcfile $GBT__CONF" $@
 }
 
 function gbt_ssh() {
-    local SSH_BIN=$(which ${GBT__WHICH_OPTS} ssh 2>/dev/null)
+    local SSH_BIN=$(which $GBT__WHICH_OPTS ssh 2>/dev/null)
     [ $? -ne 0 ] && gbt__err "'ssh' not found" && return 1
 
     [ -z $SSH_BIN ] && return 1
@@ -75,21 +75,21 @@ function gbt_ssh() {
 }
 
 function gbt_docker() {
-    local DOCKER_BIN=$(which ${GBT__WHICH_OPTS} docker 2>/dev/null)
+    local DOCKER_BIN=$(which $GBT__WHICH_OPTS docker 2>/dev/null)
     [ $? -ne 0 ] && gbt__err "'docker' not found" && return 1
 
     if [ "$1" != 'shell' ]; then
         $DOCKER_BIN $@
     else
-        local GBT__CONTAINER_ID="$2"
+        local GBT__CONTAINER_ID="${@: -1}"
 
         $DOCKER_BIN cp $GBT__CONF $GBT__CONTAINER_ID:$(dirname $GBT__CONF)
-        $DOCKER_BIN exec -it $GBT__CONTAINER_ID /bin/bash --rcfile $GBT__CONF
+        $DOCKER_BIN exec ${@:2:$(($# - 2))} -it $GBT__CONTAINER_ID bash --rcfile $GBT__CONF
     fi
 }
 
 function gbt_vagrant() {
-    local VAGRNAT_BIN=$(which ${GBT__WHICH_OPTS} vagrant 2>/dev/null)
+    local VAGRNAT_BIN=$(which $GBT__WHICH_OPTS vagrant 2>/dev/null)
     [ $? -ne 0 ] && gbt__err "'vagrant' not found" && return 1
 
     if [ "$1" != 'ssh' ]; then

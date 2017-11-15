@@ -1,4 +1,4 @@
-[ ${SHELL##*/} = "zsh" ] && local GBT__WHICH_OPTS='-p'
+[ ${SHELL##*/} = 'zsh' ] && export GBT__WHICH_OPTS='-p'
 
 function gbt_docker() {
     [ -z "$GBT__HOME$GBT__PROFILE" ] && gbt__err "'GBT__HOME' not defined" && return 1
@@ -6,13 +6,13 @@ function gbt_docker() {
     [ -z "$GBT__PROFILE" ] && GBT__PROFILE="$GBT__HOME/sources/ssh_prompt/remote"
     [ -z "$GBT__THEME" ] && GBT__THEME="$GBT__HOME/themes/ssh_prompt"
 
-    local DOCKER_BIN=$(which ${GBT__WHICH_OPTS} docker 2>/dev/null)
+    local DOCKER_BIN=$(which $GBT__WHICH_OPTS docker 2>/dev/null)
     [ $? -ne 0 ] && gbt__err "'docker' not found" && return 1
 
     if [ "$1" != 'shell' ]; then
         $DOCKER_BIN $@
     else
-        local GBT__CONTAINER_ID="$2"
+        local GBT__CONTAINER_ID="${@: -1}"
 
         [ -z "$GBT__CONF" ] && export GBT__CONF="/tmp/.gbt.$RANDOM"
 
@@ -22,12 +22,12 @@ function gbt_docker() {
             echo "export GBT__STATUS='$(source $GBT__THEME; GBT_SHELL='bash' GBT_CARS='Status, Custom1' gbt 1)'";
             echo -n "PS1='";
             source $GBT__THEME;
-            gbt | sed 's/\\\$/$/g';
+            gbt | awk '{gsub(/\\\$/, "$"); printf "%s", $0}';
             echo "'"
         ) > $GBT__CONF
 
         $DOCKER_BIN cp $GBT__CONF $GBT__CONTAINER_ID:$(dirname $GBT__CONF)
-        $DOCKER_BIN exec -it $GBT__CONTAINER_ID /bin/bash --rcfile $GBT__CONF
+        $DOCKER_BIN exec ${@:2:$(($# - 2))} -it $GBT__CONTAINER_ID bash --rcfile $GBT__CONF
 
         rm -f $GBT__CONF
         unset GBT__CONF
