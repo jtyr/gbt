@@ -42,7 +42,7 @@ for P in "${PLATFORMS[@]}"; do
         ln -s "$TMP/$PKG" ~/rpmbuild/SOURCES/
         (
             cd "$TRAVIS_BUILD_DIR/contrib/redhat"
-            m4 -DVER="$VER" gbt.spec.m4 > gbt.spec
+            m4 -DVER="$VER" -DDATE="$(date '+%a %b %d %Y')" gbt.spec.m4 > gbt.spec
             rpmbuild -bb gbt.spec
         )
         mv ~/rpmbuild/RPMS/x86_64/*.rpm "$TMP"
@@ -50,4 +50,4 @@ for P in "${PLATFORMS[@]}"; do
 done
 
 cd "$TMP"
-sha256sum *.tar.gz *.deb *.rpm > "$NAME-$VER-checksums.txt"
+sha256sum *.tar.gz *.deb *.rpm | sort -k2 > "$NAME-$VER-checksums-sha256.txt"
