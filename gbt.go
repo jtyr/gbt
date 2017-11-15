@@ -34,6 +34,8 @@ type Cars interface {
     GetWrap() bool
 }
 
+const version = "1.1.1"
+
 func printCars(cars []Cars, right bool) {
     prevBg := "\000"
     prevDisplay := true
@@ -130,7 +132,7 @@ func main() {
         os.Exit(0)
     }
     if argsVersion {
-        fmt.Println("GBT v1.1.0")
+        fmt.Printf("GBT v%s\n", version)
         os.Exit(0)
     }
 
