@@ -7,7 +7,7 @@ function gbt__err() {
 function gbt__local_rcfile() {
     [ -z "$GBT__HOME$GBT__PROFILE" ] && gbt__err "'GBT__HOME' not defined" && return 1
     [ -z "$GBT__HOME$GBT__THEME" ] && gbt__err "'GBT__HOME' not defined" && return 1
-    [ -z "$GBT__PROFILE" ] && GBT__PROFILE="$GBT__HOME/sources/ssh_prompt/remote"
+    [ -z "$GBT__PROFILE" ] && GBT__PROFILE="$GBT__HOME/sources/prompt_forwarding/remote"
     [ -z "$GBT__THEME" ] && GBT__THEME="$GBT__HOME/themes/ssh_prompt"
 
     GBT__CONF="/tmp/.gbt.$RANDOM"
@@ -29,7 +29,7 @@ function gbt__local_rcfile() {
 function gbt_docker() {
     [ -z "$GBT__HOME$GBT__PROFILE" ] && gbt__err "'GBT__HOME' not defined" && return 1
     [ -z "$GBT__HOME$GBT__THEME" ] && gbt__err "'GBT__HOME' not defined" && return 1
-    [ -z "$GBT__PROFILE" ] && GBT__PROFILE="$GBT__HOME/sources/ssh_prompt/remote"
+    [ -z "$GBT__PROFILE" ] && GBT__PROFILE="$GBT__HOME/sources/prompt_forwarding/remote"
     [ -z "$GBT__THEME" ] && GBT__THEME="$GBT__HOME/themes/ssh_prompt"
 
     local DOCKER_BIN=$(which $GBT__WHICH_OPTS docker 2>/dev/null)
@@ -63,7 +63,7 @@ function gbt_docker() {
 function gbt_ssh() {
     [ -z "$GBT__HOME$GBT__PROFILE" ] && gbt__err "'GBT__HOME' not defined" && return 1
     [ -z "$GBT__HOME$GBT__THEME" ] && gbt__err "'GBT__HOME' not defined" && return 1
-    [ -z "$GBT__PROFILE" ] && GBT__PROFILE="$GBT__HOME/sources/ssh_prompt/remote"
+    [ -z "$GBT__PROFILE" ] && GBT__PROFILE="$GBT__HOME/sources/prompt_forwarding/remote"
     [ -z "$GBT__THEME" ] && GBT__THEME="$GBT__HOME/themes/ssh_prompt"
 
     local SSH_BIN=$(which $GBT__WHICH_OPTS ssh 2>/dev/null)
@@ -117,7 +117,7 @@ function gbt_sudo() {
 function gbt_vagrant() {
     [ -z "$GBT__HOME$GBT__PROFILE" ] && gbt__err "'GBT__HOME' not defined" && return 1
     [ -z "$GBT__HOME$GBT__THEME" ] && gbt__err "'GBT__HOME' not defined" && return 1
-    [ -z "$GBT__PROFILE" ] && GBT__PROFILE="$GBT__HOME/sources/ssh_prompt/remote"
+    [ -z "$GBT__PROFILE" ] && GBT__PROFILE="$GBT__HOME/sources/prompt_forwarding/remote"
     [ -z "$GBT__THEME" ] && GBT__THEME="$GBT__HOME/themes/ssh_prompt"
 
     local VAGRANT_BIN=$(which $GBT__WHICH_OPTS vagrant 2>/dev/null)
