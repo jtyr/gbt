@@ -24,7 +24,9 @@ GBT__SYMBOLS[ubuntu]='\001\e[38;5;166m\002'
 
 [ ${SHELL##*/} = 'zsh' ] && export GBT__WHICH_OPTS='-p'
 
-function gbt__err() { echo "$@" >&2; }
+function gbt__err() {
+    echo "$@" >&2
+}
 
 function gbt__get_os() {
     local ret
@@ -41,39 +43,6 @@ function gbt__get_os() {
     echo $ret | tr '[:upper:]' '[:lower:]'
 }
 
-function gbt_sudo() {
-    local SU_BIN=$(which $GBT__WHICH_OPTS su 2>/dev/null)
-    [ $? -ne 0 ] &&  gbt__err "'su' not found" && return 1
-    local SUDO_BIN=$(which $GBT__WHICH_OPTS sudo 2>/dev/null)
-    [ $? -ne 0 ] && gbt__err "'sudo' not found" && return 1
-
-    if [ "$1" != 'su' ]; then
-        $SUDO_BIN $@
-    else
-        shift
-        $SUDO_BIN $SU_BIN -c "bash --rcfile $GBT__CONF" $@
-    fi
-}
-
-function gbt_su() {
-    local SU_BIN=$(which $GBT__WHICH_OPTS su 2>/dev/null)
-    [ $? -ne 0 ] &&  gbt__err "'su' not found" && return 1
-
-    $SU_BIN -c "bash --rcfile $GBT__CONF" $@
-}
-
-function gbt_ssh() {
-    local SSH_BIN=$(which $GBT__WHICH_OPTS ssh 2>/dev/null)
-    [ $? -ne 0 ] && gbt__err "'ssh' not found" && return 1
-
-    [ -z $SSH_BIN ] && return 1
-    $SSH_BIN -t $@ "
-        cat /etc/motd 2>/dev/null;
-        echo \"$(base64 $GBT__CONF | tr -d '\r\n')\" | base64 -d > $GBT__CONF &&
-        bash --rcfile $GBT__CONF;
-        rm -f $GBT__CONF"
-}
-
 function gbt_docker() {
     local DOCKER_BIN=$(which $GBT__WHICH_OPTS docker 2>/dev/null)
     [ $? -ne 0 ] && gbt__err "'docker' not found" && return 1
@@ -87,6 +56,38 @@ function gbt_docker() {
         $DOCKER_BIN exec ${@:2:$(($# - 2))} -it $GBT__CONTAINER_ID bash --rcfile $GBT__CONF
     fi
 }
+function gbt_su() {
+    local SU_BIN=$(which $GBT__WHICH_OPTS su 2>/dev/null)
+    [ $? -ne 0 ] &&  gbt__err "'su' not found" && return 1
+
+    $SU_BIN -s "$GBT__CONF.bash" $@
+}
+
+function gbt_sudo() {
+    local SU_BIN=$(which $GBT__WHICH_OPTS su 2>/dev/null)
+    [ $? -ne 0 ] &&  gbt__err "'su' not found" && return 1
+    local SUDO_BIN=$(which $GBT__WHICH_OPTS sudo 2>/dev/null)
+    [ $? -ne 0 ] && gbt__err "'sudo' not found" && return 1
+
+    if [ "$1" != 'su' ]; then
+        $SUDO_BIN $@
+    else
+        shift
+        $SUDO_BIN $SU_BIN -s "$GBT__CONF.bash" $@
+    fi
+}
+
+function gbt_ssh() {
+    local SSH_BIN=$(which $GBT__WHICH_OPTS ssh 2>/dev/null)
+    [ $? -ne 0 ] && gbt__err "'ssh' not found" && return 1
+
+    [ -z $SSH_BIN ] && return 1
+    $SSH_BIN -t $@ "
+        cat /etc/motd 2>/dev/null;
+        echo \"$(base64 $GBT__CONF | tr -d '\r\n')\" | base64 -d > $GBT__CONF &&
+        bash --rcfile $GBT__CONF;
+        rm -f $GBT__CONF $GBT__CONF.bash"
+}
 
 function gbt_vagrant() {
     local VAGRNAT_BIN=$(which $GBT__WHICH_OPTS vagrant 2>/dev/null)
@@ -99,7 +100,7 @@ function gbt_vagrant() {
             cat /etc/motd 2>/dev/null;
             echo \"$(base64 $GBT__CONF | tr -d '\r\n')\" | base64 -d > $GBT__CONF &&
             bash --rcfile $GBT__CONF;
-            rm -f $GBT__CONF"
+            rm -f $GBT__CONF $GBT__CONF.bash"
     fi
 }
 
@@ -113,4 +114,9 @@ else
 fi
 
 export GBT__OS=${GBT__SYMBOLS[$(gbt__get_os)]}
+
+if [ ! -e "$GBT__CONF.bash" ]; then
+    echo -e "#!/bin/bash\nbash --rcfile $GBT__CONF" > $GBT__CONF.bash
+    chmod +x $GBT__CONF.bash
+fi
 
