@@ -10,6 +10,9 @@ VER="${TRAVIS_TAG:1}"
 TMP="/tmp/$NAME"
 rm -fr "$TMP"
 
+gpg --import "$TRAVIS_BUILD_DIR/dist/gpg_key.priv"
+echo -e '%_gpg_name Jiri Tyr (PKG) <jiri.tyr@gmail.com>\n%dist .el7' > ~/.rpmmacros
+
 for P in "${PLATFORMS[@]}"; do
     echo "Building $P"
 
@@ -33,7 +36,7 @@ for P in "${PLATFORMS[@]}"; do
             cd "$TRAVIS_BUILD_DIR/contrib"
             ln -s "$PTMP" "$TRAVIS_BUILD_DIR/contrib/$NAME"
             m4 -DVER="$VER" -DDATE="$(date '+%a, %d %b %Y %H:%M:%S %z')" debian/changelog.m4 > debian/changelog
-            dpkg-buildpackage -us -uc -tc -b
+            dpkg-buildpackage -tc -b -kCA67951CD2BBE8AAE4210B72FB90C91F64BED28C
         )
         mv "$TRAVIS_BUILD_DIR"/*.deb $TMP
 
@@ -45,6 +48,9 @@ for P in "${PLATFORMS[@]}"; do
             m4 -DVER="$VER" -DDATE="$(date '+%a %b %d %Y')" gbt.spec.m4 > gbt.spec
             rpmbuild -bb gbt.spec
         )
+        echo -e '#!/usr/bin/expect -f\nspawn rpmsign --key-id CA67951CD2BBE8AAE4210B72FB90C91F64BED28C --addsign {*}$argv\nexpect -exact "Enter pass phrase: "\nsend -- "\\r"\nexpect eof' > ~/rpm-sign.exp
+        chmod +x ~/rpm-sign.exp
+        ~/rpm-sign.exp ~/rpmbuild/RPMS/x86_64/*.rpm
         mv ~/rpmbuild/RPMS/x86_64/*.rpm "$TMP"
     fi
 done
