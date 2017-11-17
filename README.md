@@ -34,7 +34,7 @@ Table of contents
     - [`Sign` car](#sign-car)
     - [`Status` car](#status-car)
     - [`Time` car](#time-car)
-- [Prompt forwarding](#prompt-forwarding)
+- [Prompt forwarding](#seamless-implementation)
 - [Author](#author)
 - [License](#license)
 
@@ -46,61 +46,51 @@ On Arch Linux:
 
 ```shell
 yaourt -S gbt
-# For ZSH
-PROMPT='$(gbt $?)'
-# For Bash
-PS1='$(gbt $?)'
 ```
 
-or on CentOS/RHEL:
+On CentOS/RHEL:
 
 ```shell
 cat > /etc/yum.repos.d/gbt.repo <<END
 [gbt]
 name=GBT YUM repo
 baseurl=https://packagecloud.io/jtyr/gbt/el/7/\$basearch
-gpgcheck=0
+gpgkey=https://packagecloud.io/jtyr/gbt/gpgkey/jtyr-gbt-4C6E79EFF45439B6.pub.gpg
+gpgcheck=1
 END
 yum install gbt
-# For ZSH
-PROMPT='$(gbt $?)'
-# For Bash
-PS1='$(gbt $?)'
 ```
 
-or on Ubuntu/Debian:
+On Ubuntu/Debian:
 
 ```shell
 curl -L https://packagecloud.io/jtyr/gbt/gpgkey | apt-key add -
 echo 'deb https://packagecloud.io/jtyr/gbt/ubuntu/ xenial main' > /etc/apt/sources.list.d/gbt.list
 apt-get update
 apt-get install gbt
-# For ZSH
-PROMPT='$(gbt $?)'
-# For Bash
-PS1='$(gbt $?)'
 ```
 
-or on Mac via [`brew`](https://brew.sh/):
+On Mac via [`Homebrew`](https://brew.sh/):
 
 ```shell
 brew tap jtyr/repo
 brew install gbt
-# For ZSH
-PROMPT='$(gbt $?)'
-# For Bash
-PS1='$(gbt $?)'
 ```
 
-or via Go:
+From source code:
 
 ```shell
 go get -u github.com/jtyr/gbt
 go build -o ~/gbt github.com/jtyr/gbt
-# For ZSH
-PROMPT='$(~/gbt $?)'
+```
+
+GBT can be activated by calling it from the shell prompt variable:
+
+```shell
 # For Bash
-PS1='$(~/gbt $?)'
+PS1='$(gbt $?)'
+# For ZSH
+PROMPT='$(gbt $?)'
 ```
 
 In order to display all colors correctly, the terminal should use 256 color
@@ -571,10 +561,10 @@ In order to allow this car to calculate the execution time, the following must
 be loaded in the shell:
 
 ```shell
-# For ZSH
-source /usr/share/gbt/sources/ExecTime.zsh
 # For Bash
-source /usr/share/gbt/sources/ExecTime.bash
+source /usr/share/gbt/sources/exec_time/bash
+# For ZSH
+source /usr/share/gbt/sources/exec_time/zsh
 ```
 
 
@@ -1357,19 +1347,26 @@ vagrant ssh --command "echo \"PS1='$(source ~/.gbt.theme; gbt)'\" > /tmp/.gbt; b
 ### Seamless implementation
 
 More complete and seamless implementation of the above, including the passing
-of the `PS1` string via `su`, `sudo`, `docker` and `vagrant` commands, is
-available as a part of this repo. You can start using it by doing the
+of the `PS1` string via `docker`, `ssh`, `su`, `sudo` and `vagrant` commands,
+is available as a part of this repo. You can start using it by doing the
 following:
 
 ```shell
 export GBT__HOME="/usr/share/gbt"
-source "$GBT__HOME/sources/docker_prompt"
-source "$GBT__HOME/sources/ssh_prompt/local"
+source "$GBT__HOME/sources/prompt_forwarding/local"
 alias docker="gbt_docker"
 alias ssh="gbt_ssh"
 alias su="gbt_su"
 alias sudo="gbt_sudo"
 alias vagrant="gbt_vagrant"
+```
+
+If you want to have the alias available only on the remote machine, prepend the
+alias by `gbt___`. For example to have the `sudo` alias, using the `gbt_sudo`
+function, available only on the remote machine, define the alias like this:
+
+```shell
+alias gbt__sudo="gbt_sudo"
 ```
 
 Then just SSH to some remote server or enter some Docker container or Vagrant

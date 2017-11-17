@@ -25,7 +25,7 @@ unset GBT_CARS
 clear                                                                      
 ### ExecTime car demo
 export GBT_CARS="Status, Os, ExecTime, Hostname, Dir, Sign"
-source /usr/share/gbt/sources/ExecTime.zsh
+source /usr/share/gbt/sources/exec_time/zsh
 export GBT_CAR_EXECTIME_PRECISION=4
 ls -la /usr/share/gbt/
 unset GBT_CAR_EXECTIME_PRECISION
