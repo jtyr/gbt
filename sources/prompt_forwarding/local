@@ -14,7 +14,7 @@ function gbt__local_rcfile() {
 
     echo "export GBT__CONF='$GBT__CONF'" > $GBT__CONF
     cat $GBT__PROFILE >> $GBT__CONF
-    echo "$(alias | awk '/gbt_/ {sub(/^(alias |)(gbt___|)/, "", $0); print "alias "$0}')" >> $GBT__CONF
+    echo "$(alias | awk '/gbt_/ {sub(/^(alias )?(gbt___)?/, "", $0); print "alias "$0}')" >> $GBT__CONF
     echo "export GBT__STATUS='$(source $GBT__THEME; GBT_SHELL='bash' GBT_CARS='Status, Custom1' gbt 1)'" >> $GBT__CONF
     echo -n "PS1='" >> $GBT__CONF
     (source $GBT__THEME; gbt | awk '{gsub(/\\\$/, "$"); printf "%s", $0}') >> $GBT__CONF
@@ -132,7 +132,7 @@ function gbt_vagrant() {
             export GBT__CONF=\"/tmp/.gbt.$RANDOM\" &&
             echo \"export GBT__CONF='\$GBT__CONF'\" > \$GBT__CONF &&
             echo \"$(base64 $GBT__PROFILE | tr -d '\r\n')\" | base64 -d >> \$GBT__CONF &&
-            echo \"$(alias | awk '/gbt_/ {sub(/^(alias |)(gbt___|)/, "", $0); print "alias "$0}')\" >> \$GBT__CONF &&
+            echo \"$(alias | awk '/gbt_/ {sub(/^(alias )?(gbt___)?/, "", $0); print "alias "$0}')\" >> \$GBT__CONF &&
             echo \"export GBT__STATUS='$(source $GBT__THEME; GBT_SHELL='bash' GBT_CARS='Status, Custom1' gbt 1)'\" >> \$GBT__CONF &&
             echo \"PS1='$(source $GBT__THEME; gbt)'\" >> \$GBT__CONF &&
             bash --rcfile \$GBT__CONF;
