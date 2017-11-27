@@ -48,24 +48,24 @@ On Arch Linux:
 yaourt -S gbt
 ```
 
-On CentOS/RHEL:
+On CentOS/RHEL (packages hosted by [Packagecloud](https://packagecloud.io)):
 
 ```shell
 cat > /etc/yum.repos.d/gbt.repo <<END
 [gbt]
 name=GBT YUM repo
-baseurl=https://packagecloud.io/jtyr/gbt/el/7/\$basearch
-gpgkey=https://packagecloud.io/jtyr/gbt/gpgkey/jtyr-gbt-4C6E79EFF45439B6.pub.gpg
+baseurl=https://packagecloud.io/gbt/release/el/7/\$basearch
+gpgkey=https://packagecloud.io/gbt/release/gpgkey/jtyr-gbt-4C6E79EFF45439B6.pub.gpg
 gpgcheck=1
 END
 yum install gbt
 ```
 
-On Ubuntu/Debian:
+On Ubuntu/Debian (packages hosted by [Packagecloud](https://packagecloud.io)):
 
 ```shell
-curl -L https://packagecloud.io/jtyr/gbt/gpgkey | apt-key add -
-echo 'deb https://packagecloud.io/jtyr/gbt/ubuntu/ xenial main' > /etc/apt/sources.list.d/gbt.list
+curl -L https://packagecloud.io/gbt/release/gpgkey | apt-key add -
+echo 'deb https://packagecloud.io/gbt/release/ubuntu/ xenial main' > /etc/apt/sources.list.d/gbt.list
 apt-get update
 apt-get install gbt
 ```
