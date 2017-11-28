@@ -1,3 +1,4 @@
+# Customize 'which' option for ZSH
 [ ${SHELL##*/} = 'zsh' ] && export GBT__WHICH_OPTS='-p'
 
 function gbt__err() {

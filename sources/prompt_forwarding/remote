@@ -1,4 +1,5 @@
 
+# List of OS names and their icons
 declare -A GBT__SYMBOLS
 GBT__SYMBOLS[amzn]='\001\e[38;5;208m\002'
 GBT__SYMBOLS[arch]='\001\e[38;5;25m\002'
@@ -23,6 +24,7 @@ GBT__SYMBOLS[sabayon]='\001\e[38;5;15m\002'
 GBT__SYMBOLS[slackware]='\001\e[38;5;15m\002'
 GBT__SYMBOLS[ubuntu]='\001\e[38;5;166m\002'
 
+# Customize 'which' option for ZSH
 [ ${SHELL##*/} = 'zsh' ] && export GBT__WHICH_OPTS='-p'
 
 function gbt__err() {
@@ -127,10 +129,17 @@ else
     export GBT__USER="\001\x1b[38;5;11m\002"
 fi
 
+# Customize OS icon
 export GBT__OS=${GBT__SYMBOLS[$(gbt__get_os)]}
 
+# Create executable that is used as shell in 'su'
 if [ ! -e "$GBT__CONF.bash" ]; then
     echo -e "#!/bin/bash\nbash --rcfile $GBT__CONF" > $GBT__CONF.bash
     chmod +x $GBT__CONF.bash
+fi
+
+# Load remote custom profile if it exists
+if [ -e ~/.gbt_profile ]; then
+    source ~/.gbt_profile
 fi
 
