@@ -12,7 +12,7 @@ iTerm). It has no other dependencies than Go and its standard libraries.
 
 [![Release](https://img.shields.io/github/release/jtyr/gbt.svg)](https://github.com/jtyr/gbt/releases)
 [![Build status](https://travis-ci.org/jtyr/gbt.svg?branch=master)](https://travis-ci.org/jtyr/gbt)
-[![Packagecloud](https://img.shields.io/badge/%E2%98%81-Packagecloud-707aed.svg)](https://packagecloud.io)
+[![Packagecloud](https://img.shields.io/badge/%E2%98%81-Packagecloud-707aed.svg)](https://packagecloud.io/gbt/release)
 
 
 Table of contents
@@ -49,7 +49,7 @@ On Arch Linux:
 yaourt -S gbt
 ```
 
-On CentOS/RHEL (packages hosted by [Packagecloud](https://packagecloud.io)):
+On CentOS/RHEL (packages hosted by [Packagecloud](https://packagecloud.io/gbt/release)):
 
 ```shell
 cat > /etc/yum.repos.d/gbt.repo <<END
@@ -62,7 +62,7 @@ END
 yum install gbt
 ```
 
-On Ubuntu/Debian (packages hosted by [Packagecloud](https://packagecloud.io)):
+On Ubuntu/Debian (packages hosted by [Packagecloud](https://packagecloud.io/gbt/release)):
 
 ```shell
 curl -L https://packagecloud.io/gbt/release/gpgkey | apt-key add -
