@@ -36,7 +36,7 @@ function gbt__get_os() {
 
     if [[ ! $(cat /proc/1/sched | head -n 1 | egrep '(init|systemd)') ]]; then
         ret='docker'
-    elif [ "$(uname -s)" = 'Linux' ]; then
+    elif [ "$(uname -s)" = 'Linux' ] && [ -e /etc/os-release ]; then
         source /etc/os-release
         ret="$ID"
     else
@@ -130,7 +130,7 @@ else
 fi
 
 # Customize OS icon
-export GBT__OS=${GBT__SYMBOLS[$(gbt__get_os)]}
+export GBT__OS=${GBT__SYMBOLS[$(gbt__get_os)]:=?}
 
 # Create executable that is used as shell in 'su'
 if [ ! -e "$GBT__CONF.bash" ]; then
