@@ -1345,17 +1345,43 @@ vagrant ssh --command "echo \"PS1='$(source ~/.gbt.theme; gbt)'\" > /tmp/.gbt; b
 ```
 
 
+### MySQL
+
+To get GBT-like prompt in MySQL, we can use the same approach like in the case of Bash:
+
+```shell
+mysql --prompt "$(source ~/.gbt_mysql.theme; gbt)"
+```
+
+where the `.gbt_mysql.theme` file looks like this:
+
+```shell
+export GBT_CARS="${GBT__THEME_MYSQL_CARS:=Hostname, Dir, Sign}"
+export GBT_CAR_HOSTNAME_USER_TEXT="\u"
+export GBT_CAR_HOSTNAME_HOST_TEXT="\h"
+export GBT_CAR_DIR_DIR_TEXT="\d"
+export GBT_CAR_SIGN_FORMAT=" {{ User }} "
+export GBT_CAR_SIGN_USER_TEXT=">"
+export GBT_SHELL="bash"
+```
+
+Unfortunately the Bash colors
+[don't work](https://bugs.mysql.com/bug.php?id=79755) in MySQL 5.6 and above.
+It works just fine in all MariaDB versions.
+
+
 ### Seamless implementation
 
 More complete and seamless implementation of the above, including the passing
-of the `PS1` string via `docker`, `ssh`, `su`, `sudo` and `vagrant` commands,
-is available as a part of this repo. You can start using it by doing the
-following:
+of the `PS1` string via `docker`, `mysql`, `ssh`, `su`, `sudo` and `vagrant`
+commands, is available as a part of this repo. You can start using it by doing
+the following:
 
 ```shell
 export GBT__HOME="/usr/share/gbt"
 source "$GBT__HOME/sources/prompt_forwarding/local"
 alias docker="gbt_docker"
+alias mysql="gbt_mysql"
 alias ssh="gbt_ssh"
 alias su="gbt_su"
 alias sudo="gbt_sudo"

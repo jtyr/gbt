@@ -1,0 +1,16 @@
+export GBT_CARS="${GBT__THEME_MYSQL_CARS:=Os, Time, Hostname, Dir, Sign}"
+
+export GBT_CAR_OS_SYMBOL_TEXT=''
+export GBT_CAR_OS_SYMBOL_FG='30'
+
+export GBT_CAR_TIME_FORMAT=' \R:\m:\s '
+
+export GBT_CAR_HOSTNAME_USER_TEXT='\u'
+export GBT_CAR_HOSTNAME_HOST_TEXT='\h'
+
+export GBT_CAR_DIR_DIR_TEXT='\d'
+
+export GBT_CAR_SIGN_FORMAT=' {{ User }} '
+export GBT_CAR_SIGN_USER_TEXT='>'
+
+export GBT_SHELL='bash'
