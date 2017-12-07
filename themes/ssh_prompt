@@ -8,7 +8,8 @@ export GBT_CAR_CUSTOM1_FG='default'
 export GBT_CAR_CUSTOM1_FORMAT=''
 
 # The following is to create the rest of the remote shell
-export GBT_CARS='Custom, Os, Time, Hostname, Dir, Sign'
+export GBT_CARS="${GBT__THEME_SSH_CARS:=Custom, Os, Time, Hostname, Dir, Sign}"
+
 
 export GBT_CAR_OS_SEP=''
 export GBT_CAR_OS_NAME='cloud'
