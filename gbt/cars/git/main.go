@@ -1,7 +1,6 @@
 package git
 
 import (
-    "fmt"
     "strings"
 
     "github.com/jtyr/gbt/gbt/core/car"
@@ -26,7 +25,7 @@ func getHead(display bool) string {
         return ""
     }
 
-    // Get branch name
+    // Remote branch name which the local branch is tracking
     rc, out, _ := utils.Run([]string{"git", "symbolic-ref", "HEAD"})
 
     if rc > 0 {
@@ -62,22 +61,16 @@ func compareRemote(display bool, ahead bool) bool {
 
     ret := false
 
-    // Get branch name
-    rc, branch, _ := utils.Run([]string{"git", "symbolic-ref", "HEAD"})
+    direction := "HEAD..@{upstream}"
 
-    if rc == 0 {
-        branch := strings.Replace(branch, "refs/heads/", "", 1)
-        direction := fmt.Sprintf("HEAD..origin/%s", branch)
+    if ahead {
+        direction = "@{upstream}..HEAD"
+    }
 
-        if ahead {
-            direction = fmt.Sprintf("origin/%s..HEAD", branch)
-        }
+    rc, out, _ := utils.Run([]string{"git", "rev-list", "--count", direction})
 
-        rc, out, _ := utils.Run([]string{"git", "rev-list", direction})
-
-        if rc == 0 && len(out) > 0 {
-            ret = true
-        }
+    if rc == 0 && out != "0" {
+        ret = true
     }
 
     return ret
