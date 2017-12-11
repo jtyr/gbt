@@ -38,6 +38,7 @@ for P in "${PLATFORMS[@]}"; do
             m4 -DVER="$VER" -DDATE="$(date '+%a, %d %b %Y %H:%M:%S %z')" debian/changelog.m4 > debian/changelog
             dpkg-buildpackage -tc -b -kCA67951CD2BBE8AAE4210B72FB90C91F64BED28C
         )
+        debsigs --sign=origin -k CA67951CD2BBE8AAE4210B72FB90C91F64BED28C "$TRAVIS_BUILD_DIR"/*.deb
         mv "$TRAVIS_BUILD_DIR"/*.deb $TMP
 
         # RPM

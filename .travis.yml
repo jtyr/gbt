@@ -10,7 +10,7 @@ matrix:
 
 before_install:
   - go get github.com/golang/lint/golint
-  - if [ -n "$TRAVIS_TAG" ]; then sudo apt-get install -y rpm build-essential fakeroot expect; fi
+  - if [ -n "$TRAVIS_TAG" ]; then sudo apt-get install -y rpm build-essential fakeroot expect debsigs; fi
   - if [ -n "$TRAVIS_TAG" ]; then openssl aes-256-cbc -K $encrypted_6b7e08428daf_key -iv $encrypted_6b7e08428daf_iv -in dist/gpg_key.priv.enc -out dist/gpg_key.priv -d; fi
 
 before_script:
