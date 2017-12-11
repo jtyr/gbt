@@ -1,30 +1,30 @@
 ### Status car demo
 false
 true
-export GBT_CAR_STATUS_FORMAT=" {{ Symbol }} {{ Code }} "
+export GBT_CAR_STATUS_FORMAT=' {{ Symbol }} {{ Code }} '
 nonexisting_command
 clear                                                                      
 ### Dir car demo
 cd /
 cd /usr/share/doc/sudo
-export GBT_CAR_DIR_DEPTH="3"
-export GBT_CAR_DIR_DEPTH="9999"
+export GBT_CAR_DIR_DEPTH='3'
+export GBT_CAR_DIR_DEPTH='9999'
 unset GBT_CAR_DIR_DEPTH
 cd ~
 clear                                                                      
 ### Time car demo
-export GBT_CARS="Status, Os, Time, Hostname, Dir, Sign"
-export GBT_CAR_TIME_TIME_FORMAT="03:04:05 PM"
-export GBT_CAR_TIME_BG="yellow"
-export GBT_CAR_TIME_DATE_FG="black"
+export GBT_CARS='Status, Os, Time, Hostname, Dir, Sign'
+export GBT_CAR_TIME_TIME_FORMAT='03:04:05 PM'
+export GBT_CAR_TIME_BG='yellow'
+export GBT_CAR_TIME_DATE_FG='black'
 unset GBT_CAR_TIME_DATE_FG
 unset GBT_CAR_TIME_BG
-export GBT_CAR_TIME_FORMAT=" {{ Time }} "
+export GBT_CAR_TIME_FORMAT=' {{ Time }} '
 unset GBT_CAR_TIME_FORMAT
 unset GBT_CARS
 clear                                                                      
 ### ExecTime car demo
-export GBT_CARS="Status, Os, ExecTime, Hostname, Dir, Sign"
+export GBT_CARS='Status, Os, ExecTime, Hostname, Dir, Sign'
 source /usr/share/gbt/sources/exec_time/zsh
 export GBT_CAR_EXECTIME_PRECISION=4
 ls -la /usr/share/gbt/
@@ -41,11 +41,11 @@ git clone test.git
 cd test
 touch .gitignore
 git add -A
-git commit -am "First commit"
+git commit -am 'First commit'
 git push
 touch README
 git add -A
-git commit -am "Adding README"
+git commit -am 'Adding README'
 git push
 git tag v1.0.0
 git checkout v1.0.0
@@ -53,14 +53,14 @@ git checkout HEAD~1
 cd ~
 clear                                                                      
 ### PyVirtEnv car demo
-export GBT_CARS="Status, Os, Hostname, Dir, PyVirtEnv, Sign"
-export VIRTUAL_ENV_DISABLE_PROMPT="1"
+export GBT_CARS='Status, Os, Hostname, Dir, PyVirtEnv, Sign'
+export VIRTUAL_ENV_DISABLE_PROMPT='1'
 source /tmp/test01/bin/activate
 deactivate
 unset GBT_CARS
 clear                                                                      
 ### Custom car demo
-export GBT_CARS="Status, Os, Custom, Hostname, Dir, Sign"
+export GBT_CARS='Status, Os, Custom, Hostname, Dir, Sign'
 export GBT_CAR_CUSTOM_TEXT_CMD="uptime | sed --e 's/.*load average: //' -e 's/,.*//'"
 unset GBT_CARS
 clear                                                                      

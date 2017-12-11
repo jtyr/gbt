@@ -98,7 +98,7 @@ In order to display all colors correctly, the terminal should use 256 color
 scheme:
 
 ```shell
-export TERM="xterm-256color"
+export TERM='xterm-256color'
 ```
 
 In order to display all characters of the prompt correctly, the shell should
@@ -118,27 +118,27 @@ true
 cd /
 cd /usr/share/doc/sudo
 # Display only last 3 elements of the path
-export GBT_CAR_DIR_DEPTH="3"
+export GBT_CAR_DIR_DEPTH='3'
 # Display full path
-export GBT_CAR_DIR_DEPTH="9999"
+export GBT_CAR_DIR_DEPTH='9999'
 # Show only last element of the path
 unset GBT_CAR_DIR_DEPTH
 cd ~
 ### Test Time car
 # Add the Time car into the train
-export GBT_CARS="Status, Os, Time, Hostname, Dir, Sign"
+export GBT_CARS='Status, Os, Time, Hostname, Dir, Sign'
 # Set 12h format
-export GBT_CAR_TIME_TIME_FORMAT="03:04:05 PM"
+export GBT_CAR_TIME_TIME_FORMAT='03:04:05 PM'
 # Change background color of the all car
-export GBT_CAR_TIME_BG="yellow"
+export GBT_CAR_TIME_BG='yellow'
 # Change color of Date part
-export GBT_CAR_TIME_DATE_FG="black"
+export GBT_CAR_TIME_DATE_FG='black'
 # Reset the color of the Date part
 unset GBT_CAR_TIME_DATE_FG
 # Reset the background color of all Time car
 unset GBT_CAR_TIME_BG
 # Remove the Date part from the car
-export GBT_CAR_TIME_FORMAT=" {{ Time }} "
+export GBT_CAR_TIME_FORMAT=' {{ Time }} '
 # Reset the format of the car
 unset GBT_CAR_TIME_FORMAT
 # Reset the original train
@@ -189,9 +189,9 @@ Examples:
 
 ```shell
 # Set the background color of the `Dir` car to red
-export GBT_CAR_DIR_BG="red"
+export GBT_CAR_DIR_BG='red'
 # Set the foreground color of the `Dir` car to white
-export GBT_CAR_DIR_FG="white"
+export GBT_CAR_DIR_FG='white'
 ```
 
 #### Color number
@@ -206,9 +206,9 @@ Examples:
 
 ```shell
 # Set the background color of the `Dir` car to red
-export GBT_CAR_DIR_BG="1"
+export GBT_CAR_DIR_BG='1'
 # Set the foreground color of the `Dir` car to white
-export GBT_CAR_DIR_FG="15"
+export GBT_CAR_DIR_FG='15'
 ```
 
 #### RGB number
@@ -219,9 +219,9 @@ Examples:
 
 ```shell
 # Set the background color of the `Dir` car to red
-export GBT_CAR_DIR_BG="170;0;0"
+export GBT_CAR_DIR_BG='170;0;0'
 # Set the foreground color of the `Dir` car to white
-export GBT_CAR_DIR_FG="255;255;255"
+export GBT_CAR_DIR_FG='255;255;255'
 ```
 
 
@@ -249,13 +249,13 @@ Formatting is done via `_FM` variables. The possible values are:
 
   ```shell
   # Set the directory name to be bold
-  export GBT_CAR_DIR_FM="bold"
+  export GBT_CAR_DIR_FM='bold'
   ```
 
 
 ### Train variables
 
-- `GBT_CARS="Status, Os, Hostname, Dir, Git, Sign"`
+- `GBT_CARS='Status, Os, Hostname, Dir, Git, Sign'`
 
   List of cars used in the train.
 
@@ -264,30 +264,30 @@ Formatting is done via `_FM` variables. The possible values are:
   the `Os` and `Hostname` car, the variable should look like this:
 
   ```shell
-  export GBT_CARS="Status, Os, Time, Hostname, Dir, Git, Sign"
+  export GBT_CARS='Status, Os, Time, Hostname, Dir, Git, Sign'
   ```
 
-- `GBT_RCARS="Time"`
+- `GBT_RCARS='Time'`
 
   The same like `GBT_CARS` but for the right hand side prompt.
 
   ```shell
   # Add the Custom car into the right hand site car to have the separator visible
-  export GBT_RCARS="Custom, Time"
+  export GBT_RCARS='Custom, Time'
   # Make the Custom car to be invisible (zero length text)
-  export GBT_CAR_CUSTOM_BG="default"
-  export GBT_CAR_CUSTOM_FORMAT=""
+  export GBT_CAR_CUSTOM_BG='default'
+  export GBT_CAR_CUSTOM_FORMAT=''
   # Show only time
-  export GBT_CAR_TIME_FORMAT=" {{ Time }} "
+  export GBT_CAR_TIME_FORMAT=' {{ Time }} '
   # Set the right hand side prompt (ZSH only)
   export RPROMPT='$(gbt -right)'
   ```
 
-- `GBT_SEPARATOR=""`
+- `GBT_SEPARATOR=''`
 
   Character used to separate cars in the train.
 
-- `GBT_RSEPARATOR=""`
+- `GBT_RSEPARATOR=''`
 
   The same like `GBT_SEPARATOR` but for the right hand side prompt.
 
@@ -306,19 +306,19 @@ Formatting is done via `_FM` variables. The possible values are:
   Formatting inherited by the top formatting variable of every car. That allows
   to set the formatting of all cars via single variable.
 
-- `GBT_BEGINNING_BG="default"`
+- `GBT_BEGINNING_BG='default'`
 
   Background color of the text shown at the beginning of the train.
 
-- `GBT_BEGINNING_FG="default"`
+- `GBT_BEGINNING_FG='default'`
 
   Foreground color of the text shown at the beginning of the train.
 
-- `GBT_BEGINNING_FM="none"`
+- `GBT_BEGINNING_FM='none'`
 
   Formatting of the text shown at the beginning of the train.
 
-- `GBT_BEGINNING_TEXT=""`
+- `GBT_BEGINNING_TEXT=''`
 
   Text shown at the beginning of the train.
 
@@ -330,11 +330,11 @@ Formatting is done via `_FM` variables. The possible values are:
   in Bash:
 
   ```shell
-  export GBT_SHELL="bash"
+  export GBT_SHELL='bash'
   bash
   ```
 
-- `GBT_DEBUG="0"`
+- `GBT_DEBUG='0'`
 
   Shows more verbose output if some of the car modules cannot be imported.
 
@@ -346,19 +346,19 @@ Formatting is done via `_FM` variables. The possible values are:
 The main purpose of this car is to provide the possibility to create car with
 custom text.
 
-- `GBT_CAR_CUSTOM_BG="yellow"`
+- `GBT_CAR_CUSTOM_BG='yellow'`
 
   Background color of the car.
 
-- `GBT_CAR_CUSTOM_FG="default"`
+- `GBT_CAR_CUSTOM_FG='default'`
 
   Foreground color of the car.
 
-- `GBT_CAR_CUSTOM_FM="none"`
+- `GBT_CAR_CUSTOM_FM='none'`
 
   Formatting of the car.
 
-- `GBT_CAR_CUSTOM_FORMAT=" {{ Text }} "`
+- `GBT_CAR_CUSTOM_FORMAT=' {{ Text }} '`
 
   Format of the car.
 
@@ -374,7 +374,7 @@ custom text.
 
   Formatting of the `{{ Text }}` element.
 
-- `GBT_CAR_CUSTOM_TEXT_TEXT="?"`
+- `GBT_CAR_CUSTOM_TEXT_TEXT='?'`
 
   Text content of the `{{ Text }}` element.
 
@@ -389,7 +389,7 @@ custom text.
   export GBT_CAR_CUSTOM_CMD="uptime | sed --e 's/.*load average: //' -e 's/,.*//'"
   ```
 
-- `GBT_CAR_CUSTOM_DISPLAY="1"`
+- `GBT_CAR_CUSTOM_DISPLAY='1'`
 
   Whether to display this car if it's in the list of cars (`GBT_CARS`).
 
@@ -406,7 +406,7 @@ custom text.
   export GBT_CAR_CUSTOM_DISPLAY_CMD="[[ $(df -h --output=pcent / | tail -n1 | sed -re 's/\s//g' -e 's/%//') -gt 70 ]] && echo YES"
   ```
 
-- `GBT_CAR_CUSTOM_WRAP="0"`
+- `GBT_CAR_CUSTOM_WRAP='0'`
 
   Whether to wrap the prompt line in front of this car.
 
@@ -420,13 +420,13 @@ same identifier into the environment variable:
 
 ```shell
 # Adding Custom and Custo1 car
-export GBT_CARS="Status, Os, Custom, Custom1, Hostname, Dir, Git, Sign"
+export GBT_CARS='Status, Os, Custom, Custom1, Hostname, Dir, Git, Sign'
 # The text of the default Custom car
-export GBT_CAR_CUSTOM_TEXT_TEXT="default"
+export GBT_CAR_CUSTOM_TEXT_TEXT='default'
 # The text of the Custom1 car
-export GBT_CAR_CUSTOM1_TEXT_TEXT="1"
+export GBT_CAR_CUSTOM1_TEXT_TEXT='1'
 # Set different background color for the Custom1 car
-export GBT_CAR_CUSTOM1_BG="magenta"
+export GBT_CAR_CUSTOM1_BG='magenta'
 ```
 
 
@@ -434,19 +434,19 @@ export GBT_CAR_CUSTOM1_BG="magenta"
 
 Car that displays current directory name.
 
-- `GBT_CAR_DIR_BG="blue"`
+- `GBT_CAR_DIR_BG='blue'`
 
   Background color of the car.
 
-- `GBT_CAR_DIR_FG="light_gray"`
+- `GBT_CAR_DIR_FG='light_gray'`
 
   Foreground color of the car.
 
-- `GBT_CAR_DIR_FM="none"`
+- `GBT_CAR_DIR_FM='none'`
 
   Formatting of the car.
 
-- `GBT_CAR_DIR_FORMAT=" {{ Dir }} "`
+- `GBT_CAR_DIR_FORMAT=' {{ Dir }} '`
 
   Format of the car.
 
@@ -470,20 +470,20 @@ Car that displays current directory name.
 
   OS-default character used to separate directories.
 
-- `GBT_CAR_DIR_HOMESIGN="~"`
+- `GBT_CAR_DIR_HOMESIGN='~'`
 
   Character which represents the user's home directory. If set to empty
   string, full home directory path is used instead.
 
-- `GBT_CAR_DIR_DEPTH="1"`
+- `GBT_CAR_DIR_DEPTH='1'`
 
   Number of directories to show.
 
-- `GBT_CAR_DIR_DISPLAY="1"`
+- `GBT_CAR_DIR_DISPLAY='1'`
 
   Whether to display this car if it's in the list of cars (`GBT_CARS`).
 
-- `GBT_CAR_DIR_WRAP="0"`
+- `GBT_CAR_DIR_WRAP='0'`
 
   Whether to wrap the prompt line in front of this car.
 
@@ -496,19 +496,19 @@ Car that displays current directory name.
 
 Car that displays how long each shell command run.
 
-- `GBT_CAR_EXECTIME_BG="light_gray"`
+- `GBT_CAR_EXECTIME_BG='light_gray'`
 
   Background color of the car.
 
-- `GBT_CAR_EXECTIME_FG="black"`
+- `GBT_CAR_EXECTIME_FG='black'`
 
   Foreground color of the car.
 
-- `GBT_CAR_EXECTIME_FM="none"`
+- `GBT_CAR_EXECTIME_FM='none'`
 
   Formatting of the car.
 
-- `GBT_CAR_EXECTIME_FORMAT=" {{ Time }} "`
+- `GBT_CAR_EXECTIME_FORMAT=' {{ Time }} '`
 
   Format of the car.
 
@@ -532,7 +532,7 @@ Car that displays how long each shell command run.
 
   OS-default character used to separate directories.
 
-- `GBT_CAR_EXECTIME_PRECISION="0"`
+- `GBT_CAR_EXECTIME_PRECISION='0'`
 
   Sub-second precision to show.
 
@@ -541,16 +541,16 @@ Car that displays how long each shell command run.
   The number of seconds the command run in shell. This variable is defined in
   the source file as shown bellow.
 
-- `GBT_CAR_EXECTIME_BELL="0"`
+- `GBT_CAR_EXECTIME_BELL='0'`
 
   Sound console bell if the executed command exceeds specified number of
   seconds. Value set to `0` disables the bell (default).
 
-- `GBT_CAR_EXECTIME_DISPLAY="1"`
+- `GBT_CAR_EXECTIME_DISPLAY='1'`
 
   Whether to display this car if it's in the list of cars (`GBT_CARS`).
 
-- `GBT_CAR_EXECTIME_WRAP="0"`
+- `GBT_CAR_EXECTIME_WRAP='0'`
 
   Whether to wrap the prompt line in front of this car.
 
@@ -574,19 +574,19 @@ source /usr/share/gbt/sources/exec_time/zsh
 Car that displays information about a local Git repository. This car is
 displayed only if the current directory is a Git repository.
 
-- `GBT_CAR_GIT_BG="light_gray"`
+- `GBT_CAR_GIT_BG='light_gray'`
 
   Background color of the car.
 
-- `GBT_CAR_GIT_FG="black"`
+- `GBT_CAR_GIT_FG='black'`
 
   Foreground color of the car.
 
-- `GBT_CAR_GIT_FM="none"`
+- `GBT_CAR_GIT_FM='none'`
 
   Formatting of the car.
 
-- `GBT_CAR_GIT_FORMAT=" {{ Icon }} {{ Head }} {{ Status }}{{ Ahead }}{{ Behind }} "`
+- `GBT_CAR_GIT_FORMAT=' {{ Icon }} {{ Head }} {{ Status }}{{ Ahead }}{{ Behind }} '`
 
   Format of the car.
 
@@ -602,7 +602,7 @@ displayed only if the current directory is a Git repository.
 
   Formatting of the `{{ Icon }}` element.
 
-- `GBT_CAR_GIT_ICON_TEXT=""`
+- `GBT_CAR_GIT_ICON_TEXT=''`
 
   Text content of the `{{ Icon }}` element.
 
@@ -644,7 +644,7 @@ displayed only if the current directory is a Git repository.
 
   Background color of the `{{ Dirty }}` element.
 
-- `GBT_CAR_GIT_DIRTY_FG="red"`
+- `GBT_CAR_GIT_DIRTY_FG='red'`
 
   Foreground color of the `{{ Dirty }}` element.
 
@@ -652,7 +652,7 @@ displayed only if the current directory is a Git repository.
 
   Formatting of the `{{ Dirty }}` element.
 
-- `GBT_CAR_GIT_DIRTY_TEXT="✘"`
+- `GBT_CAR_GIT_DIRTY_TEXT='✘'`
 
   Text content of the `{{ Dirty }}` element.
 
@@ -660,7 +660,7 @@ displayed only if the current directory is a Git repository.
 
   Background color of the `{{ Clean }}` element.
 
-- `GBT_CAR_GIT_CLEAN_FG="green"`
+- `GBT_CAR_GIT_CLEAN_FG='green'`
 
   Foreground color of the `{{ Clean }}` element.
 
@@ -668,7 +668,7 @@ displayed only if the current directory is a Git repository.
 
   Formatting of the `{{ Clean }}` element.
 
-- `GBT_CAR_GIT_CLEAN_TEXT="✔"`
+- `GBT_CAR_GIT_CLEAN_TEXT='✔'`
 
   Text content of the `{{ Clean }}` element.
 
@@ -684,7 +684,7 @@ displayed only if the current directory is a Git repository.
 
   Formatting of the `{{ Ahead }}` element.
 
-- `GBT_CAR_GIT_AHEAD_TEXT=" ⬆"`
+- `GBT_CAR_GIT_AHEAD_TEXT=' ⬆'`
 
   Text content of the `{{ Ahead }}` element.
 
@@ -700,7 +700,7 @@ displayed only if the current directory is a Git repository.
 
   Formatting of the `{{ Behind }}` element.
 
-- `GBT_CAR_GIT_BEHIND_TEXT=" ⬇"`
+- `GBT_CAR_GIT_BEHIND_TEXT=' ⬇'`
 
   Text content of the `{{ Behind }}` element.
 
@@ -708,7 +708,7 @@ displayed only if the current directory is a Git repository.
 
   Whether to display this car if it's in the list of cars (`GBT_CARS`).
 
-- `GBT_CAR_GIT_WRAP="0"`
+- `GBT_CAR_GIT_WRAP='0'`
 
   Whether to wrap the prompt line in front of this car.
 
@@ -722,19 +722,19 @@ displayed only if the current directory is a Git repository.
 Car that displays username of the currently logged user and the hostname of the
 local machine.
 
-- `GBT_CAR_HOSTNAME_BG="dark_gray"`
+- `GBT_CAR_HOSTNAME_BG='dark_gray'`
 
   Background color of the car.
 
-- `GBT_CAR_HOSTNAME_FG="252"`
+- `GBT_CAR_HOSTNAME_FG='252'`
 
   Foreground color of the car.
 
-- `GBT_CAR_HOSTNAME_FM="none"`
+- `GBT_CAR_HOSTNAME_FM='none'`
 
   Formatting of the car.
 
-- `GBT_CAR_HOSTNAME_FORMAT=" {{ UserHost }} "`
+- `GBT_CAR_HOSTNAME_FORMAT=' {{ UserHost }} '`
 
   Format of the car.
 
@@ -804,11 +804,11 @@ local machine.
 
   Text content of the `{{ Host }}` element. The host name.
 
-- `GBT_CAR_HOSTNAME_DISPLAY="1"`
+- `GBT_CAR_HOSTNAME_DISPLAY='1'`
 
   Whether to display this car if it's in the list of cars (`GBT_CARS`).
 
-- `GBT_CAR_HOSTNAME_WRAP="0"`
+- `GBT_CAR_HOSTNAME_WRAP='0'`
 
   Whether to wrap the prompt line in front of this car.
 
@@ -821,19 +821,19 @@ local machine.
 
 Car that displays icon of the operating system.
 
-- `GBT_CAR_OS_BG="235"`
+- `GBT_CAR_OS_BG='235'`
 
   Background color of the car.
 
-- `GBT_CAR_OS_FG="white"`
+- `GBT_CAR_OS_FG='white'`
 
   Foreground color of the car.
 
-- `GBT_CAR_OS_FM="none"`
+- `GBT_CAR_OS_FM='none'`
 
   Formatting of the car.
 
-- `GBT_CAR_OS_FORMAT=" {{ Symbol }} "`
+- `GBT_CAR_OS_FORMAT=' {{ Symbol }} '`
 
   Format of the car.
 
@@ -887,14 +887,14 @@ Car that displays icon of the operating system.
   Example:
 
   ```shell
-  export GBT_CAR_OS_NAME="arch"
+  export GBT_CAR_OS_NAME='arch'
   ```
 
-- `GBT_CAR_OS_DISPLAY="1"`
+- `GBT_CAR_OS_DISPLAY='1'`
 
   Whether to display this car if it's in the list of cars (`GBT_CARS`).
 
-- `GBT_CAR_OS_WRAP="0"`
+- `GBT_CAR_OS_WRAP='0'`
 
   Whether to wrap the prompt line in front of this car.
 
@@ -911,24 +911,24 @@ prepends the shell prompt by the Virtual Environment name by default. In order
 to disable it, the following environment variable must be set:
 
 ```shell
-export VIRTUAL_ENV_DISABLE_PROMPT="1"
+export VIRTUAL_ENV_DISABLE_PROMPT='1'
 ```
 
 Variables used by the car:
 
-- `GBT_CAR_PYVIRTENV_BG="222"`
+- `GBT_CAR_PYVIRTENV_BG='222'`
 
   Background color of the car.
 
-- `GBT_CAR_PYVIRTENV_FG="black"`
+- `GBT_CAR_PYVIRTENV_FG='black'`
 
   Foreground color of the car.
 
-- `GBT_CAR_PYVIRTENV_FM="none"`
+- `GBT_CAR_PYVIRTENV_FM='none'`
 
   Formatting of the car.
 
-- `GBT_CAR_PYVIRTENV_FORMAT=" {{ Icon }} {{ Name }} "`
+- `GBT_CAR_PYVIRTENV_FORMAT=' {{ Icon }} {{ Name }} '`
 
   Format of the car.
 
@@ -952,7 +952,7 @@ Variables used by the car:
 
   Background color of the `{{ Name }}` element.
 
-- `GBT_CAR_PYVIRTENV_NAME_FG="33"`
+- `GBT_CAR_PYVIRTENV_NAME_FG='33'`
 
   Foreground color of the `{{ NAME }}` element.
 
@@ -969,7 +969,7 @@ Variables used by the car:
 
   Whether to display this car if it's in the list of cars (`GBT_CARS`).
 
-- `GBT_CAR_PYVIRTENV_WRAP="0"`
+- `GBT_CAR_PYVIRTENV_WRAP='0'`
 
   Whether to wrap the prompt line in front of this car.
 
@@ -983,19 +983,19 @@ Variables used by the car:
 Car that displays prompt character for the admin and user at the end of the
 train.
 
-- `GBT_CAR_SIGN_BG="default"`
+- `GBT_CAR_SIGN_BG='default'`
 
   Background color of the car.
 
-- `GBT_CAR_SIGN_FG="default"`
+- `GBT_CAR_SIGN_FG='default'`
 
   Foreground color of the car.
 
-- `GBT_CAR_SIGN_FM="none"`
+- `GBT_CAR_SIGN_FM='none'`
 
   Formatting of the car.
 
-- `GBT_CAR_SIGN_FORMAT=" {{ Symbol }} "`
+- `GBT_CAR_SIGN_FORMAT=' {{ Symbol }} '`
 
   Format of the car.
 
@@ -1007,7 +1007,7 @@ train.
 
   Foreground color of the `{{ Symbol }}` element.
 
-- `GBT_CAR_SIGN_SYMBOL_FM="bold"`
+- `GBT_CAR_SIGN_SYMBOL_FM='bold'`
 
   Formatting of the `{{ Symbol }}` element.
 
@@ -1020,7 +1020,7 @@ train.
 
   Background color of the `{{ Admin }}` element.
 
-- `GBT_CAR_SIGN_ADMIN_FG="red"`
+- `GBT_CAR_SIGN_ADMIN_FG='red'`
 
   Foreground color of the `{{ Admin }}` element.
 
@@ -1028,7 +1028,7 @@ train.
 
   Formatting of the `{{ Admin }}` element.
 
-- `GBT_CAR_SIGN_ADMIN_TEXT="#"`
+- `GBT_CAR_SIGN_ADMIN_TEXT='#'`
 
   Text content of the `{{ Admin }}` element.
 
@@ -1036,7 +1036,7 @@ train.
 
   Background color of the `{{ User }}` element.
 
-- `GBT_CAR_SIGN_USER_FG="light_green"`
+- `GBT_CAR_SIGN_USER_FG='light_green'`
 
   Foreground color of the `{{ User }}` element.
 
@@ -1044,15 +1044,15 @@ train.
 
   Formatting of the `{{ User }}` element.
 
-- `GBT_CAR_SIGN_USER_TEXT="$"`
+- `GBT_CAR_SIGN_USER_TEXT='$'`
 
   Text content of the `{{ User }}` element. The user name.
 
-- `GBT_CAR_SIGN_DISPLAY="1"`
+- `GBT_CAR_SIGN_DISPLAY='1'`
 
   Whether to display this car if it's in the list of cars (`GBT_CARS`).
 
-- `GBT_CAR_SIGN_WRAP="0"`
+- `GBT_CAR_SIGN_WRAP='0'`
 
   Whether to wrap the prompt line in front of this car.
 
@@ -1068,7 +1068,7 @@ displayed only when the return code is non-zero. If you want to display it even
 if the return code is zero, set the following variable:
 
 ```shell
-export GBT_CAR_STATUS_DISPLAY="1"
+export GBT_CAR_STATUS_DISPLAY='1'
 ```
 
 Variables used by the car:
@@ -1079,24 +1079,24 @@ Variables used by the car:
   command returned `0` return code otherwise the `GBT_CAR_STATUS_ERROR_BG` is
   used.
 
-- `GBT_CAR_STATUS_FG="default"`
+- `GBT_CAR_STATUS_FG='default'`
 
   Foreground color of the car. It's either `GBT_CAR_STATUS_OK_FG` if the last
   command returned `0` return code otherwise the `GBT_CAR_STATUS_ERROR_FG` is
   used.
 
-- `GBT_CAR_STATUS_FM="none"`
+- `GBT_CAR_STATUS_FM='none'`
 
   Formatting of the car. It's either `GBT_CAR_STATUS_OK_FM` if the last command
   returned `0` return code otherwise the `GBT_CAR_STATUS_ERROR_FM` is used.
 
-- `GBT_CAR_STATUS_FORMAT=" {{ Symbol }} "`
+- `GBT_CAR_STATUS_FORMAT=' {{ Symbol }} '`
 
   Format of the car. This can be changed to contain also the value of the
   return code:
 
   ```shell
-  export GBT_CAR_STATUS_FORMAT=" {{ Symbol }} {{ Code }} "
+  export GBT_CAR_STATUS_FORMAT=' {{ Symbol }} {{ Code }} '
   ```
 
 - `GBT_CAR_STATUS_SYMBOL_BG`
@@ -1107,7 +1107,7 @@ Variables used by the car:
 
   Foreground color of the `{{ Symbol }}` element.
 
-- `GBT_CAR_STATUS_SYMBOL_FM="bold"`
+- `GBT_CAR_STATUS_SYMBOL_FM='bold'`
 
   Formatting of the `{{ Symbol }}` element.
 
@@ -1117,15 +1117,15 @@ Variables used by the car:
   the last command returned non zero return code otherwise `{{ User }}` is
   used.
 
-- `GBT_CAR_STATUS_CODE_BG="red"`
+- `GBT_CAR_STATUS_CODE_BG='red'`
 
   Background color of the `{{ Code }}` element.
 
-- `GBT_CAR_STATUS_CODE_FG="light_gray"`
+- `GBT_CAR_STATUS_CODE_FG='light_gray'`
 
   Foreground color of the `{{ Code }}` element.
 
-- `GBT_CAR_STATUS_CODE_FM="none"`
+- `GBT_CAR_STATUS_CODE_FM='none'`
 
   Formatting of the `{{ Code }}` element.
 
@@ -1133,35 +1133,35 @@ Variables used by the car:
 
   Text content of the `{{ Code }}` element. The return code.
 
-- `GBT_CAR_STATUS_ERROR_BG="red"`
+- `GBT_CAR_STATUS_ERROR_BG='red'`
 
   Background color of the `{{ Error }}` element.
 
-- `GBT_CAR_STATUS_ERROR_FG="light_gray"`
+- `GBT_CAR_STATUS_ERROR_FG='light_gray'`
 
   Foreground color of the `{{ Error }}` element.
 
-- `GBT_CAR_STATUS_ERROR_FM="none"`
+- `GBT_CAR_STATUS_ERROR_FM='none'`
 
   Formatting of the `{{ Error }}` element.
 
-- `GBT_CAR_STATUS_ERROR_TEXT="✘"`
+- `GBT_CAR_STATUS_ERROR_TEXT='✘'`
 
   Text content of the `{{ Error }}` element.
 
-- `GBT_CAR_STATUS_OK_BG="green"`
+- `GBT_CAR_STATUS_OK_BG='green'`
 
   Background color of the `{{ Ok }}` element.
 
-- `GBT_CAR_STATUS_OK_FG="light_gray"`
+- `GBT_CAR_STATUS_OK_FG='light_gray'`
 
   Foreground color of the `{{ Ok }}` element.
 
-- `GBT_CAR_STATUS_OK_FM="none"`
+- `GBT_CAR_STATUS_OK_FM='none'`
 
   Formatting of the `{{ Ok }}` element.
 
-- `GBT_CAR_STATUS_OK_TEXT="✔"`
+- `GBT_CAR_STATUS_OK_TEXT='✔'`
 
   Text content of the `{{ Ok }}` element.
 
@@ -1169,7 +1169,7 @@ Variables used by the car:
 
   Whether to display this car if it's in the list of cars (`GBT_CARS`).
 
-- `GBT_CAR_STATUS_WRAP="0"`
+- `GBT_CAR_STATUS_WRAP='0'`
 
   Whether to wrap the prompt line in front of this car.
 
@@ -1182,19 +1182,19 @@ Variables used by the car:
 
 Car that displays current date and time.
 
-- `GBT_CAR_TIME_BG="light_blue"`
+- `GBT_CAR_TIME_BG='light_blue'`
 
   Background color of the car.
 
-- `GBT_CAR_TIME_FG="light_gray"`
+- `GBT_CAR_TIME_FG='light_gray'`
 
   Foreground color of the car.
 
-- `GBT_CAR_TIME_FM="none"`
+- `GBT_CAR_TIME_FM='none'`
 
   Formatting of the car.
 
-- `GBT_CAR_TIME_FORMAT=" {{ DateTime }} "`
+- `GBT_CAR_TIME_FORMAT=' {{ DateTime }} '`
 
   Format of the car.
 
@@ -1210,7 +1210,7 @@ Car that displays current date and time.
 
   Formatting of the `{{ DateTime }}` element.
 
-- `GBT_CAR_TIME_DATETIME_FORMAT="{{ Date }} {{ Time }}"`
+- `GBT_CAR_TIME_DATETIME_FORMAT='{{ Date }} {{ Time }}'`
 
   Format of the `{{ DateTime }}` element.
 
@@ -1226,7 +1226,7 @@ Car that displays current date and time.
 
   Formatting of the `{{ Date }}` element.
 
-- `GBT_CAR_TIME_DATE_FORMAT="Mon 02 Jan"`
+- `GBT_CAR_TIME_DATE_FORMAT='Mon 02 Jan'`
 
   Format of the `{{ Date }}` element. The format is using placeholders as
   described in the [`time.Format()`](https://golang.org/src/time/format.go#L87)
@@ -1239,7 +1239,7 @@ Car that displays current date and time.
 
   Background color of the `{{ Host }}` element.
 
-- `GBT_CAR_TIME_TIME_FG="light_yellow"`
+- `GBT_CAR_TIME_TIME_FG='light_yellow'`
 
   Foreground color of the `{{ Host }}` element.
 
@@ -1247,18 +1247,18 @@ Car that displays current date and time.
 
   Formatting of the `{{ Host }}` element.
 
-- `GBT_CAR_TIME_TIME_FORMAT="15:04:05"`
+- `GBT_CAR_TIME_TIME_FORMAT='15:04:05'`
 
   Text content of the `{{ Host }}` element. The format principles are the same
   like in the case of the `GBT_CAR_TIME_DATE_FORMAT` variable above. So in
   order to display time in the 12h format, the value of this variable should be
   `03:04:05 PM`.
 
-- `GBT_CAR_TIME_DISPLAY="1"`
+- `GBT_CAR_TIME_DISPLAY='1'`
 
   Whether to display this car if it's in the list of cars (`GBT_CARS`).
 
-- `GBT_CAR_TIME_WRAP="0"`
+- `GBT_CAR_TIME_WRAP='0'`
 
   Whether to wrap the prompt line in front of this car.
 
@@ -1356,13 +1356,13 @@ mysql --prompt "$(source ~/.gbt_mysql.theme; gbt)"
 where the `.gbt_mysql.theme` file looks like this:
 
 ```shell
-export GBT_CARS="${GBT__THEME_MYSQL_CARS:=Hostname, Dir, Sign}"
-export GBT_CAR_HOSTNAME_USER_TEXT="\u"
-export GBT_CAR_HOSTNAME_HOST_TEXT="\h"
-export GBT_CAR_DIR_DIR_TEXT="\d"
-export GBT_CAR_SIGN_FORMAT=" {{ User }} "
-export GBT_CAR_SIGN_USER_TEXT=">"
-export GBT_SHELL="bash"
+export GBT_CARS='${GBT__THEME_MYSQL_CARS:=Hostname, Dir, Sign}'
+export GBT_CAR_HOSTNAME_USER_TEXT='\u'
+export GBT_CAR_HOSTNAME_HOST_TEXT='\h'
+export GBT_CAR_DIR_DIR_TEXT='\d'
+export GBT_CAR_SIGN_FORMAT=' {{ User }} '
+export GBT_CAR_SIGN_USER_TEXT='>'
+export GBT_SHELL='bash'
 ```
 
 Unfortunately the Bash colors
@@ -1378,14 +1378,14 @@ commands, is available as a part of this repo. You can start using it by doing
 the following:
 
 ```shell
-export GBT__HOME="/usr/share/gbt"
+export GBT__HOME='/usr/share/gbt'
 source "$GBT__HOME/sources/prompt_forwarding/local"
-alias docker="gbt_docker"
-alias mysql="gbt_mysql"
-alias ssh="gbt_ssh"
-alias su="gbt_su"
-alias sudo="gbt_sudo"
-alias vagrant="gbt_vagrant"
+alias docker='gbt_docker'
+alias mysql='gbt_mysql'
+alias ssh='gbt_ssh'
+alias su='gbt_su'
+alias sudo='gbt_sudo'
+alias vagrant='gbt_vagrant'
 ```
 
 If you want to have the alias available only on the remote machine, prepend the
@@ -1393,7 +1393,7 @@ alias by `gbt___`. For example to have the `sudo` alias, using the `gbt_sudo`
 function, available only on the remote machine, define the alias like this:
 
 ```shell
-alias gbt__sudo="gbt_sudo"
+alias gbt__sudo='gbt_sudo'
 ```
 
 Then just SSH to some remote server or enter some Docker container or Vagrant
