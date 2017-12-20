@@ -223,7 +223,10 @@ func decorateShell(seq string) (ret string) {
         ret = fmt.Sprintf("%%{%s%%}", seq)
     } else if Shell == "_bash" {
         ret = fmt.Sprintf("\\[%s\\]", seq)
+    } else if Shell == "plain" {
+        ret = fmt.Sprintf("%s", seq)
     } else {
+        // bash
         ret = fmt.Sprintf("\001%s\002", seq)
     }
 
