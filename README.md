@@ -102,9 +102,9 @@ export TERM='xterm-256color'
 ```
 
 In order to display all characters of the prompt correctly, the shell should
-support UTF-8 and [Nerd](https://github.com/ryanoasis/nerd-fonts) (or at least
-[Powerline](https://github.com/ryanoasis/powerline-extra-symbols)) fonts should
-be installed and set in the terminal application.
+support UTF-8 and [Nerd](https://github.com/ryanoasis/nerd-fonts) fonts (or at
+least the [Nerd BitstreamVeraSansMono](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/BitstreamVeraSansMono)
+font) should be installed and set in the terminal application.
 
 
 Usage
