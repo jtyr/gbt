@@ -47,7 +47,7 @@ func printCars(cars []Cars, right bool) {
     }
 
     if ! right && utils.GetEnv("GBT_BEGINNING_TEXT", "") != "" {
-        fmt.Print(
+        myPrint(
             fakeCar.DecorateElement(
                 "",
                 fakeCar.GetColor(utils.GetEnv("GBT_BEGINNING_BG", "default"), false),
@@ -71,7 +71,7 @@ func printCars(cars []Cars, right bool) {
         }
 
         if cDisplay {
-            fmt.Print(fakeCar.GetColor("RESETALL", false))
+            myPrint(fakeCar.GetColor("RESETALL", false))
 
             if prevBg != "\000" && prevDisplay {
                 bg := c.GetColor(cModel["root"].Bg, false)
@@ -83,7 +83,7 @@ func printCars(cars []Cars, right bool) {
                 }
 
                 if right {
-                    fmt.Print(
+                    myPrint(
                         c.DecorateElement(
                             "",
                             c.GetColor(prevBg, false),
@@ -91,7 +91,7 @@ func printCars(cars []Cars, right bool) {
                             "",
                             separator))
                 } else {
-                    fmt.Print(
+                    myPrint(
                         c.DecorateElement(
                             "",
                             bg,
@@ -101,22 +101,24 @@ func printCars(cars []Cars, right bool) {
                 }
 
                 if cWrap {
-                    fmt.Print("\n")
+                    myPrint("\n")
                 }
             }
 
             prevBg = cModel["root"].Bg
             prevDisplay = cDisplay
 
-            fmt.Print(c.Format())
+            myPrint(c.Format())
         }
     }
 
-    fmt.Print(fakeCar.GetColor("RESETALL", false))
+    myPrint(fakeCar.GetColor("RESETALL", false))
 }
 
 // For the test
-var run = flag.PrintDefaults
+var myPrint = func(s string) {
+    fmt.Print(s)
+}
 
 func main() {
     var argsHelp, argsVersion, argsRight bool
@@ -128,9 +130,10 @@ func main() {
 
     if argsHelp {
         fmt.Printf("Usage of %s:\n", os.Args[0])
-        run()
+        flag.PrintDefaults()
         os.Exit(0)
     }
+
     if argsVersion {
         fmt.Printf("GBT v%s\n", version)
         os.Exit(0)

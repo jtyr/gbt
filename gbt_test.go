@@ -1,22 +1,23 @@
 package main
 
 import (
-    "testing"
     "os"
+    "testing"
 )
 
 func TestMain(t *testing.T) {
     var ran bool
 
-    run = func() {
+    myPrint = func(s string) {
         ran = true
     }
 
-    os.Args = append(os.Args, "-help")
+    os.Setenv("GBT_CARS", "Status, Os, Time, Custom, Hostname, Dir, PyVirtEnv, Git, Sign")
+    os.Setenv("GBT_CAR_SIGN_WRAP", "1")
 
     main()
 
     if ! ran {
-        t.Error("Expected Run() to be called, but it wasn't.")
+        t.Error("Expected myPrint() to be called, but it wasn't.")
     }
 }
