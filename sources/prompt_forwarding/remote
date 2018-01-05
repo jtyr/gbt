@@ -53,7 +53,7 @@ function gbt_docker() {
     [ $? -ne 0 ] && gbt__err "'docker' not found" && return 1
 
     if [ "$1" != 'shell' ]; then
-        $DOCKER_BIN $@
+        $DOCKER_BIN "$@"
     else
         local GBT__CONTAINER_ID="${@: -1}"
 
@@ -69,7 +69,7 @@ function gbt_mysql() {
     local MYSQL_BIN=$(which $GBT__WHICH_OPTS mysql 2>/dev/null)
     [ $? -ne 0 ] && gbt__err "'mysql' not found" && return 1
 
-    $MYSQL_BIN --prompt "$GBT__MYSQL_PS1" $@
+    $MYSQL_BIN --prompt "$GBT__MYSQL_PS1" "$@"
 }
 
 function gbt_su() {
@@ -78,7 +78,7 @@ function gbt_su() {
     local SU_BIN=$(which $GBT__WHICH_OPTS su 2>/dev/null)
     [ $? -ne 0 ] && gbt__err "'su' not found" && return 1
 
-    $SU_BIN -s "$GBT__CONF.bash" $@
+    $SU_BIN -s "$GBT__CONF.bash" "$@"
 }
 
 function gbt_sudo() {
@@ -90,10 +90,10 @@ function gbt_sudo() {
     [ $? -ne 0 ] && gbt__err "'sudo' not found" && return 1
 
     if [ "$1" != 'su' ]; then
-        $SUDO_BIN $@
+        $SUDO_BIN "$@"
     else
         shift
-        $SUDO_BIN $SU_BIN -s "$GBT__CONF.bash" $@
+        $SUDO_BIN $SU_BIN -s "$GBT__CONF.bash" "$@"
     fi
 }
 
@@ -104,7 +104,7 @@ function gbt_ssh() {
     [ $? -ne 0 ] && gbt__err "'ssh' not found" && return 1
 
     [ -z $SSH_BIN ] && return 1
-    $SSH_BIN -t $@ "
+    $SSH_BIN -t "$@" "
         cat /etc/motd 2>/dev/null;
         echo \"$(base64 $GBT__CONF | tr -d '\r\n')\" | base64 -d > $GBT__CONF &&
         bash --rcfile $GBT__CONF;
@@ -118,14 +118,14 @@ function gbt_vagrant() {
     [ $? -ne 0 ] && gbt__err "'vagrant' not found" && return 1
 
     if [ "$1" != 'ssh' ]; then
-        $VAGRANT_BIN $@
+        $VAGRANT_BIN "$@"
     else
         shift
         $VAGRANT_BIN ssh --command "
             cat /etc/motd 2>/dev/null;
             echo \"$(base64 $GBT__CONF | tr -d '\r\n')\" | base64 -d > $GBT__CONF &&
             bash --rcfile $GBT__CONF;
-            rm -f $GBT__CONF $GBT__CONF.bash" $@
+            rm -f $GBT__CONF $GBT__CONF.bash" "$@"
     fi
 }
 
@@ -143,7 +143,7 @@ export GBT__OS=${GBT__SYMBOLS[$(gbt__get_os)]:=?}
 
 # Create executable that is used as shell in 'su'
 if [ ! -e "$GBT__CONF.bash" ]; then
-    echo -e "#!/bin/bash\nbash --rcfile $GBT__CONF \$@" > $GBT__CONF.bash
+    echo -e "#!/bin/bash\nbash --rcfile $GBT__CONF \"\$@\"" > $GBT__CONF.bash
     chmod +x $GBT__CONF.bash
 fi
 

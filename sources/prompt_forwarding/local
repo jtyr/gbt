@@ -25,7 +25,7 @@ function gbt__local_rcfile() {
     (source $GBT__THEME; gbt | awk '{gsub(/\\\$/, "$"); printf "%s", $0}') >> $GBT__CONF
     echo "'" >> $GBT__CONF
 
-    echo -e "#!/bin/bash\nbash --rcfile $GBT__CONF \$@" > $GBT__CONF.bash
+    echo -e "#!/bin/bash\nbash --rcfile $GBT__CONF \"\$@\"" > $GBT__CONF.bash
     chmod +x $GBT__CONF.bash
 
     echo $GBT__CONF
@@ -43,7 +43,7 @@ function gbt_docker() {
     [ $? -ne 0 ] && gbt__err "'docker' not found" && return 1
 
     if [ "$1" != 'shell' ]; then
-        $DOCKER_BIN $@
+        $DOCKER_BIN "$@"
     else
         local GBT__CONTAINER_ID="${@: -1}"
         local GBT__CONF=$(gbt__local_rcfile)
@@ -68,7 +68,7 @@ function gbt_mysql() {
     local MYSQL_BIN=$(which $GBT__WHICH_OPTS mysql 2>/dev/null)
     [ $? -ne 0 ] && gbt__err "'mysql' not found" && return 1
 
-    $MYSQL_BIN --prompt "$(source $GBT__THEME_MYSQL; gbt)" $@
+    $MYSQL_BIN --prompt "$(source $GBT__THEME_MYSQL; gbt)" "$@"
 }
 
 function gbt_ssh() {
@@ -84,9 +84,9 @@ function gbt_ssh() {
     [ $? -ne 0 ] && gbt__err "'ssh' not found" && return 1
 
     if [[ " ${GBT__SSH_IGNORE[*]} " == *" ${@: -1} "* ]]; then
-        $SSH_BIN $@
+        $SSH_BIN "$@"
     else
-        $SSH_BIN -t $@ "
+        $SSH_BIN -t "$@" "
             cat /etc/motd 2>/dev/null;
             export GBT__CONF=\"/tmp/.gbt.$RANDOM\" &&
             echo \"export GBT__CONF='\$GBT__CONF'\" > \$GBT__CONF &&
@@ -108,7 +108,7 @@ function gbt_su() {
 
     local GBT__CONF=$(gbt__local_rcfile)
 
-    $SU_BIN -s "$GBT__CONF.bash" $@
+    $SU_BIN -s "$GBT__CONF.bash" "$@"
 
     rm -f $GBT__CONF $GBT__CONF.bash
 }
@@ -122,12 +122,12 @@ function gbt_sudo() {
     [ $? -ne 0 ] && gbt__err "'sudo' not found" && return 1
 
     if [ "$1" != 'su' ]; then
-        $SUDO_BIN $@
+        $SUDO_BIN "$@"
     else
         local GBT__CONF=$(gbt__local_rcfile)
 
         shift
-        $SUDO_BIN $SU_BIN -s "$GBT__CONF.bash" $@
+        $SUDO_BIN $SU_BIN -s "$GBT__CONF.bash" "$@"
     fi
 
     rm -f $GBT__CONF $GBT__CONF.bash
@@ -146,7 +146,7 @@ function gbt_vagrant() {
     [ $? -ne 0 ] && gbt__err "'vagrant' not found" && return 1
 
     if [ "$1" != 'ssh' ]; then
-        $VAGRANT_BIN $@
+        $VAGRANT_BIN "$@"
     else
         shift
         $VAGRANT_BIN ssh --command "
@@ -159,6 +159,6 @@ function gbt_vagrant() {
             echo \"export GBT__MYSQL_PS1='$(source $GBT__THEME_MYSQL; gbt)'\" >> \$GBT__CONF &&
             echo \"PS1='$(source $GBT__THEME; gbt)'\" >> \$GBT__CONF &&
             bash --rcfile \$GBT__CONF;
-            rm -f \$GBT__CONF \$GBT__CONF.bash" $@
+            rm -f \$GBT__CONF \$GBT__CONF.bash" "$@"
     fi
 }
