@@ -50,6 +50,8 @@ git push
 git tag v1.0.0
 git checkout v1.0.0
 git checkout HEAD~1
+git checkout master
+git commit --amend -am "Amending"
 cd ~
 clear                                                                      
 ### PyVirtEnv car demo

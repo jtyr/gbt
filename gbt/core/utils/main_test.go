@@ -185,6 +185,7 @@ func TestRun(t *testing.T) {
     }{
         { cmd: []string{"find", "/", "-maxdepth", "1", "-name", "tmp"}, rc: 0, stdout: "/tmp", stderr: "", },
         { cmd: []string{"curl", "-s", "-S", "http://localhost:12345"}, rc: 7, stdout: "", stderr: "curl: (7) Failed to connect to localhost port 12345: Connection refused", },
+        { cmd: []string{"unknown_command"}, rc: 1, stdout: "", stderr: "exec: \"unknown_command\": executable file not found in $PATH", },
     }
 
     for i, test := range tests {

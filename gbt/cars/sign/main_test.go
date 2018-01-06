@@ -1,15 +1,36 @@
 package sign
 
 import (
+    "os/user"
     "testing"
 )
 
-func TestInit(t *testing.T) {
-    car := Car{}
+func TestInitUser(t *testing.T) {
+    curUser, _ := user.Current()
 
-    car.Init()
+    tests := []struct {
+        uid string
+        expectedOutput string
+    }{
+        {
+            uid: "12345",
+            expectedOutput: "{{ User }}",
+        },
+        {
+            uid: curUser.Uid,
+            expectedOutput: "{{ Admin }}",
+        },
+    }
 
-    if car.Wrap != false {
-        t.Errorf("Expected %s = %t, found %t.", "Wrap", false, car.Wrap)
+    for i, test := range tests {
+        car := Car{}
+
+        adminUID = test.uid
+
+        car.Init()
+
+        if car.Model["Symbol"].Text != test.expectedOutput {
+            t.Errorf("Test [%d]: Expected '%s', found '%s'.", i, test.expectedOutput, car.Model["Symbol"].Text)
+        }
     }
 }

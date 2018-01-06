@@ -119,24 +119,27 @@ func printCars(cars []Cars, right bool) {
 var myPrint = func(s string) {
     fmt.Print(s)
 }
+var printDefaults = flag.PrintDefaults
+var exit = os.Exit
+var argsHelp, argsVersion, argsRight bool
 
 func main() {
-    var argsHelp, argsVersion, argsRight bool
-
-    flag.BoolVar(&argsHelp, "help", false, "show this help message and exit")
-    flag.BoolVar(&argsVersion, "version", false, "show version and exit")
-    flag.BoolVar(&argsRight, "right", false, "compose right hand site prompt")
-    flag.Parse()
+    if len(flag.Args()) == 0 {
+        flag.BoolVar(&argsHelp, "help", false, "show this help message and exit")
+        flag.BoolVar(&argsVersion, "version", false, "show version and exit")
+        flag.BoolVar(&argsRight, "right", false, "compose right hand site prompt")
+        flag.Parse()
+    }
 
     if argsHelp {
         fmt.Printf("Usage of %s:\n", os.Args[0])
-        flag.PrintDefaults()
-        os.Exit(0)
+        printDefaults()
+        exit(0)
     }
 
     if argsVersion {
-        fmt.Printf("GBT v%s\n", version)
-        os.Exit(0)
+        myPrint(fmt.Sprintf("GBT v%s\n", version))
+        exit(0)
     }
 
     carsStr := utils.GetEnv("GBT_CARS", "Status, Os, Hostname, Dir, Git, Sign")

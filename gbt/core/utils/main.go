@@ -32,7 +32,7 @@ func IsTrue(value string) (ret bool) {
     return
 }
 
-// GetEnv returns the value of the environment variable or provided fallback
+// GetEnv returns the value of the environment variable or provided fallback.
 // value if the environment variable is not defined.
 func GetEnv(key string, fallback string) string {
     if value, ok := os.LookupEnv(key); ok {

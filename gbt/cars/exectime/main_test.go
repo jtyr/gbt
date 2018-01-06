@@ -1,11 +1,14 @@
 package exectime
 
 import (
+    "os"
     "testing"
 )
 
 func TestInit(t *testing.T) {
     car := Car{}
+
+    os.Setenv("GBT_CAR_EXECTIME_PRECISION", "3")
 
     car.Init()
 

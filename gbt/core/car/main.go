@@ -142,7 +142,7 @@ func (c *Car) DecorateElement(element, bg, fg, fm, text string) string {
     return fmt.Sprintf("%s%s%s%s%s", bg, fg, fm, text, fmEnd)
 }
 
-// Patterns to parse the color codes
+// Patterns to parse the color codes.
 var reColorNumber = regexp.MustCompile(`^\d{1,3}$`)
 var reRgbTriplet = regexp.MustCompile(`^\d{1,3};\d{1,3};\d{1,3}$`)
 

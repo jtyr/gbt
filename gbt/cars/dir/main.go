@@ -40,10 +40,8 @@ func getDir() (ret string) {
         ret = dirSep
     } else if pwd == "~" {
         ret = pwd
-    } else if len(dirs) > 1 {
-        ret = strings.Join(dirs[(dirsLen - depth):], dirSep)
     } else {
-        ret = strings.Join(dirs, dirSep)
+        ret = strings.Join(dirs[(dirsLen - depth):], dirSep)
     }
 
     return

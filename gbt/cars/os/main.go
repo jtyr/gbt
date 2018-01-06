@@ -53,6 +53,9 @@ var symbols = map[string]iconColor {
 // Holds the OS name.
 var osName string
 
+// Path to the os-release file.
+var osReleaseFile = "/etc/os-release"
+
 // Returns the OS name.
 func getOsName() string {
     if osName != "" {
@@ -61,8 +64,8 @@ func getOsName() string {
 
     osName = runtime.GOOS
 
-    if _, err := os.Stat("/etc/os-release"); ! os.IsNotExist(err) {
-        file, err := os.Open("/etc/os-release")
+    if _, err := os.Stat(osReleaseFile); ! os.IsNotExist(err) {
+        file, err := os.Open(osReleaseFile)
 
         if err != nil {
             return osName

@@ -1,15 +1,34 @@
 package pyvirtenv
 
 import (
+    "os"
     "testing"
 )
 
 func TestInit(t *testing.T) {
-    car := Car{}
+    tests := []struct {
+        virtenv string
+        expectedDisplay bool
+    }{
+        {
+            virtenv: "",
+            expectedDisplay: false,
+        },
+        {
+            virtenv: "test",
+            expectedDisplay: true,
+        },
+    }
 
-    car.Init()
+    for i, test := range tests {
+        os.Setenv("VIRTUAL_ENV", test.virtenv)
 
-    if car.Wrap != false {
-        t.Errorf("Expected %s = %t, found %t.", "Wrap", false, car.Wrap)
+        car := Car{}
+
+        car.Init()
+
+        if car.Display != test.expectedDisplay {
+            t.Errorf("Test [%d]: Expected %t, found %t.", i, test.expectedDisplay, car.Display)
+        }
     }
 }

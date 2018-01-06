@@ -12,6 +12,9 @@ type Car struct {
     car.Car
 }
 
+// Admin UID.
+var adminUID = "0"
+
 // Init initializes the car.
 func (c *Car) Init() {
     defaultRootBg := utils.GetEnv("GBT_CAR_BG", "default")
@@ -28,7 +31,7 @@ func (c *Car) Init() {
     symbolFormat := "{{ User }}"
     curUser, _ := user.Current()
 
-    if curUser.Uid == "0" {
+    if curUser.Uid == adminUID {
         symbolFormat = "{{ Admin }}"
     }
 

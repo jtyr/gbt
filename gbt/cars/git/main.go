@@ -12,9 +12,17 @@ type Car struct {
     car.Car
 }
 
+// Git commands.
+var runIsGitDir = []string{"git", "rev-parse", "--git-dir"}
+var runGetBranch = []string{"git", "symbolic-ref", "HEAD"}
+var runGetTag = []string{"git", "describe", "--tags", "--exact-match", "HEAD"}
+var runGetCommit = []string{"git", "rev-parse", "--short", "HEAD"}
+var runIsDirty = []string{"git", "status", "--porcelain"}
+var runCompareRemote = []string{"git", "rev-list", "--count"}
+
 // Returns true if the current directory is a Git repo.
 func isGitDir() bool {
-    rc, _, _ := utils.Run([]string{"git", "rev-parse", "--git-dir"})
+    rc, _, _ := utils.Run(runIsGitDir)
 
     return rc == 0
 }
@@ -26,16 +34,15 @@ func getHead(display bool) string {
     }
 
     // Remote branch name which the local branch is tracking
-    rc, out, _ := utils.Run([]string{"git", "symbolic-ref", "HEAD"})
+    rc, out, _ := utils.Run(runGetBranch)
 
     if rc > 0 {
         // Get tag name
-        rc, out, _ = utils.Run(
-            []string{"git", "describe", "--tags", "--exact-match", "HEAD"})
+        rc, out, _ = utils.Run(runGetTag)
 
         if rc > 0 {
             // Get commit ID
-            _, out, _ = utils.Run([]string{"git", "rev-parse", "--short", "HEAD"})
+            _, out, _ = utils.Run(runGetCommit)
         }
     }
 
@@ -48,7 +55,7 @@ func isDirty(display bool) bool {
         return false
     }
 
-    _, out, _ := utils.Run([]string{"git", "status", "--porcelain"})
+    _, out, _ := utils.Run(runIsDirty)
 
     return len(out) > 0
 }
@@ -67,7 +74,7 @@ func compareRemote(display bool, ahead bool) bool {
         direction = "@{upstream}..HEAD"
     }
 
-    rc, out, _ := utils.Run([]string{"git", "rev-list", "--count", direction})
+    rc, out, _ := utils.Run(append(runCompareRemote, direction))
 
     if rc == 0 && out != "0" {
         ret = true

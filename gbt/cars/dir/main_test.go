@@ -6,13 +6,38 @@ import (
 )
 
 func TestInit(t *testing.T) {
-    os.Setenv("GBT_CAR_DIR_DEPTH", "999")
+    os.Setenv("GBT_CAR_DIR_DEPTH", "2")
 
-    car := Car{}
+    tests := []struct {
+        pwd string
+        expectedOutput string
+    }{
+        {
+            pwd: "/",
+            expectedOutput: "/",
+        },
+        {
+            pwd: os.Getenv("HOME"),
+            expectedOutput: "~",
+        },
+        {
+            pwd: "/usr",
+            expectedOutput: "/usr",
+        },
+        {
+            pwd: "/usr/share/ssl",
+            expectedOutput: "share/ssl",
+        },
+    }
 
-    car.Init()
+    for i, test := range tests {
+        car := Car{}
 
-    if car.Wrap != false {
-        t.Errorf("Expected %s = %t, found %t.", "Wrap", false, car.Wrap)
+        os.Setenv("PWD", test.pwd)
+        car.Init()
+
+        if car.Model["Dir"].Text != test.expectedOutput {
+            t.Errorf("Test [%d]: Expected '%s', found '%s'.", i, test.expectedOutput, car.Model["Dir"].Text)
+        }
     }
 }

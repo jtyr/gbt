@@ -24,7 +24,6 @@ script:
   - go install
   - $GOPATH/bin/gbt -version
   - if [ -n "$TRAVIS_TAG" ]; then dist/build.sh; fi
-  - go test -v -covermode=count -coverprofile=$(go list . | sed 's,/,_,g').out 1>/dev/null
   - for N in $(go list ./...); do go test -v -covermode=count -coverprofile=${N//\//_}.out $N 1>/dev/null; done
   - "echo 'mode: count' > coverage.out && cat *.out | grep -v 'mode:' | sort -r | awk '{if($1 != last) {print $0;last=$1}}' >> coverage.out"
   - $HOME/gopath/bin/goveralls -coverprofile=coverage.out -service=travis-ci -repotoken $COVERALLS_TOKEN
