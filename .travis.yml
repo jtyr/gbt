@@ -15,8 +15,8 @@ before_install:
   - if [ -n "$TRAVIS_TAG" ]; then openssl aes-256-cbc -K $encrypted_6b7e08428daf_key -iv $encrypted_6b7e08428daf_iv -in dist/gpg_key.priv.enc -out dist/gpg_key.priv -d; fi
 
 before_script:
-  - golint ./...
-  - go vet ./...
+  - golint -set_exit_status ./...
+  - go vet ./... | grep ':' && false || true
   - go test -v -cover ./...
   - if [ -n "$TRAVIS_TAG" ]; then go install && $GOPATH/bin/gbt -version | egrep " $TRAVIS_TAG\$"; fi
 
@@ -25,7 +25,7 @@ script:
   - $GOPATH/bin/gbt -version
   - if [ -n "$TRAVIS_TAG" ]; then dist/build.sh; fi
   - for N in $(go list ./...); do go test -v -covermode=count -coverprofile=${N//\//_}.out $N 1>/dev/null; done
-  - "echo 'mode: count' > coverage.out && cat *.out | grep -v 'mode:' | sort -r | awk '{if($1 != last) {print $0;last=$1}}' >> coverage.out"
+  - echo -e 'mode:'' count' > coverage.out && cat *.out | grep -v 'mode:' | sort -r | awk '{if($1 != last) {print $0;last=$1}}' >> coverage.out
   - $HOME/gopath/bin/goveralls -coverprofile=coverage.out -service=travis-ci -repotoken $COVERALLS_TOKEN
 
 deploy:

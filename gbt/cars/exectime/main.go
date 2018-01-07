@@ -13,10 +13,13 @@ type Car struct {
     car.Car
 }
 
+// Reference to the time.Now() function.
+var tnow = time.Now
+
 // Returns the execution time.
 func getTime() string {
     precision := utils.GetEnvInt("GBT_CAR_EXECTIME_PRECISION", 0)
-    now := float64(time.Now().UnixNano())/float64(1e9)
+    now := float64(tnow().UnixNano())/float64(1e9)
     execs := now - utils.GetEnvFloat("GBT_CAR_EXECTIME_SECS", now)
     subsecs := ""
 

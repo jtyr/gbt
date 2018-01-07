@@ -20,8 +20,10 @@ func TestMain(t *testing.T) {
     os.Args = append(os.Args, "-version")
     os.Args = append(os.Args, "0")
 
+    // Call the myPrint as it's defined by default
     myPrint("")
 
+    // Redefine some functions
     exit = func(i int) {}
     printDefaults = func() {}
     myPrint = func(s string) {
@@ -30,6 +32,7 @@ func TestMain(t *testing.T) {
 
     main()
 
+    // Prepare cars for right-hand side prompt testing
     cars := []Cars{}
     cars = append(cars, &signCar.Car{})
     cars = append(cars, &timeCar.Car{})

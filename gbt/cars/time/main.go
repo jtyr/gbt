@@ -12,6 +12,9 @@ type Car struct {
     car.Car
 }
 
+// Reference to the time.Now() function.
+var tnow = time.Now
+
 // Init initializes the car.
 func (c *Car) Init() {
     defaultRootBg := utils.GetEnv("GBT_CAR_BG", "light_blue")
@@ -57,7 +60,7 @@ func (c *Car) Init() {
             Fm: utils.GetEnv(
                 "GBT_CAR_TIME_DATE_FM", utils.GetEnv(
                     "GBT_CAR_TIME_FM", defaultDateFm)),
-            Text: time.Now().Format(
+            Text: tnow().Format(
                 utils.GetEnv("GBT_CAR_TIME_DATE_FORMAT", "Mon 02 Jan")),
         },
         "Time": {
@@ -70,7 +73,7 @@ func (c *Car) Init() {
             Fm: utils.GetEnv(
                 "GBT_CAR_TIME_TIME_FM", utils.GetEnv(
                     "GBT_CAR_TIME_FM", defaultTimeFm)),
-            Text: time.Now().Format(
+            Text: tnow().Format(
                 utils.GetEnv("GBT_CAR_TIME_TIME_FORMAT", "15:04:05")),
         },
     }
