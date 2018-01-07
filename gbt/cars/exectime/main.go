@@ -26,7 +26,7 @@ func getTime() string {
     }
 
     hours := int(execs/3600)
-    mins := int((execs - float64(hours))/60)
+    mins := int((execs - float64(hours)*3600)/60)
     secs := int(execs - float64(hours)*3600 - float64(mins)*60)
 
     exectime := fmt.Sprintf("%.2d:%.2d:%02d%s", hours, mins, secs, subsecs)
