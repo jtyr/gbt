@@ -82,8 +82,8 @@ brew install gbt
 From source code:
 
 ```shell
-go get -u github.com/jtyr/gbt
-go build -o ~/gbt github.com/jtyr/gbt
+go get -u github.com/jtyr/gbt/cmd/gbt
+go build github.com/jtyr/gbt/cmd/gbt
 ```
 
 GBT can be activated by calling it from the shell prompt variable:

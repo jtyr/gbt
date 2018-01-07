@@ -3,8 +3,8 @@ package ttime
 import (
     "time"
 
-    "github.com/jtyr/gbt/core/car"
-    "github.com/jtyr/gbt/core/utils"
+    "github.com/jtyr/gbt/pkg/core/car"
+    "github.com/jtyr/gbt/pkg/core/utils"
 )
 
 // Car inherits the core.Car.

@@ -22,7 +22,7 @@ for P in "${PLATFORMS[@]}"; do
     PKG="$NAME-$VER-$OS-$ARCH.tar.gz"
 
     mkdir -p "$PTMP"
-    GOOS="$OS" GOARCH="$ARCH" CGO_ENABLED=0 go build -ldflags='-s -w' -o "$PTMP/$NAME"
+    GOOS="$OS" GOARCH="$ARCH" CGO_ENABLED=0 go build -ldflags='-s -w' -o "$PTMP/$NAME" github.com/jtyr/gbt/cmd/gbt
 
     (
         cp -r "$TRAVIS_BUILD_DIR"/{README.md,LICENSE,themes,sources} "$PTMP"
