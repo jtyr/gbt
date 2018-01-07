@@ -6,8 +6,8 @@ import (
     "runtime"
     "strings"
 
-    "github.com/jtyr/gbt/gbt/core/car"
-    "github.com/jtyr/gbt/gbt/core/utils"
+    "github.com/jtyr/gbt/core/car"
+    "github.com/jtyr/gbt/core/utils"
 )
 
 // Car inherits the core.Car.

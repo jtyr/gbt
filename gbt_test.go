@@ -4,8 +4,8 @@ import (
     "os"
     "testing"
 
-    signCar "github.com/jtyr/gbt/gbt/cars/sign"
-    timeCar "github.com/jtyr/gbt/gbt/cars/time"
+    signCar "github.com/jtyr/gbt/cars/sign"
+    timeCar "github.com/jtyr/gbt/cars/time"
 )
 
 func TestMain(t *testing.T) {

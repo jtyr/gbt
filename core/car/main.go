@@ -6,7 +6,7 @@ import (
     "regexp"
     "strings"
 
-    "github.com/jtyr/gbt/gbt/core/utils"
+    "github.com/jtyr/gbt/core/utils"
 )
 
 // ModelElement is an element of which the car model is constructed from.

@@ -6,19 +6,19 @@ import (
     "os"
     "regexp"
 
-    customCar    "github.com/jtyr/gbt/gbt/cars/custom"
-    dirCar       "github.com/jtyr/gbt/gbt/cars/dir"
-    exectimeCar  "github.com/jtyr/gbt/gbt/cars/exectime"
-    gitCar       "github.com/jtyr/gbt/gbt/cars/git"
-    hostnameCar  "github.com/jtyr/gbt/gbt/cars/hostname"
-    osCar        "github.com/jtyr/gbt/gbt/cars/os"
-    pyvirtenvCar "github.com/jtyr/gbt/gbt/cars/pyvirtenv"
-    signCar      "github.com/jtyr/gbt/gbt/cars/sign"
-    statusCar    "github.com/jtyr/gbt/gbt/cars/status"
-    timeCar      "github.com/jtyr/gbt/gbt/cars/time"
+    customCar    "github.com/jtyr/gbt/cars/custom"
+    dirCar       "github.com/jtyr/gbt/cars/dir"
+    exectimeCar  "github.com/jtyr/gbt/cars/exectime"
+    gitCar       "github.com/jtyr/gbt/cars/git"
+    hostnameCar  "github.com/jtyr/gbt/cars/hostname"
+    osCar        "github.com/jtyr/gbt/cars/os"
+    pyvirtenvCar "github.com/jtyr/gbt/cars/pyvirtenv"
+    signCar      "github.com/jtyr/gbt/cars/sign"
+    statusCar    "github.com/jtyr/gbt/cars/status"
+    timeCar      "github.com/jtyr/gbt/cars/time"
 
-    "github.com/jtyr/gbt/gbt/core/car"
-    "github.com/jtyr/gbt/gbt/core/utils"
+    "github.com/jtyr/gbt/core/car"
+    "github.com/jtyr/gbt/core/utils"
 )
 
 // Cars interface for methods from the core.car package.

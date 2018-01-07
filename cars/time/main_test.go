@@ -5,7 +5,7 @@ import (
     "testing"
     "time"
 
-    ccar "github.com/jtyr/gbt/gbt/core/car"
+    ccar "github.com/jtyr/gbt/core/car"
 )
 
 func TestInit(t *testing.T) {
