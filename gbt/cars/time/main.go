@@ -36,16 +36,16 @@ func (c *Car) Init() {
         },
         "DateTime": {
             Bg: utils.GetEnv(
-                "GBT_CAR_TIME_USERHOST_BG", utils.GetEnv(
+                "GBT_CAR_TIME_DATETIME_BG", utils.GetEnv(
                     "GBT_CAR_TIME_BG", defaultDatetimeBg)),
             Fg: utils.GetEnv(
-                "GBT_CAR_TIME_USERHOST_FG", utils.GetEnv(
+                "GBT_CAR_TIME_DATETIME_FG", utils.GetEnv(
                     "GBT_CAR_TIME_FG", defaultDatetimeFg)),
             Fm: utils.GetEnv(
-                "GBT_CAR_TIME_USERHOST_FM", utils.GetEnv(
+                "GBT_CAR_TIME_DATETIME_FM", utils.GetEnv(
                     "GBT_CAR_TIME_FM", defaultDatetimeFm)),
             Text: utils.GetEnv(
-                "GBT_CAR_TIME_USERHOST_FORMAT", "{{ Date }} {{ Time }}"),
+                "GBT_CAR_TIME_DATETIME_FORMAT", "{{ Date }} {{ Time }}"),
         },
         "Date": {
             Bg: utils.GetEnv(
