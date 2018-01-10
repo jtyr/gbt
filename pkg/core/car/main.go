@@ -27,7 +27,7 @@ type Car struct {
 }
 
 // Shell type.
-var Shell = utils.GetEnv("GBT_SHELL", path.Base(utils.GetEnv("SHELL", "zsh")))
+var Shell = utils.GetEnv("GBT_SHELL", path.Base(utils.GetEnv("SHELL", "bash")))
 
 // List of named colors and their codes.
 var colors = map[string]string {
