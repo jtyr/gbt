@@ -3,6 +3,8 @@
 declare -a PLATFORMS=(
     'darwin/amd64'
     'linux/amd64'
+    'linux/arm'
+    'linux/arm64'
 )
 
 NAME='gbt'
@@ -14,7 +16,7 @@ gpg --import "$TRAVIS_BUILD_DIR/dist/gpg_key.priv"
 echo -e '%_gpg_name Jiri Tyr (PKG) <jiri.tyr@gmail.com>\n%dist .el7' > ~/.rpmmacros
 
 for P in "${PLATFORMS[@]}"; do
-    echo "Building $P"
+    echo "### Building $P"
 
     PTMP="$TMP/$P/$NAME-$VER"
     OS="${P%%/*}"
@@ -36,23 +38,25 @@ for P in "${PLATFORMS[@]}"; do
             cd "$TRAVIS_BUILD_DIR/contrib"
             ln -s "$PTMP" "$TRAVIS_BUILD_DIR/contrib/$NAME"
             m4 -DVER="$VER" -DDATE="$(date '+%a, %d %b %Y %H:%M:%S %z')" debian/changelog.m4 > debian/changelog
-            dpkg-buildpackage -tc -b -kCA67951CD2BBE8AAE4210B72FB90C91F64BED28C
+            dpkg-buildpackage -a$ARCH -tc -b -kCA67951CD2BBE8AAE4210B72FB90C91F64BED28C
         )
         debsigs --sign=origin -k CA67951CD2BBE8AAE4210B72FB90C91F64BED28C "$TRAVIS_BUILD_DIR"/*.deb
         mv "$TRAVIS_BUILD_DIR"/*.deb $TMP
 
         # RPM
-        mkdir -p ~/rpmbuild/SOURCES
-        ln -s "$TMP/$PKG" ~/rpmbuild/SOURCES/
-        (
-            cd "$TRAVIS_BUILD_DIR/contrib/redhat"
-            m4 -DVER="$VER" -DDATE="$(date '+%a %b %d %Y')" gbt.spec.m4 > gbt.spec
-            rpmbuild -bb gbt.spec
-        )
-        echo -e '#!/usr/bin/expect -f\nspawn rpmsign --key-id CA67951CD2BBE8AAE4210B72FB90C91F64BED28C --addsign {*}$argv\nexpect -exact "Enter pass phrase: "\nsend -- "\\r"\nexpect eof' > ~/rpm-sign.exp
-        chmod +x ~/rpm-sign.exp
-        ~/rpm-sign.exp ~/rpmbuild/RPMS/x86_64/*.rpm
-        mv ~/rpmbuild/RPMS/x86_64/*.rpm "$TMP"
+        if [ "$ARCH" = 'amd64' ]; then
+            mkdir -p ~/rpmbuild/SOURCES
+            ln -s "$TMP/$PKG" ~/rpmbuild/SOURCES/
+            (
+                cd "$TRAVIS_BUILD_DIR/contrib/redhat"
+                m4 -DVER="$VER" -DDATE="$(date '+%a %b %d %Y')" gbt.spec.m4 > gbt.spec
+                rpmbuild -bb gbt.spec
+            )
+            echo -e '#!/usr/bin/expect -f\nspawn rpmsign --key-id CA67951CD2BBE8AAE4210B72FB90C91F64BED28C --addsign {*}$argv\nexpect -exact "Enter pass phrase: "\nsend -- "\\r"\nexpect eof' > ~/rpm-sign.exp
+            chmod +x ~/rpm-sign.exp
+            ~/rpm-sign.exp ~/rpmbuild/RPMS/x86_64/*.rpm
+            mv ~/rpmbuild/RPMS/x86_64/*.rpm "$TMP"
+        fi
     fi
 done
 

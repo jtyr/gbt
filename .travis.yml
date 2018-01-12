@@ -51,7 +51,7 @@ deploy:
     dist: ubuntu/xenial
     skip_cleanup: true
     local-dir: /tmp/gbt
-    package_glob: "*.deb"
+    package_glob: "*64.deb"
     on:
       tags: true
       repo: jtyr/gbt
