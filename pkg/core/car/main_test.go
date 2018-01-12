@@ -38,8 +38,12 @@ func TestGetModel(t *testing.T) {
     }{
         {
             key:            "root",
-            model:          map[string]ModelElement{ "root": { Bg: "255", Fg: "red", Fm: "bold", Text: "test", }, },
-            expectedOutput: map[string]ModelElement{ "root": { Bg: "255", Fg: "red", Fm: "bold", Text: "test", }, },
+            model:          map[string]ModelElement{
+                "root": { Bg: "255", Fg: "red", Fm: "bold", Text: "test", },
+            },
+            expectedOutput: map[string]ModelElement{
+                "root": { Bg: "255", Fg: "red", Fm: "bold", Text: "test", },
+            },
         },
     }
 
@@ -134,7 +138,7 @@ func TestFormat(t *testing.T) {
     }{
         {
             model: map[string]ModelElement{
-                "root": { Bg: "222", Fg: "red", Fm: "bold",    Text: "test", },
+                "root": { Bg: "222", Fg: "red", Fm: "bold", Text: "test", },
             },
             // TODO: This isn't what's actually generated on the command line.
             expectedOutput: "\x1b[48;5;222m\x1b[38;5;1m\x1b[1m\x1b[21mtest",
@@ -143,7 +147,7 @@ func TestFormat(t *testing.T) {
         },
         {
             model: map[string]ModelElement{
-                "root": { Bg: "222", Fg: "red", Fm: "bold",    Text: "{{ Unknown }}", },
+                "root": { Bg: "222", Fg: "red", Fm: "bold", Text: "{{ Unknown }}", },
             },
             // TODO: This isn't what's actually generated on the command line.
             expectedOutput: "\x1b[48;5;222m\x1b[38;5;1m\x1b[1m\x1b[21m{{ Unknown }}",
@@ -161,7 +165,9 @@ func TestFormat(t *testing.T) {
             shell: "plain",
         },
         {
-            model: map[string]ModelElement{ "root": { Bg: "222", Fg: "red", Fm: "bold", Text: "text", }, },
+            model: map[string]ModelElement{
+                "root": { Bg: "222", Fg: "red", Fm: "bold", Text: "text", },
+            },
             expectedOutput: "",
             display: false,
             shell: "plain",
@@ -194,14 +200,18 @@ func TestDecorateElement(t *testing.T) {
     }{
         {
             element: "root",
-            model: map[string]ModelElement{ "root": { Bg: "222", Fg: "red", Fm: "bold", Text: "test", }, },
+            model: map[string]ModelElement{
+                "root": { Bg: "222", Fg: "red", Fm: "bold", Text: "test", },
+            },
             expectedOutput: "\x1b[48;5;222m\x1b[38;5;1m\x1b[1m\x1b[21m",
             display: true,
             shell: "plain",
         },
         {
             element: "User",
-            model: map[string]ModelElement{ "User": { Bg: "222", Fg: "red", Fm: "bold", Text: "test", }, },
+            model: map[string]ModelElement{
+                "User": { Bg: "222", Fg: "red", Fm: "bold", Text: "test", },
+            },
             expectedOutput: "\x1b[48;5;222m\x1b[38;5;1m\x1b[1mtest\x1b[21m",
             display: true,
             shell: "plain",
