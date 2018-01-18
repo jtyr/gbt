@@ -7,8 +7,9 @@ Train](https://github.com/caiogondim/bullet-train.zsh) theme.
 
 ![Demo](https://raw.githubusercontent.com/jtyr/gbt/master/images/demo.gif "Demo")
 
-Works well on Linux (Terminator, Konsole, Gnome Terminal) and Mac (Terminal,
-iTerm). It has no other dependencies than Go and its standard libraries.
+Works well on Linux (Terminator, Konsole, Gnome Terminal), Mac (Terminal,
+iTerm) and Android (Termux). It has no other dependencies than Go and its
+standard libraries.
 
 [![Release](https://img.shields.io/github/release/jtyr/gbt.svg)](https://github.com/jtyr/gbt/releases)
 [![Build status](https://travis-ci.org/jtyr/gbt.svg?branch=master)](https://travis-ci.org/jtyr/gbt)
@@ -36,13 +37,14 @@ Table of contents
     - [`Sign` car](#sign-car)
     - [`Status` car](#status-car)
     - [`Time` car](#time-car)
+- [Benchmark](#benchmark)
 - [Prompt forwarding](#prompt-forwarding)
-    - [SSH](#ssh)
-    - [SU and SUDO](#su-and-sudo)
-    - [Docker](#docker)
-    - [Vagrant](#vagrant)
-    - [MySQL](#mysql)
-    - [Seamless implementation](#seamless-implementation)
+  - [SSH](#ssh)
+  - [SU and SUDO](#su-and-sudo)
+  - [Docker](#docker)
+  - [Vagrant](#vagrant)
+  - [MySQL](#mysql)
+  - [Seamless implementation](#seamless-implementation)
 - [Author](#author)
 - [License](#license)
 
@@ -78,11 +80,21 @@ apt-get update
 apt-get install gbt
 ```
 
-On Mac via [`Homebrew`](https://brew.sh/):
+On Mac via [`Homebrew`](https://brew.sh):
 
 ```shell
 brew tap jtyr/repo
 brew install gbt
+```
+
+On Android via [Termux](https://termux.com):
+
+Just install [Termux](https://play.google.com/store/apps/details?id=com.termux)
+from Google Play and then type this in the Termux app:
+
+```shell
+apt update
+apt install gbt
 ```
 
 From source code:
@@ -101,17 +113,22 @@ PS1='$(gbt $?)'
 PROMPT='$(gbt $?)'
 ```
 
-In order to display all colors correctly, the terminal should use 256 color
-scheme:
-
-```shell
-export TERM='xterm-256color'
-```
-
 In order to display all characters of the prompt correctly, the shell should
 support UTF-8 and [Nerd](https://github.com/ryanoasis/nerd-fonts) fonts (or at
 least the [Nerd BitstreamVeraSansMono](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/BitstreamVeraSansMono)
 font) should be installed and set in the terminal application.
+
+In order to have the Nerd fonts in Termux on Android, you have to install
+[Termux:Styling](https://play.google.com/store/apps/details?id=com.termux.styling)
+application. Then longpress the terminal screen and select `MORE...` → `Style`
+→ `CHOOSE FONT` and there choose the `DejaVu` font.
+
+Some terminals might not use 256 color palette by default. In such case the
+following must be set:
+
+```shell
+export TERM='xterm-256color'
+```
 
 
 Usage
@@ -287,7 +304,7 @@ Formatting is done via `_FM` variables. The possible values are:
   # Show only time
   export GBT_CAR_TIME_FORMAT=' {{ Time }} '
   # Set the right hand side prompt (ZSH only)
-  export RPROMPT='$(gbt -right)'
+  RPROMPT='$(gbt -right)'
   ```
 
 - `GBT_SEPARATOR=''`
@@ -1274,6 +1291,86 @@ Car that displays current date and time.
   Custom separator string for this car.
 
 
+Benchmark
+---------
+
+Benchmark of GBT can be done by faking the output of GBT by a testing script
+which executes as minimum of commands as possible. For simplicity, the test will
+produce output of the Git car only and will be done from within a directory with
+a Git repository.
+
+The testing script is using exactly the same commands like GBT to determine the
+Git branch, whether the Git repository contains any change and whether it's
+ahead/behind of the remote branch. The script has the following content and is
+stored in `/tmp/test.sh`:
+
+```shell
+BRANCH="$(git symbolic-ref HEAD)"
+[ -z "$(git status --porcelain)" ] && DIRTY_ICON='%{\e[38;5;2m%}✔' || DIRTY_ICON='%{\e[38;5;1m%}✘'
+[[ "$(git rev-list --count HEAD..@{upstream})" == '0' ]] && AHEAD_ICON='' || AHEAD_ICON=' ⬆'
+[[ "$(git rev-list --count @{upstream}..HEAD)" == '0' ]] && BEHIND_ICON='' || BEHIND_ICON=' ⬇'
+
+echo -en "%{\e[0m%}%{\e[48;5;7m%}%{\e[38;5;0m%} %{\e[48;5;7m%}%{\e[38;5;0m%}%{\e[48;5;7m%}%{\e[38;5;0m%} %{\e[48;5;7m%}%{\e[38;5;0m%}${BRANCH##*/}%{\e[48;5;7m%}%{\e[38;5;0m%} %{\e[48;5;7m%}%{\e[38;5;0m%}%{\e[48;5;7m%}$DIRTY_ICON%{\e[48;5;7m%}%{\e[38;5;0m%}%{\e[48;5;7m%}%{\e[38;5;0m%}%{\e[48;5;7m%}%{\e[38;5;0m%}$AHEAD_ICON%{\e[48;5;7m%}%{\e[38;5;0m%}%{\e[48;5;7m%}%{\e[38;5;0m%}$BEHIND_ICON%{\e[48;5;7m%}%{\e[38;5;0m%} %{\e[0m%}"
+```
+
+The testing script produces the same output like GBT when run by Bash or ZSH:
+
+```shell
+bash /tmp/test.sh > /tmp/a
+zsh /tmp/test.sh > /tmp/b
+GBT_SHELL='zsh' GBT_CARS='Git' gbt > /tmp/c
+diff /tmp/{a,b}
+diff /tmp/{b,c}
+```
+
+We will use ZSH to run 10 measurements of 100 executions of the testing script
+by Bash and ZSH as well as of GBT itself.
+
+```shell
+# Execution of the testing script by Bash
+for N in $(seq 10); do time (for M in $(seq 100); do bash /tmp/test.sh 1>/dev/null 2>&1; done;) done 2>&1 | sed 's/.*  //'
+0.95s user 1.05s system 102% cpu 1.944 total
+0.94s user 1.06s system 102% cpu 1.944 total
+0.93s user 1.05s system 102% cpu 1.930 total
+0.91s user 1.10s system 102% cpu 1.954 total
+0.92s user 1.07s system 102% cpu 1.933 total
+0.97s user 1.03s system 102% cpu 1.943 total
+0.92s user 1.07s system 102% cpu 1.931 total
+0.92s user 1.08s system 102% cpu 1.949 total
+0.89s user 1.11s system 102% cpu 1.938 total
+0.93s user 1.07s system 102% cpu 1.944 total
+# Execution of the testing script by ZSH
+for N in $(seq 10); do time (for M in $(seq 100); do zsh /tmp/test.sh 1>/dev/null 2>&1; done;) done 2>&1 | sed 's/.*  //'
+0.89s user 1.08s system 103% cpu 1.909 total
+0.82s user 1.15s system 103% cpu 1.906 total
+0.82s user 1.15s system 103% cpu 1.903 total
+0.84s user 1.13s system 103% cpu 1.907 total
+0.88s user 1.10s system 103% cpu 1.915 total
+0.88s user 1.09s system 103% cpu 1.907 total
+0.84s user 1.14s system 103% cpu 1.919 total
+0.85s user 1.11s system 103% cpu 1.901 total
+0.89s user 1.08s system 103% cpu 1.914 total
+0.96s user 1.01s system 103% cpu 1.908 total
+# Execution of GBT
+for N in $(seq 10); do time (for M in $(seq 100); do GBT_SHELL='zsh' GBT_CARS='Git' gbt 1>/dev/null 2>&1; done;) done 2>&1 | sed 's/.*  //'
+1.03s user 1.19s system 115% cpu 1.922 total
+0.98s user 1.18s system 115% cpu 1.874 total
+1.06s user 1.11s system 115% cpu 1.880 total
+1.02s user 1.14s system 115% cpu 1.867 total
+1.04s user 1.17s system 115% cpu 1.918 total
+1.05s user 1.10s system 115% cpu 1.853 total
+1.07s user 1.11s system 115% cpu 1.895 total
+1.01s user 1.18s system 115% cpu 1.903 total
+1.08s user 1.03s system 115% cpu 1.825 total
+1.05s user 1.09s system 115% cpu 1.844 total
+```
+
+From the above is visible that GBT performs faster than Bash and ZSH even if the
+testing script was as simple as possible. You can also notice that GBT was using
+more CPU than Bash or ZSH. That's probably because of the built-in concurrency
+support in Go.
+
+
 Prompt forwarding
 -----------------
 
@@ -1373,8 +1470,8 @@ export GBT_SHELL='bash'
 ```
 
 Unfortunately the Bash colors
-[don't work](https://bugs.mysql.com/bug.php?id=79755) in MySQL 5.6 and above.
-It works just fine in all MariaDB versions.
+[might not work](https://bugs.mysql.com/bug.php?id=79755) in MySQL 5.6 and
+above. It works just fine in all versions of MariaDB.
 
 
 ### Seamless implementation
