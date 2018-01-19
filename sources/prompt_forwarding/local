@@ -8,9 +8,9 @@ function gbt__err() {
 function gbt__local_rcfile() {
     [ -z "$GBT__HOME$GBT__PROFILE" ] && gbt__err "'GBT__HOME' not defined" && return 1
     [ -z "$GBT__HOME$GBT__THEME" ] && gbt__err "'GBT__HOME' not defined" && return 1
-    [ -z "$GBT__PROFILE" ] && GBT__PROFILE="$GBT__HOME/sources/prompt_forwarding/remote"
-    [ -z "$GBT__THEME" ] && GBT__THEME="$GBT__HOME/themes/ssh_prompt"
-    [ -z "$GBT__THEME_MYSQL" ] && GBT__THEME_MYSQL="$GBT__HOME/themes/mysql_prompt"
+    [ -z "$GBT__PROFILE" ] && local GBT__PROFILE="$GBT__HOME/sources/prompt_forwarding/remote"
+    [ -z "$GBT__THEME" ] && local GBT__THEME="$GBT__HOME/themes/ssh_prompt"
+    [ -z "$GBT__THEME_MYSQL" ] && local GBT__THEME_MYSQL="$GBT__HOME/themes/mysql_prompt"
 
     GBT__CONF="/tmp/.gbt.$RANDOM"
 
@@ -34,8 +34,8 @@ function gbt__local_rcfile() {
 function gbt_docker() {
     [ -z "$GBT__HOME$GBT__PROFILE" ] && gbt__err "'GBT__HOME' not defined" && return 1
     [ -z "$GBT__HOME$GBT__THEME" ] && gbt__err "'GBT__HOME' not defined" && return 1
-    [ -z "$GBT__PROFILE" ] && GBT__PROFILE="$GBT__HOME/sources/prompt_forwarding/remote"
-    [ -z "$GBT__THEME" ] && GBT__THEME="$GBT__HOME/themes/ssh_prompt"
+    [ -z "$GBT__PROFILE" ] && local GBT__PROFILE="$GBT__HOME/sources/prompt_forwarding/remote"
+    [ -z "$GBT__THEME" ] && local GBT__THEME="$GBT__HOME/themes/ssh_prompt"
 
     local WHICH=$(which $GBT__WHICH_OPTS which 2>/dev/null)
     [ -z $WHICH ] && gbt__err "'which' not found" && return 1
@@ -60,8 +60,8 @@ function gbt_docker() {
 function gbt_mysql() {
     [ -z "$GBT__HOME$GBT__PROFILE" ] && gbt__err "'GBT__HOME' not defined" && return 1
     [ -z "$GBT__HOME$GBT__THEME" ] && gbt__err "'GBT__HOME' not defined" && return 1
-    [ -z "$GBT__PROFILE" ] && GBT__PROFILE="$GBT__HOME/sources/prompt_forwarding/remote"
-    [ -z "$GBT__THEME_MYSQL" ] && GBT__THEME_MYSQL="$GBT__HOME/themes/mysql_prompt"
+    [ -z "$GBT__PROFILE" ] && local GBT__PROFILE="$GBT__HOME/sources/prompt_forwarding/remote"
+    [ -z "$GBT__THEME_MYSQL" ] && local GBT__THEME_MYSQL="$GBT__HOME/themes/mysql_prompt"
 
     local WHICH=$(which $GBT__WHICH_OPTS which 2>/dev/null)
     [ -z $WHICH ] && gbt__err "'which' not found" && return 1
@@ -74,9 +74,9 @@ function gbt_mysql() {
 function gbt_ssh() {
     [ -z "$GBT__HOME$GBT__PROFILE" ] && gbt__err "'GBT__HOME' not defined" && return 1
     [ -z "$GBT__HOME$GBT__THEME" ] && gbt__err "'GBT__HOME' not defined" && return 1
-    [ -z "$GBT__PROFILE" ] && GBT__PROFILE="$GBT__HOME/sources/prompt_forwarding/remote"
-    [ -z "$GBT__THEME" ] && GBT__THEME="$GBT__HOME/themes/ssh_prompt"
-    [ -z "$GBT__THEME_MYSQL" ] && GBT__THEME_MYSQL="$GBT__HOME/themes/mysql_prompt"
+    [ -z "$GBT__PROFILE" ] && local GBT__PROFILE="$GBT__HOME/sources/prompt_forwarding/remote"
+    [ -z "$GBT__THEME" ] && local GBT__THEME="$GBT__HOME/themes/ssh_prompt"
+    [ -z "$GBT__THEME_MYSQL" ] && local GBT__THEME_MYSQL="$GBT__HOME/themes/mysql_prompt"
 
     local WHICH=$(which $GBT__WHICH_OPTS which 2>/dev/null)
     [ -z $WHICH ] && gbt__err "'which' not found" && return 1
@@ -136,9 +136,9 @@ function gbt_sudo() {
 function gbt_vagrant() {
     [ -z "$GBT__HOME$GBT__PROFILE" ] && gbt__err "'GBT__HOME' not defined" && return 1
     [ -z "$GBT__HOME$GBT__THEME" ] && gbt__err "'GBT__HOME' not defined" && return 1
-    [ -z "$GBT__PROFILE" ] && GBT__PROFILE="$GBT__HOME/sources/prompt_forwarding/remote"
-    [ -z "$GBT__THEME" ] && GBT__THEME="$GBT__HOME/themes/ssh_prompt"
-    [ -z "$GBT__THEME_MYSQL" ] && GBT__THEME_MYSQL="$GBT__HOME/themes/mysql_prompt"
+    [ -z "$GBT__PROFILE" ] && local GBT__PROFILE="$GBT__HOME/sources/prompt_forwarding/remote"
+    [ -z "$GBT__THEME" ] && local GBT__THEME="$GBT__HOME/themes/ssh_prompt"
+    [ -z "$GBT__THEME_MYSQL" ] && local GBT__THEME_MYSQL="$GBT__HOME/themes/mysql_prompt"
 
     local WHICH=$(which $GBT__WHICH_OPTS which 2>/dev/null)
     [ -z $WHICH ] && gbt__err "'which' not found" && return 1
