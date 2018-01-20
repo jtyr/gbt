@@ -116,6 +116,8 @@ go install github.com/jtyr/gbt/cmd/gbt
 
 ---
 
+### Activation
+
 After GBT is installed, it can be activated by calling it from the shell prompt
 variable:
 
@@ -125,6 +127,8 @@ PS1='$(gbt $?)'
 # For ZSH
 PROMPT='$(gbt $?)'
 ```
+
+### Fonts and colors
 
 In order to display all characters of the prompt correctly, the shell should
 support UTF-8 and [Nerd](https://github.com/ryanoasis/nerd-fonts) fonts (or at
