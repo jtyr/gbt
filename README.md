@@ -52,13 +52,15 @@ Table of contents
 Installation
 ------------
 
-On Arch Linux:
+### Arch Linux
 
 ```shell
 yaourt -S gbt
 ```
 
-On CentOS/RHEL (packages hosted by [Packagecloud](https://packagecloud.io/gbt/release)):
+### CentOS/RHEL
+
+Packages hosted by [Packagecloud](https://packagecloud.io/gbt/release)):
 
 ```shell
 cat > /etc/yum.repos.d/gbt.repo <<END
@@ -71,7 +73,9 @@ END
 yum install gbt
 ```
 
-On Ubuntu/Debian (packages hosted by [Packagecloud](https://packagecloud.io/gbt/release)):
+### Ubuntu/Debian
+
+Packages hosted by [Packagecloud](https://packagecloud.io/gbt/release)):
 
 ```shell
 curl -L https://packagecloud.io/gbt/release/gpgkey | apt-key add -
@@ -80,31 +84,40 @@ apt-get update
 apt-get install gbt
 ```
 
-On Mac via [`Homebrew`](https://brew.sh):
+Use the exact repository definition from above for all Debian-based
+distribution regardless its version.
+
+
+### Mac
+
+Using [`Homebrew`](https://brew.sh):
 
 ```shell
 brew tap jtyr/repo
 brew install gbt
 ```
 
-On Android via [Termux](https://termux.com):
+### Android
 
-Just install [Termux](https://play.google.com/store/apps/details?id=com.termux)
-from Google Play and then type this in the Termux app:
+Install [Termux](https://termux.com) from [Google Play Store](https://play.google.com/store/apps/details?id=com.termux)
+and then type this in the Termux app:
 
 ```shell
 apt update
 apt install gbt
 ```
 
-From source code:
+### From source code
 
 ```shell
 go get -u github.com/jtyr/gbt/cmd/gbt
-go build github.com/jtyr/gbt/cmd/gbt
+go install github.com/jtyr/gbt/cmd/gbt
 ```
 
-GBT can be activated by calling it from the shell prompt variable:
+---
+
+After GBT is installed, it can be activated by calling it from the shell prompt
+variable:
 
 ```shell
 # For Bash
