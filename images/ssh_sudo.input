@@ -1,3 +1,0 @@
-ssh -l ec2-user 35.176.192.197
-sudo su -
-exit

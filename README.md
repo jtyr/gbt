@@ -1503,7 +1503,7 @@ alias gbt__sudo='gbt_sudo'
 Then just SSH to some remote server or enter some Docker container or Vagrant
 box and you should get GBT-like looking prompt:
 
-![SSH and SUDO demo](https://raw.githubusercontent.com/jtyr/gbt/master/images/ssh_sudo.gif "SSH and SUDO demo")
+![Prompt forwarding demo](https://raw.githubusercontent.com/jtyr/gbt/master/images/prompt_forwarding.gif "Prompt forwarding demo")
 
 
 Author

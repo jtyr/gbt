@@ -2,7 +2,24 @@
 false
 true
 export GBT_CAR_STATUS_FORMAT=' {{ Symbol }} {{ Code }} '
-nonexisting_command
+ls /root
+asdasd
+clear                                                                      
+### Os car demo
+export GBT_CAR_OS_NAME='ubuntu'
+export GBT_CAR_OS_NAME='gentoo'
+export GBT_CAR_OS_NAME='darwin'
+export GBT_CAR_OS_NAME='windows'
+export GBT_CAR_OS_NAME='linux'
+unset GBT_CAR_OS_NAME
+clear                                                                      
+### Hostname car demo
+export GBT_CAR_HOSTNAME_FORMAT=' {{ User }} '
+export GBT_CAR_HOSTNAME_FORMAT=' {{ Host }} '
+unset GBT_CAR_HOSTNAME_FORMAT
+export GBT_CAR_HOSTNAME_USER_FG='yellow'
+export GBT_CAR_HOSTNAME_HOST_FG='green'
+unset GBT_CAR_HOSTNAME_USER_FG GBT_CAR_HOSTNAME_HOST_FG
 clear                                                                      
 ### Dir car demo
 cd /
@@ -12,24 +29,25 @@ export GBT_CAR_DIR_DEPTH='9999'
 unset GBT_CAR_DIR_DEPTH
 cd ~
 clear                                                                      
+### Sign car demo
+sudo su -
+exit
+clear                                                                      
 ### Time car demo
 export GBT_CARS='Status, Os, Time, Hostname, Dir, Sign'
 export GBT_CAR_TIME_TIME_FORMAT='03:04:05 PM'
 export GBT_CAR_TIME_BG='yellow'
 export GBT_CAR_TIME_DATE_FG='black'
-unset GBT_CAR_TIME_DATE_FG
-unset GBT_CAR_TIME_BG
+unset GBT_CAR_TIME_DATE_FG GBT_CAR_TIME_BG
 export GBT_CAR_TIME_FORMAT=' {{ Time }} '
-unset GBT_CAR_TIME_FORMAT
-unset GBT_CARS
+unset GBT_CAR_TIME_FORMAT GBT_CARS
 clear                                                                      
 ### ExecTime car demo
 export GBT_CARS='Status, Os, ExecTime, Hostname, Dir, Sign'
 source /usr/share/gbt/sources/exec_time/zsh
 export GBT_CAR_EXECTIME_PRECISION=4
 ls -la /usr/share/gbt/
-unset GBT_CAR_EXECTIME_PRECISION
-unset GBT_CARS
+unset GBT_CAR_EXECTIME_PRECISION GBT_CARS
 clear                                                                      
 ### Git car demo
 cd /tmp
@@ -51,20 +69,24 @@ git tag v1.0.0
 git checkout v1.0.0
 git checkout HEAD~1
 git checkout master
+git reset --hard HEAD~1
 git commit --amend -am "Amending"
 cd ~
+rm -fr /tmp/test{,.git}
 clear                                                                      
 ### PyVirtEnv car demo
-export GBT_CARS='Status, Os, Hostname, Dir, PyVirtEnv, Sign'
+virtualenv /tmp/test
+export GBT_CARS='Status, Os, Hostname, Dir, PyVirtEnv, Sign'
 export VIRTUAL_ENV_DISABLE_PROMPT='1'
-source /tmp/test01/bin/activate
+source /tmp/test/bin/activate
 deactivate
+rm -fr /tmp/test
 unset GBT_CARS
 clear                                                                      
 ### Custom car demo
 export GBT_CARS='Status, Os, Custom, Hostname, Dir, Sign'
-export GBT_CAR_CUSTOM_TEXT_CMD="uptime | sed --e 's/.*load average: //' -e 's/,.*//'"
-unset GBT_CARS
+export GBT_CAR_CUSTOM_TEXT_CMD="uptime | grep -Po '(?<=: )\d+\.\d+'"
+unset GBT_CARS GBT_CAR_CUSTOM_TEXT_CMD
 clear                                                                      
 ### Theme demo
 source /usr/share/gbt/themes/square_brackets_multiline

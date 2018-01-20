@@ -1,0 +1,8 @@
+ssh desktop
+cd test
+vagrant ssh
+sudo su -
+docker shell mysql
+mysql -p
+password
+use mysql
