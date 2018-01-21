@@ -16,13 +16,15 @@ function gbt__local_rcfile() {
 
     echo "export GBT__CONF='$GBT__CONF'" > $GBT__CONF
     cat $GBT__PROFILE >> $GBT__CONF
-    echo "$(alias | awk '/gbt_/ {sub(/^(alias )?(gbt___)?/, "", $0); print "alias "$0}')" >> $GBT__CONF
-    echo "export GBT__STATUS='$(source $GBT__THEME; GBT_SHELL='bash' GBT_CARS='Status, Custom1' gbt 1)'" >> $GBT__CONF
+    (alias | awk '/gbt_/ {sub(/^(alias )?(gbt___)?/, "", $0); print "alias "$0}') >> $GBT__CONF
+    echo -n "export GBT__STATUS='" >> $GBT__CONF
+    (source $GBT__THEME; GBT_SHELL='bash' GBT_CARS='Status, Custom1' gbt 1) >> $GBT__CONF
+    echo -n "'" >> $GBT__CONF
     echo -n "export GBT__MYSQL_PS1='" >> $GBT__CONF
     (source $GBT__THEME_MYSQL; gbt) >> $GBT__CONF
     echo "'" >> $GBT__CONF
     echo -n "PS1='" >> $GBT__CONF
-    (source $GBT__THEME; gbt | awk '{gsub(/\\\$/, "$"); printf "%s", $0}') >> $GBT__CONF
+    (source $GBT__THEME; gbt) >> $GBT__CONF
     echo "'" >> $GBT__CONF
 
     echo -e "#!/bin/bash\nbash --rcfile $GBT__CONF \"\$@\"" > $GBT__CONF.bash
@@ -88,13 +90,19 @@ function gbt_ssh() {
     else
         $SSH_BIN -t "$@" "
             cat /etc/motd 2>/dev/null;
-            export GBT__CONF=\"/tmp/.gbt.$RANDOM\" &&
+            export GBT__CONF='/tmp/.gbt.$RANDOM' &&
             echo \"export GBT__CONF='\$GBT__CONF'\" > \$GBT__CONF &&
-            echo \"$(base64 $GBT__PROFILE | tr -d '\r\n')\" | base64 -d >> \$GBT__CONF &&
-            echo \"$(alias | awk '/gbt_/ {sub(/^(alias )?(gbt___)?/, "", $0); print "alias "$0}')\" >> \$GBT__CONF &&
-            echo \"export GBT__STATUS='$(source $GBT__THEME; GBT_SHELL='bash' GBT_CARS='Status, Custom1' gbt 1)'\" >> \$GBT__CONF &&
-            echo \"export GBT__MYSQL_PS1='$(source $GBT__THEME_MYSQL; gbt)'\" >> \$GBT__CONF &&
-            echo \"PS1='$(source $GBT__THEME; gbt)'\" >> \$GBT__CONF &&
+            echo '$(base64 $GBT__PROFILE | tr -d '\r\n')' | base64 -d >> \$GBT__CONF &&
+            echo '$(alias | awk '/gbt_/ {sub(/^(alias )?(gbt___)?/, "", $0); print "alias "$0}' | base64 | tr -d '\r\n')' | base64 -d >> \$GBT__CONF &&
+            echo -n \"export GBT__STATUS='\" >> \$GBT__CONF &&
+            echo -n '$(source $GBT__THEME; GBT_SHELL='bash' GBT_CARS='Status, Custom1' gbt 1 | base64 | tr -d '\r\n')' | base64 -d >> \$GBT__CONF &&
+            echo \"'\" >> \$GBT__CONF &&
+            echo -n \"export GBT__MYSQL_PS1='\" >> \$GBT__CONF &&
+            echo -n '$(source $GBT__THEME_MYSQL; gbt | base64 | tr -d '\r\n')' | base64 -d >> \$GBT__CONF &&
+            echo \"'\" >> \$GBT__CONF &&
+            echo -n \"PS1='\" >> \$GBT__CONF &&
+            echo -n '$(source $GBT__THEME; gbt | base64 | tr -d '\r\n')' | base64 -d >> \$GBT__CONF &&
+            echo \"'\" >> \$GBT__CONF &&
             bash --rcfile \$GBT__CONF;
             rm -f \$GBT__CONF \$GBT__CONF.bash"
     fi
@@ -151,13 +159,19 @@ function gbt_vagrant() {
         shift
         $VAGRANT_BIN ssh --command "
             cat /etc/motd 2>/dev/null;
-            export GBT__CONF=\"/tmp/.gbt.$RANDOM\" &&
+            export GBT__CONF='/tmp/.gbt.$RANDOM' &&
             echo \"export GBT__CONF='\$GBT__CONF'\" > \$GBT__CONF &&
-            echo \"$(base64 $GBT__PROFILE | tr -d '\r\n')\" | base64 -d >> \$GBT__CONF &&
-            echo \"$(alias | awk '/gbt_/ {sub(/^(alias )?(gbt___)?/, "", $0); print "alias "$0}')\" >> \$GBT__CONF &&
-            echo \"export GBT__STATUS='$(source $GBT__THEME; GBT_SHELL='bash' GBT_CARS='Status, Custom1' gbt 1)'\" >> \$GBT__CONF &&
-            echo \"export GBT__MYSQL_PS1='$(source $GBT__THEME_MYSQL; gbt)'\" >> \$GBT__CONF &&
-            echo \"PS1='$(source $GBT__THEME; gbt)'\" >> \$GBT__CONF &&
+            echo '$(base64 $GBT__PROFILE | tr -d '\r\n')' | base64 -d >> \$GBT__CONF &&
+            echo '$(alias | awk '/gbt_/ {sub(/^(alias )?(gbt___)?/, "", $0); print "alias "$0}' | base64 | tr -d '\r\n')' | base64 -d >> \$GBT__CONF &&
+            echo -n \"export GBT__STATUS='\" >> \$GBT__CONF &&
+            echo -n '$(source $GBT__THEME; GBT_SHELL='bash' GBT_CARS='Status, Custom1' gbt 1 | base64 | tr -d '\r\n')' | base64 -d >> \$GBT__CONF &&
+            echo \"'\" >> \$GBT__CONF &&
+            echo -n \"export GBT__MYSQL_PS1='\" >> \$GBT__CONF &&
+            echo -n '$(source $GBT__THEME_MYSQL; gbt | base64 | tr -d '\r\n')' | base64 -d >> \$GBT__CONF &&
+            echo \"'\" >> \$GBT__CONF &&
+            echo -n \"PS1='\" >> \$GBT__CONF &&
+            echo -n '$(source $GBT__THEME; gbt | base64 | tr -d '\r\n')' | base64 -d >> \$GBT__CONF &&
+            echo \"'\" >> \$GBT__CONF &&
             bash --rcfile \$GBT__CONF;
             rm -f \$GBT__CONF \$GBT__CONF.bash" "$@"
     fi
