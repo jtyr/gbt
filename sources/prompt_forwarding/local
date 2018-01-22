@@ -19,7 +19,7 @@ function gbt__local_rcfile() {
     (alias | awk '/gbt_/ {sub(/^(alias )?(gbt___)?/, "", $0); print "alias "$0}') >> $GBT__CONF
     echo -n "export GBT__STATUS='" >> $GBT__CONF
     (source $GBT__THEME; GBT_SHELL='bash' GBT_CARS='Status, Custom1' gbt 1) >> $GBT__CONF
-    echo -n "'" >> $GBT__CONF
+    echo "'" >> $GBT__CONF
     echo -n "export GBT__MYSQL_PS1='" >> $GBT__CONF
     (source $GBT__THEME_MYSQL; gbt) >> $GBT__CONF
     echo "'" >> $GBT__CONF
