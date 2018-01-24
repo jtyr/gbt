@@ -1486,9 +1486,10 @@ export GBT_CAR_SIGN_USER_TEXT='>'
 export GBT_SHELL='bash'
 ```
 
-Unfortunately the Bash colors
-[might not work](https://bugs.mysql.com/bug.php?id=79755) in MySQL 5.6 and
-above. It works just fine in all versions of MariaDB.
+Unfortunately the [color representation](https://bugs.mysql.com/79755) and
+[support of unicode characters](https://bugs.mysql.com/89359) is broken in
+MySQL 5.6 and above. But it works just fine in all versions of Percona and
+MariaDB.
 
 
 ### Seamless implementation
