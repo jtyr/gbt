@@ -1,0 +1,21 @@
+export GBT_CARS='Time, Os, Hostname, Dir, Sign'
+export GBT_CAR_BG="default"
+export GBT_CAR_DIR_DIR_TEXT='\W'
+export GBT_CAR_DIR_FG="light_blue"
+export GBT_CAR_DIR_FM="bold"
+export GBT_CAR_DIR_FORMAT="{{Dir}}"
+export GBT_CAR_DIR_SEP=" "
+export GBT_CAR_HOSTNAME_FG="yellow"
+export GBT_CAR_HOSTNAME_FORMAT="[{{UserHost}}]"
+export GBT_CAR_HOSTNAME_HOST_TEXT='\h'
+export GBT_CAR_HOSTNAME_USER_FG='green'
+export GBT_CAR_HOSTNAME_USER_TEXT='$([ "$UID" = '0' ] && echo -en "\001\x1b[38;5;9m\002")\u'
+export GBT_CAR_OS_NAME='cloud'
+export GBT_CAR_OS_SYMBOL_TEXT='$(echo -en $GBT__OS)'
+export GBT_CAR_SIGN_SYMBOL_FORMAT='$(echo -en $GBT__SIGN)'
+export GBT_CAR_TIME_FG="dark_gray"
+export GBT_CAR_TIME_FM="bold"
+export GBT_CAR_TIME_FORMAT='\t'
+
+export GBT_SHELL='_bash'
+export GBT_SEPARATOR=""
