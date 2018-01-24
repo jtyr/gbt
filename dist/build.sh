@@ -54,7 +54,7 @@ for P in "${PLATFORMS[@]}"; do
             fi
 
             cd "$TRAVIS_BUILD_DIR/contrib"
-            ln -s "$PTMP" "$TRAVIS_BUILD_DIR/contrib/$NAME"
+            ln -sf "$PTMP" "$TRAVIS_BUILD_DIR/contrib/$NAME"
             m4 -DVER="$VER" -DDATE="$(date '+%a, %d %b %Y %H:%M:%S %z')" debian/changelog.m4 > debian/changelog
             dpkg-buildpackage -a$DEBARCH -tc -b -kCA67951CD2BBE8AAE4210B72FB90C91F64BED28C
         )
@@ -64,7 +64,7 @@ for P in "${PLATFORMS[@]}"; do
         # RPM
         if [ "$ARCH" = 'amd64' ]; then
             mkdir -p ~/rpmbuild/SOURCES
-            ln -s "$TMP/$PKG" ~/rpmbuild/SOURCES/
+            ln -sf "$TMP/$PKG" ~/rpmbuild/SOURCES/
             (
                 cd "$TRAVIS_BUILD_DIR/contrib/redhat"
                 m4 -DVER="$VER" -DDATE="$(date '+%a %b %d %Y')" gbt.spec.m4 > gbt.spec
