@@ -3,7 +3,8 @@
 declare -a PLATFORMS=(
     'darwin/amd64'
     'linux/amd64'
-    'linux/arm'
+    'linux/arm:5'
+    'linux/arm:6'
     'linux/arm64'
 )
 
@@ -21,10 +22,19 @@ for P in "${PLATFORMS[@]}"; do
     PTMP="$TMP/$P/$NAME-$VER"
     OS="${P%%/*}"
     ARCH="${P#*/}"
+    ARM="${ARCH#*:}"
     PKG="$NAME-$VER-$OS-$ARCH.tar.gz"
 
     mkdir -p "$PTMP"
-    GOOS="$OS" GOARCH="$ARCH" CGO_ENABLED=0 go build -ldflags='-s -w' -o "$PTMP/$NAME" github.com/jtyr/gbt/cmd/gbt
+
+    if [ -z "$ARM" ]; then
+        GOOS="$OS" GOARCH="$ARCH" CGO_ENABLED=0 go build -ldflags='-s -w' -o "$PTMP/$NAME" github.com/jtyr/gbt/cmd/gbt
+    else
+        ARCH="${ARCH%%:*}"
+        PKG="$NAME-$VER-$OS-$ARCH$ARM.tar.gz"
+
+        GOOS="$OS" GOARCH="$ARCH" GOARM="$ARM" CGO_ENABLED=0 go build -ldflags='-s -w' -o "$PTMP/$NAME" github.com/jtyr/gbt/cmd/gbt
+    fi
 
     (
         cp -r "$TRAVIS_BUILD_DIR"/{README.md,LICENSE,themes,sources} "$PTMP"
@@ -35,13 +45,21 @@ for P in "${PLATFORMS[@]}"; do
     if [ "$OS" = 'linux' ]; then
         # DEB
         (
+            DEBARCH="$ARCH"
+
+            if [ "$ARM" == '5' ]; then
+                DEBARCH='armel'
+            elif [ "$ARM" == '6' ]; then
+                DEBARCH='armhf'
+            fi
+
             cd "$TRAVIS_BUILD_DIR/contrib"
             ln -s "$PTMP" "$TRAVIS_BUILD_DIR/contrib/$NAME"
             m4 -DVER="$VER" -DDATE="$(date '+%a, %d %b %Y %H:%M:%S %z')" debian/changelog.m4 > debian/changelog
-            dpkg-buildpackage -a$ARCH -tc -b -kCA67951CD2BBE8AAE4210B72FB90C91F64BED28C
+            dpkg-buildpackage -a$DEBARCH -tc -b -kCA67951CD2BBE8AAE4210B72FB90C91F64BED28C
         )
         debsigs --sign=origin -k CA67951CD2BBE8AAE4210B72FB90C91F64BED28C "$TRAVIS_BUILD_DIR"/*.deb
-        mv "$TRAVIS_BUILD_DIR"/*.deb $TMP
+        mv "$TRAVIS_BUILD_DIR"/*.deb "$TMP"
 
         # RPM
         if [ "$ARCH" = 'amd64' ]; then
