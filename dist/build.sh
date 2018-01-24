@@ -27,7 +27,7 @@ for P in "${PLATFORMS[@]}"; do
 
     mkdir -p "$PTMP"
 
-    if [ -z "$ARM" ]; then
+    if [ "$ARCH" == "$ARM" ]; then
         GOOS="$OS" GOARCH="$ARCH" CGO_ENABLED=0 go build -ldflags='-s -w' -o "$PTMP/$NAME" github.com/jtyr/gbt/cmd/gbt
     else
         ARCH="${ARCH%%:*}"
