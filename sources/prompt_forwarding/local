@@ -7,10 +7,10 @@ function gbt__err() {
 
 function gbt__local_rcfile() {
     [ -z "$GBT__HOME$GBT__PROFILE" ] && gbt__err "'GBT__HOME' not defined" && return 1
-    [ -z "$GBT__HOME$GBT__THEME" ] && gbt__err "'GBT__HOME' not defined" && return 1
+    [ -z "$GBT__HOME$GBT__THEME_SSH" ] && gbt__err "'GBT__HOME' not defined" && return 1
     [ -z "$GBT__PROFILE" ] && local GBT__PROFILE="$GBT__HOME/sources/prompt_forwarding/remote"
-    [ -z "$GBT__THEME" ] && local GBT__THEME="$GBT__HOME/themes/ssh_prompt"
-    [ -z "$GBT__THEME_MYSQL" ] && local GBT__THEME_MYSQL="$GBT__HOME/themes/mysql_prompt"
+    [ -z "$GBT__THEME_SSH" ] && local GBT__THEME_SSH="$GBT__HOME/themes/ssh/${GBT__THEME_SSH_NAME:=default}"
+    [ -z "$GBT__THEME_MYSQL" ] && local GBT__THEME_MYSQL="$GBT__HOME/themes/mysql/${GBT__THEME_MYSQL_NAME:=default}"
 
     GBT__CONF="/tmp/.gbt.$RANDOM"
 
@@ -18,13 +18,13 @@ function gbt__local_rcfile() {
     cat $GBT__PROFILE >> $GBT__CONF
     (alias | awk '/gbt_/ {sub(/^(alias )?(gbt___)?/, "", $0); print "alias "$0}') >> $GBT__CONF
     echo -n "export GBT__STATUS='" >> $GBT__CONF
-    (source $GBT__THEME; GBT_SHELL='bash' GBT_CARS='Status, Custom1' gbt 1) >> $GBT__CONF
+    (source $GBT__THEME_SSH; GBT_SHELL='bash' GBT_CARS='Status, Custom1' gbt 1) >> $GBT__CONF
     echo "'" >> $GBT__CONF
     echo -n "export GBT__MYSQL_PS1='" >> $GBT__CONF
     (source $GBT__THEME_MYSQL; gbt) >> $GBT__CONF
     echo "'" >> $GBT__CONF
     echo -n "PS1='" >> $GBT__CONF
-    (source $GBT__THEME; gbt) >> $GBT__CONF
+    (source $GBT__THEME_SSH; gbt) >> $GBT__CONF
     echo "'" >> $GBT__CONF
 
     echo -e "#!/bin/bash\nbash --rcfile $GBT__CONF \"\$@\"" > $GBT__CONF.bash
@@ -35,9 +35,9 @@ function gbt__local_rcfile() {
 
 function gbt_docker() {
     [ -z "$GBT__HOME$GBT__PROFILE" ] && gbt__err "'GBT__HOME' not defined" && return 1
-    [ -z "$GBT__HOME$GBT__THEME" ] && gbt__err "'GBT__HOME' not defined" && return 1
+    [ -z "$GBT__HOME$GBT__THEME_SSH" ] && gbt__err "'GBT__HOME' not defined" && return 1
     [ -z "$GBT__PROFILE" ] && local GBT__PROFILE="$GBT__HOME/sources/prompt_forwarding/remote"
-    [ -z "$GBT__THEME" ] && local GBT__THEME="$GBT__HOME/themes/ssh_prompt"
+    [ -z "$GBT__THEME_SSH" ] && local GBT__THEME_SSH="$GBT__HOME/themes/ssh/${GBT__THEME_SSH_NAME:=default}"
 
     local WHICH=$(which $GBT__WHICH_OPTS which 2>/dev/null)
     [ -z $WHICH ] && gbt__err "'which' not found" && return 1
@@ -61,9 +61,9 @@ function gbt_docker() {
 
 function gbt_mysql() {
     [ -z "$GBT__HOME$GBT__PROFILE" ] && gbt__err "'GBT__HOME' not defined" && return 1
-    [ -z "$GBT__HOME$GBT__THEME" ] && gbt__err "'GBT__HOME' not defined" && return 1
+    [ -z "$GBT__HOME$GBT__THEME_SSH" ] && gbt__err "'GBT__HOME' not defined" && return 1
     [ -z "$GBT__PROFILE" ] && local GBT__PROFILE="$GBT__HOME/sources/prompt_forwarding/remote"
-    [ -z "$GBT__THEME_MYSQL" ] && local GBT__THEME_MYSQL="$GBT__HOME/themes/mysql_prompt"
+    [ -z "$GBT__THEME_MYSQL" ] && local GBT__THEME_MYSQL="$GBT__HOME/themes/mysql/${GBT__THEME_MYSQL_NAME:=default}"
 
     local WHICH=$(which $GBT__WHICH_OPTS which 2>/dev/null)
     [ -z $WHICH ] && gbt__err "'which' not found" && return 1
@@ -75,10 +75,10 @@ function gbt_mysql() {
 
 function gbt_ssh() {
     [ -z "$GBT__HOME$GBT__PROFILE" ] && gbt__err "'GBT__HOME' not defined" && return 1
-    [ -z "$GBT__HOME$GBT__THEME" ] && gbt__err "'GBT__HOME' not defined" && return 1
+    [ -z "$GBT__HOME$GBT__THEME_SSH" ] && gbt__err "'GBT__HOME' not defined" && return 1
     [ -z "$GBT__PROFILE" ] && local GBT__PROFILE="$GBT__HOME/sources/prompt_forwarding/remote"
-    [ -z "$GBT__THEME" ] && local GBT__THEME="$GBT__HOME/themes/ssh_prompt"
-    [ -z "$GBT__THEME_MYSQL" ] && local GBT__THEME_MYSQL="$GBT__HOME/themes/mysql_prompt"
+    [ -z "$GBT__THEME_SSH" ] && local GBT__THEME_SSH="$GBT__HOME/themes/ssh/${GBT__THEME_SSH_NAME:=default}"
+    [ -z "$GBT__THEME_MYSQL" ] && local GBT__THEME_MYSQL="$GBT__HOME/themes/mysql/${GBT__THEME_MYSQL_NAME:=default}"
 
     local WHICH=$(which $GBT__WHICH_OPTS which 2>/dev/null)
     [ -z $WHICH ] && gbt__err "'which' not found" && return 1
@@ -95,13 +95,13 @@ function gbt_ssh() {
             echo '$(base64 $GBT__PROFILE | tr -d '\r\n')' | base64 -d >> \$GBT__CONF &&
             echo '$(alias | awk '/gbt_/ {sub(/^(alias )?(gbt___)?/, "", $0); print "alias "$0}' | base64 | tr -d '\r\n')' | base64 -d >> \$GBT__CONF &&
             echo -n \"export GBT__STATUS='\" >> \$GBT__CONF &&
-            echo -n '$(source $GBT__THEME; GBT_SHELL='bash' GBT_CARS='Status, Custom1' gbt 1 | base64 | tr -d '\r\n')' | base64 -d >> \$GBT__CONF &&
+            echo -n '$(source $GBT__THEME_SSH; GBT_SHELL='bash' GBT_CARS='Status, Custom1' gbt 1 | base64 | tr -d '\r\n')' | base64 -d >> \$GBT__CONF &&
             echo \"'\" >> \$GBT__CONF &&
             echo -n \"export GBT__MYSQL_PS1='\" >> \$GBT__CONF &&
             echo -n '$(source $GBT__THEME_MYSQL; gbt | base64 | tr -d '\r\n')' | base64 -d >> \$GBT__CONF &&
             echo \"'\" >> \$GBT__CONF &&
             echo -n \"PS1='\" >> \$GBT__CONF &&
-            echo -n '$(source $GBT__THEME; gbt | base64 | tr -d '\r\n')' | base64 -d >> \$GBT__CONF &&
+            echo -n '$(source $GBT__THEME_SSH; gbt | base64 | tr -d '\r\n')' | base64 -d >> \$GBT__CONF &&
             echo \"'\" >> \$GBT__CONF &&
             bash --rcfile \$GBT__CONF;
             rm -f \$GBT__CONF \$GBT__CONF.bash"
@@ -143,10 +143,10 @@ function gbt_sudo() {
 
 function gbt_vagrant() {
     [ -z "$GBT__HOME$GBT__PROFILE" ] && gbt__err "'GBT__HOME' not defined" && return 1
-    [ -z "$GBT__HOME$GBT__THEME" ] && gbt__err "'GBT__HOME' not defined" && return 1
+    [ -z "$GBT__HOME$GBT__THEME_SSH" ] && gbt__err "'GBT__HOME' not defined" && return 1
     [ -z "$GBT__PROFILE" ] && local GBT__PROFILE="$GBT__HOME/sources/prompt_forwarding/remote"
-    [ -z "$GBT__THEME" ] && local GBT__THEME="$GBT__HOME/themes/ssh_prompt"
-    [ -z "$GBT__THEME_MYSQL" ] && local GBT__THEME_MYSQL="$GBT__HOME/themes/mysql_prompt"
+    [ -z "$GBT__THEME_SSH" ] && local GBT__THEME_SSH="$GBT__HOME/themes/ssh/${GBT__THEME_SSH_NAME:=default}"
+    [ -z "$GBT__THEME_MYSQL" ] && local GBT__THEME_MYSQL="$GBT__HOME/themes/mysql/${GBT__THEME_MYSQL_NAME:=default}"
 
     local WHICH=$(which $GBT__WHICH_OPTS which 2>/dev/null)
     [ -z $WHICH ] && gbt__err "'which' not found" && return 1
@@ -164,13 +164,13 @@ function gbt_vagrant() {
             echo '$(base64 $GBT__PROFILE | tr -d '\r\n')' | base64 -d >> \$GBT__CONF &&
             echo '$(alias | awk '/gbt_/ {sub(/^(alias )?(gbt___)?/, "", $0); print "alias "$0}' | base64 | tr -d '\r\n')' | base64 -d >> \$GBT__CONF &&
             echo -n \"export GBT__STATUS='\" >> \$GBT__CONF &&
-            echo -n '$(source $GBT__THEME; GBT_SHELL='bash' GBT_CARS='Status, Custom1' gbt 1 | base64 | tr -d '\r\n')' | base64 -d >> \$GBT__CONF &&
+            echo -n '$(source $GBT__THEME_SSH; GBT_SHELL='bash' GBT_CARS='Status, Custom1' gbt 1 | base64 | tr -d '\r\n')' | base64 -d >> \$GBT__CONF &&
             echo \"'\" >> \$GBT__CONF &&
             echo -n \"export GBT__MYSQL_PS1='\" >> \$GBT__CONF &&
             echo -n '$(source $GBT__THEME_MYSQL; gbt | base64 | tr -d '\r\n')' | base64 -d >> \$GBT__CONF &&
             echo \"'\" >> \$GBT__CONF &&
             echo -n \"PS1='\" >> \$GBT__CONF &&
-            echo -n '$(source $GBT__THEME; gbt | base64 | tr -d '\r\n')' | base64 -d >> \$GBT__CONF &&
+            echo -n '$(source $GBT__THEME_SSH; gbt | base64 | tr -d '\r\n')' | base64 -d >> \$GBT__CONF &&
             echo \"'\" >> \$GBT__CONF &&
             bash --rcfile \$GBT__CONF;
             rm -f \$GBT__CONF \$GBT__CONF.bash" "$@"

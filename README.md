@@ -186,7 +186,7 @@ unset GBT_CAR_TIME_FORMAT
 unset GBT_CARS
 ### Themes
 # Load theme
-source /usr/share/gbt/themes/square_brackets_multiline
+source /usr/share/gbt/themes/local/square_brackets_multiline
 ```
 
 
