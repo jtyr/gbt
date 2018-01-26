@@ -69,13 +69,11 @@ branch.
 Packages hosted by [Packagecloud](https://packagecloud.io/gbt/release)):
 
 ```shell
-cat > /etc/yum.repos.d/gbt.repo <<END
-[gbt]
+echo '[gbt]
 name=GBT YUM repo
-baseurl=https://packagecloud.io/gbt/release/el/7/\$basearch
+baseurl=https://packagecloud.io/gbt/release/el/7/$basearch
 gpgkey=https://packagecloud.io/gbt/release/gpgkey/jtyr-gbt-4C6E79EFF45439B6.pub.gpg
-gpgcheck=1
-END
+gpgcheck=1' | sudo tee /tmp/gbt.repo >/dev/null
 yum install gbt
 ```
 
@@ -87,8 +85,8 @@ distribution regardless its version.
 Packages hosted by [Packagecloud](https://packagecloud.io/gbt/release)):
 
 ```shell
-curl -L https://packagecloud.io/gbt/release/gpgkey | apt-key add -
-echo 'deb https://packagecloud.io/gbt/release/ubuntu/ xenial main' > /etc/apt/sources.list.d/gbt.list
+curl -L https://packagecloud.io/gbt/release/gpgkey | sudo apt-key add -
+echo 'deb https://packagecloud.io/gbt/release/ubuntu/ xenial main' | sudo tee /etc/apt/sources.list.d/gbt.list >/dev/null
 apt-get update
 apt-get install gbt
 ```
