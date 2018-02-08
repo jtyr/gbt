@@ -75,22 +75,22 @@ func TestGetEnvBool(t *testing.T) {
         set bool
         setVal string
     }{
-        { name: "XXX", fallback: false, expectedVal: false, set: false, setVal: ""       },
-        { name: "YYY", fallback: true,  expectedVal: true,  set: true, setVal: "1"       },
-        { name: "YYY", fallback: true,  expectedVal: true,  set: true, setVal: "true"    },
-        { name: "YYY", fallback: true,  expectedVal: true,  set: true, setVal: "True"    },
-        { name: "YYY", fallback: true,  expectedVal: true,  set: true, setVal: "TRUE"    },
-        { name: "YYY", fallback: true,  expectedVal: true,  set: true, setVal: "yes"     },
-        { name: "YYY", fallback: true,  expectedVal: true,  set: true, setVal: "Yes"     },
-        { name: "YYY", fallback: true,  expectedVal: true,  set: true, setVal: "YES"     },
-        { name: "YYY", fallback: true,  expectedVal: false, set: true, setVal: "0"       },
-        { name: "YYY", fallback: true,  expectedVal: false, set: true, setVal: "false"   },
-        { name: "YYY", fallback: true,  expectedVal: false, set: true, setVal: "False"   },
-        { name: "YYY", fallback: true,  expectedVal: false, set: true, setVal: "FALSE"   },
-        { name: "YYY", fallback: true,  expectedVal: false, set: true, setVal: "no"      },
-        { name: "YYY", fallback: true,  expectedVal: false, set: true, setVal: "No"      },
-        { name: "YYY", fallback: true,  expectedVal: false, set: true, setVal: "NO"      },
-        { name: "YYY", fallback: true,  expectedVal: false, set: true, setVal: "UNKNOWN" },
+        { name: "XXX", fallback: false, expectedVal: false, set: false, setVal: ""        },
+        { name: "YYY", fallback: true,  expectedVal: true,  set: true,  setVal: "1"       },
+        { name: "YYY", fallback: true,  expectedVal: true,  set: true,  setVal: "true"    },
+        { name: "YYY", fallback: true,  expectedVal: true,  set: true,  setVal: "True"    },
+        { name: "YYY", fallback: true,  expectedVal: true,  set: true,  setVal: "TRUE"    },
+        { name: "YYY", fallback: true,  expectedVal: true,  set: true,  setVal: "yes"     },
+        { name: "YYY", fallback: true,  expectedVal: true,  set: true,  setVal: "Yes"     },
+        { name: "YYY", fallback: true,  expectedVal: true,  set: true,  setVal: "YES"     },
+        { name: "YYY", fallback: true,  expectedVal: false, set: true,  setVal: "0"       },
+        { name: "YYY", fallback: true,  expectedVal: false, set: true,  setVal: "false"   },
+        { name: "YYY", fallback: true,  expectedVal: false, set: true,  setVal: "False"   },
+        { name: "YYY", fallback: true,  expectedVal: false, set: true,  setVal: "FALSE"   },
+        { name: "YYY", fallback: true,  expectedVal: false, set: true,  setVal: "no"      },
+        { name: "YYY", fallback: true,  expectedVal: false, set: true,  setVal: "No"      },
+        { name: "YYY", fallback: true,  expectedVal: false, set: true,  setVal: "NO"      },
+        { name: "YYY", fallback: true,  expectedVal: false, set: true,  setVal: "UNKNOWN" },
     }
 
     for i, test := range tests {
