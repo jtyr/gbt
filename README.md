@@ -292,11 +292,15 @@ Formatting is done via `_FM` variables. The possible values are:
 
   No formatting applied.
 
-  Example:
+  Multiple formattings can be combined into comma-separated list.
+
+  Examples:
 
   ```shell
   # Set the directory name to be bold
   export GBT_CAR_DIR_FM='bold'
+  # Set the directory name to be bold and underlined
+  export GBT_CAR_DIR_FM='bold,underline'
   ```
 
 
@@ -371,15 +375,18 @@ Formatting is done via `_FM` variables. The possible values are:
 
 - `GBT_SHELL`
 
-  Indicates which shell is used. The value can be either `zsh` or `bash`. By
-  default, the value is extracted from the `$SHELL` environment variable. Set
-  this variable to `bash` if your default shell is ZSH but you want to test GBT
-  in Bash:
+  Indicates which shell is used. The value can be either `zsh`, `bash` or
+  `plain`. By default, the value is extracted from the `$SHELL` environment
+  variable. Set this variable to `bash` if your default shell is ZSH but you
+  want to test GBT in Bash:
 
   ```shell
   export GBT_SHELL='bash'
   bash
   ```
+  If set to `plain`, no shell-specific decoration is included in the output
+  text. That's suitable for displaying the GBT-generated string in the console
+  output.
 
 - `GBT_DEBUG='0'`
 
