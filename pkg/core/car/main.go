@@ -201,7 +201,11 @@ func (c *Car) GetFormat(name string, end bool) (ret string) {
     }
 
     if strings.Contains(name, "bold") {
-        seq += fmt.Sprintf("%s[%s1m", esc, kind)
+        if end {
+            seq += fmt.Sprintf("%s[22m", esc)
+        } else {
+            seq += fmt.Sprintf("%s[%s1m", esc, kind)
+        }
     }
 
     if strings.Contains(name, "underline") {
