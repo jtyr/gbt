@@ -1332,7 +1332,7 @@ Shows kubectl information
 | `GBT_CAR_KUBECTL_BG`             | `'light_blue'`                               |                                                                                                           |
 | `GBT_CAR_KUBECTL_FG`             | `'white'`                                    |                                                                                                           |
 | `GBT_CAR_KUBECTL_FM`             | `'none'`                                     |                                                                                                           |
-| `GBT_CAR_KUBECTL_FORMAT`         | `' {{ Icon }} {{ Context }}|{{ Cluster }} '` | The text of the car. The following variables can be used:  Icon, Context, Cluster, AuthInfo and Namespace |
+| `GBT_CAR_KUBECTL_FORMAT`         | `' {{ Icon }} {{ Context }}\|{{ Cluster }} '` | The text of the car. The following variables can be used:  Icon, Context, Cluster, AuthInfo and Namespace |
 | `GBT_CAR_KUBECTL_ICON_BG`        |                                              |                                                                                                           |
 | `GBT_CAR_KUBECTL_ICON_FG`        |                                              |                                                                                                           |
 | `GBT_CAR_KUBECTL_ICON_FM`        |                                              |                                                                                                           |
