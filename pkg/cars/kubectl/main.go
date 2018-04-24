@@ -44,7 +44,7 @@ func getCurrentContext(display bool) *kubeContextInfo {
 
 	matchGroupMapping := make(map[string]string)
 	if rc == 0 {
-		var re = regexp.MustCompile(`(?m)^\*[\t\f\v ]+(?P<Context>[\w\-]+)[\t\f\v ]+(?P<Cluster>[\w\-]+)\s+(?P<AuthInfo>[\w\-]+)(?:[\t\f\v ]+(?P<Namespace>[\w\-]+))?$`)
+		var re = regexp.MustCompile(`(?m)^\*[\t\f\v ]+(?P<Context>[\w\-]+)[\t\f\v ]+(?P<Cluster>[\w\-]+)\s+(?P<AuthInfo>[\w\-]+)(?:[\t\f\v ]+(?P<Namespace>[\w\-]+)?)?$`)
 		groupNames := re.SubexpNames()
 		for _, match := range re.FindAllStringSubmatch(out, -1) {
 			for groupIdx, value := range match {
