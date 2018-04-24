@@ -16,6 +16,7 @@ import (
     signCar      "github.com/jtyr/gbt/pkg/cars/sign"
     statusCar    "github.com/jtyr/gbt/pkg/cars/status"
     timeCar      "github.com/jtyr/gbt/pkg/cars/time"
+    kubectlCar   "github.com/jtyr/gbt/pkg/cars/kubectl"
 
     "github.com/jtyr/gbt/pkg/core/car"
     "github.com/jtyr/gbt/pkg/core/utils"
@@ -161,6 +162,7 @@ func main() {
         "Sign":      &signCar.Car{},
         "Status":    &statusCar.Car{},
         "Time":      &timeCar.Car{},
+        "Kubectl":   &kubectlCar.Car{},
     }
     cars := []Cars{}
 
