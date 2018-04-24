@@ -15,7 +15,7 @@ func TestInit(t *testing.T) {
 		expectedNamespace string
 	}{
 		{
-			kubectlLookupCmd:    "kubectl",
+			kubectlLookupCmd:    "echo",
 			runGetContexts:    []string{"echo", "CURRENT   NAME            CLUSTER         AUTHINFO        NAMESPACE\n*         minikube        minikube        minikube\n"},
 			expectedDisplay:   true,
 			expectedContext:   "minikube",
@@ -24,7 +24,7 @@ func TestInit(t *testing.T) {
 			expectedNamespace: "",
 		},
 		{
-			kubectlLookupCmd:    "kubectl",
+			kubectlLookupCmd:    "echo",
 			runGetContexts:    []string{"echo", "CURRENT   NAME            CLUSTER         AUTHINFO        NAMESPACE\n*         context        cluster        authinfo        namespace\n"},
 			expectedDisplay:   true,
 			expectedContext:   "context",
