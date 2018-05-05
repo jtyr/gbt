@@ -11,6 +11,7 @@ import (
     exectimeCar  "github.com/jtyr/gbt/pkg/cars/exectime"
     gitCar       "github.com/jtyr/gbt/pkg/cars/git"
     hostnameCar  "github.com/jtyr/gbt/pkg/cars/hostname"
+    kubectlCar   "github.com/jtyr/gbt/pkg/cars/kubectl"
     osCar        "github.com/jtyr/gbt/pkg/cars/os"
     pyvirtenvCar "github.com/jtyr/gbt/pkg/cars/pyvirtenv"
     signCar      "github.com/jtyr/gbt/pkg/cars/sign"
@@ -156,6 +157,7 @@ func main() {
         "ExecTime":  &exectimeCar.Car{},
         "Git":       &gitCar.Car{},
         "Hostname":  &hostnameCar.Car{},
+        "Kubectl":   &kubectlCar.Car{},
         "Os":        &osCar.Car{},
         "PyVirtEnv": &pyvirtenvCar.Car{},
         "Sign":      &signCar.Car{},
