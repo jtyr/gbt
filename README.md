@@ -874,49 +874,104 @@ local machine.
 
 #### `Kubectl` car
 
-Shows kubectl information. The items without a description should hopefully be straightforward named. All BG/FG/FM variable fall back to `GBT_CAR_KUBECTL_*` variables if not set.
+Car that displays `kubectl` information.
 
-- `GBT_CAR_KUBECTL_BG='light_blue'`
+- `GBT_CAR_KUBECTL_BG='26'`
+
+  Background color of the car.
+
 - `GBT_CAR_KUBECTL_FG='white'`
-- `GBT_CAR_KUBECTL_FM='none'`
-- `GBT_CAR_KUBECTL_FORMAT=' {{ Icon }} {{ Context }}|{{ Cluster }} '`
 
-  The text of the car. The variables below can be used. Each individual variable can be overriden by
+  Foreground color of the car.
+
+- `GBT_CAR_KUBECTL_FM='none'`
+
+  Formatting of the car.
+
+- `GBT_CAR_KUBECTL_FORMAT=' {{ Icon }} {{ Context }} '`
+
+  Format of the car. `{{ Cluster }}`, `{{ AuthInfo }}` and `{{ Namespace }}`
+  can be used here as well.
 
 - `GBT_CAR_KUBECTL_ICON_BG`
+
+  Background color of the `{{ Icon }}` element.
+
 - `GBT_CAR_KUBECTL_ICON_FG`
+
+  Foreground color of the `{{ Icon }}` element.
+
 - `GBT_CAR_KUBECTL_ICON_FM`
+
+  Formatting of the `{{ Icon }}` element.
+
 - `GBT_CAR_KUBECTL_ICON_TEXT='⎈'`
 
-  The icon to use for the kubectl car
+  Text content of the `{{ Icon }}` element.
 
 - `GBT_CAR_KUBECTL_CONTEXT_BG`
+
+  Background color of the `{{ Context }}` element.
+
 - `GBT_CAR_KUBECTL_CONTEXT_FG`
+
+  Foreground color of the `{{ Context }}` element.
+
 - `GBT_CAR_KUBECTL_CONTEXT_FM`
+
+  Formatting of the `{{ Context }}` element.
+
 - `GBT_CAR_KUBECTL_CONTEXT_TEXT`
 
-  The text to use instead of the current context retrieved from kubectl
+  Text content of the `{{ Context }}` element.
 
 - `GBT_CAR_KUBECTL_CLUSTER_BG`
+
+  Background color of the `{{ Cluster }}` element.
+
 - `GBT_CAR_KUBECTL_CLUSTER_FG`
+
+  Foreground color of the `{{ Cluster }}` element.
+
 - `GBT_CAR_KUBECTL_CLUSTER_FM`
+
+  Formatting of the `{{ Cluster }}` element.
+
 - `GBT_CAR_KUBECTL_CLUSTER_TEXT`
 
-  The text to use instead of the current cluster retrieved from kubectl
+  Text content of the `{{ Cluster }}` element.
 
 - `GBT_CAR_KUBECTL_AUTHINFO_BG`
+
+  Background color of the `{{ AuthInfo }}` element.
+
 - `GBT_CAR_KUBECTL_AUTHINFO_FG`
+
+  Foreground color of the `{{ AuthInfo }}` element.
+
 - `GBT_CAR_KUBECTL_AUTHINFO_FM`
+
+  Formatting of the `{{ AuthInfo }}` element.
+
 - `GBT_CAR_KUBECTL_AUTHINFO_TEXT`
 
-  The text to use instead of the current authentication info retrieved from kubectl
+  Text content of the `{{ AuthInfo }}` element.
 
 - `GBT_CAR_KUBECTL_NAMESPACE_BG`
+
+  Background color of the `{{ Namespace }}` element.
+
 - `GBT_CAR_KUBECTL_NAMESPACE_FG`
+
+  Foreground color of the `{{ Namespace }}` element.
+
 - `GBT_CAR_KUBECTL_NAMESPACE_FM`
+
+  Formatting of the `{{ Namespace }}` element.
+
 - `GBT_CAR_KUBECTL_NAMESPACE_TEXT`
 
-  The text to use instead of the current nameespace retrieved from kubectl
+  Text content of the `{{ Namespace }}` element.
 
 
 #### `Os` car
@@ -1367,6 +1422,7 @@ Car that displays current date and time.
 - `GBT_CAR_TIME_SEP`
 
   Custom separator string for this car.
+
 
 Benchmark
 ---------
