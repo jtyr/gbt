@@ -872,6 +872,53 @@ local machine.
   Custom separator string for this car.
 
 
+#### `Kubectl` car
+
+Shows kubectl information. The items without a description should hopefully be straightforward named. All BG/FG/FM variable fall back to `GBT_CAR_KUBECTL_*` variables if not set.
+
+- `GBT_CAR_KUBECTL_BG='light_blue'`
+- `GBT_CAR_KUBECTL_FG='white'`
+- `GBT_CAR_KUBECTL_FM='none'`
+- `GBT_CAR_KUBECTL_FORMAT=' {{ Icon }} {{ Context }}|{{ Cluster }} '`
+
+  The text of the car. The variables below can be used. Each individual variable can be overriden by
+
+- `GBT_CAR_KUBECTL_ICON_BG`
+- `GBT_CAR_KUBECTL_ICON_FG`
+- `GBT_CAR_KUBECTL_ICON_FM`
+- `GBT_CAR_KUBECTL_ICON_TEXT='⎈'`
+
+  The icon to use for the kubectl car
+
+- `GBT_CAR_KUBECTL_CONTEXT_BG`
+- `GBT_CAR_KUBECTL_CONTEXT_FG`
+- `GBT_CAR_KUBECTL_CONTEXT_FM`
+- `GBT_CAR_KUBECTL_CONTEXT_TEXT`
+
+  The text to use instead of the current context retrieved from kubectl
+
+- `GBT_CAR_KUBECTL_CLUSTER_BG`
+- `GBT_CAR_KUBECTL_CLUSTER_FG`
+- `GBT_CAR_KUBECTL_CLUSTER_FM`
+- `GBT_CAR_KUBECTL_CLUSTER_TEXT`
+
+  The text to use instead of the current cluster retrieved from kubectl
+
+- `GBT_CAR_KUBECTL_AUTHINFO_BG`
+- `GBT_CAR_KUBECTL_AUTHINFO_FG`
+- `GBT_CAR_KUBECTL_AUTHINFO_FM`
+- `GBT_CAR_KUBECTL_AUTHINFO_TEXT`
+
+  The text to use instead of the current authentication info retrieved from kubectl
+
+- `GBT_CAR_KUBECTL_NAMESPACE_BG`
+- `GBT_CAR_KUBECTL_NAMESPACE_FG`
+- `GBT_CAR_KUBECTL_NAMESPACE_FM`
+- `GBT_CAR_KUBECTL_NAMESPACE_TEXT`
+
+  The text to use instead of the current nameespace retrieved from kubectl
+
+
 #### `Os` car
 
 Car that displays icon of the operating system.
@@ -1320,39 +1367,6 @@ Car that displays current date and time.
 - `GBT_CAR_TIME_SEP`
 
   Custom separator string for this car.
-
-
-#### `Kubectl` car
-
-Shows kubectl information
-
-
-| Variable                         | Default value                                | Description                                                                                               |
-|----------------------------------|----------------------------------------------|-----------------------------------------------------------------------------------------------------------|
-| `GBT_CAR_KUBECTL_BG`             | `'light_blue'`                               |                                                                                                           |
-| `GBT_CAR_KUBECTL_FG`             | `'white'`                                    |                                                                                                           |
-| `GBT_CAR_KUBECTL_FM`             | `'none'`                                     |                                                                                                           |
-| `GBT_CAR_KUBECTL_FORMAT`         | `' {{ Icon }} {{ Context }}\|{{ Cluster }} '` | The text of the car. The following variables can be used:  Icon, Context, Cluster, AuthInfo and Namespace |
-| `GBT_CAR_KUBECTL_ICON_BG`        |                                              |                                                                                                           |
-| `GBT_CAR_KUBECTL_ICON_FG`        |                                              |                                                                                                           |
-| `GBT_CAR_KUBECTL_ICON_FM`        |                                              |                                                                                                           |
-| `GBT_CAR_KUBECTL_ICON_TEXT`      | `'⎈'`                                        | The icon to use for the kubectl car                                                                       |
-| `GBT_CAR_KUBECTL_CONTEXT_BG`     |                                              |                                                                                                           |
-| `GBT_CAR_KUBECTL_CONTEXT_FG`     |                                              |                                                                                                           |
-| `GBT_CAR_KUBECTL_CONTEXT_FM`     |                                              |                                                                                                           |
-| `GBT_CAR_KUBECTL_CONTEXT_TEXT`   |                                              | The text to use instead of the current context retrieved from kubectl                                     |
-| `GBT_CAR_KUBECTL_CLUSTER_BG`     |                                              |                                                                                                           |
-| `GBT_CAR_KUBECTL_CLUSTER_FG`     |                                              |                                                                                                           |
-| `GBT_CAR_KUBECTL_CLUSTER_FM`     |                                              |                                                                                                           |
-| `GBT_CAR_KUBECTL_CLUSTER_TEXT`   |                                              | The text to use instead of the current cluster retrieved from kubectl                                     |
-| `GBT_CAR_KUBECTL_AUTHINFO_BG`    |                                              |                                                                                                           |
-| `GBT_CAR_KUBECTL_AUTHINFO_FG`    |                                              |                                                                                                           |
-| `GBT_CAR_KUBECTL_AUTHINFO_FM`    |                                              |                                                                                                           |
-| `GBT_CAR_KUBECTL_AUTHINFO_TEXT`  |                                              | The text to use instead of the current authentication info retrieved from kubectl                         |
-| `GBT_CAR_KUBECTL_NAMESPACE_BG`   |                                              |                                                                                                           |
-| `GBT_CAR_KUBECTL_NAMESPACE_FG`   |                                              |                                                                                                           |
-| `GBT_CAR_KUBECTL_NAMESPACE_FM`   |                                              |                                                                                                           |
-| `GBT_CAR_KUBECTL_NAMESPACE_TEXT` |                                              | The text to use instead of the current nameespace retrieved from kubectl                                  |
 
 Benchmark
 ---------
