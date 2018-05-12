@@ -11,10 +11,6 @@ type Car struct {
 }
 
 func getMsgMapping(exitStatus string) (msg string) {
-    if exitStatus == "0" {
-        return "OK"
-    }
-
     // Inspired by code from zsh-prompt-powerline:
     // https://github.com/bric3/nice-exit-code/blob/master/nice-exit-code.plugin.zsh
     //
@@ -26,6 +22,7 @@ func getMsgMapping(exitStatus string) (msg string) {
     switch exitStatus {
     // usual exit codes
     case "-1": return "FATAL"
+    case "0": return "OK"
     case "1": return "FAIL" // Miscellaneous errors, such as "divide by zero"
     case "2": return "BUILTINMISUSE" // misuse of shell builtins (pretty rare)
     case "6": return "UNKADDR" // Unknown address or device, e.g.: curl foo; echo $?
