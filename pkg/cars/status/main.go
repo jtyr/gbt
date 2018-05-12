@@ -15,6 +15,14 @@ func getMsgMapping(exitStatus string) (msg string) {
         return "OK"
     }
 
+    // Inspired by code from zsh-prompt-powerline:
+    // https://github.com/bric3/nice-exit-code/blob/master/nice-exit-code.plugin.zsh
+    //
+    // Statuses based on above script + the following URLs:
+    // Advanced Bash-Scripting Guide: http://tldp.org/LDP/abs/html/exitcodes.html
+    // StackExchange: https://unix.stackexchange.com/a/254747/53489
+    //
+    // Unfortunately no good resources that provide the same details for zsh and/or other shells
     switch exitStatus {
     // usual exit codes
     case "-1": return "FATAL"
@@ -23,8 +31,8 @@ func getMsgMapping(exitStatus string) (msg string) {
     case "6": return "UNKADDR" // Unknown address or device, e.g.: curl foo; echo $?
 
     // issue with the actual command being invoked
-    case "126": return "NEXEC" // cannot invoke requested command (ex : source script_with_syntax_error)
-    case "127": return "CNOTFOUND" // command not found (ex : source script_not_existing)
+    case "126": return "NOEXEC" // cannot invoke requested command (ex : source script_with_syntax_error)
+    case "127": return "NOTFOUND" // command not found (ex : source script_not_existing)
 
     // errors from signal (error code = 128 + signal). These signals are based for "x86, arm, and most other architectures"
     // see "man 7 signal" on Linux or "man signal" on BSD
