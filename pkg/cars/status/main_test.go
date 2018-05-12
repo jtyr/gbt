@@ -22,7 +22,7 @@ func TestInit(t *testing.T) {
         },
         {
             args: "126",
-            expectedMsg: "NEXEC",
+            expectedMsg: "NOEXEC",
             expectedDisplay: true,
         },
     }
