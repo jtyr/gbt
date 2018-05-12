@@ -1256,6 +1256,11 @@ Variables used by the car:
   export GBT_CAR_STATUS_FORMAT=' {{ Symbol }} {{ Code }} '
   ```
 
+  You may also have a (best guess) description of the error code by adding `{{ Msg }}`.
+  Please note that this is not always accurate as the description depends on
+  the program that's exiting. The error codes are currently based on the
+  reserved bash exit codes.
+
 - `GBT_CAR_STATUS_SYMBOL_BG`
 
   Background color of the `{{ Symbol }}` element.
@@ -1273,6 +1278,22 @@ Variables used by the car:
   Format of the `{{ Symbol }}` element. The format is either `{{ Error }}` if
   the last command returned non zero return code otherwise `{{ User }}` is
   used.
+
+- `GBT_CAR_STATUS_MSG_BG`
+
+  Background color of the `{{ Msg }}` element.
+
+- `GBT_CAR_STATUS_MSG_FG`
+
+  Foreground color of the `{{ Msg }}` element.
+
+- `GBT_CAR_STATUS_MSG_FM`
+
+  Formatting color of the `{{ Msg }}` element.
+
+- `GBT_CAR_STATUS_MSG_TEXT`
+
+  Text of the `{{ Msg }}` element.
 
 - `GBT_CAR_STATUS_CODE_BG='red'`
 
