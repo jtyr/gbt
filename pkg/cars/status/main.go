@@ -10,66 +10,65 @@ type Car struct {
     car.Car
 }
 
-func getMsgMapping(exitStatus string) (msg string) {
-    // Inspired by code from zsh-prompt-powerline:
+func (c *Car) getSignal() (signal string) {
+    _, argsExist := c.Params["args"]
+
+    if ! argsExist {
+        return "?"
+    }
+
+    // The bellow statuses are based on the following URLs:
     // https://github.com/bric3/nice-exit-code/blob/master/nice-exit-code.plugin.zsh
-    //
-    // Statuses based on above script + the following URLs:
-    // Advanced Bash-Scripting Guide: http://tldp.org/LDP/abs/html/exitcodes.html
-    // StackExchange: https://unix.stackexchange.com/a/254747/53489
-    //
-    // Unfortunately no good resources that provide the same details for zsh and/or other shells
-    switch exitStatus {
-    // usual exit codes
-    case "-1": return "FATAL"
-    case "0": return "OK"
-    case "1": return "FAIL" // Miscellaneous errors, such as "divide by zero"
-    case "2": return "BUILTINMISUSE" // misuse of shell builtins (pretty rare)
-    case "6": return "UNKADDR" // Unknown address or device, e.g.: curl foo; echo $?
+    // http://tldp.org/LDP/abs/html/exitcodes.html
+    // https://unix.stackexchange.com/a/254747/53489
+    switch c.Params["args"] {
+        // Usual exit codes
+        case  "-1": return "FATAL"
+        case   "0": return "OK"
+        case   "1": return "FAIL"
+        case   "2": return "BLTINMUSE"
+        case   "6": return "UNKADDR"
 
-    // issue with the actual command being invoked
-    case "126": return "NOEXEC" // cannot invoke requested command (ex : source script_with_syntax_error)
-    case "127": return "NOTFOUND" // command not found (ex : source script_not_existing)
+        // Issue with the actual command being invoked
+        case "126": return "NOEXEC"
+        case "127": return "NOTFOUND"
 
-    // errors from signal (error code = 128 + signal). These signals are based for "x86, arm, and most other architectures"
-    // see "man 7 signal" on Linux or "man signal" on BSD
-    case "129":  return "SIGHUP"  //  1
-    case "130":  return "SIGINT"  //  2
-    case "131":  return "SIGQUIT" //  3
-    case "132":  return "SIGILL"  //  4
-    case "133":  return "SIGTRAP"  // 5
-    case "134":  return "SIGABRT" //  6
-    case "135":  return "SIGBUS"  //  7
-    case "136":  return "SIGFPE"  //  8
-    case "137":  return "SIGKILL" //  9
-    case "138":  return "SIGUSR1" // 10
-    case "139":  return "SIGSEGV" // 11
-    case "140":  return "SIGUSR2" // 12
-    case "141":  return "SIGPIPE" // 13
-    case "142":  return "SIGALRM" // 14
-    case "143":  return "SIGTERM" // 15
-    case "145":  return "SIGCHLD" // 17
-    case "146":  return "SIGCONT" // 18
-    case "147":  return "SIGSTOP" // 19
-    case "148":  return "SIGTSTP" // 20
-    case "149":  return "SIGTTIN" // 21
-    case "150":  return "SIGTTOU" // 22
+        // Signal errors (128 + signal)
+        case "129": return "SIGHUP"
+        case "130": return "SIGINT"
+        case "131": return "SIGQUIT"
+        case "132": return "SIGILL"
+        case "133": return "SIGTRAP"
+        case "134": return "SIGABRT"
+        case "135": return "SIGBUS"
+        case "136": return "SIGFPE"
+        case "137": return "SIGKILL"
+        case "138": return "SIGUSR1"
+        case "139": return "SIGSEGV"
+        case "140": return "SIGUSR2"
+        case "141": return "SIGPIPE"
+        case "142": return "SIGALRM"
+        case "143": return "SIGTERM"
+        case "145": return "SIGCHLD"
+        case "146": return "SIGCONT"
+        case "147": return "SIGSTOP"
+        case "148": return "SIGTSTP"
+        case "149": return "SIGTTIN"
+        case "150": return "SIGTTOU"
 
-    // anything else is unknown
-    default: return "UNK"
+        // Anything else is unknown
+        default:    return "UNK"
     }
 }
 
 // Checks for the return code.
-func getStatus(c *Car) (isOk bool, msg string) {
+func (c *Car) isOk() (ret bool) {
     _, argsExist := c.Params["args"]
 
     if ! argsExist || c.Params["args"] == "0" {
-        isOk = true
-        msg = ""
+        ret = true
     } else {
-        isOk = false
-        msg = getMsgMapping(c.Params["args"].(string))
+        ret = false
     }
 
     return
@@ -89,13 +88,17 @@ func (c *Car) Init() {
     defaultSymbolBg := defaultRootBg
     defaultSymbolFg := defaultRootFg
     defaultSymbolFm := defaultRootFm
+    defaultDetailsBg := defaultRootBg
+    defaultDetailsFg := defaultRootFg
+    defaultDetailsFm := defaultRootFm
     defaultCodeBg := defaultRootBg
     defaultCodeFg := defaultRootFg
     defaultCodeFm := defaultRootFm
-    defaultMsgBg := defaultRootBg
-    defaultMsgFg := defaultRootFg
-    defaultMsgFm := defaultRootFm
+    defaultSignalBg := defaultRootBg
+    defaultSignalFg := defaultRootFg
+    defaultSignalFm := defaultRootFm
 
+    defaultDetailsFormat := " {{ Signal }}"
     defaultSymbolFormat := "{{ Error }}"
     defaultCodeText := "?"
 
@@ -103,12 +106,15 @@ func (c *Car) Init() {
         defaultCodeText = val.(string)
     }
 
-    isOk, msg := getStatus(c)
-    if isOk {
+    if c.isOk() {
         defaultRootBg = utils.GetEnv("GBT_CAR_BG", defaultOkBg)
         defaultRootFg = utils.GetEnv("GBT_CAR_FG", defaultOkFg)
         defaultRootFm = utils.GetEnv("GBT_CAR_FM", defaultOkFm)
+        defaultDetailsFormat = ""
         defaultSymbolFormat = "{{ Ok }}"
+    } else {
+        defaultDetailsFormat = utils.GetEnv(
+            "GBT_CAR_STATUS_DETAILS_FORMAT", defaultDetailsFormat)
     }
 
     c.Model = map[string]car.ModelElement {
@@ -117,45 +123,6 @@ func (c *Car) Init() {
             Fg: utils.GetEnv("GBT_CAR_STATUS_FG", defaultRootFg),
             Fm: utils.GetEnv("GBT_CAR_STATUS_FM", defaultRootFm),
             Text: utils.GetEnv("GBT_CAR_STATUS_FORMAT", " {{ Symbol }} "),
-        },
-        "Symbol": {
-            Bg: utils.GetEnv(
-                "GBT_CAR_STATUS_SYMBOL_BG", utils.GetEnv(
-                    "GBT_CAR_STATUS_BG", defaultSymbolBg)),
-            Fg: utils.GetEnv(
-                "GBT_CAR_STATUS_SYMBOL_FG", utils.GetEnv(
-                    "GBT_CAR_STATUS_FG", defaultSymbolFg)),
-            Fm: utils.GetEnv(
-                "GBT_CAR_STATUS_SYMBOL_FM", utils.GetEnv(
-                    "GBT_CAR_STATUS_FM", defaultSymbolFm)),
-            Text: utils.GetEnv(
-                "GBT_CAR_STATUS_SYMBOL_FORMAT", defaultSymbolFormat),
-        },
-        "Code": {
-            Bg: utils.GetEnv(
-                "GBT_CAR_STATUS_CODE_BG", utils.GetEnv(
-                    "GBT_CAR_STATUS_BG", defaultCodeBg)),
-            Fg: utils.GetEnv(
-                "GBT_CAR_STATUS_CODE_FG", utils.GetEnv(
-                    "GBT_CAR_STATUS_FG", defaultCodeFg)),
-            Fm: utils.GetEnv(
-                "GBT_CAR_STATUS_CODE_FM", utils.GetEnv(
-                    "GBT_CAR_STATUS_FM", defaultCodeFm)),
-            Text: utils.GetEnv(
-                "GBT_CAR_STATUS_CODE_TEXT", defaultCodeText),
-        },
-        "Msg": {
-            Bg: utils.GetEnv(
-                "GBT_CAR_STATUS_MSG_BG", utils.GetEnv(
-                    "GBT_CAR_STATUS_BG", defaultMsgBg)),
-            Fg: utils.GetEnv(
-                "GBT_CAR_STATUS_MSG_FG", utils.GetEnv(
-                    "GBT_CAR_STATUS_FG", defaultMsgFg)),
-            Fm: utils.GetEnv(
-                "GBT_CAR_STATUS_MSG_FM", utils.GetEnv(
-                    "GBT_CAR_STATUS_FM", defaultMsgFm)),
-            Text: utils.GetEnv(
-                "GBT_CAR_STATUS_MSG_TEXT", msg),
         },
         "Error": {
             Bg: utils.GetEnv(
@@ -187,9 +154,60 @@ func (c *Car) Init() {
                         "GBT_CAR_STATUS_FM", defaultOkFm))),
             Text: utils.GetEnv("GBT_CAR_STATUS_OK_TEXT", "✔"),
         },
+        "Symbol": {
+            Bg: utils.GetEnv(
+                "GBT_CAR_STATUS_SYMBOL_BG", utils.GetEnv(
+                    "GBT_CAR_STATUS_BG", defaultSymbolBg)),
+            Fg: utils.GetEnv(
+                "GBT_CAR_STATUS_SYMBOL_FG", utils.GetEnv(
+                    "GBT_CAR_STATUS_FG", defaultSymbolFg)),
+            Fm: utils.GetEnv(
+                "GBT_CAR_STATUS_SYMBOL_FM", utils.GetEnv(
+                    "GBT_CAR_STATUS_FM", defaultSymbolFm)),
+            Text: utils.GetEnv(
+                "GBT_CAR_STATUS_SYMBOL_FORMAT", defaultSymbolFormat),
+        },
+        "Details": {
+            Bg: utils.GetEnv(
+                "GBT_CAR_STATUS_DETAILS_BG", utils.GetEnv(
+                    "GBT_CAR_STATUS_BG", defaultDetailsBg)),
+            Fg: utils.GetEnv(
+                "GBT_CAR_STATUS_DETAILS_FG", utils.GetEnv(
+                    "GBT_CAR_STATUS_FG", defaultDetailsFg)),
+            Fm: utils.GetEnv(
+                "GBT_CAR_STATUS_DETAILS_FM", utils.GetEnv(
+                    "GBT_CAR_STATUS_FM", defaultDetailsFm)),
+            Text: defaultDetailsFormat,
+        },
+        "Code": {
+            Bg: utils.GetEnv(
+                "GBT_CAR_STATUS_CODE_BG", utils.GetEnv(
+                    "GBT_CAR_STATUS_BG", defaultCodeBg)),
+            Fg: utils.GetEnv(
+                "GBT_CAR_STATUS_CODE_FG", utils.GetEnv(
+                    "GBT_CAR_STATUS_FG", defaultCodeFg)),
+            Fm: utils.GetEnv(
+                "GBT_CAR_STATUS_CODE_FM", utils.GetEnv(
+                    "GBT_CAR_STATUS_FM", defaultCodeFm)),
+            Text: utils.GetEnv(
+                "GBT_CAR_STATUS_CODE_TEXT", defaultCodeText),
+        },
+        "Signal": {
+            Bg: utils.GetEnv(
+                "GBT_CAR_STATUS_SIGNAL_BG", utils.GetEnv(
+                    "GBT_CAR_STATUS_BG", defaultSignalBg)),
+            Fg: utils.GetEnv(
+                "GBT_CAR_STATUS_SIGNAL_FG", utils.GetEnv(
+                    "GBT_CAR_STATUS_FG", defaultSignalFg)),
+            Fm: utils.GetEnv(
+                "GBT_CAR_STATUS_SIGNAL_FM", utils.GetEnv(
+                    "GBT_CAR_STATUS_FM", defaultSignalFm)),
+            Text: utils.GetEnv(
+                "GBT_CAR_STATUS_SIGNAL_TEXT", c.getSignal()),
+        },
     }
 
-    if isOk {
+    if c.isOk() {
         c.Display = utils.GetEnvBool("GBT_CAR_STATUS_DISPLAY", false)
     } else {
         c.Display = utils.GetEnvBool("GBT_CAR_STATUS_DISPLAY", true)

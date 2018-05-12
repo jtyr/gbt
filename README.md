@@ -1256,10 +1256,27 @@ Variables used by the car:
   export GBT_CAR_STATUS_FORMAT=' {{ Symbol }} {{ Code }} '
   ```
 
-  You may also have a (best guess) description of the error code by adding `{{ Msg }}`.
-  Please note that this is not always accurate as the description depends on
-  the program that's exiting. The error codes are currently based on the
-  reserved bash exit codes.
+  or the signal name of the return code:
+
+  ```shell
+  export GBT_CAR_STATUS_FORMAT=' {{ Symbol }} {{ Signal }} '
+  ```
+
+  If you want to display the Status train even if there is no error, you have
+  to use the `{{ Details }}` element to prevent the `{{ Code }}` and/or
+  `{{ Signal }}` from being displayed:
+
+  ```shell
+  export GBT_CAR_STATUS_DISPLAY=1
+  export GBT_CAR_STATUS_FORMAT=' {{ Symbol }}{{ Details }} '
+  ```
+
+  Then you can modify the format of the `{{ Details }}` element like this for
+  when there is an error:
+
+  ```shell
+  export GBT_CAR_STATUS_DETAILS_FORMAT=' {{ Code }} {{ Signal }}'
+  ```
 
 - `GBT_CAR_STATUS_SYMBOL_BG`
 
@@ -1279,21 +1296,21 @@ Variables used by the car:
   the last command returned non zero return code otherwise `{{ User }}` is
   used.
 
-- `GBT_CAR_STATUS_MSG_BG`
+- `GBT_CAR_STATUS_SIGNAL_BG`
 
-  Background color of the `{{ Msg }}` element.
+  Background color of the `{{ Signal }}` element.
 
-- `GBT_CAR_STATUS_MSG_FG`
+- `GBT_CAR_STATUS_SIGNAL_FG`
 
-  Foreground color of the `{{ Msg }}` element.
+  Foreground color of the `{{ Signal }}` element.
 
-- `GBT_CAR_STATUS_MSG_FM`
+- `GBT_CAR_STATUS_SIGNAL_FM`
 
-  Formatting color of the `{{ Msg }}` element.
+  Formatting color of the `{{ Signal }}` element.
 
-- `GBT_CAR_STATUS_MSG_TEXT`
+- `GBT_CAR_STATUS_SIGNAL_TEXT`
 
-  Text of the `{{ Msg }}` element.
+  Text of the `{{ Signal }}` element.
 
 - `GBT_CAR_STATUS_CODE_BG='red'`
 
