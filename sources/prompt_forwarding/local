@@ -5,114 +5,146 @@ function gbt__err() {
     echo "$@" >&2
 }
 
+gbt__get_bin() {
+    local cmd="$1"
+
+    local BIN=$(which "${GBT__WHICH_OPTS}" "${cmd}" 2>/dev/null)
+    [ $? -ne 0 -o "$BIN" = "" ] && gbt__err "'$cmd' not found" && return 1
+
+    echo "${BIN}"
+}
+
 function gbt__local_rcfile() {
-    [ -z "$GBT__HOME$GBT__PROFILE" ] && gbt__err "'GBT__HOME' not defined" && return 1
-    [ -z "$GBT__HOME$GBT__THEME_SSH" ] && gbt__err "'GBT__HOME' not defined" && return 1
+    [ -z "$GBT__HOME" ] && gbt__err "'GBT__HOME' not defined" && return 1
     [ -z "$GBT__PROFILE" ] && local GBT__PROFILE="$GBT__HOME/sources/prompt_forwarding/remote"
     [ -z "$GBT__THEME_SSH" ] && local GBT__THEME_SSH="$GBT__HOME/themes/ssh/${GBT__THEME_SSH_NAME:=default}"
     [ -z "$GBT__THEME_MYSQL" ] && local GBT__THEME_MYSQL="$GBT__HOME/themes/mysql/${GBT__THEME_MYSQL_NAME:=default}"
 
-    GBT__CONF="/tmp/.gbt.$RANDOM"
+    GBT__CONF="$(mktemp --suffix .gbt)"
 
-    echo "export GBT__CONF='$GBT__CONF'" > $GBT__CONF
-    cat $GBT__PROFILE >> $GBT__CONF
-    (alias | awk '/gbt_/ {sub(/^(alias )?(gbt___)?/, "", $0); print "alias "$0}') >> $GBT__CONF
-    echo -n "export GBT__STATUS='" >> $GBT__CONF
-    (source $GBT__THEME_SSH; GBT_SHELL='bash' GBT_CARS='Status, Custom1' gbt 1) >> $GBT__CONF
-    echo "'" >> $GBT__CONF
-    echo -n "export GBT__MYSQL_PS1='" >> $GBT__CONF
-    (source $GBT__THEME_MYSQL; gbt) >> $GBT__CONF
-    echo "'" >> $GBT__CONF
-    echo -n "PS1='" >> $GBT__CONF
-    (source $GBT__THEME_SSH; gbt) >> $GBT__CONF
-    echo "'" >> $GBT__CONF
+    local gbt_aliases="$(alias | awk '/gbt_/ {sub(/^(alias )?(gbt___)?/, "", $0); print "alias "$0}')"
+    local gbt_status="$(source "${GBT__THEME_SSH}"; GBT_SHELL='sh' GBT_CARS='Status, Custom1' gbt 1)"
+    local gbt_mysql_ps1="$(source $GBT__THEME_MYSQL; gbt)"
+    local gbt_ps1="$(source "${GBT__THEME_SSH}"; gbt)"
 
-    echo -e "#!/bin/bash\nbash --rcfile $GBT__CONF \"\$@\"" > $GBT__CONF.bash
-    chmod +x $GBT__CONF.bash
+    cat <<CONF > "${GBT__CONF}"
+export GBT__CONF='${GBT__CONF}'
 
-    echo $GBT__CONF
+$(cat "${GBT__PROFILE}")
+${gbt_aliases}
+export GBT__STATUS='${gbt_status}'
+export GBT__MYSQL_PS1='${gbt_mysql_ps1}'
+PS1='${gbt_ps1}'
+CONF
+
+    cat <<ENTRY_SCRIPT > $GBT__CONF.bash
+#!/usr/bin/env sh
+
+if which \$GBT__WHICH_OPTS bash 2>/dev/null; then
+    bash --rcfile ${GBT__CONF} "\$@"
+# sh does not show the unicode characters well in the prompt for some reason. Need to figure that out first.
+# once that's figured out, this can be uncommented
+#elif which \$GBT__WHICH_OPTS sh 2>/dev/null; then
+#    ENV=${GBT__CONF} sh "\$@"
+else
+    echo "Cannot use gbt prompt forwarding without either bash or sh installed."
+    exit 1
+fi
+ENTRY_SCRIPT
+
+    chmod +x "${GBT__CONF}.bash"
+
+    echo "${GBT__CONF}"
+#    set +x
 }
 
+# todo add kubectl exec/kubectl shell
 function gbt_docker() {
-    [ -z "$GBT__HOME$GBT__PROFILE" ] && gbt__err "'GBT__HOME' not defined" && return 1
-    [ -z "$GBT__HOME$GBT__THEME_SSH" ] && gbt__err "'GBT__HOME' not defined" && return 1
-    [ -z "$GBT__PROFILE" ] && local GBT__PROFILE="$GBT__HOME/sources/prompt_forwarding/remote"
-    [ -z "$GBT__THEME_SSH" ] && local GBT__THEME_SSH="$GBT__HOME/themes/ssh/${GBT__THEME_SSH_NAME:=default}"
+    [ -z "$GBT__HOME" ] && gbt__err "'GBT__HOME' not defined" && return 1
 
-    local WHICH=$(which $GBT__WHICH_OPTS which 2>/dev/null)
-    [ -z $WHICH ] && gbt__err "'which' not found" && return 1
-    local DOCKER_BIN=$(which $GBT__WHICH_OPTS docker 2>/dev/null)
-    [ $? -ne 0 ] && gbt__err "'docker' not found" && return 1
+    local DOCKER_BIN="$(gbt__get_bin docker)"
 
-    if [ "$1" != 'shell' ]; then
-        $DOCKER_BIN "$@"
-    else
+    # todo allow for usage of this in docker exec bash
+    if [[ "$1" == 'shell' ]]; then
         local GBT__CONTAINER_ID="${@: -1}"
         local GBT__CONF=$(gbt__local_rcfile)
 
+        # todo instead of using docker cp, we can simply exec everything
+        # in one go similar to how ssh and vagrant do it.
         $DOCKER_BIN cp $GBT__CONF $GBT__CONTAINER_ID:$(dirname $GBT__CONF)
-        $DOCKER_BIN exec ${@:2:$(($# - 2))} -it $GBT__CONTAINER_ID bash --rcfile $GBT__CONF
+        $DOCKER_BIN cp $GBT__CONF.bash $GBT__CONTAINER_ID:$(dirname $GBT__CONF)
+        $DOCKER_BIN exec ${@:2:$(($# - 2))} -it $GBT__CONTAINER_ID $GBT__CONF.bash
         $DOCKER_BIN exec ${@:2:$(($# - 2))} -it $GBT__CONTAINER_ID rm -f $GBT__CONF $GBT__CONF.bash
 
         rm -f $GBT__CONF $GBT__CONF.bash
         unset GBT__CONF
+    else
+        $DOCKER_BIN "$@"
     fi
 }
 
 function gbt_mysql() {
-    [ -z "$GBT__HOME$GBT__PROFILE" ] && gbt__err "'GBT__HOME' not defined" && return 1
-    [ -z "$GBT__HOME$GBT__THEME_SSH" ] && gbt__err "'GBT__HOME' not defined" && return 1
-    [ -z "$GBT__PROFILE" ] && local GBT__PROFILE="$GBT__HOME/sources/prompt_forwarding/remote"
+    [ -z "$GBT__HOME" ] && gbt__err "'GBT__HOME' not defined" && return 1
     [ -z "$GBT__THEME_MYSQL" ] && local GBT__THEME_MYSQL="$GBT__HOME/themes/mysql/${GBT__THEME_MYSQL_NAME:=default}"
 
-    local WHICH=$(which $GBT__WHICH_OPTS which 2>/dev/null)
-    [ -z $WHICH ] && gbt__err "'which' not found" && return 1
-    local MYSQL_BIN=$(which $GBT__WHICH_OPTS mysql 2>/dev/null)
-    [ $? -ne 0 ] && gbt__err "'mysql' not found" && return 1
+    local MYSQL_BIN="$(gbt__get_bin mysql)"
 
     $MYSQL_BIN --prompt "$(source $GBT__THEME_MYSQL; gbt)" "$@"
 }
 
-function gbt_ssh() {
-    [ -z "$GBT__HOME$GBT__PROFILE" ] && gbt__err "'GBT__HOME' not defined" && return 1
-    [ -z "$GBT__HOME$GBT__THEME_SSH" ] && gbt__err "'GBT__HOME' not defined" && return 1
+function _get_ssh_cmd() {
+    [ -z "$GBT__HOME" ] && gbt__err "'GBT__HOME' not defined" && return 1
     [ -z "$GBT__PROFILE" ] && local GBT__PROFILE="$GBT__HOME/sources/prompt_forwarding/remote"
     [ -z "$GBT__THEME_SSH" ] && local GBT__THEME_SSH="$GBT__HOME/themes/ssh/${GBT__THEME_SSH_NAME:=default}"
     [ -z "$GBT__THEME_MYSQL" ] && local GBT__THEME_MYSQL="$GBT__HOME/themes/mysql/${GBT__THEME_MYSQL_NAME:=default}"
 
-    local WHICH=$(which $GBT__WHICH_OPTS which 2>/dev/null)
-    [ -z $WHICH ] && gbt__err "'which' not found" && return 1
-    local SSH_BIN=$(which $GBT__WHICH_OPTS ssh 2>/dev/null)
-    [ $? -ne 0 ] && gbt__err "'ssh' not found" && return 1
+    profile="$(base64 $GBT__PROFILE | tr -d '\r\n')"
+    aliases="$(alias | awk '/gbt_/ {sub(/^(alias )?(gbt___)?/, "", $0); print "alias "$0}' | base64 | tr -d '\r\n')"
+    status="$(source $GBT__THEME_SSH; GBT_SHELL='bash' GBT_CARS='Status, Custom1' gbt 1 | base64 | tr -d '\r\n')"
+    mysql_ps1="$(source $GBT__THEME_MYSQL; gbt | base64 | tr -d '\r\n')"
+    ps1="$(source $GBT__THEME_SSH; gbt | base64 | tr -d '\r\n')"
+
+    cat <<ENTRY_SCRIPT
+set -e
+cat /etc/motd 2>/dev/null
+export GBT__CONF='$(mktemp --suffix .gbt)'
+
+echo "export GBT__CONF='\$GBT__CONF'" > \$GBT__CONF
+echo '${profile}' | base64 -d >> \$GBT__CONF
+echo '${aliases}' | base64 -d >> \$GBT__CONF
+echo "export GBT__STATUS='\$(echo -n '${status}' | base64 -d)'" >> \$GBT__CONF
+echo "export GBT__MYSQL_PS1='\$(echo -n '${mysql_ps1}' | base64 -d)'" >> \$GBT__CONF
+echo "PS1='\$(echo -n '${ps1}' | base64 -d)'" >> \$GBT__CONF
+
+if which bash 2>/dev/null; then
+   bash --rcfile \$GBT__CONF "\$@"
+# sh does not show the unicode characters well in the prompt for some reason. Need to figure that out first.
+# once that's figured out, this can be uncommented
+#elif which sh 2>/dev/null; then
+#    ENV=\$GBT__CONF sh "\$@"
+else
+    echo "Cannot use gbt prompt forwarding without either bash or sh installed."
+    exit 1
+fi
+
+rm -f \$GBT__CONF \$GBT__CONF.bash
+ENTRY_SCRIPT
+}
+
+function gbt_ssh() {
+    [ -z "$GBT__HOME" ] && gbt__err "'GBT__HOME' not defined" && return 1
+
+    local SSH_BIN="$(gbt__get_bin ssh)"
 
     if [[ " ${GBT__SSH_IGNORE[*]} " == *" ${@: -1} "* ]]; then
         $SSH_BIN "$@"
     else
-        $SSH_BIN -t "$@" "
-            cat /etc/motd 2>/dev/null;
-            export GBT__CONF='/tmp/.gbt.$RANDOM' &&
-            echo \"export GBT__CONF='\$GBT__CONF'\" > \$GBT__CONF &&
-            echo '$(base64 $GBT__PROFILE | tr -d '\r\n')' | base64 -d >> \$GBT__CONF &&
-            echo '$(alias | awk '/gbt_/ {sub(/^(alias )?(gbt___)?/, "", $0); print "alias "$0}' | base64 | tr -d '\r\n')' | base64 -d >> \$GBT__CONF &&
-            echo -n \"export GBT__STATUS='\" >> \$GBT__CONF &&
-            echo -n '$(source $GBT__THEME_SSH; GBT_SHELL='bash' GBT_CARS='Status, Custom1' gbt 1 | base64 | tr -d '\r\n')' | base64 -d >> \$GBT__CONF &&
-            echo \"'\" >> \$GBT__CONF &&
-            echo -n \"export GBT__MYSQL_PS1='\" >> \$GBT__CONF &&
-            echo -n '$(source $GBT__THEME_MYSQL; gbt | base64 | tr -d '\r\n')' | base64 -d >> \$GBT__CONF &&
-            echo \"'\" >> \$GBT__CONF &&
-            echo -n \"PS1='\" >> \$GBT__CONF &&
-            echo -n '$(source $GBT__THEME_SSH; gbt | base64 | tr -d '\r\n')' | base64 -d >> \$GBT__CONF &&
-            echo \"'\" >> \$GBT__CONF &&
-            bash --rcfile \$GBT__CONF;
-            rm -f \$GBT__CONF \$GBT__CONF.bash"
+        $SSH_BIN -t "$@" "$(_get_ssh_cmd)"
     fi
 }
 
 function gbt_su() {
-    local WHICH=$(which $GBT__WHICH_OPTS which 2>/dev/null)
-    [ -z $WHICH ] && gbt__err "'which' not found" && return 1
-    local SU_BIN=$(which $GBT__WHICH_OPTS su 2>/dev/null)
-    [ $? -ne 0 ] && gbt__err "'su' not found" && return 1
+    local SU_BIN="$(gbt__get_bin su)"
 
     local GBT__CONF=$(gbt__local_rcfile)
 
@@ -122,12 +154,8 @@ function gbt_su() {
 }
 
 function gbt_sudo() {
-    local WHICH=$(which $GBT__WHICH_OPTS which 2>/dev/null)
-    [ -z $WHICH ] && gbt__err "'which' not found" && return 1
-    local SU_BIN=$(which $GBT__WHICH_OPTS su 2>/dev/null)
-    [ $? -ne 0 ] && gbt__err "'su' not found" && return 1
-    local SUDO_BIN=$(which $GBT__WHICH_OPTS sudo 2>/dev/null)
-    [ $? -ne 0 ] && gbt__err "'sudo' not found" && return 1
+    local SU_BIN="$(gbt__get_bin su)"
+    local SUDO_BIN="$(gbt__get_bin sudo)"
 
     if [ "$1" != 'su' ]; then
         $SUDO_BIN "$@"
@@ -142,37 +170,14 @@ function gbt_sudo() {
 }
 
 function gbt_vagrant() {
-    [ -z "$GBT__HOME$GBT__PROFILE" ] && gbt__err "'GBT__HOME' not defined" && return 1
-    [ -z "$GBT__HOME$GBT__THEME_SSH" ] && gbt__err "'GBT__HOME' not defined" && return 1
-    [ -z "$GBT__PROFILE" ] && local GBT__PROFILE="$GBT__HOME/sources/prompt_forwarding/remote"
-    [ -z "$GBT__THEME_SSH" ] && local GBT__THEME_SSH="$GBT__HOME/themes/ssh/${GBT__THEME_SSH_NAME:=default}"
-    [ -z "$GBT__THEME_MYSQL" ] && local GBT__THEME_MYSQL="$GBT__HOME/themes/mysql/${GBT__THEME_MYSQL_NAME:=default}"
+    [ -z "$GBT__HOME" ] && gbt__err "'GBT__HOME' not defined" && return 1
 
-    local WHICH=$(which $GBT__WHICH_OPTS which 2>/dev/null)
-    [ -z $WHICH ] && gbt__err "'which' not found" && return 1
-    local VAGRANT_BIN=$(which $GBT__WHICH_OPTS vagrant 2>/dev/null)
-    [ $? -ne 0 ] && gbt__err "'vagrant' not found" && return 1
+    local VAGRANT_BIN="$(gbt__get_bin vagrant)"
 
     if [ "$1" != 'ssh' ]; then
         $VAGRANT_BIN "$@"
     else
         shift
-        $VAGRANT_BIN ssh --command "
-            cat /etc/motd 2>/dev/null;
-            export GBT__CONF='/tmp/.gbt.$RANDOM' &&
-            echo \"export GBT__CONF='\$GBT__CONF'\" > \$GBT__CONF &&
-            echo '$(base64 $GBT__PROFILE | tr -d '\r\n')' | base64 -d >> \$GBT__CONF &&
-            echo '$(alias | awk '/gbt_/ {sub(/^(alias )?(gbt___)?/, "", $0); print "alias "$0}' | base64 | tr -d '\r\n')' | base64 -d >> \$GBT__CONF &&
-            echo -n \"export GBT__STATUS='\" >> \$GBT__CONF &&
-            echo -n '$(source $GBT__THEME_SSH; GBT_SHELL='bash' GBT_CARS='Status, Custom1' gbt 1 | base64 | tr -d '\r\n')' | base64 -d >> \$GBT__CONF &&
-            echo \"'\" >> \$GBT__CONF &&
-            echo -n \"export GBT__MYSQL_PS1='\" >> \$GBT__CONF &&
-            echo -n '$(source $GBT__THEME_MYSQL; gbt | base64 | tr -d '\r\n')' | base64 -d >> \$GBT__CONF &&
-            echo \"'\" >> \$GBT__CONF &&
-            echo -n \"PS1='\" >> \$GBT__CONF &&
-            echo -n '$(source $GBT__THEME_SSH; gbt | base64 | tr -d '\r\n')' | base64 -d >> \$GBT__CONF &&
-            echo \"'\" >> \$GBT__CONF &&
-            bash --rcfile \$GBT__CONF;
-            rm -f \$GBT__CONF \$GBT__CONF.bash" "$@"
+        $VAGRANT_BIN ssh --command "$(_get_ssh_cmd)" "$@"
     fi
 }
