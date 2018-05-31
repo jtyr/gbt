@@ -23,7 +23,7 @@ function gbt__local_rcfile() {
     GBT__CONF="$(mktemp --suffix .gbt)"
 
     local gbt_aliases="$(alias | awk '/gbt_/ {sub(/^(alias )?(gbt___)?/, "", $0); print "alias "$0}')"
-    local gbt_status="$(source "${GBT__THEME_SSH}"; GBT_SHELL='sh' GBT_CARS='Status, Custom1' gbt 1)"
+    local gbt_status="$(source "${GBT__THEME_SSH}"; GBT_SHELL='bash' GBT_CARS='Status, Custom1' gbt 1)"
     local gbt_mysql_ps1="$(source $GBT__THEME_MYSQL; gbt)"
     local gbt_ps1="$(source "${GBT__THEME_SSH}"; gbt)"
 
@@ -40,12 +40,12 @@ CONF
     cat <<ENTRY_SCRIPT > $GBT__CONF.bash
 #!/usr/bin/env sh
 
-if which \$GBT__WHICH_OPTS bash 2>/dev/null; then
+if which \$GBT__WHICH_OPTS bash &>/dev/null; then
     bash --rcfile ${GBT__CONF} "\$@"
 # sh does not show the unicode characters well in the prompt for some reason. Need to figure that out first.
 # once that's figured out, this can be uncommented
-#elif which \$GBT__WHICH_OPTS sh 2>/dev/null; then
-#    ENV=${GBT__CONF} sh "\$@"
+elif which \$GBT__WHICH_OPTS sh &>/dev/null; then
+    ENV=${GBT__CONF} sh "\$@"
 else
     echo "Cannot use gbt prompt forwarding without either bash or sh installed."
     exit 1
@@ -55,7 +55,6 @@ ENTRY_SCRIPT
     chmod +x "${GBT__CONF}.bash"
 
     echo "${GBT__CONF}"
-#    set +x
 }
 
 # todo add kubectl exec/kubectl shell
@@ -116,12 +115,12 @@ echo "export GBT__STATUS='\$(echo -n '${status}' | base64 -d)'" >> \$GBT__CONF
 echo "export GBT__MYSQL_PS1='\$(echo -n '${mysql_ps1}' | base64 -d)'" >> \$GBT__CONF
 echo "PS1='\$(echo -n '${ps1}' | base64 -d)'" >> \$GBT__CONF
 
-if which bash 2>/dev/null; then
+if which bash &>/dev/null; then
    bash --rcfile \$GBT__CONF "\$@"
 # sh does not show the unicode characters well in the prompt for some reason. Need to figure that out first.
 # once that's figured out, this can be uncommented
-#elif which sh 2>/dev/null; then
-#    ENV=\$GBT__CONF sh "\$@"
+elif which sh &>/dev/null; then
+    ENV=\$GBT__CONF sh "\$@"
 else
     echo "Cannot use gbt prompt forwarding without either bash or sh installed."
     exit 1
