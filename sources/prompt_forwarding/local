@@ -23,8 +23,8 @@ function gbt__local_rcfile() {
     GBT__CONF="$(mktemp --suffix .gbt)"
 
     local gbt_aliases="$(alias | awk '/gbt_/ {sub(/^(alias )?(gbt___)?/, "", $0); print "alias "$0}')"
-    local gbt_status="$(source "${GBT__THEME_SSH}"; GBT_SHELL='bash' GBT_CARS='Status, Custom1' gbt 1)"
-    local gbt_mysql_ps1="$(source $GBT__THEME_MYSQL; gbt)"
+    local gbt_status="$(source "${GBT__THEME_SSH}"; GBT_CARS='Status, Custom1' gbt 1)"
+    local gbt_mysql_ps1="$(source "${GBT__THEME_MYSQL}"; gbt)"
     local gbt_ps1="$(source "${GBT__THEME_SSH}"; gbt)"
 
     cat <<CONF > "${GBT__CONF}"
