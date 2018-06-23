@@ -11,7 +11,11 @@ function gbt_exectime_pre() {
 
     unset GBT_CAR_EXECTIME__TMP
 
-    export GBT_CAR_EXECTIME_SECS=$($GBT_CAR_EXECTIME__DATE '+%s.%N')
+    if [ $($GBT_CAR_EXECTIME__DATE '+%N') == "N" ]; then
+        export GBT_CAR_EXECTIME_SECS=$($GBT_CAR_EXECTIME__DATE '+%s')
+    else
+        export GBT_CAR_EXECTIME_SECS=$($GBT_CAR_EXECTIME__DATE '+%s.%N')
+    fi
 }
 
 # Function executed after every command run by the shell
