@@ -23,31 +23,34 @@ type iconColor struct {
 
 // List of names and symbols.
 var symbols = map[string]iconColor {
-    "amzn":       { icon: "", color: "208",   },
-    "android":    { icon: "", color: "113",   },
-    "arch":       { icon: "", color: "25",    },
-    "archarm":    { icon: "", color: "125",   },
-    "centos":     { icon: "", color: "27",    },
-    "cloud":      { icon: "", color: "39",    },
-    "coreos":     { icon: "", color: "white", },
-    "darwin":     { icon: "", color: "white", },
-    "debian":     { icon: "", color: "88",    },
-    "docker":     { icon: "", color: "26",    },
-    "elementary": { icon: "", color: "33",    },
-    "fedora":     { icon: "", color: "32",    },
-    "freebsd":    { icon: "", color: "red",   },
-    "gentoo":     { icon: "", color: "62"     },
-    "linux":      { icon: "", color: "white", },
-    "linuxmint":  { icon: "", color: "47",    },
-    "mageia":     { icon: "", color: "24",    },
-    "mandriva":   { icon: "", color: "208",   },
-    "opensuse":   { icon: "", color: "113",   },
-    "raspbian":   { icon: "", color: "125",   },
-    "redhat":     { icon: "", color: "red",   },
-    "sabayon":    { icon: "", color: "white", },
-    "slackware":  { icon: "", color: "white", },
-    "ubuntu":     { icon: "", color: "166",   },
-    "windows":    { icon: "", color: "cyan",  },
+    // Unicode codes and font names are taken from https://nerdfonts.com
+    // If adding a new symbol, always choose the smaller picture if multiple
+    // symbols are available.
+    "amzn":       { icon: "\uf52c", color: "208", }, // nf-mdi-amazon
+    "android":    { icon: "\uf17b", color: "113", }, // nf-fa-android
+    "arch":       { icon: "\uf303", color: "25",  }, // nf-linux-archlinux
+    "archarm":    { icon: "\uf303", color: "125", }, // nf-linux-archlinux
+    "centos":     { icon: "\uf304", color: "27",  }, // nf-linux-centos
+    "cloud":      { icon: "\uf65e", color: "39",  }, // nf-mdi-cloud
+    "coreos":     { icon: "\uf305", color: "32",  }, // nf-linux-coreos
+    "darwin":     { icon: "\uf534", color: "15",  }, // nf-mdi-apple
+    "debian":     { icon: "\ue77d", color: "88",  }, // nf-dev-debian
+    "docker":     { icon: "\ue7b0", color: "26",  }, // nf-dev-docker
+    "elementary": { icon: "\uf309", color: "33",  }, // nf-linux-elementary
+    "fedora":     { icon: "\uf30a", color: "32",  }, // nf-linux-fedora
+    "freebsd":    { icon: "\uf30c", color: "1",   }, // nf-linux-freebsd
+    "gentoo":     { icon: "\uf30d", color: "62"   }, // nf-linux-gentoo
+    "linux":      { icon: "\uf17c", color: "15",  }, // nf-fa-linux
+    "linuxmint":  { icon: "\uf30e", color: "47",  }, // nf-linux-linuxmint
+    "mageia":     { icon: "\uf310", color: "24",  }, // nf-linux-mageia
+    "mandriva":   { icon: "\uf311", color: "208", }, // nf-linux-mandriva
+    "opensuse":   { icon: "\uf314", color: "113", }, // nf-linux-opensuse
+    "raspbian":   { icon: "\uf315", color: "125", }, // nf-linux-raspberry_pi
+    "redhat":     { icon: "\ue7bb", color: "1",   }, // nf-dev-redhat
+    "sabayon":    { icon: "\uf317", color: "255", }, // nf-linux-sabayon
+    "slackware":  { icon: "\uf318", color: "63",  }, // nf-linux-slackware
+    "ubuntu":     { icon: "\uf31b", color: "166", }, // nf-linux-ubuntu
+    "windows":    { icon: "\ue62a", color: "6",   }, // nf-custom-windows
 }
 
 // Holds the OS name.

@@ -14,7 +14,7 @@ func TestInitDefault(t *testing.T) {
         {
             name: "linux",
             osRelease: "/proc/1/environ",
-            expectedOutput: "",
+            expectedOutput: "\uf17c",
         },
         {
             name: "unknown",
