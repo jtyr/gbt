@@ -41,7 +41,7 @@ func (c *Car) Init() {
             Fm: utils.GetEnv(
                 "GBT_CAR_PYVIRTENV_ICON_FM", utils.GetEnv(
                     "GBT_CAR_PYVIRTENV_FM", defaultIconFm)),
-            Text: utils.GetEnv("GBT_CAR_PYVIRTENV_NAME_TEXT", ""),
+            Text: utils.GetEnv("GBT_CAR_PYVIRTENV_NAME_TEXT", "\ue73c"),
         },
         "Name": {
             Bg: utils.GetEnv(

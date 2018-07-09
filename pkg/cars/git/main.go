@@ -121,11 +121,11 @@ func (c *Car) Init() {
     }
 
     if compareRemote(c.Display, true) {
-        defaultAheadText = utils.GetEnv("GBT_CAR_GIT_AHEAD_SYMBOL", " ⬆")
+        defaultAheadText = utils.GetEnv("GBT_CAR_GIT_AHEAD_SYMBOL", " \u2b06")
     }
 
     if compareRemote(c.Display, false) {
-        defaultBehindText = utils.GetEnv("GBT_CAR_GIT_BEHIND_SYMBOL", " ⬇")
+        defaultBehindText = utils.GetEnv("GBT_CAR_GIT_BEHIND_SYMBOL", " \u2b07")
     }
 
     c.Model = map[string]car.ModelElement {
@@ -147,7 +147,7 @@ func (c *Car) Init() {
             Fm: utils.GetEnv(
                 "GBT_CAR_GIT_ICON_FM", utils.GetEnv(
                     "GBT_CAR_GIT_FM", defaultIconFm)),
-            Text: utils.GetEnv("GBT_CAR_GIT_ICON_TEXT", ""),
+            Text: utils.GetEnv("GBT_CAR_GIT_ICON_TEXT", "\ue0a0"),
         },
         "Head": {
             Bg: utils.GetEnv(
@@ -184,7 +184,7 @@ func (c *Car) Init() {
             Fm: utils.GetEnv(
                 "GBT_CAR_GIT_DIRTY_FM", utils.GetEnv(
                     "GBT_CAR_GIT_FM", defaultDirtyFm)),
-            Text: utils.GetEnv("GBT_CAR_GIT_DIRTY_TEXT", "✘"),
+            Text: utils.GetEnv("GBT_CAR_GIT_DIRTY_TEXT", "\u2718"),
         },
         "Clean": {
             Bg: utils.GetEnv(
@@ -196,7 +196,7 @@ func (c *Car) Init() {
             Fm: utils.GetEnv(
                 "GBT_CAR_GIT_CLEAN_FM", utils.GetEnv(
                     "GBT_CAR_GIT_FM", defaultCleanFm)),
-            Text: utils.GetEnv("GBT_CAR_GIT_CLEAN_TEXT", "✔"),
+            Text: utils.GetEnv("GBT_CAR_GIT_CLEAN_TEXT", "\u2714"),
         },
         "Ahead": {
             Bg: utils.GetEnv(

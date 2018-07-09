@@ -39,7 +39,7 @@ var symbols = map[string]iconColor {
     "elementary": { icon: "\uf309", color: "33",  }, // nf-linux-elementary
     "fedora":     { icon: "\uf30a", color: "32",  }, // nf-linux-fedora
     "freebsd":    { icon: "\uf30c", color: "1",   }, // nf-linux-freebsd
-    "gentoo":     { icon: "\uf30d", color: "62"   }, // nf-linux-gentoo
+    "gentoo":     { icon: "\uf30d", color: "62",  }, // nf-linux-gentoo
     "linux":      { icon: "\uf17c", color: "15",  }, // nf-fa-linux
     "linuxmint":  { icon: "\uf30e", color: "47",  }, // nf-linux-linuxmint
     "mageia":     { icon: "\uf310", color: "24",  }, // nf-linux-mageia

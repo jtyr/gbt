@@ -108,7 +108,7 @@ func (c *Car) Init() {
             Fm: utils.GetEnv(
                 "GBT_CAR_KUBECTL_ICON_FM", utils.GetEnv(
                     "GBT_CAR_KUBECTL_FM", defaultIconFm)),
-            Text: utils.GetEnv("GBT_CAR_KUBECTL_ICON_TEXT", "⎈"),
+            Text: utils.GetEnv("GBT_CAR_KUBECTL_ICON_TEXT", "\u2388"),
         },
         "Context": {
             Bg: utils.GetEnv(

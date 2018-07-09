@@ -137,7 +137,7 @@ func (c *Car) Init() {
                 "GBT_CAR_STATUS_ERROR_FM", utils.GetEnv(
                     "GBT_CAR_STATUS_SYMBOL_FM", utils.GetEnv(
                         "GBT_CAR_STATUS_FM", defaultErrorFm))),
-            Text: utils.GetEnv("GBT_CAR_STATUS_ERROR_TEXT", "✘"),
+            Text: utils.GetEnv("GBT_CAR_STATUS_ERROR_TEXT", "\u2718"),
         },
         "Ok": {
             Bg: utils.GetEnv(
@@ -152,7 +152,7 @@ func (c *Car) Init() {
                 "GBT_CAR_STATUS_OK_FM", utils.GetEnv(
                     "GBT_CAR_STATUS_SYMBOL_FM", utils.GetEnv(
                         "GBT_CAR_STATUS_FM", defaultOkFm))),
-            Text: utils.GetEnv("GBT_CAR_STATUS_OK_TEXT", "✔"),
+            Text: utils.GetEnv("GBT_CAR_STATUS_OK_TEXT", "\u2714"),
         },
         "Symbol": {
             Bg: utils.GetEnv(

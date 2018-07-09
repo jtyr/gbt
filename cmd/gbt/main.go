@@ -41,10 +41,10 @@ func printCars(cars []Cars, right bool) {
     prevBg := "\000"
     prevDisplay := true
     fakeCar := car.Car{}
-    defaultSeparator := utils.GetEnv("GBT_SEPARATOR", "")
+    defaultSeparator := utils.GetEnv("GBT_SEPARATOR", "\ue0b0")
 
     if right {
-        defaultSeparator = utils.GetEnv("GBT_RSEPARATOR", "")
+        defaultSeparator = utils.GetEnv("GBT_RSEPARATOR", "\ue0b2")
     }
 
     if ! right && utils.GetEnv("GBT_BEGINNING_TEXT", "") != "" {
