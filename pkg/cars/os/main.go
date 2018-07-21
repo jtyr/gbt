@@ -30,11 +30,14 @@ var symbols = map[string]iconColor {
     "android":    { icon: "\uf17b", color: "113", }, // nf-fa-android
     "arch":       { icon: "\uf303", color: "25",  }, // nf-linux-archlinux
     "archarm":    { icon: "\uf303", color: "125", }, // nf-linux-archlinux
+    "alpine":     { icon: "\uf300", color: "24",  }, // nf-linux-alpine
+    "aosc":       { icon: "\uf301", color: "172", }, // nf-linux-aosc
     "centos":     { icon: "\uf304", color: "27",  }, // nf-linux-centos
     "cloud":      { icon: "\uf65e", color: "39",  }, // nf-mdi-cloud
     "coreos":     { icon: "\uf305", color: "32",  }, // nf-linux-coreos
     "darwin":     { icon: "\uf534", color: "15",  }, // nf-mdi-apple
     "debian":     { icon: "\ue77d", color: "88",  }, // nf-dev-debian
+    "devuan":     { icon: "\uf307", color: "16",  }, // nf-linux-devuan
     "docker":     { icon: "\ue7b0", color: "26",  }, // nf-dev-docker
     "elementary": { icon: "\uf309", color: "33",  }, // nf-linux-elementary
     "fedora":     { icon: "\uf30a", color: "32",  }, // nf-linux-fedora
@@ -44,6 +47,8 @@ var symbols = map[string]iconColor {
     "linuxmint":  { icon: "\uf30e", color: "47",  }, // nf-linux-linuxmint
     "mageia":     { icon: "\uf310", color: "24",  }, // nf-linux-mageia
     "mandriva":   { icon: "\uf311", color: "208", }, // nf-linux-mandriva
+    "manjaro":    { icon: "\uf312", color: "34",  }, // nf-linux-manjaro
+    "nixos":      { icon: "\uf313", color: "88",  }, // nf-linux-nixos
     "opensuse":   { icon: "\uf314", color: "113", }, // nf-linux-opensuse
     "raspbian":   { icon: "\uf315", color: "125", }, // nf-linux-raspberry_pi
     "redhat":     { icon: "\ue7bb", color: "1",   }, // nf-dev-redhat
