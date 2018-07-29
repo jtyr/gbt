@@ -202,7 +202,7 @@ Configuration
 
 The prompt (train) is assembled from several elements (cars). The look and
 behavior of whole train as well as each car can be influenced by a set of
-environment variables. Majority of the 
+environment variables. Majority of the
 
 
 ### Colors
@@ -555,6 +555,10 @@ Car that displays how long each shell command run.
 
   Background color of the car.
 
+- `GBT_CAR_EXECTIME__DATE_ARG='+%s.%N'`
+
+  Format argument for `date` command, used for calculation of execution time.
+
 - `GBT_CAR_EXECTIME_FG='black'`
 
   Foreground color of the car.
@@ -623,6 +627,8 @@ source /usr/share/gbt/sources/exec_time/bash
 source /usr/share/gbt/sources/exec_time/zsh
 ```
 
+On macOS the `date` command does not support `%N` format for milliseconds and
+you need to override the environment variable `GBT_CAR_EXECTIME__DATE_ARG='+%s`.
 
 #### `Git` car
 
