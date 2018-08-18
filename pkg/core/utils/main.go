@@ -81,6 +81,11 @@ func GetEnvFloat(key string, fallback float64) float64 {
     return fallback
 }
 
+func CommandExists(cmd string) bool {
+    _, err := exec.LookPath(cmd)
+    return err == nil
+}
+
 const defaultFailedCode = 1
 
 // Run runs a command and returns the exit code, stdour and stderr output.
