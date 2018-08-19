@@ -81,6 +81,7 @@ func GetEnvFloat(key string, fallback float64) float64 {
     return fallback
 }
 
+// CommandExists checks if a CLI command exists
 func CommandExists(cmd string) bool {
     _, err := exec.LookPath(cmd)
     return err == nil
