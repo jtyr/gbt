@@ -20,7 +20,7 @@ function gbt_exectime_post() {
         local BELL=${GBT_CAR_EXECTIME_BELL:-0}
 
         if (( $BELL > 0 )); then
-            local EXECS=$(echo "$(date '+%s.%N') - $GBT_CAR_EXECTIME_SECS" | bc)
+            local EXECS=$(( $(GBT_CAR_EXECTIME__DATE "$GBT_CAR_EXECTIME__DATE_ARG") - $GBT_CAR_EXECTIME_SECS ))
 
             if (( $EXECS > $BELL )); then
                 echo -en '\a'

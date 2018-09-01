@@ -29,10 +29,10 @@ function gbt_exectime_post() {
     local SECS=${GBT_CAR_EXECTIME_SECS:-0}
     local BELL=${GBT_CAR_EXECTIME_BELL:-0}
 
-    if (( $(echo "$SECS > 0" | bc) )) && (( $BELL > 0 )); then
-        local EXECS=$(echo "$(GBT_CAR_EXECTIME__DATE "$GBT_CAR_EXECTIME__DATE_ARG") - $GBT_CAR_EXECTIME_SECS" | bc)
+    if (( $(echo "0 $SECS" | awk '{print $1 < $2}') )) && (( $BELL > 0 )); then
+        local EXECS=$(echo "$(GBT_CAR_EXECTIME__DATE "$GBT_CAR_EXECTIME__DATE_ARG") $GBT_CAR_EXECTIME_SECS" | awk '{print $1 - $2}')
 
-        if (( $(echo "$EXECS > $BELL" | bc) )); then
+        if (( $(echo "$BELL $EXECS" | awk '{print $1 < $2}') )); then
             echo -en '\a'
         fi
     fi
