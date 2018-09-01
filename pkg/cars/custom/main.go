@@ -2,6 +2,7 @@ package custom
 
 import (
     "fmt"
+    "strings"
 
     "github.com/jtyr/gbt/pkg/core/car"
     "github.com/jtyr/gbt/pkg/core/utils"
@@ -21,7 +22,7 @@ func (c *Car) Init() {
     defaultTextFg := defaultRootFg
     defaultTextFm := defaultRootFm
 
-    prefix := fmt.Sprintf("GBT_CAR_CUSTOM%s", c.Params["name"].(string))
+    prefix := fmt.Sprintf("GBT_CAR_CUSTOM%s", strings.ToUpper(c.Params["name"].(string)))
     defaultTextText := "?"
     defaultTextCmd := utils.GetEnv(fmt.Sprintf("%s_TEXT_CMD", prefix), "")
     defaultDisplayCmd := utils.GetEnv(fmt.Sprintf("%s_DISPLAY_CMD", prefix), "")
