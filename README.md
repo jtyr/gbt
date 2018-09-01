@@ -441,7 +441,7 @@ custom text.
 
   ```shell
   # Show 1 minute loadavg as the content of the Text element
-  export GBT_CAR_CUSTOM_CMD="uptime | sed --e 's/.*load average: //' -e 's/,.*//'"
+  export GBT_CAR_CUSTOM_TEXT_CMD="uptime | sed -e 's/.*load average: //' -e 's/,.*//'"
   ```
 
 - `GBT_CAR_CUSTOM_DISPLAY='1'`
