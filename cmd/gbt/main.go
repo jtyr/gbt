@@ -5,6 +5,7 @@ import (
     "fmt"
     "os"
     "regexp"
+    "strings"
 
     customCar    "github.com/jtyr/gbt/pkg/cars/custom"
     dirCar       "github.com/jtyr/gbt/pkg/cars/dir"
@@ -143,39 +144,39 @@ func main() {
         exit(0)
     }
 
-    carsStr := utils.GetEnv("GBT_CARS", "Status, Os, Hostname, Dir, Git, Sign")
+    carsStr := strings.ToLower(utils.GetEnv("GBT_CARS", "status, os, hostname, dir, git, sign"))
 
     if argsRight {
-        carsStr = utils.GetEnv("GBT_RCARS", "Time")
+        carsStr = strings.ToLower(utils.GetEnv("GBT_RCARS", "time"))
     }
 
     reCarSplit := regexp.MustCompile(`\s*,\s*`)
     carsNames := reCarSplit.Split(carsStr, -1)
     carsFactory := map[string]Cars{
-        "Custom":    &customCar.Car{},
-        "Dir":       &dirCar.Car{},
-        "ExecTime":  &exectimeCar.Car{},
-        "Git":       &gitCar.Car{},
-        "Hostname":  &hostnameCar.Car{},
-        "Kubectl":   &kubectlCar.Car{},
-        "Os":        &osCar.Car{},
-        "PyVirtEnv": &pyvirtenvCar.Car{},
-        "Sign":      &signCar.Car{},
-        "Status":    &statusCar.Car{},
-        "Time":      &timeCar.Car{},
+        "custom":    &customCar.Car{},
+        "dir":       &dirCar.Car{},
+        "exectime":  &exectimeCar.Car{},
+        "git":       &gitCar.Car{},
+        "hostname":  &hostnameCar.Car{},
+        "kubectl":   &kubectlCar.Car{},
+        "os":        &osCar.Car{},
+        "pyvirtenv": &pyvirtenvCar.Car{},
+        "sign":      &signCar.Car{},
+        "status":    &statusCar.Car{},
+        "time":      &timeCar.Car{},
     }
     cars := []Cars{}
 
     for _, cn := range carsNames {
         custom := "\000"
 
-        if len(cn) >= 6 && cn[:6] == "Custom" {
+        if len(cn) >= 6 && cn[:6] == "custom" {
             custom = cn[6:]
             cn = cn[:6]
         }
 
         if val, ok := carsFactory[cn]; ok {
-            if cn == "Status" && len(flag.Args()) > 0 {
+            if cn == "status" && len(flag.Args()) > 0 {
                 val.SetParamStr("args", flag.Args()[0])
             } else if custom != "\000" {
                 val = &customCar.Car{}
