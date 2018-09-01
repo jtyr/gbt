@@ -1,38 +1,38 @@
 # Allow to override the date command (e.g. by 'gdate' on Mac)
-if [ -z "$GBT_CAR_EXECTIME__DATE" ]; then
-    export GBT_CAR_EXECTIME__DATE='date'
+if [ -z "$GBT__SOURCE_DATE" ]; then
+    export GBT__SOURCE_DATE='date'
 fi
 
 # Allow to override the date argument.
 # See https://github.com/jtyr/gbt/issues/14
-if [ -z "$GBT_CAR_EXECTIME__DATE_ARG" ]; then
-    export GBT_CAR_EXECTIME__DATE_ARG='+%s.%N'
+if [ -z "$GBT__SOURCE_DATE_ARG" ]; then
+    export GBT__SOURCE_DATE_ARG='+%s.%N'
 fi
 
 # Function executed before every command run by the shell
 function gbt_exectime_pre() {
-    if [ -z $GBT_CAR_EXECTIME__TMP ]; then
+    if [ -z $GBT__EXECTIME_TMP ]; then
         return
     fi
 
-    unset GBT_CAR_EXECTIME__TMP
+    unset GBT__EXECTIME_TMP
 
-    export GBT_CAR_EXECTIME_SECS=$($GBT_CAR_EXECTIME__DATE "$GBT_CAR_EXECTIME__DATE_ARG")
+    export GBT_CAR_EXECTIME_SECS=$($GBT__SOURCE_DATE "$GBT__SOURCE_DATE_ARG")
 }
 
 # Function executed after every command run by the shell
 function gbt_exectime_post() {
-    GBT_CAR_EXECTIME__TMP=1
+    GBT__EXECTIME_TMP=1
 
     # The rest of the function is only necessary if you want to ring the system
     # bell if the command is taking more that GBT_CAR_EXECTIME_BELL seconds.
     local SECS=${GBT_CAR_EXECTIME_SECS:-0}
     local BELL=${GBT_CAR_EXECTIME_BELL:-0}
 
-    if (( $(echo "0 $SECS" | awk '{print $1 < $2}') )) && (( $BELL > 0 )); then
-        local EXECS=$(echo "$(GBT_CAR_EXECTIME__DATE "$GBT_CAR_EXECTIME__DATE_ARG") $GBT_CAR_EXECTIME_SECS" | awk '{print $1 - $2}')
+    if [ "$BELL" -gt 0 ] && [ "$SECS" -gt 0 ]; then
+        local EXECS=$(echo "$(GBT_CAR_EXECTIME__DATE "$GBT_CAR_EXECTIME__DATE_ARG") - $GBT_CAR_EXECTIME_SECS" | bc)
 
-        if (( $(echo "$BELL $EXECS" | awk '{print $1 < $2}') )); then
+        if [ "$EXECS" -gt "$BELL" ]; then
             echo -en '\a'
         fi
     fi

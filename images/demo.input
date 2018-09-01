@@ -89,5 +89,5 @@ export GBT_CAR_CUSTOM_TEXT_CMD="uptime | grep -Po '(?<=: )\d+\.\d+'"
 unset GBT_CARS GBT_CAR_CUSTOM_TEXT_CMD
 clear                                                                      
 ### Theme demo
-source /usr/share/gbt/themes/local/square_brackets_multiline
+source /usr/share/gbt/themes/square_brackets_multiline.sh
 That's all ;o)

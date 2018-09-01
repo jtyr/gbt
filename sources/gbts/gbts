@@ -1,0 +1,10 @@
+#!/bin/bash
+
+source $GBT__HOME/sources/gbts/car/_common.sh
+
+for car in $(echo ${GBT_CARS:-status,os,hostname,dir,git,sign} | sed -E 's/,\ */ /g' | tr '[:upper:]' '[:lower:]'); do
+    [ "${car:0:6}" == 'custom' ] && car=${car:0:6}
+    source $GBT__HOME/sources/gbts/car/$car.sh
+done
+
+GbtMain $@

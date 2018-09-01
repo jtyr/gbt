@@ -1,34 +1,34 @@
 # Allow to override the date command (e.g. by 'gdate' on Mac)
-if [ -z "$GBT_CAR_EXECTIME__DATE" ]; then
-    export GBT_CAR_EXECTIME__DATE='date'
+if [ -z "$GBT__SOURCE_DATE" ]; then
+    export GBT__SOURCE_DATE='date'
 fi
 
 # Function executed before every command run by the shell
 function gbt_exectime_pre() {
-    export GBT_CAR_EXECTIME_SECS=$($GBT_CAR_EXECTIME__DATE '+%s.%N')
-    GBT_CAR_EXECTIME__TMP=1
+    export GBT_CAR_EXECTIME_SECS=$($GBT__SOURCE_DATE '+%s.%N')
+    GBT__EXECTIME_TMP=1
 }
 
 # Function executed after every command run by the shell
 function gbt_exectime_post() {
-    if [ -z $GBT_CAR_EXECTIME__TMP ]; then
-        export GBT_CAR_EXECTIME_SECS=$($GBT_CAR_EXECTIME__DATE '+%s.%N')
+    if [ -z $GBT__EXECTIME_TMP ]; then
+        export GBT_CAR_EXECTIME_SECS=$($GBT__SOURCE_DATE '+%s.%N')
     else
         # This "else" part is only necessary if you want to ring the system
         # bell if the command is taking more that GBT_CAR_EXECTIME_BELL
         # seconds.
         local BELL=${GBT_CAR_EXECTIME_BELL:-0}
 
-        if (( $BELL > 0 )); then
-            local EXECS=$(( $(GBT_CAR_EXECTIME__DATE "$GBT_CAR_EXECTIME__DATE_ARG") - $GBT_CAR_EXECTIME_SECS ))
+        if [ "$BELL" -gt 0 ]; then
+            local EXECS=$(( $(GBT__SOURCE_DATE "$GBT__SOURCE_DATE_ARG") - $GBT_CAR_EXECTIME_SECS ))
 
-            if (( $EXECS > $BELL )); then
+            if [ "$EXECS" -gt "$BELL" ]; then
                 echo -en '\a'
             fi
         fi
     fi
 
-    unset GBT_CAR_EXECTIME__TMP
+    unset GBT__EXECTIME_TMP
 }
 
 preexec_functions+=(gbt_exectime_pre)
