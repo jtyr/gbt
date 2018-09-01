@@ -48,6 +48,7 @@ var symbols = map[string]iconColor {
     "mageia":     { icon: "\uf310", color: "24",  }, // nf-linux-mageia
     "mandriva":   { icon: "\uf311", color: "208", }, // nf-linux-mandriva
     "manjaro":    { icon: "\uf312", color: "34",  }, // nf-linux-manjaro
+    "mysql":      { icon: "\ue704", color: "30",  }, // nf-dev-mysql
     "nixos":      { icon: "\uf313", color: "88",  }, // nf-linux-nixos
     "opensuse":   { icon: "\uf314", color: "113", }, // nf-linux-opensuse
     "raspbian":   { icon: "\uf315", color: "125", }, // nf-linux-raspberry_pi
