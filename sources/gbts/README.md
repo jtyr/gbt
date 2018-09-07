@@ -35,6 +35,9 @@ Additional settings
 The following variables must be configured before sourcing the `local.sh` file:
 
 ```shell
+# Don't use 'gbt_ssh' when connecting to 'myhost1' or 'myhost2'
+export GBT__SSH_IGNORE=(myhost1 myhost2)
+
 # List of cars to pack for the remote.
 # Should match or exceed the list of cars from the theme or the theme variables
 # (GBT__THEME_REMOTE_CARS and GBT__THEME_MYSQL_CARS).
