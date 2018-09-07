@@ -1659,6 +1659,7 @@ export GBT__SOURCE_BASE64_DEC='-D'
 
 ### Limitations
 
+- Requires Bash v4.x to run.
 - The [color representation](https://bugs.mysql.com/79755) and [support of
   unicode characters](https://bugs.mysql.com/89359) for MySQL is broken in MySQL
   5.6 and above. But it works just fine in all versions of Percona and MariaDB.
