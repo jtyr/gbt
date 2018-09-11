@@ -315,9 +315,3 @@ function GbtMain() {
     GbtGetColor 'RESETALL' 0
     echo -en $GBT__RETVAL
 }
-
-
-if [[ -z $GBT_SHELL ]]; then
-    GBT_SHELL=${SHELL:-bash}
-    GBT_SHELL=${GBT_SHELL##/*/}
-fi
