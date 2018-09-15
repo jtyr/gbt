@@ -11,6 +11,12 @@ function gbt__local_rcfile() {
 
     gbt__get_sources >> $GBT__CONF
 
+    if [ -z "$GBT__SOURCE_SEC_DISABLE" ]; then
+        echo "[ -z \"\$GBT__CONF_MD5\" ] && export GBT__CONF_MD5=$($GBT__SOURCE_SEC_SUM_LOCAL $GBT__CONF 2>/dev/null| cut -d' ' -f$GBT__SOURCE_SEC_CUT_LOCAL 2>/dev/null)" >> $GBT__CONF
+    else
+        echo 'export GBT__SOURCE_SEC_DISABLE=1' >> $GBT__CONF
+    fi
+
     echo -e "#!/bin/bash\nexec -a gbt.bash bash --rcfile $GBT__CONF \"\$@\"" > $GBT__CONF.bash
     chmod +x $GBT__CONF.bash
 
@@ -44,6 +50,14 @@ function gbt__get_sources() {
         # Allow to override default list of cars defined in the theme
         [ -n "$GBT__THEME_REMOTE_CARS" ] && echo "export GBT__THEME_REMOTE_CARS='$GBT__THEME_REMOTE_CARS'"
         [ -n "$GBT__THEME_MYSQL_CARS" ] && echo "export GBT__THEME_MYSQL_CARS='$GBT__THEME_MYSQL_CARS'"
+
+        # Security on the remote site
+        if [ -z "$GBT__SOURCE_SEC_DISABLE" ]; then
+            [ -n "$GBT__SOURCE_SEC_CUT_REMOTE" ] && echo "export GBT__SOURCE_SEC_CUT_REMOTE=\"\${GBT__SOURCE_SEC_CUT_LOCAL:-$GBT__SOURCE_SEC_CUT_REMOTE}\""
+            [ -n "$GBT__SOURCE_SEC_SUM_REMOTE" ] && echo "export GBT__SOURCE_SEC_SUM_REMOTE=\"\${GBT__SOURCE_SEC_SUM_LOCAL:-$GBT__SOURCE_SEC_SUM_REMOTE}\""
+        else
+            echo 'export GBT__SOURCE_SEC_DISABLE=1'
+        fi
 
         for P in $(echo $GBT__PLUGINS_REMOTE__HASH); do
             cat $GBT__HOME/sources/gbts/cmd/remote/$P.sh

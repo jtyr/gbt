@@ -4,5 +4,7 @@ function gbt_su() {
     local SU_BIN=$(which $GBT__WHICH_OPTS su 2>/dev/null)
     [ $? -ne 0 ] && gbt__err "'su' not found" && return 1
 
+    gbt__check_md5
+
     $SU_BIN -s "$GBT__CONF.bash" "$@"
 }

@@ -6,10 +6,13 @@ function gbt_sudo() {
     local SUDO_BIN=$(which $GBT__WHICH_OPTS sudo 2>/dev/null)
     [ $? -ne 0 ] && gbt__err "'sudo' not found" && return 1
 
+    gbt__check_md5
+
     if [ "$1" != 'su' ]; then
         $SUDO_BIN "$@"
     else
         shift
+
         $SUDO_BIN $SU_BIN -s "$GBT__CONF.bash" "$@"
     fi
 }

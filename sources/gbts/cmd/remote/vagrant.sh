@@ -4,6 +4,8 @@ function gbt_vagrant() {
     local VAGRANT_BIN=$(which $GBT__WHICH_OPTS vagrant 2>/dev/null)
     [ $? -ne 0 ] && gbt__err "'vagrant' not found" && return 1
 
+    gbt__check_md5
+
     if [ "$1" != 'ssh' ]; then
         $VAGRANT_BIN "$@"
     else

@@ -4,6 +4,8 @@ function gbt_docker() {
     local DOCKER_BIN=$(which $GBT__WHICH_OPTS docker 2>/dev/null)
     [ $? -ne 0 ] && gbt__err "'docker' not found" && return 1
 
+    gbt__check_md5
+
     if [ "$1" != 'shell' ]; then
         $DOCKER_BIN "$@"
     else

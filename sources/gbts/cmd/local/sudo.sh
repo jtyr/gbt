@@ -9,9 +9,10 @@ function gbt_sudo() {
     if [ "$1" != 'su' ]; then
         $SUDO_BIN "$@"
     else
+        shift
+
         local GBT__CONF=$(gbt__local_rcfile)
 
-        shift
         $SUDO_BIN $SU_BIN -s "$GBT__CONF.bash" "$@"
     fi
 

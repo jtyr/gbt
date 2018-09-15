@@ -60,6 +60,18 @@ export GBT__SOURCE_COMPRESS='cat'
 
 # Suppress code decompressin
 export GBT__SOURCE_DECOMPRESS='cat'
+
+# Disable verification of the GBT script content
+export GBT__SOURCE_SEC_DISABLE=1
+
+# Set md5 and cut index for MacOS (needded for the verification of the GBT script content)
+export GBT__SOURCE_SEC_SUM_REMOTE=md5
+export GBT__SOURCE_SEC_CUT_REMOTE=4
+
+# When logging from MacOS to Linux (needded for the verification of the GBT script content)
+export GBT__SOURCE_SEC_SUM_LOCAL=md5
+export GBT__SOURCE_SEC_CUT_LOCAL=4
+source $GBT__HOME/sources/gbts/cmd/local.sh
 ```
 
 
