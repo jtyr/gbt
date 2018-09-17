@@ -71,7 +71,7 @@ Packages hosted by [Packagecloud](https://packagecloud.io/gbt/release)):
 echo '[gbt]
 name=GBT YUM repo
 baseurl=https://packagecloud.io/gbt/release/el/7/$basearch
-gpgkey=https://packagecloud.io/gbt/release/gpgkey/jtyr-gbt-4C6E79EFF45439B6.pub.gpg
+gpgkey=https://packagecloud.io/gbt/release/gpgkey
 gpgcheck=1' | sudo tee /tmp/gbt.repo >/dev/null
 yum install gbt
 ```
