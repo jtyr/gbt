@@ -5,11 +5,11 @@ function gbt__check_md5() {
         local CAT=$(which $GBT__WHICH_OPTS cat 2>/dev/null)
         local CUT=$(which $GBT__WHICH_OPTS cut 2>/dev/null)
         local GREP=$(which $GBT__WHICH_OPTS grep 2>/dev/null)
-        local MD5SUM=$(which $GBT__WHICH_OPTS $GBT__SOURCE_SEC_SUM_REMOTE 2>/dev/null)
+        local MD5SUM=$(which $GBT__WHICH_OPTS $GBT__SOURCE_MD5_REMOTE 2>/dev/null)
 
         if [ -z "$CAT" ] || [ -z "$CUT" ] || [ -z "$GREP" ] || [ -z "$MD5SUM" ]; then
             gbt__err 'WARNING: Cannot verify content of the GBT config!'
-        elif [ "$($CAT $GBT__CONF | $GREP -v 'export GBT__CONF_MD5=[0-9a-f]' | $MD5SUM | $CUT -d' ' -f$GBT__SOURCE_SEC_CUT_REMOTE)" != "$GBT__CONF_MD5" ]; then
+        elif [ "$($CAT $GBT__CONF | $GREP -v 'export GBT__CONF_MD5=[0-9a-f]' | $MD5SUM | $CUT -d' ' -f$GBT__SOURCE_MD5_CUT_REMOTE)" != "$GBT__CONF_MD5" ]; then
             gbt__err 'SECURITY WARNING: GBT script has been changed! Exiting...'
             sleep 3
             exit 1
