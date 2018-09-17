@@ -7,12 +7,10 @@ GBT__CARS_REMOTE__HASH=" $(echo ${GBT__CARS_REMOTE:-dir,git,hostname,os,sign,sta
 
 function gbt__local_rcfile() {
     local GBT__CONF="/tmp/.gbt.$RANDOM"
-    echo -n '' > $GBT__CONF
-
-    gbt__get_sources >> $GBT__CONF
+    local MD5SUM=$(gbt__get_sources | tee $GBT__CONF | $GBT__SOURCE_MD5_LOCAL 2>/dev/null | cut -d' ' -f$GBT__SOURCE_MD5_CUT_LOCAL 2>/dev/null)
 
     if [ -z "$GBT__SOURCE_SEC_DISABLE" ]; then
-        echo "[ -z \"\$GBT__CONF_MD5\" ] && export GBT__CONF_MD5=$($GBT__SOURCE_MD5_LOCAL $GBT__CONF 2>/dev/null| cut -d' ' -f$GBT__SOURCE_MD5_CUT_LOCAL 2>/dev/null)" >> $GBT__CONF
+        echo "[ -z \"\$GBT__CONF_MD5\" ] && export GBT__CONF_MD5=$MD5SUM" >> $GBT__CONF
     else
         echo 'export GBT__SOURCE_SEC_DISABLE=1' >> $GBT__CONF
     fi
