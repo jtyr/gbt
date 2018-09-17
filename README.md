@@ -1624,16 +1624,37 @@ the details
 
 ### MacOS users
 
-Basic command line tools like `date` and `base64` are very old on MacOS and
-mostly incompatible with the Linux world. Therefore when using the `ExecTime`
-car, the following variable must be set:
+To make GBTS working correctly between Linux and MacOS and vice versa requires a
+little bit of fiddling. The reason is that the basic command line tools like
+`date` and `base64` are very old on MacOS and mostly incompatible with the Linux
+world. Some tools are even called differently (e.g. `md5sum` is called `md5`).
+
+Therefore if you want to make the remote script verification working (make sure
+nobody changed the remote script while using it), the following variables must be
+set:
+
+```shell
+# Use 'md5' command instead of 'md5sum'
+export GBT__SOURCE_MD5_LOCAL='md5'
+# Cut the 4th field from the output of 'md5'
+export GBT__SOURCE_MD5_CUT_LOCAL='4'
+```
+
+If you don't want to use this feature, you can disable it in which case the above
+variables won't be required:
+
+```shell
+export GBT__SOURCE_SEC_DISABLE=1
+```
+
+When using the `ExecTime` car, the following variable must be set:
 
 ```shell
 # Don't use nanoseconds in the 'ExecTime' car
 export GBT__SOURCE_DATE_ARG='+%s'
 ```
 
-For maximum compatibility with GBT, it's recomended to install GNU `coreutils`
+For maximum compatibility with GBT, it's recommended to install GNU `coreutils`
 (`brew install coreutils`) and instead of the variable above use these:
 
 ```shell
