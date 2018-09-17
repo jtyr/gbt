@@ -40,12 +40,14 @@ function GbtCarOs() {
         os=$GBT_CAR_OS_NAME
     elif [ -e /proc/1/sched ] && [[ ! $(cat /proc/1/sched | head -n 1 | egrep '(init|systemd)') ]]; then
         os='docker'
-    elif [ "$(uname -s)" = 'Darwin' ]; then
-        os='darwin'
-    elif [ "$(uname -s)" = 'Linux' ] && [ -e /etc/os-release ]; then
-        os=$(source /etc/os-release; echo "$ID")
     else
-        os=$(uname -s)
+        os="$(uname -s)"
+
+        if [ "$os" = 'Darwin' ]; then
+            os='darwin'
+        elif [ "$os" = 'Linux' ] && [ -e /etc/os-release ]; then
+            os=$(source /etc/os-release; echo "$ID")
+        fi
     fi
 
     os=$(echo $os | tr '[:upper:]' '[:lower:]')
