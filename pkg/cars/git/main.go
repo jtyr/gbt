@@ -19,6 +19,7 @@ var runGetTag = []string{"git", "describe", "--tags", "--exact-match", "HEAD"}
 var runGetCommit = []string{"git", "rev-parse", "--short", "HEAD"}
 var runIsDirty = []string{"git", "status", "--porcelain"}
 var runCompareRemote = []string{"git", "rev-list", "--count"}
+var runHasStashes= []string{"git", "stash", "list"}
 
 // Returns true if the current directory is a Git repo.
 func isGitDir() bool {
@@ -60,7 +61,7 @@ func isDirty(display bool) bool {
     return len(out) > 0
 }
 
-// Returns true if the repo si ahead/behind.
+// Returns true if the repo is ahead/behind.
 func compareRemote(display bool, ahead bool) bool {
     if ! display {
         return false
@@ -81,6 +82,17 @@ func compareRemote(display bool, ahead bool) bool {
     }
 
     return ret
+}
+
+// Returns true if the repo has stashes
+func hasStashes(display bool) bool {
+    if ! display {
+        return false
+    }
+
+    rc, out, _ := utils.Run(runHasStashes)
+
+    return rc == 0 && len(strings.TrimSpace(out)) > 0
 }
 
 // Init initializes the car.
@@ -109,12 +121,16 @@ func (c *Car) Init() {
     defaultBehindBg := defaultRootBg
     defaultBehindFg := defaultRootFg
     defaultBehindFm := defaultRootFm
+    defaultStashBg := defaultRootBg
+    defaultStashFg := defaultRootFg
+    defaultStashFm := defaultRootFm
 
     c.Display = utils.GetEnvBool("GBT_CAR_GIT_DISPLAY", isGitDir())
 
     defaultStatusFormat := "{{ Clean }}"
     defaultAheadText := ""
     defaultBehindText := ""
+    defaultStashText := ""
 
     if isDirty(c.Display) {
         defaultStatusFormat = "{{ Dirty }}"
@@ -126,6 +142,10 @@ func (c *Car) Init() {
 
     if compareRemote(c.Display, false) {
         defaultBehindText = utils.GetEnv("GBT_CAR_GIT_BEHIND_SYMBOL", " \u2b07")
+    }
+
+    if hasStashes(c.Display) {
+        defaultStashText = utils.GetEnv("GBT_CAR_GIT_STASH_SYMBOL", "\uf01c")
     }
 
     c.Model = map[string]car.ModelElement {
@@ -223,6 +243,19 @@ func (c *Car) Init() {
                     "GBT_CAR_GIT_FM", defaultBehindFm)),
             Text: utils.GetEnv(
                 "GBT_CAR_GIT_BEHIND_TEXT", defaultBehindText),
+        },
+        "Stash": {
+            Bg: utils.GetEnv(
+                "GBT_CAR_GIT_STASH_BG", utils.GetEnv(
+                    "GBT_CAR_GIT_BG", defaultStashBg)),
+            Fg: utils.GetEnv(
+                "GBT_CAR_GIT_STASH_FG", utils.GetEnv(
+                    "GBT_CAR_GIT_FG", defaultStashFg)),
+            Fm: utils.GetEnv(
+                "GBT_CAR_GIT_STASH_FM", utils.GetEnv(
+                    "GBT_CAR_GIT_FM", defaultStashFm)),
+            Text: utils.GetEnv(
+                "GBT_CAR_GIT_STASH_TEXT", defaultStashText),
         },
     }
 
