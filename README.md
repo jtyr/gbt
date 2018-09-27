@@ -60,8 +60,8 @@ Installation
 yaourt -S gbt
 ```
 
-Or install `gbt-git` if you would like to run the latest from the `master`
-branch.
+Or install `gbt-git` if you would like to run the latest greatest from the
+`master` branch.
 
 ### CentOS/RHEL
 
@@ -101,6 +101,8 @@ Using [`Homebrew`](https://brew.sh):
 brew tap jtyr/repo
 brew install gbt
 ```
+Or install `gbt-git` if you would like to run the latest greatest from the
+`master` branch.
 
 ### Android
 
