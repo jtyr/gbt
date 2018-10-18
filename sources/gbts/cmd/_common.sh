@@ -1,5 +1,5 @@
 # Customize 'which' option for ZSH
-[ "$(ps -p $$ 2>/dev/null | awk '$1 != "PID" {print $4}' | sed 's/-//g')" = 'zsh' ] && GBT__WHICH_OPTS='-p'
+[ "$(ps -p $$ 2>/dev/null | awk '$1 != "PID" {print $4}' | sed 's,.*/,,g')" = 'zsh' ] && GBT__WHICH_OPTS='-p'
 
 [ -z "$GBT__SOURCE_COMPRESS" ] && GBT__SOURCE_COMPRESS='gzip -qc9'
 [ -z "$GBT__SOURCE_DECOMPRESS" ] && GBT__SOURCE_DECOMPRESS='gzip -qd'
