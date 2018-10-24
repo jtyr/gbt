@@ -1693,6 +1693,14 @@ Author
 Jiri Tyr
 
 
+Contributors
+------------
+
+- Vladimir Babichev (@mrdrup)
+- Stanislav Petrov (@sepetrov)
+- Hosh Sadiq (@hoshsadiq)
+
+
 License
 -------
 
