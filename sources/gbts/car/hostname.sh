@@ -5,7 +5,7 @@ function GbtCarHostname() {
 
     local hostname=$(hostname)
 
-    if [[ -z $hostname ]]; then
+    if [[ -z "$hostname" ]]; then
         hostname='localhost'
     fi
 

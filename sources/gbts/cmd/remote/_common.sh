@@ -1,15 +1,13 @@
 function gbt__check_md5() {
     if [ -n "$GBT__CONF_MD5" ]; then
-        local WHICH=$(which $GBT__WHICH_OPTS which 2>/dev/null)
-        [ -z $WHICH ] && gbt__err "'which' not found" && return 1
-        local CAT=$(which $GBT__WHICH_OPTS cat 2>/dev/null)
-        local CUT=$(which $GBT__WHICH_OPTS cut 2>/dev/null)
-        local GREP=$(which $GBT__WHICH_OPTS grep 2>/dev/null)
-        local MD5SUM=$(which $GBT__WHICH_OPTS $GBT__SOURCE_MD5_REMOTE 2>/dev/null)
+        local CAT_BIN=$(gbt__which cat)
+        local CUT_BIN=$(gbt__which cut)
+        local GREP_BIN=$(gbt__which grep)
+        local MD5SUM_BIN=$(gbt__which $GBT__SOURCE_MD5_REMOTE)
 
-        if [ -z "$CAT" ] || [ -z "$CUT" ] || [ -z "$GREP" ] || [ -z "$MD5SUM" ]; then
+        if [ -z "$CAT_BIN" ] || [ -z "$CUT_BIN" ] || [ -z "$GREP_BIN" ] || [ -z "$MD5SUM_BIN" ]; then
             gbt__err 'WARNING: Cannot verify content of the GBT config!'
-        elif [ "$($CAT $GBT__CONF | $GREP -v 'export GBT__CONF_MD5=[0-9a-f]' | $MD5SUM | $CUT -d' ' -f$GBT__SOURCE_MD5_CUT_REMOTE)" != "$GBT__CONF_MD5" ]; then
+        elif [ "$($CAT_BIN $GBT__CONF | $GREP_BIN -v 'export GBT__CONF_MD5=[0-9a-f]' | $MD5SUM_BIN | $CUT_BIN -d' ' -f$GBT__SOURCE_MD5_CUT_REMOTE)" != "$GBT__CONF_MD5" ]; then
             gbt__err 'SECURITY WARNING: GBT script has been changed! Exiting...'
             sleep 3
             exit 1
@@ -30,7 +28,12 @@ if [ ! -e "$GBT__CONF.bash" ]; then
     chmod +x $GBT__CONF.bash
 fi
 
+# Load remote Bash profile if it exists
+if [ -f ~/.bash_profile ]; then
+    source ~/.bash_profile
+fi
+
 # Load remote custom profile if it exists
-if [ -e ~/.gbt_profile ]; then
+if [ -f ~/.gbt_profile ]; then
     source ~/.gbt_profile
 fi

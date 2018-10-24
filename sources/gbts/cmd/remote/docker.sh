@@ -1,8 +1,6 @@
 function gbt_docker() {
-    local WHICH=$(which $GBT__WHICH_OPTS which 2>/dev/null)
-    [ -z $WHICH ] && gbt__err "'which' not found" && return 1
-    local DOCKER_BIN=$(which $GBT__WHICH_OPTS docker 2>/dev/null)
-    [ $? -ne 0 ] && gbt__err "'docker' not found" && return 1
+    local DOCKER_BIN=$(gbt__which docker)
+    [ -z "$DOCKER_BIN" ] && return 1
 
     gbt__check_md5
 

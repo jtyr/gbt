@@ -7,7 +7,7 @@ for car in $(echo ${GBT_CARS:-status,os,hostname,dir,git,sign} | sed -E 's/,\ */
     source $GBT__HOME/sources/gbts/car/$car.sh
 done
 
-if [[ -z $GBT_SHELL ]]; then
+if [[ -z "$GBT_SHELL" ]]; then
     GBT_SHELL=${SHELL:-bash}
     GBT_SHELL=${GBT_SHELL##/*/}
 fi

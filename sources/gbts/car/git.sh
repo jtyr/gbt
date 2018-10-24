@@ -30,10 +30,10 @@ function GbtCarGit() {
     if [[ $isGitDir == 1 ]]; then
         defaultHeadText=$(git symbolic-ref HEAD 2>/dev/null)
 
-        if [[ -z $defaultHeadText ]]; then
+        if [[ -z "$defaultHeadText" ]]; then
             defaultHeadText=$(git describe --tags --exact-match HEAD 2>/dev/null)
 
-            if [[ -z $defaultHeadText ]]; then
+            if [[ -z "$defaultHeadText" ]]; then
                 defaultHeadText=$(git rev-parse --short HEAD 2>/dev/null)
             fi
         fi

@@ -1,8 +1,6 @@
 function gbt_su() {
-    local WHICH=$(which $GBT__WHICH_OPTS which 2>/dev/null)
-    [ -z $WHICH ] && gbt__err "'which' not found" && return 1
-    local SU_BIN=$(which $GBT__WHICH_OPTS su 2>/dev/null)
-    [ $? -ne 0 ] && gbt__err "'su' not found" && return 1
+    local SU_BIN=$(gbt__which su)
+    [ -z "$SU_BIN" ] && return 1
 
     gbt__check_md5
 
