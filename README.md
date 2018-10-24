@@ -1551,7 +1551,7 @@ Prompt forwarding
 In order to enjoy GBT prompt via SSH but also in Docker, Vagrant, MySQL or in
 Screen without the need to install GBT everywhere, you can use GBTS (GBT witten
 in Shell). GBTS is a set of scripts which get forwarded to applications and
-remote connections  and then executed to generate the nice looking prompt.
+remote connections and then executed to generate the nice looking prompt.
 
 You can start using it by doing the following:
 
@@ -1588,6 +1588,11 @@ enter some Docker container or Vagrant box and you should get GBT-like looking
 prompt:
 
 ![Prompt forwarding demo](https://raw.githubusercontent.com/jtyr/gbt/master/images/prompt_forwarding.gif "Prompt forwarding demo")
+
+The idea of prompt forwarding is coming from Vladimir Babichev (@mrdrup) who was
+using it for several years before GBT even existed. After seeing the potential of
+GBT, he sparked the implementation of prompt forwarding into GBT which later
+turned into GBTS.
 
 
 ### Principle
