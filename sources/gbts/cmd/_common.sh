@@ -14,7 +14,7 @@ function gbt__which() {
     # Ignore aliases when using 'which'
     if [ "$(ps -p $$ 2>/dev/null | awk '$1 != "PID" {print $4}' | sed 's,.*/,,')" = 'zsh' ]; then
         GBT__WHICH_OPTS='-p'
-    else
+    elif [ "$(uname)" = 'Linux' ]; then
         GBT__WHICH_OPTS='--skip-alias'
     fi
 
