@@ -11,16 +11,41 @@
 function gbt__which() {
     local PROG=$1
 
-    # Ignore aliases when using 'which'
-    if [ "$(ps -p $$ 2>/dev/null | awk '$1 != "PID" {print $4}' | sed 's,.*/,,')" = 'zsh' ]; then
-        GBT__WHICH_OPTS='-p'
-    elif [ -e "$(which which 2>/dev/null)" ] && [ "$(uname)" = 'Linux' ]; then
-        GBT__WHICH_OPTS='--skip-alias'
+    if [ -z "$GBT__WHICH" ]; then
+        # Ignore aliases when using 'which'
+        if [ "$(ps -p $$ 2>/dev/null | awk '$1 != "PID" {print $4}' | sed 's,.*/,,')" = 'zsh' ]; then
+            GBT__WHICH_OPTS='-p'
+
+            if [ -z "$GBT__WHICH" ]; then
+                # ZSH has built in which command
+                GBT__WHICH='which'
+            fi
+        else
+            # Run which
+            GBT__WHICH=$(which which 2>/dev/null)
+
+            if [ $? -ne 0 ]; then
+                # Fail if there is no which
+                GBT__WHICH=''
+            else
+                if [ ! -e "$GBT__WHICH" ]; then
+                    if [ -z "$GBT__WHICH_OPTS" ]; then
+                        # If it's not a path, try to get a path by excluding aliases
+                        GBT__WHICH_OPTS='--skip-alias'
+                    fi
+
+                    GBT__WHICH=$(which $GBT__WHICH_OPTS which 2>/dev/null)
+
+                    if [ $? -ne 0 ] || [ ! -e "$GBT__WHICH" ]; then
+                        # Fail if that didn't work or if the returned string isn't a path
+                        GBT__WHICH=''
+                    fi
+                fi
+            fi
+        fi
     fi
 
-    GBT__WHICH=$(which $GBT__WHICH_OPTS which 2>/dev/null)
-
-    if [ $? -ne 0 ] || [ -z "$GBT__WHICH" ]; then
+    if [ -z "$GBT__WHICH" ]; then
         gbt__err "ERROR: 'which' not found"
         return 1
     fi
