@@ -17,6 +17,10 @@ func TestInit(t *testing.T) {
             expectedOutput: "/",
         },
         {
+            pwd: "//",
+            expectedOutput: "//",
+        },
+        {
             pwd: os.Getenv("HOME"),
             expectedOutput: "~",
         },

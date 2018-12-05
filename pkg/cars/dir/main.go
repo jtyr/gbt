@@ -1,6 +1,7 @@
 package dir
 
 import (
+    "fmt"
     "os"
     "os/user"
     "strings"
@@ -38,6 +39,8 @@ func getDir() (ret string) {
 
     if pwd == sep {
         ret = dirSep
+    } else if pwd == fmt.Sprintf("%s%s", sep, sep) {
+        ret = fmt.Sprintf("%s%s", dirSep, dirSep)
     } else if pwd == "~" {
         ret = pwd
     } else {

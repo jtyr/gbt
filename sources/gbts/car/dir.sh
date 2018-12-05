@@ -12,6 +12,8 @@ function GbtCarDir() {
         text=$homesign
     elif [[ $PWD == '/' ]]; then
         text=${GBT_CAR_DIR_DIRSEP:-/}
+    elif [[ $PWD == '//' ]]; then
+        text=${GBT_CAR_DIR_DIRSEP:-/}${GBT_CAR_DIR_DIRSEP:-/}
     else
         local first=1
         local cur=1
