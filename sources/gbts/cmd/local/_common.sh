@@ -1,6 +1,6 @@
-GBT__PLUGINS_LOCAL__HASH=" $(echo ${GBT__PLUGINS_LOCAL:-docker,mysql,screen,ssh,su,sudo,vagrant} | sed -E 's/,\ */ /g' | tr '[:upper:]' '[:lower:]') "
-GBT__PLUGINS_REMOTE__HASH=" $(echo ${GBT__PLUGINS_REMOTE:-docker,mysql,screen,ssh,su,sudo,vagrant} | sed -E 's/,\ */ /g' | tr '[:upper:]' '[:lower:]') "
-GBT__CARS_REMOTE__HASH=" $(echo ${GBT__CARS_REMOTE:-dir,git,hostname,os,sign,status,time} | sed -E 's/,\ */ /g' | tr '[:upper:]' '[:lower:]') "
+GBT__PLUGINS_LOCAL__HASH=". $(echo ${GBT__PLUGINS_LOCAL:-docker,mysql,screen,ssh,su,sudo,vagrant} | sed -E 's/,\ */ /g' | tr '[:upper:]' '[:lower:]') ."
+GBT__PLUGINS_REMOTE__HASH=". $(echo ${GBT__PLUGINS_REMOTE:-docker,mysql,screen,ssh,su,sudo,vagrant} | sed -E 's/,\ */ /g' | tr '[:upper:]' '[:lower:]') ."
+GBT__CARS_REMOTE__HASH=". $(echo ${GBT__CARS_REMOTE:-dir,git,hostname,os,sign,status,time} | sed -E 's/,\ */ /g' | tr '[:upper:]' '[:lower:]') ."
 
 [ -z "$GBT__SOURCE_BASE64_LOCAL" ] && GBT__SOURCE_BASE64_LOCAL='base64'
 
