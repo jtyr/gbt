@@ -28,7 +28,9 @@ function gbt__get_sources_cars() {
     [ "$C" = 'exectime' ] && cat $GBT__HOME/sources/exectime/bash.sh
     [ "${C:0:6}" = 'custom' ] && C=${C:0:6}
 
-    cat $GBT__HOME/sources/gbts/car/$C.sh
+    if [ -f $GBT__HOME/sources/gbts/car/$C.sh ]; then
+        cat $GBT__HOME/sources/gbts/car/$C.sh
+    fi
 }
 
 
@@ -58,7 +60,9 @@ function gbt__get_sources() {
         fi
 
         for P in $(echo $GBT__PLUGINS_REMOTE__HASH); do
-            cat $GBT__HOME/sources/gbts/cmd/remote/$P.sh
+            if [ -f $GBT__HOME/sources/gbts/cmd/remote/$P.sh ]; then
+                cat $GBT__HOME/sources/gbts/cmd/remote/$P.sh
+            fi
         done
 
         for C in $(echo $GBT__CARS_REMOTE__HASH); do
