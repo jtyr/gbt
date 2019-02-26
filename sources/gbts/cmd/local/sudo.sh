@@ -1,7 +1,7 @@
 function gbt_sudo() {
     local SU_BIN=$(gbt__which su)
     [ -z "$SU_BIN" ] && return 1
-    local SUDO_BIN=$(gbt__ which sudo)
+    local SUDO_BIN=$(gbt__which sudo)
     [ -z "$SUDO_BIN" ] && return 1
 
     if [ "$1" != 'su' ]; then
