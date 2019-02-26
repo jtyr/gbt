@@ -27,6 +27,7 @@ GBT__OS_SYMBOLS=(
     [opensuse]='\xef\x8c\x94'       [opensuse_color]=113
     [raspbian]='\xef\x8c\x95'       [raspbian_color]=125
     [redhat]='\xee\x9e\xbb'         [redhat_color]=1
+    [rhel]='\xee\x9e\xbb'           [rhel_color]=1
     [sabayon]='\xef\x8c\x97'        [sabayon_color]=255
     [slackware]='\xef\x8c\x98'      [slackware_color]=63
     [ubuntu]='\xef\x8c\x9b'         [ubuntu_color]=166
@@ -47,10 +48,14 @@ function GbtCarOs() {
             os='darwin'
         elif [ "$os" = 'Linux' ] && [ -e /etc/os-release ]; then
             os=$(source /etc/os-release; echo "$ID")
+
+            if [ ! ${GBT__OS_SYMBOLS[$os]+1} ]; then
+                os='linux'
+            fi
         fi
     fi
 
-    os=$(echo $os | tr '[:upper:]' '[:lower:]')
+    os=${os,,}
 
     local defaultRootBg=${GBT_CAR_BG:-235}
     local defaultRootFg=${GBT_CAR_FG:-white}
