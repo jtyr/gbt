@@ -13,7 +13,7 @@ function gbt__which() {
 
     if [ -z "$GBT__WHICH" ]; then
         # Ignore aliases when using 'which'
-        if [ "$(ps -p $$ 2>/dev/null | awk '$1 != "PID" {print $4}' | sed 's,.*/,,')" = 'zsh' ]; then
+        if [ "$(ps -p $$ 2>/dev/null | awk '$1 != "PID" {print $4}' | sed -e 's,.*/,,' -e 's/^-//')" = 'zsh' ]; then
             GBT__WHICH_OPTS='-p'
 
             if [ -z "$GBT__WHICH" ]; then
