@@ -112,11 +112,15 @@ func (c *Car) Init() {
 
     c.Display = utils.GetEnvBool("GBT_CAR_GIT_DISPLAY", isGitDir())
 
+    gitFormat := utils.GetEnv(
+	    "GBT_CAR_GIT_FORMAT",
+	    " {{ Icon }} {{ Head }} {{ Status }}{{ Ahead }}{{ Behind }} ")
+
     defaultStatusFormat := "{{ Clean }}"
     defaultAheadText := ""
     defaultBehindText := ""
 
-    if isDirty(c.Display) {
+    if strings.Contains(gitFormat, "{{ Status }}") && isDirty(c.Display) {
         defaultStatusFormat = "{{ Dirty }}"
     }
 
@@ -133,9 +137,7 @@ func (c *Car) Init() {
             Bg: utils.GetEnv("GBT_CAR_GIT_BG", defaultRootBg),
             Fg: utils.GetEnv("GBT_CAR_GIT_FG", defaultRootFg),
             Fm: utils.GetEnv("GBT_CAR_GIT_FM", defaultRootFm),
-            Text: utils.GetEnv(
-                "GBT_CAR_GIT_FORMAT",
-                " {{ Icon }} {{ Head }} {{ Status }}{{ Ahead }}{{ Behind }} "),
+            Text: gitFormat,
         },
         "Icon": {
             Bg: utils.GetEnv(
