@@ -4,6 +4,8 @@ function gbt_ssh() {
 
     if [[ " ${GBT__SSH_IGNORE[*]} " == *" ${@: -1} "* ]]; then
         $SSH_BIN "$@"
+    elif [[ "$GBT__SSH_CATCH_PSEUDO_TERMINAL" == true ]] && [[ " ${@} " == *" -t "* ]]; then
+        $SSH_BIN "$@";
     else
         local RDN=$RANDOM
         local GBT__CONF="/tmp/.gbt.$RDN"

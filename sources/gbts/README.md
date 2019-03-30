@@ -38,6 +38,9 @@ The following variables must be configured before sourcing the `local.sh` file:
 # Don't use 'gbt_ssh' when connecting to 'myhost1' or 'myhost2'
 export GBT__SSH_IGNORE=(myhost1 myhost2)
 
+# Don't use gbt_ssh when forcing pseudo-terminal allocation
+export GBT__SSH_CATCH_PSEUDO_TERMINAL=true
+
 # List of cars to pack for the remote.
 # Should match or exceed the list of cars from the theme or the theme variables
 # (GBT__THEME_REMOTE_CARS and GBT__THEME_MYSQL_CARS).
