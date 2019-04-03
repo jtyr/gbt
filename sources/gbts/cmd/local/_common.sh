@@ -15,8 +15,10 @@ function gbt__local_rcfile() {
         echo 'export GBT__SOURCE_SEC_DISABLE=1' >> $GBT__CONF
     fi
 
+    chmod $GBT__CONF_MODE $GBT__CONF
+
     echo -e "#!/bin/bash\nexec -a gbt.bash bash --rcfile $GBT__CONF \"\$@\"" > $GBT__CONF.bash
-    chmod +x $GBT__CONF.bash
+    chmod $GBT__CONF_BASH_MODE $GBT__CONF.bash
 
     echo $GBT__CONF
 }
@@ -46,6 +48,10 @@ function gbt__get_sources() {
     (
         echo "export GBT__CONF='$GBT__CONF'"
         cat $GBT__HOME/sources/gbts/{cmd{,/remote},car}/_common.sh
+
+        # Preserver modes
+        [ "$GBT__CONF_MODE" != '0600' ] && echo "export GBT__CONF_MODE='$GBT__CONF_MODE'"
+        [ "$GBT__CONF_BASH_MODE" != '0755' ] && echo "export GBT__CONF_BASH_MODE='$GBT__CONF_BASH_MODE'"
 
         # Allow to override default list of cars defined in the theme
         [ -n "$GBT__THEME_REMOTE_CARS" ] && echo "export GBT__THEME_REMOTE_CARS='$GBT__THEME_REMOTE_CARS'"

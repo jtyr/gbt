@@ -25,7 +25,7 @@ fi
 # Create executable that is used as shell in 'su'
 if [ ! -e "$GBT__CONF.bash" ]; then
     echo -e "#!/bin/bash\nexec -a gbt.bash bash --rcfile $GBT__CONF \"\$@\"" > $GBT__CONF.bash
-    chmod +x $GBT__CONF.bash
+    chmod $GBT__CONF_BASH_MODE $GBT__CONF.bash
 fi
 
 # Load remote Bash profile if it exists

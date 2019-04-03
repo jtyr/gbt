@@ -6,6 +6,8 @@
 [ -z "$GBT__SOURCE_MD5_CUT_REMOTE" ] && GBT__SOURCE_MD5_CUT_REMOTE='1'
 [ -z "$GBT__SOURCE_MD5_LOCAL" ] && GBT__SOURCE_MD5_LOCAL='md5sum'
 [ -z "$GBT__SOURCE_MD5_REMOTE" ] && GBT__SOURCE_MD5_REMOTE='md5sum'
+[ -z "$GBT__CONF_MODE" ] && GBT__CONF_MODE='0644'
+[ -z "$GBT__CONF_BASH_MODE" ] && GBT__CONF_BASH_MODE='0755'
 
 
 function gbt__which() {
