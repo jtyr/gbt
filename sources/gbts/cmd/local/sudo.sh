@@ -4,7 +4,7 @@ function gbt_sudo() {
     local SUDO_BIN=$(gbt__which sudo)
     [ -z "$SUDO_BIN" ] && return 1
 
-    if [ "$1" != 'su' ]; then
+    if [ "$1" != 'su' ] && [[ " $@ " != *" -i "* ]]; then
         $SUDO_BIN "$@"
     else
         shift

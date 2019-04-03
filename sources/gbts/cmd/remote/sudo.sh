@@ -6,7 +6,7 @@ function gbt_sudo() {
 
     gbt__check_md5
 
-    if [ "$1" != 'su' ]; then
+    if [ "$1" != 'su' ] && [[ " $@ " != *" -i "* ]]; then
         $SUDO_BIN "$@"
     else
         shift
