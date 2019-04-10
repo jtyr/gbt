@@ -1,37 +1,8 @@
-function remote_ssh_command {
-    # Parse through ssh command options and determine
-    # if there is a remote command to be executed
-    local SSH_DUAL_OPTIONS="BbcDEeFIiJLlmOopQRSWw"
-    while (( "$#" )); do
-        #check if it's an option and start with dash
-        if [[ "${1:0:1}" == "-" ]]; then
-            #check $1 is a option with argument, then do an extra shift
-            if [[ "$SSH_DUAL_OPTIONS" =~ "${1:1}" ]]; then
-                shift
-            fi
-            shift
-        else
-            #shift over ssh destination
-            shift
-            if [[ -z "$@" ]];then
-                # no command specified to be executed on remote host
-                return 1
-            else
-                # command specified to be exexuted
-                return 0
-            fi
-            break
-        fi
-    done
-}
-
 function gbt_ssh() {
     local SSH_BIN=$(gbt__which ssh)
     [ -z "$SSH_BIN" ] && return 1
 
-    if [[ " ${GBT__SSH_IGNORE[*]} " == *" ${@: -1} "* ]]; then
-        $SSH_BIN "$@"
-    elif remote_ssh_command "$@"; then
+	if [[ " ${GBT__SSH_IGNORE[*]} " == *" ${@: -1} "* ]] || (gbt__is_ssh_command "$@"); then
         $SSH_BIN "$@"
     else
         local RND=$RANDOM

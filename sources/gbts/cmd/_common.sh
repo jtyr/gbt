@@ -78,4 +78,33 @@ function gbt__finish() {
 }
 
 
+function gbt__is_ssh_command() {
+    # Parse through ssh command options and determine
+    # if there is a remote command to be executed
+    local SSH_DUAL_OPTIONS="BbcDEeFIiJLlmOopQRSWw"
+    while (( "$#" )); do
+        #check if it's an option and start with dash
+        if [[ "${1:0:1}" == "-" ]]; then
+            #check $1 is a option with argument, then do an extra shift
+            if [[ "$SSH_DUAL_OPTIONS" =~ "${1:1}" ]]; then
+                shift
+            fi
+            shift
+        else
+            #shift over ssh destination
+            shift
+            if [[ -z "$@" ]];then
+                # no command specified to be executed on remote host
+                return 1
+            else
+                # command specified to be exexuted
+                return 0
+            fi
+            break
+        fi
+
+    done
+}
+
+
 trap gbt__finish EXIT
