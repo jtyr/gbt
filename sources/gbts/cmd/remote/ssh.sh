@@ -2,7 +2,7 @@ function gbt_ssh() {
     local SSH_BIN=$(gbt__which ssh)
     [ -z "$SSH_BIN" ] && return 1
 
-    if gbt__is_ssh_command "$@"; then
+    if ( gbt__is_ssh_command "$@" ); then
         $SSH_BIN "$@"
     else
         gbt__check_md5
