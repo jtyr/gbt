@@ -10,6 +10,38 @@
 [ -z "$GBT__CONF_BASH_MODE" ] && GBT__CONF_BASH_MODE='0755'
 
 
+function gbt__is_ssh_command() {
+    # Parse through ssh command options and determine
+    # If there is a remote command to be executed
+    local SSH_DUAL_OPTIONS="BbcDEeFIiJLlmOopQRSWw"
+
+    while [[ $# -gt 0 ]]; do
+        # Check if it's an option and start with dash
+        if [[ "${1:0:1}" == "-" ]]; then
+            # Check $1 is a option with argument, then do an extra shift
+            if [[ "$SSH_DUAL_OPTIONS" =~ "${1:1}" ]]; then
+                shift
+            fi
+
+            shift
+        else
+            # Shift over ssh destination
+            shift
+
+            if [[ -z "$@" ]]; then
+                # No command specified to be executed on remote host
+                return 1
+            else
+                # Command specified to be exexuted
+                return 0
+            fi
+
+            break
+        fi
+    done
+}
+
+
 function gbt__which() {
     local PROG=$1
 
@@ -75,38 +107,6 @@ function gbt__finish() {
         # Cleanup at the end of the 'ssh' or 'vagrant' session
         rm -f $GBT__CONF $GBT__CONF.bash
     fi
-}
-
-
-function gbt__is_ssh_command() {
-    # Parse through ssh command options and determine
-    # If there is a remote command to be executed
-    local SSH_DUAL_OPTIONS="BbcDEeFIiJLlmOopQRSWw"
-
-    while [[ $# -gt 0 ]]; do
-        # Check if it's an option and start with dash
-        if [[ "${1:0:1}" == "-" ]]; then
-            # Check $1 is a option with argument, then do an extra shift
-            if [[ "$SSH_DUAL_OPTIONS" =~ "${1:1}" ]]; then
-                shift
-            fi
-
-            shift
-        else
-            # Shift over ssh destination
-            shift
-
-            if [[ -z "$@" ]];then
-                # No command specified to be executed on remote host
-                return 1
-            else
-                # Command specified to be exexuted
-                return 0
-            fi
-
-            break
-        fi
-    done
 }
 
 
