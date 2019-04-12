@@ -4,6 +4,8 @@ function gbt_vagrant() {
 
     if [ "$1" != 'ssh' ]; then
         $VAGRANT_BIN "$@"
+    elif ( gbt__is_vagrant_ssh_command "$@" ); then
+        $VAGRANT_BIN "$@"
     else
         shift
 

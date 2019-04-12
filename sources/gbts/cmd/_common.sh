@@ -42,6 +42,19 @@ function gbt__is_ssh_command() {
 }
 
 
+function gbt__is_vagrant_ssh_command() {
+    # Parse through vagrant ssh to see if -c or --command is specified
+    while (( "$#" )); do
+        if [[ "$1" == "-c" ]] || [[ "$1" == "--command" ]]; then
+            return 0
+            break
+        fi
+        shift
+    done
+    return 1
+}
+
+
 function gbt__which() {
     local PROG=$1
 
