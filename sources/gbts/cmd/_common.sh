@@ -11,15 +11,13 @@
 
 
 function gbt__is_ssh_command() {
-    # Parse through ssh command options and determine
-    # If there is a remote command to be executed
-    local SSH_DUAL_OPTIONS="BbcDEeFIiJLlmOopQRSWw"
-
-    while [[ $# -gt 0 ]]; do
+    # Parse through ssh command options and determine if there is a remote
+    # command to be executed
+    while [ $# -gt 0 ]; do
         # Check if it's an option and start with dash
-        if [[ "${1:0:1}" == "-" ]]; then
+        if [[ ${1:0:1} == '-' ]]; then
             # Check $1 is a option with argument, then do an extra shift
-            if [[ "$SSH_DUAL_OPTIONS" =~ "${1:1}" ]]; then
+            if [[ 'BbcDEeFIiJLlmOopQRSWw' =~ ${1:1} ]]; then
                 shift
             fi
 
@@ -44,13 +42,14 @@ function gbt__is_ssh_command() {
 
 function gbt__is_vagrant_ssh_command() {
     # Parse through vagrant ssh to see if -c or --command is specified
-    while (( "$#" )); do
-        if [[ "$1" == "-c" ]] || [[ "$1" == "--command" ]]; then
+    while [ $# -gt 0 ]; do
+        if [[ $1 == '-c' ]] || [[ $1 == '--command' ]]; then
             return 0
-            break
         fi
+
         shift
     done
+
     return 1
 }
 

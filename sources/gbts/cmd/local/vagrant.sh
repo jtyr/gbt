@@ -2,9 +2,7 @@ function gbt_vagrant() {
     local VAGRANT_BIN=$(gbt__which vagrant)
     [ -z "$VAGRANT_BIN" ] && return 1
 
-    if [ "$1" != 'ssh' ]; then
-        $VAGRANT_BIN "$@"
-    elif ( gbt__is_vagrant_ssh_command "$@" ); then
+    if [ "$1" != 'ssh' ] || ( gbt__is_vagrant_ssh_command "$@" ); then
         $VAGRANT_BIN "$@"
     else
         shift

@@ -4,9 +4,7 @@ function gbt_vagrant() {
 
     gbt__check_md5
 
-    if [ "$1" != 'ssh' ]; then
-        $VAGRANT_BIN "$@"
-    elif ( gbt__is_vagrant_ssh_command "$@" ); then
+    if [ "$1" != 'ssh' ] || ( gbt__is_vagrant_ssh_command "$@" ); then
         $VAGRANT_BIN "$@"
     else
         shift
