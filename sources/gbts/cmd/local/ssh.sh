@@ -2,7 +2,7 @@ function gbt_ssh() {
     local SSH_BIN=$(gbt__which ssh)
     [ -z "$SSH_BIN" ] && return 1
 
-    if [[ " ${GBT__SSH_IGNORE[*]} " == *" ${@: -1} "* ]]; then
+    if [[ " ${GBT__SSH_IGNORE[*]} " == *" ${@: -1} "* ]] || ( gbt__is_ssh_command "$@" ); then
         $SSH_BIN "$@"
     else
         local RND=$RANDOM

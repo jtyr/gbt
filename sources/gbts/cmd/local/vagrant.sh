@@ -2,9 +2,7 @@ function gbt_vagrant() {
     local VAGRANT_BIN=$(gbt__which vagrant)
     [ -z "$VAGRANT_BIN" ] && return 1
 
-    if [ "$1" != 'ssh' ]; then
-        $VAGRANT_BIN "$@"
-    else
+    if [[ $1 == 'ssh' ]] && ( ! gbt__is_vagrant_ssh_command "$@" ); then
         shift
 
         local RND=$RANDOM
@@ -21,5 +19,7 @@ else
   gbt__$RND > $GBT__CONF;
 fi;
 exec -a gbt.bash bash --rcfile \$GBT__CONF" "$@"
+    else
+        $VAGRANT_BIN "$@"
     fi
 }
