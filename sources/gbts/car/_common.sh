@@ -72,6 +72,10 @@ function GbtGetFormat() {
         esc='\e'
     fi
 
+    if [[ $name != ${name//normal/} ]]; then
+        seq+="${esc}[0m"
+    fi
+
     if [[ $name != ${name//bold/} ]]; then
         if [[ $end == 1 ]]; then
             seq+="${esc}[22m"
@@ -80,12 +84,28 @@ function GbtGetFormat() {
         fi
     fi
 
+    if [[ $name != ${name//dim/} ]]; then
+        seq+="${esc}[${kind}2m"
+    fi
+
     if [[ $name != ${name//underline/} ]]; then
         seq+="${esc}[${kind}4m"
     fi
 
     if [[ $name != ${name//blink/} ]]; then
         seq+="${esc}[${kind}5m"
+    fi
+
+    if [[ $name != ${name//invert/} ]]; then
+        seq+="${esc}[${kind}7m"
+    fi
+
+    if [[ $name != ${name//hide/} ]]; then
+        seq+="${esc}[${kind}8m"
+    fi
+
+    if [[ $name != ${name//strikeout/} ]]; then
+        seq+="${esc}[${kind}9m"
     fi
 
     GbtDecorateShell "$seq"

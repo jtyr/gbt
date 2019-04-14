@@ -277,6 +277,14 @@ export GBT_CAR_DIR_FG='255;255;255'
 
 Formatting is done via `_FM` variables. The possible values are:
 
+- `normal`
+
+  Makes the text normal.
+
+- `dim`
+
+  Makes the text dim.
+
 - `bold`
 
   Makes the text bold. Not all font characters have variant for bold formatting.
@@ -288,6 +296,14 @@ Formatting is done via `_FM` variables. The possible values are:
 - `blink`
 
   Makes the text to blink.
+
+- `invert`
+
+  Makes the text color inverted.
+
+- `hide`
+
+  Makes the text hidden.
 
 - `none`
 

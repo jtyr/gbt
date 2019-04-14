@@ -200,6 +200,10 @@ func (c *Car) GetFormat(name string, end bool) (ret string) {
         esc = "\\e"
     }
 
+    if strings.Contains(name, "normal") {
+        seq += fmt.Sprintf("%s[0m", esc)
+    }
+
     if strings.Contains(name, "bold") {
         if end {
             seq += fmt.Sprintf("%s[22m", esc)
@@ -208,12 +212,28 @@ func (c *Car) GetFormat(name string, end bool) (ret string) {
         }
     }
 
+    if strings.Contains(name, "dim") {
+        seq += fmt.Sprintf("%s[%s2m", esc, kind)
+    }
+
     if strings.Contains(name, "underline") {
         seq += fmt.Sprintf("%s[%s4m", esc, kind)
     }
 
     if strings.Contains(name, "blink") {
         seq += fmt.Sprintf("%s[%s5m", esc, kind)
+    }
+
+    if strings.Contains(name, "invert") {
+        seq += fmt.Sprintf("%s[%s7m", esc, kind)
+    }
+
+    if strings.Contains(name, "hide") {
+        seq += fmt.Sprintf("%s[%s8m", esc, kind)
+    }
+
+    if strings.Contains(name, "strikeout") {
+        seq += fmt.Sprintf("%s[%s9m", esc, kind)
     }
 
     ret = decorateShell(seq)
