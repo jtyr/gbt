@@ -12,6 +12,7 @@ if [[ ${GBT__PLUGINS_LOCAL__HASH[@]} == *' screen '* ]]; then
 fi
 if [[ ${GBT__PLUGINS_LOCAL__HASH[@]} == *' ssh '* ]]; then
     source $GBT__HOME/sources/gbts/cmd/local/ssh.sh
+    source $GBT__HOME/sources/gbts/cmd/_common_ssh.sh
 fi
 if [[ ${GBT__PLUGINS_LOCAL__HASH[@]} == *' su '* ]]; then
     source $GBT__HOME/sources/gbts/cmd/local/su.sh
@@ -21,4 +22,5 @@ if [[ ${GBT__PLUGINS_LOCAL__HASH[@]} == *' sudo '* ]]; then
 fi
 if [[ ${GBT__PLUGINS_LOCAL__HASH[@]} == *' vagrant '* ]]; then
     source $GBT__HOME/sources/gbts/cmd/local/vagrant.sh
+    source $GBT__HOME/sources/gbts/cmd/_common_vagrant.sh
 fi

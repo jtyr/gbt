@@ -49,6 +49,16 @@ function gbt__get_sources() {
         echo "export GBT__CONF='$GBT__CONF'"
         cat $GBT__HOME/sources/gbts/{cmd{,/remote},car}/_common.sh
 
+        # Include SSH common function if car is present
+        if [[ ${GBT__PLUGINS_REMOTE__HASH[@]} == *' ssh '* ]]; then
+            cat $GBT__HOME/sources/gbts/cmd/_common_ssh.sh
+        fi
+
+        # Include Vagrant common function if car is present
+        if [[ ${GBT__PLUGINS_REMOTE__HASH[@]} == *' vagrant '* ]]; then
+            cat $GBT__HOME/sources/gbts/cmd/_common_vagrant.sh
+        fi
+
         # Preserver modes
         [ "$GBT__CONF_MODE" != '0600' ] && echo "export GBT__CONF_MODE='$GBT__CONF_MODE'"
         [ "$GBT__CONF_BASH_MODE" != '0755' ] && echo "export GBT__CONF_BASH_MODE='$GBT__CONF_BASH_MODE'"
