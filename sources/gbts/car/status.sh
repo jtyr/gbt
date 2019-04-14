@@ -47,9 +47,9 @@ function GbtCarStatus() {
     local defaultOkFg=${GBT_CAR_BG:-light_gray}
     local defaultOkFm=${GBT_CAR_BG:-none}
 
-    local defaultRootBg=$defaultOkBg
-    local defaultRootFg=$defaultOkFg
-    local defaultRootFm=$defaultOkFm
+    local defaultRootBg=$defaultErrorBg
+    local defaultRootFg=$defaultErrorFg
+    local defaultRootFm=$defaultErrorFm
 
     GbtDecorateUnicode ${GBT_CAR_STATUS_ERROR_TEXT:-'\xe2\x9c\x98'}
     local defaultErrorText=$GBT__RETVAL
