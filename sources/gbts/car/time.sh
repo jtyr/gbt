@@ -43,14 +43,14 @@ function GbtCarTime() {
         [model-DateTime-Fm]=${GBT_CAR_TIME_DATETIME_FM:-${GBT_CAR_TIME_FM:-$defaultRootFm}}
         [model-DateTime-Text]=${GBT_CAR_TIME_DATETIME_FORMAT:-'{{ Date }} {{ Time }}'}
 
-        [model-Date-Bg]=${GBT_CAR_TIME_DATE_BG:-${GBT_CAR_TIME_BG:-$defaultRootBg}}
-        [model-Date-Fg]=${GBT_CAR_TIME_DATE_FG:-${GBT_CAR_TIME_FG:-$defaultRootFg}}
-        [model-Date-Fm]=${GBT_CAR_TIME_DATE_FM:-${GBT_CAR_TIME_FM:-$defaultRootFm}}
+        [model-Date-Bg]=${GBT_CAR_TIME_DATE_BG:-${GBT_CAR_TIME_DATETIME_FG:-${GBT_CAR_TIME_BG:-$defaultRootBg}}}
+        [model-Date-Fg]=${GBT_CAR_TIME_DATE_FG:-${GBT_CAR_TIME_DATETIME_BG:-${GBT_CAR_TIME_FG:-$defaultRootFg}}}
+        [model-Date-Fm]=${GBT_CAR_TIME_DATE_FM:-${GBT_CAR_TIME_DATETIME_FM:-${GBT_CAR_TIME_FM:-$defaultRootFm}}}
         [model-Date-Text]=$defaultDateText
 
-        [model-Time-Bg]=${GBT_CAR_TIME_TIME_BG:-${GBT_CAR_TIME_BG:-$defaultRootBg}}
-        [model-Time-Fg]=${GBT_CAR_TIME_TIME_FG:-${GBT_CAR_TIME_FG:-light_yellow}}
-        [model-Time-Fm]=${GBT_CAR_TIME_TIME_FM:-${GBT_CAR_TIME_FM:-$defaultRootFm}}
+        [model-Time-Bg]=${GBT_CAR_TIME_TIME_BG:-${GBT_CAR_TIME_DATETIME_FG:-${GBT_CAR_TIME_BG:-$defaultRootBg}}}
+        [model-Time-Fg]=${GBT_CAR_TIME_TIME_FG:-${GBT_CAR_TIME_DATETIME_BG:-${GBT_CAR_TIME_FG:-light_yellow}}}
+        [model-Time-Fm]=${GBT_CAR_TIME_TIME_FM:-${GBT_CAR_TIME_DATETIME_FM:-${GBT_CAR_TIME_FM:-$defaultRootFm}}}
         [model-Time-Text]=$defaultTimeText
 
         [display]=${GBT_CAR_TIME_DISPLAY:-1}

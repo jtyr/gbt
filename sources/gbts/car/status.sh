@@ -40,16 +40,16 @@ function GbtCarStatus() {
         return
     fi
 
-    local defaultErrorBg='red'
-    local defaultErrorFg='light_gray'
-    local defaultErrorFm='none'
-    local defaultOkBg='green'
-    local defaultOkFg='light_gray'
-    local defaultOkFm='none'
+    local defaultErrorBg=${GBT_CAR_BG:-red}
+    local defaultErrorFg=${GBT_CAR_BG:-light_gray}
+    local defaultErrorFm=${GBT_CAR_BG:-none}
+    local defaultOkBg=${GBT_CAR_BG:-green}
+    local defaultOkFg=${GBT_CAR_BG:-light_gray}
+    local defaultOkFm=${GBT_CAR_BG:-none}
 
-    local defaultRootBg=${GBT_CAR_BG:-$defaultErrorBg}
-    local defaultRootFg=${GBT_CAR_FG:-$defaultErrorFg}
-    local defaultRootFm=${GBT_CAR_FM:-$defaultErrorFm}
+    local defaultRootBg=$defaultOkBg
+    local defaultRootFg=$defaultOkFg
+    local defaultRootFm=$defaultOkFm
 
     GbtDecorateUnicode ${GBT_CAR_STATUS_ERROR_TEXT:-'\xe2\x9c\x98'}
     local defaultErrorText=$GBT__RETVAL
@@ -65,9 +65,9 @@ function GbtCarStatus() {
     fi
 
     if [[ $defaultCodeText == 0 ]]; then
-        defaultRootBg=${GBT_CAR_BG:-$defaultOkBg}
-        defaultRootFg=${GBT_CAR_FG:-$defaultOkFg}
-        defaultRootFm=${GBT_CAR_FM:-$defaultOkFm}
+        defaultRootBg=$defaultOkBg
+        defaultRootFg=$defaultOkFg
+        defaultRootFm=$defaultOkFm
         defaultDetailsFormat=''
         defaultSymbolFormat='{{ Ok }}'
     else
