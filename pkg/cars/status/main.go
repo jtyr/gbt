@@ -76,27 +76,15 @@ func (c *Car) isOk() (ret bool) {
 
 // Init initializes the car.
 func (c *Car) Init() {
-    defaultErrorBg := "red"
-    defaultErrorFg := "light_gray"
-    defaultErrorFm := "none"
-    defaultOkBg := "green"
-    defaultOkFg := "light_gray"
-    defaultOkFm := "none"
-    defaultRootBg := utils.GetEnv("GBT_CAR_BG", defaultErrorBg)
-    defaultRootFg := utils.GetEnv("GBT_CAR_FG", defaultErrorFg)
-    defaultRootFm := utils.GetEnv("GBT_CAR_FM", defaultErrorFm)
-    defaultSymbolBg := defaultRootBg
-    defaultSymbolFg := defaultRootFg
-    defaultSymbolFm := defaultRootFm
-    defaultDetailsBg := defaultRootBg
-    defaultDetailsFg := defaultRootFg
-    defaultDetailsFm := defaultRootFm
-    defaultCodeBg := defaultRootBg
-    defaultCodeFg := defaultRootFg
-    defaultCodeFm := defaultRootFm
-    defaultSignalBg := defaultRootBg
-    defaultSignalFg := defaultRootFg
-    defaultSignalFm := defaultRootFm
+    defaultErrorBg := utils.GetEnv("GBT_CAR_BG", "red")
+    defaultErrorFg := utils.GetEnv("GBT_CAR_FG", "light_gray")
+    defaultErrorFm := utils.GetEnv("GBT_CAR_FM", "none")
+    defaultOkBg := utils.GetEnv("GBT_CAR_BG", "green")
+    defaultOkFg := utils.GetEnv("GBT_CAR_FG", "light_gray")
+    defaultOkFm := utils.GetEnv("GBT_CAR_FM", "none")
+    defaultRootBg := defaultErrorBg
+    defaultRootFg := defaultErrorFg
+    defaultRootFm := defaultErrorFm
 
     defaultDetailsFormat := " {{ Signal }}"
     defaultSymbolFormat := "{{ Error }}"
@@ -107,9 +95,9 @@ func (c *Car) Init() {
     }
 
     if c.isOk() {
-        defaultRootBg = utils.GetEnv("GBT_CAR_BG", defaultOkBg)
-        defaultRootFg = utils.GetEnv("GBT_CAR_FG", defaultOkFg)
-        defaultRootFm = utils.GetEnv("GBT_CAR_FM", defaultOkFm)
+        defaultRootBg = defaultOkBg
+        defaultRootFg = defaultOkFg
+        defaultRootFm = defaultOkFm
         defaultDetailsFormat = ""
         defaultSymbolFormat = "{{ Ok }}"
     } else {
@@ -157,51 +145,51 @@ func (c *Car) Init() {
         "Symbol": {
             Bg: utils.GetEnv(
                 "GBT_CAR_STATUS_SYMBOL_BG", utils.GetEnv(
-                    "GBT_CAR_STATUS_BG", defaultSymbolBg)),
+                    "GBT_CAR_STATUS_BG", defaultRootBg)),
             Fg: utils.GetEnv(
                 "GBT_CAR_STATUS_SYMBOL_FG", utils.GetEnv(
-                    "GBT_CAR_STATUS_FG", defaultSymbolFg)),
+                    "GBT_CAR_STATUS_FG", defaultRootFg)),
             Fm: utils.GetEnv(
                 "GBT_CAR_STATUS_SYMBOL_FM", utils.GetEnv(
-                    "GBT_CAR_STATUS_FM", defaultSymbolFm)),
+                    "GBT_CAR_STATUS_FM", defaultRootFm)),
             Text: utils.GetEnv(
                 "GBT_CAR_STATUS_SYMBOL_FORMAT", defaultSymbolFormat),
         },
         "Details": {
             Bg: utils.GetEnv(
                 "GBT_CAR_STATUS_DETAILS_BG", utils.GetEnv(
-                    "GBT_CAR_STATUS_BG", defaultDetailsBg)),
+                    "GBT_CAR_STATUS_BG", defaultRootBg)),
             Fg: utils.GetEnv(
                 "GBT_CAR_STATUS_DETAILS_FG", utils.GetEnv(
-                    "GBT_CAR_STATUS_FG", defaultDetailsFg)),
+                    "GBT_CAR_STATUS_FG", defaultRootFg)),
             Fm: utils.GetEnv(
                 "GBT_CAR_STATUS_DETAILS_FM", utils.GetEnv(
-                    "GBT_CAR_STATUS_FM", defaultDetailsFm)),
+                    "GBT_CAR_STATUS_FM", defaultRootFm)),
             Text: defaultDetailsFormat,
         },
         "Code": {
             Bg: utils.GetEnv(
                 "GBT_CAR_STATUS_CODE_BG", utils.GetEnv(
-                    "GBT_CAR_STATUS_BG", defaultCodeBg)),
+                    "GBT_CAR_STATUS_BG", defaultRootBg)),
             Fg: utils.GetEnv(
                 "GBT_CAR_STATUS_CODE_FG", utils.GetEnv(
-                    "GBT_CAR_STATUS_FG", defaultCodeFg)),
+                    "GBT_CAR_STATUS_FG", defaultRootFg)),
             Fm: utils.GetEnv(
                 "GBT_CAR_STATUS_CODE_FM", utils.GetEnv(
-                    "GBT_CAR_STATUS_FM", defaultCodeFm)),
+                    "GBT_CAR_STATUS_FM", defaultRootFm)),
             Text: utils.GetEnv(
                 "GBT_CAR_STATUS_CODE_TEXT", defaultCodeText),
         },
         "Signal": {
             Bg: utils.GetEnv(
                 "GBT_CAR_STATUS_SIGNAL_BG", utils.GetEnv(
-                    "GBT_CAR_STATUS_BG", defaultSignalBg)),
+                    "GBT_CAR_STATUS_BG", defaultRootBg)),
             Fg: utils.GetEnv(
                 "GBT_CAR_STATUS_SIGNAL_FG", utils.GetEnv(
-                    "GBT_CAR_STATUS_FG", defaultSignalFg)),
+                    "GBT_CAR_STATUS_FG", defaultRootFg)),
             Fm: utils.GetEnv(
                 "GBT_CAR_STATUS_SIGNAL_FM", utils.GetEnv(
-                    "GBT_CAR_STATUS_FM", defaultSignalFm)),
+                    "GBT_CAR_STATUS_FM", defaultRootFm)),
             Text: utils.GetEnv(
                 "GBT_CAR_STATUS_SIGNAL_TEXT", c.getSignal()),
         },

@@ -129,9 +129,6 @@ func (c *Car) Init() {
     defaultRootBg := utils.GetEnv("GBT_CAR_BG", "235")
     defaultRootFg := utils.GetEnv("GBT_CAR_FG", "white")
     defaultRootFm := utils.GetEnv("GBT_CAR_FM", "none")
-    defaultSymbolBg := defaultRootBg
-    defaultSymbolFg := getOsColor()
-    defaultSymbolFm := defaultRootFm
 
     c.Model = map[string]car.ModelElement {
         "root": {
@@ -143,13 +140,13 @@ func (c *Car) Init() {
         "Symbol": {
             Bg: utils.GetEnv(
                 "GBT_CAR_OS_SYMBOL_BG", utils.GetEnv(
-                    "GBT_CAR_OS_BG", defaultSymbolBg)),
+                    "GBT_CAR_OS_BG", defaultRootBg)),
             Fg: utils.GetEnv(
                 "GBT_CAR_OS_SYMBOL_FG", utils.GetEnv(
-                    "GBT_CAR_OS_FG", defaultSymbolFg)),
+                    "GBT_CAR_OS_FG", getOsColor())),
             Fm: utils.GetEnv(
                 "GBT_CAR_OS_SYMBOL_FM", utils.GetEnv(
-                    "GBT_CAR_OS_FM", defaultSymbolFm)),
+                    "GBT_CAR_OS_FM", defaultRootFm)),
             Text: utils.GetEnv(
                 "GBT_CAR_OS_SYMBOL_TEXT", getOsSymbol()),
         },

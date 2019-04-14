@@ -23,18 +23,6 @@ func (c *Car) Init() {
     defaultRootBg := utils.GetEnv("GBT_CAR_BG", "dark_gray")
     defaultRootFg := utils.GetEnv("GBT_CAR_FG", "252")
     defaultRootFm := utils.GetEnv("GBT_CAR_FM", "none")
-    defaultUserhostBg := defaultRootBg
-    defaultUserhostFg := defaultRootFg
-    defaultUserhostFm := defaultRootFm
-    defaultUserBg := defaultRootBg
-    defaultUserFg := defaultRootFg
-    defaultUserFm := defaultRootFm
-    defaultAdminBg := defaultRootBg
-    defaultAdminFg := defaultRootFg
-    defaultAdminFm := defaultRootFm
-    defaultHostBg := defaultRootBg
-    defaultHostFg := defaultRootFg
-    defaultHostFm := defaultRootFm
 
     curUser, _ := user.Current()
     hostname, _ := os.Hostname()
@@ -56,50 +44,56 @@ func (c *Car) Init() {
         "UserHost": {
             Bg: utils.GetEnv(
                 "GBT_CAR_HOSTNAME_USERHOST_BG", utils.GetEnv(
-                    "GBT_CAR_HOSTNAME_BG", defaultUserhostBg)),
+                    "GBT_CAR_HOSTNAME_BG", defaultRootBg)),
             Fg: utils.GetEnv(
                 "GBT_CAR_HOSTNAME_USERHOST_FG", utils.GetEnv(
-                    "GBT_CAR_HOSTNAME_FG", defaultUserhostFg)),
+                    "GBT_CAR_HOSTNAME_FG", defaultRootFg)),
             Fm: utils.GetEnv(
                 "GBT_CAR_HOSTNAME_USERHOST_FM", utils.GetEnv(
-                    "GBT_CAR_HOSTNAME_FM", defaultUserhostFm)),
+                    "GBT_CAR_HOSTNAME_FM", defaultRootFm)),
             Text: utils.GetEnv(
                 "GBT_CAR_HOSTNAME_USERHOST_FORMAT", fmt.Sprintf("%s@{{ Host }}", uaFormat)),
         },
         "Admin": {
             Bg: utils.GetEnv(
                 "GBT_CAR_HOSTNAME_ADMIN_BG", utils.GetEnv(
-                    "GBT_CAR_HOSTNAME_BG", defaultAdminBg)),
+                    "GBT_CAR_HOSTNAME_USER_BG", utils.GetEnv(
+                        "GBT_CAR_HOSTNAME_BG", defaultRootBg))),
             Fg: utils.GetEnv(
                 "GBT_CAR_HOSTNAME_ADMIN_FG", utils.GetEnv(
-                    "GBT_CAR_HOSTNAME_FG", defaultAdminFg)),
+                    "GBT_CAR_HOSTNAME_USER_FG", utils.GetEnv(
+                        "GBT_CAR_HOSTNAME_FG", defaultRootFg))),
             Fm: utils.GetEnv(
                 "GBT_CAR_HOSTNAME_ADMIN_FM", utils.GetEnv(
-                    "GBT_CAR_HOSTNAME_FM", defaultAdminFm)),
+                    "GBT_CAR_HOSTNAME_USER_FM", utils.GetEnv(
+                        "GBT_CAR_HOSTNAME_FM", defaultRootFm))),
             Text: utils.GetEnv("GBT_CAR_HOSTNAME_ADMIN_TEXT", curUser.Username),
         },
         "User": {
             Bg: utils.GetEnv(
                 "GBT_CAR_HOSTNAME_USER_BG", utils.GetEnv(
-                    "GBT_CAR_HOSTNAME_BG", defaultUserBg)),
+                    "GBT_CAR_HOSTNAME_USER_BG", utils.GetEnv(
+                        "GBT_CAR_HOSTNAME_BG", defaultRootBg))),
             Fg: utils.GetEnv(
                 "GBT_CAR_HOSTNAME_USER_FG", utils.GetEnv(
-                    "GBT_CAR_HOSTNAME_FG", defaultUserFg)),
+                    "GBT_CAR_HOSTNAME_USER_FG", utils.GetEnv(
+                        "GBT_CAR_HOSTNAME_FG", defaultRootFg))),
             Fm: utils.GetEnv(
                 "GBT_CAR_HOSTNAME_USER_FM", utils.GetEnv(
-                    "GBT_CAR_HOSTNAME_FM", defaultUserFm)),
+                    "GBT_CAR_HOSTNAME_USER_FM", utils.GetEnv(
+                        "GBT_CAR_HOSTNAME_FM", defaultRootFm))),
             Text: utils.GetEnv("GBT_CAR_HOSTNAME_USER_TEXT", curUser.Username),
         },
         "Host": {
             Bg: utils.GetEnv(
                 "GBT_CAR_HOSTNAME_HOST_BG", utils.GetEnv(
-                    "GBT_CAR_HOSTNAME_BG", defaultHostBg)),
+                    "GBT_CAR_HOSTNAME_BG", defaultRootBg)),
             Fg: utils.GetEnv(
                 "GBT_CAR_HOSTNAME_HOST_FG", utils.GetEnv(
-                    "GBT_CAR_HOSTNAME_FG", defaultHostFg)),
+                    "GBT_CAR_HOSTNAME_FG", defaultRootFg)),
             Fm: utils.GetEnv(
                 "GBT_CAR_HOSTNAME_HOST_FM", utils.GetEnv(
-                    "GBT_CAR_HOSTNAME_FM", defaultHostFm)),
+                    "GBT_CAR_HOSTNAME_FM", defaultRootFm)),
             Text: utils.GetEnv("GBT_CAR_HOSTNAME_HOST_TEXT", hostname),
         },
     }

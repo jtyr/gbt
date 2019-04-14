@@ -18,9 +18,6 @@ func (c *Car) Init() {
     defaultRootBg := utils.GetEnv("GBT_CAR_BG", "yellow")
     defaultRootFg := utils.GetEnv("GBT_CAR_FG", "default")
     defaultRootFm := utils.GetEnv("GBT_CAR_FM", "none")
-    defaultTextBg := defaultRootBg
-    defaultTextFg := defaultRootFg
-    defaultTextFm := defaultRootFm
 
     prefix := fmt.Sprintf("GBT_CAR_CUSTOM%s", strings.ToUpper(c.Params["name"].(string)))
     defaultTextText := "?"
@@ -50,13 +47,13 @@ func (c *Car) Init() {
         "Text": {
             Bg: utils.GetEnv(
                 fmt.Sprintf("%s_TEXT_BG", prefix), utils.GetEnv(
-                    fmt.Sprintf("%s_BG", prefix), defaultTextBg)),
+                    fmt.Sprintf("%s_BG", prefix), defaultRootBg)),
             Fg: utils.GetEnv(
                 fmt.Sprintf("%s_TEXT_FG", prefix), utils.GetEnv(
-                    fmt.Sprintf("%s_FG", prefix), defaultTextFg)),
+                    fmt.Sprintf("%s_FG", prefix), defaultRootFg)),
             Fm: utils.GetEnv(
                 fmt.Sprintf("%s_TEXT_FM", prefix), utils.GetEnv(
-                    fmt.Sprintf("%s_FM", prefix), defaultTextFm)),
+                    fmt.Sprintf("%s_FM", prefix), defaultRootFm)),
             Text: utils.GetEnv(
                 fmt.Sprintf("%s_TEXT_TEXT", prefix), defaultTextText),
         },

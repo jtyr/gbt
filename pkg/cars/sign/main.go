@@ -20,13 +20,6 @@ func (c *Car) Init() {
     defaultRootBg := utils.GetEnv("GBT_CAR_BG", "default")
     defaultRootFg := utils.GetEnv("GBT_CAR_FG", "default")
     defaultRootFm := utils.GetEnv("GBT_CAR_FM", "none")
-    defaultSymbolBg := defaultRootBg
-    defaultSymbolFg := "green"
-    defaultSymbolFm := "bold"
-    defaultUserBg := defaultRootBg
-    defaultUserFm := defaultSymbolFm
-    defaultAdminBg := defaultRootBg
-    defaultAdminFm := defaultSymbolFm
 
     symbolFormat := "{{ User }}"
     curUser, _ := user.Current()
@@ -45,33 +38,33 @@ func (c *Car) Init() {
         "Symbol": {
             Bg: utils.GetEnv(
                 "GBT_CAR_SIGN_SYMBOL_BG", utils.GetEnv(
-                    "GBT_CAR_SIGN_BG", defaultSymbolBg)),
+                    "GBT_CAR_SIGN_BG", defaultRootBg)),
             Fg: utils.GetEnv(
                 "GBT_CAR_SIGN_SYMBOL_FG", utils.GetEnv(
-                    "GBT_CAR_SIGN_FG", defaultSymbolFg)),
+                    "GBT_CAR_SIGN_FG", "green")),
             Fm: utils.GetEnv(
                 "GBT_CAR_SIGN_SYMBOL_FM", utils.GetEnv(
-                    "GBT_CAR_SIGN_FM", defaultSymbolFm)),
+                    "GBT_CAR_SIGN_FM", "bold")),
             Text: utils.GetEnv("GBT_CAR_SIGN_SYMBOL_FORMAT", symbolFormat),
         },
         "User": {
             Bg: utils.GetEnv(
                 "GBT_CAR_SIGN_USER_BG", utils.GetEnv(
-                    "GBT_CAR_SIGN_BG", defaultUserBg)),
+                    "GBT_CAR_SIGN_BG", defaultRootBg)),
             Fg: utils.GetEnv("GBT_CAR_SIGN_USER_FG", "light_green"),
             Fm: utils.GetEnv(
                 "GBT_CAR_SIGN_USER_FM", utils.GetEnv(
-                    "GBT_CAR_SIGN_FM", defaultUserFm)),
+                    "GBT_CAR_SIGN_FM", defaultRootFm)),
             Text: utils.GetEnv("GBT_CAR_SIGN_USER_TEXT", "$"),
         },
         "Admin": {
             Bg: utils.GetEnv(
                 "GBT_CAR_SIGN_ADMIN_BG", utils.GetEnv(
-                    "GBT_CAR_SIGN_BG", defaultAdminBg)),
+                    "GBT_CAR_SIGN_BG", defaultRootBg)),
             Fg: utils.GetEnv("GBT_CAR_SIGN_ADMIN_FG", "red"),
             Fm: utils.GetEnv(
                 "GBT_CAR_SIGN_ADMIN_FM", utils.GetEnv(
-                    "GBT_CAR_SIGN_FM", defaultAdminFm)),
+                    "GBT_CAR_SIGN_FM", defaultRootFm)),
             Text: utils.GetEnv("GBT_CAR_SIGN_ADMIN_TEXT", "#"),
         },
     }

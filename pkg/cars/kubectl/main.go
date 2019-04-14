@@ -72,21 +72,6 @@ func (c *Car) Init() {
     defaultRootBg := utils.GetEnv("GBT_CAR_BG", "26")
     defaultRootFg := utils.GetEnv("GBT_CAR_FG", "white")
     defaultRootFm := utils.GetEnv("GBT_CAR_FM", "none")
-    defaultIconBg := defaultRootBg
-    defaultIconFg := defaultRootFg
-    defaultIconFm := defaultRootFm
-    defaultContextBg := defaultRootBg
-    defaultContextFg := defaultRootFg
-    defaultContextFm := defaultRootFm
-    defaultClusterBg := defaultRootBg
-    defaultClusterFg := defaultRootFg
-    defaultClusterFm := defaultRootFm
-    defaultAuthInfoBg := defaultRootBg
-    defaultAuthInfoFg := defaultRootFg
-    defaultAuthInfoFm := defaultRootFm
-    defaultNamespaceBg := defaultRootBg
-    defaultNamespaceFg := defaultRootFg
-    defaultNamespaceFm := defaultRootFm
 
     c.Display = utils.GetEnvBool("GBT_CAR_KUBECTL_DISPLAY", isKubectlCurrentContextSet())
     contextInfo := getCurrentContext(c.Display)
@@ -101,61 +86,61 @@ func (c *Car) Init() {
         "Icon": {
             Bg: utils.GetEnv(
                 "GBT_CAR_KUBECTL_ICON_BG", utils.GetEnv(
-                    "GBT_CAR_KUBECTL_BG", defaultIconBg)),
+                    "GBT_CAR_KUBECTL_BG", defaultRootBg)),
             Fg: utils.GetEnv(
                 "GBT_CAR_KUBECTL_ICON_FG", utils.GetEnv(
-                    "GBT_CAR_KUBECTL_FG", defaultIconFg)),
+                    "GBT_CAR_KUBECTL_FG", defaultRootFg)),
             Fm: utils.GetEnv(
                 "GBT_CAR_KUBECTL_ICON_FM", utils.GetEnv(
-                    "GBT_CAR_KUBECTL_FM", defaultIconFm)),
+                    "GBT_CAR_KUBECTL_FM", defaultRootFm)),
             Text: utils.GetEnv("GBT_CAR_KUBECTL_ICON_TEXT", "\u2388"),
         },
         "Context": {
             Bg: utils.GetEnv(
                 "GBT_CAR_KUBECTL_CONTEXT_BG", utils.GetEnv(
-                    "GBT_CAR_KUBECTL_BG", defaultContextBg)),
+                    "GBT_CAR_KUBECTL_BG", defaultRootBg)),
             Fg: utils.GetEnv(
                 "GBT_CAR_KUBECTL_CONTEXT_FG", utils.GetEnv(
-                    "GBT_CAR_KUBECTL_FG", defaultContextFg)),
+                    "GBT_CAR_KUBECTL_FG", defaultRootFg)),
             Fm: utils.GetEnv(
                 "GBT_CAR_KUBECTL_CONTEXT_FM", utils.GetEnv(
-                    "GBT_CAR_KUBECTL_FM", defaultContextFm)),
+                    "GBT_CAR_KUBECTL_FM", defaultRootFm)),
             Text: utils.GetEnv("GBT_CAR_KUBECTL_CONTEXT_TEXT", contextInfo.context),
         },
         "Cluster": {
             Bg: utils.GetEnv(
                 "GBT_CAR_KUBECTL_CLUSTER_BG", utils.GetEnv(
-                    "GBT_CAR_KUBECTL_BG", defaultClusterBg)),
+                    "GBT_CAR_KUBECTL_BG", defaultRootBg)),
             Fg: utils.GetEnv(
                 "GBT_CAR_KUBECTL_CLUSTER_FG", utils.GetEnv(
-                    "GBT_CAR_KUBECTL_FG", defaultClusterFg)),
+                    "GBT_CAR_KUBECTL_FG", defaultRootFg)),
             Fm: utils.GetEnv(
                 "GBT_CAR_KUBECTL_CLUSTER_FM", utils.GetEnv(
-                    "GBT_CAR_KUBECTL_FM", defaultClusterFm)),
+                    "GBT_CAR_KUBECTL_FM", defaultRootFm)),
             Text: utils.GetEnv("GBT_CAR_KUBECTL_CLUSTER_TEXT", contextInfo.cluster),
         },
         "AuthInfo": {
             Bg: utils.GetEnv(
                 "GBT_CAR_KUBECTL_AUTHINFO_BG", utils.GetEnv(
-                    "GBT_CAR_KUBECTL_BG", defaultAuthInfoBg)),
+                    "GBT_CAR_KUBECTL_BG", defaultRootBg)),
             Fg: utils.GetEnv(
                 "GBT_CAR_KUBECTL_AUTHINFO_FG", utils.GetEnv(
-                    "GBT_CAR_KUBECTL_FG", defaultAuthInfoFg)),
+                    "GBT_CAR_KUBECTL_FG", defaultRootFg)),
             Fm: utils.GetEnv(
                 "GBT_CAR_KUBECTL_AUTHINFO_FM", utils.GetEnv(
-                    "GBT_CAR_KUBECTL_FM", defaultAuthInfoFm)),
+                    "GBT_CAR_KUBECTL_FM", defaultRootFm)),
             Text: utils.GetEnv("GBT_CAR_KUBECTL_AUTHINFO_TEXT", contextInfo.authInfo),
         },
         "Namespace": {
             Bg: utils.GetEnv(
                 "GBT_CAR_KUBECTL_NAMESPACE_BG", utils.GetEnv(
-                    "GBT_CAR_KUBECTL_BG", defaultNamespaceBg)),
+                    "GBT_CAR_KUBECTL_BG", defaultRootBg)),
             Fg: utils.GetEnv(
                 "GBT_CAR_KUBECTL_NAMESPACE_FG", utils.GetEnv(
-                    "GBT_CAR_KUBECTL_FG", defaultNamespaceFg)),
+                    "GBT_CAR_KUBECTL_FG", defaultRootFg)),
             Fm: utils.GetEnv(
                 "GBT_CAR_KUBECTL_NAMESPACE_FM", utils.GetEnv(
-                    "GBT_CAR_KUBECTL_FM", defaultNamespaceFm)),
+                    "GBT_CAR_KUBECTL_FM", defaultRootFm)),
             Text: utils.GetEnv("GBT_CAR_KUBECTL_NAMESPACE_TEXT", contextInfo.namespace),
         },
     }

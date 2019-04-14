@@ -42,9 +42,6 @@ func (c *Car) Init() {
     defaultRootBg := utils.GetEnv("GBT_CAR_BG", "light_gray")
     defaultRootFg := utils.GetEnv("GBT_CAR_FG", "black")
     defaultRootFm := utils.GetEnv("GBT_CAR_FM", "none")
-    defaultTimeBg := defaultRootBg
-    defaultTimeFg := defaultRootFg
-    defaultTimeFm := defaultRootFm
 
     c.Model = map[string]car.ModelElement {
         "root": {
@@ -56,13 +53,13 @@ func (c *Car) Init() {
         "Time": {
             Bg: utils.GetEnv(
                 "GBT_CAR_EXECTIME_TIME_BG", utils.GetEnv(
-                    "GBT_CAR_EXECTIME_BG", defaultTimeBg)),
+                    "GBT_CAR_EXECTIME_BG", defaultRootBg)),
             Fg: utils.GetEnv(
                 "GBT_CAR_EXECTIME_TIME_FG", utils.GetEnv(
-                    "GBT_CAR_EXECTIME_FG", defaultTimeFg)),
+                    "GBT_CAR_EXECTIME_FG", defaultRootFg)),
             Fm: utils.GetEnv(
                 "GBT_CAR_EXECTIME_TIME_FM", utils.GetEnv(
-                    "GBT_CAR_EXECTIME_FM", defaultTimeFm)),
+                    "GBT_CAR_EXECTIME_FM", defaultRootFm)),
             Text: utils.GetEnv("GBT_CAR_EXECTIME_TIME_TEXT", getTime()),
         },
     }

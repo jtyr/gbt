@@ -17,12 +17,6 @@ func (c *Car) Init() {
     defaultRootBg := utils.GetEnv("GBT_CAR_BG", "222")
     defaultRootFg := utils.GetEnv("GBT_CAR_FG", "black")
     defaultRootFm := utils.GetEnv("GBT_CAR_FM", "none")
-    defaultIconBg := defaultRootBg
-    defaultIconFg := "33"
-    defaultIconFm := defaultRootFm
-    defaultNameBg := defaultRootBg
-    defaultNameFg := defaultRootFg
-    defaultNameFm := defaultRootFm
 
     c.Model = map[string]car.ModelElement {
         "root": {
@@ -34,25 +28,25 @@ func (c *Car) Init() {
         "Icon": {
             Bg: utils.GetEnv(
                 "GBT_CAR_PYVIRTENV_ICON_BG", utils.GetEnv(
-                    "GBT_CAR_PYVIRTENV_BG", defaultIconBg)),
+                    "GBT_CAR_PYVIRTENV_BG", defaultRootBg)),
             Fg: utils.GetEnv(
                 "GBT_CAR_PYVIRTENV_ICON_FG", utils.GetEnv(
-                    "GBT_CAR_PYVIRTENV_FG", defaultIconFg)),
+                    "GBT_CAR_PYVIRTENV_FG", "33")),
             Fm: utils.GetEnv(
                 "GBT_CAR_PYVIRTENV_ICON_FM", utils.GetEnv(
-                    "GBT_CAR_PYVIRTENV_FM", defaultIconFm)),
+                    "GBT_CAR_PYVIRTENV_FM", defaultRootFm)),
             Text: utils.GetEnv("GBT_CAR_PYVIRTENV_NAME_TEXT", "\ue73c"),
         },
         "Name": {
             Bg: utils.GetEnv(
                 "GBT_CAR_PYVIRTENV_NAME_BG", utils.GetEnv(
-                    "GBT_CAR_PYVIRTENV_BG", defaultNameBg)),
+                    "GBT_CAR_PYVIRTENV_BG", defaultRootBg)),
             Fg: utils.GetEnv(
                 "GBT_CAR_PYVIRTENV_NAME_FG", utils.GetEnv(
-                    "GBT_CAR_PYVIRTENV_FG", defaultNameFg)),
+                    "GBT_CAR_PYVIRTENV_FG", defaultRootFg)),
             Fm: utils.GetEnv(
                 "GBT_CAR_PYVIRTENV_NAME_FM", utils.GetEnv(
-                    "GBT_CAR_PYVIRTENV_FM", defaultNameFm)),
+                    "GBT_CAR_PYVIRTENV_FM", defaultRootFm)),
             Text: utils.GetEnv(
                 "GBT_CAR_PYVIRTENV_NAME_TEXT",
                 path.Base(utils.GetEnv("VIRTUAL_ENV", ""))),
