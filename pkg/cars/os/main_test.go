@@ -26,16 +26,6 @@ func TestInitDefault(t *testing.T) {
             osRelease: "/etc/os-release",
             expectedOutput: "?",
         },
-        {
-            name: "opensuse-leap",
-            osRelease: "/etc/os-release",
-            expectedOutput: "\uf314",
-        },
-        {
-            name: "opensuse-tumbleweed",
-            osRelease: "/etc/os-release",
-            expectedOutput: "\uf314",
-        },
     }
 
     for i, test := range tests {
