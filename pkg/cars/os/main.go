@@ -55,6 +55,7 @@ var symbols = map[string]iconColor {
     "redhat":     { icon: "\ue7bb", color: "1",   }, // nf-dev-redhat
     "sabayon":    { icon: "\uf317", color: "255", }, // nf-linux-sabayon
     "slackware":  { icon: "\uf318", color: "63",  }, // nf-linux-slackware
+    "sles":       { icon: "\uf314", color: "113", }, // nf-linux-opensuse
     "ubuntu":     { icon: "\uf31b", color: "166", }, // nf-linux-ubuntu
     "windows":    { icon: "\ue62a", color: "6",   }, // nf-custom-windows
 }
@@ -91,6 +92,10 @@ func getOsName() string {
             if len(line) > 3 && line[:3] == "ID=" {
                 osName = strings.Replace(
                     strings.Replace(line[3:], "\"", "", -1), "'", "", -1)
+            }
+
+            if len(osName) > 8 && osName[:8] == "opensuse" {
+                osName = osName[:8]
             }
         }
     }
