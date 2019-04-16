@@ -51,9 +51,9 @@ function GbtCarStatus() {
     local defaultRootFg=$defaultErrorFg
     local defaultRootFm=$defaultErrorFm
 
-    GbtDecorateUnicode ${GBT_CAR_STATUS_ERROR_TEXT:-'\xe2\x9c\x98'}
+    GbtDecorateUnicode ${GBT_CAR_STATUS_ERROR_TEXT-'\xe2\x9c\x98'}
     local defaultErrorText=$GBT__RETVAL
-    GbtDecorateUnicode ${GBT_CAR_STATUS_OK_TEXT:-'\xe2\x9c\x94'}
+    GbtDecorateUnicode ${GBT_CAR_STATUS_OK_TEXT-'\xe2\x9c\x94'}
     local defaultOkText=$GBT__RETVAL
 
     local defaultDetailsFormat=' {{ Signal }}'
@@ -71,14 +71,14 @@ function GbtCarStatus() {
         defaultDetailsFormat=''
         defaultSymbolFormat='{{ Ok }}'
     else
-        defaultDetailsFormat=${GBT_CAR_STATUS_DETAILS_FORMAT:-$defaultDetailsFormat}
+        defaultDetailsFormat=${GBT_CAR_STATUS_DETAILS_FORMAT-$defaultDetailsFormat}
     fi
 
     GBT_CAR=(
         [model-root-Bg]=${GBT_CAR_STATUS_BG:-$defaultRootBg}
         [model-root-Fg]=${GBT_CAR_STATUS_FG:-$defaultRootFg}
         [model-root-Fm]=${GBT_CAR_STATUS_FM:-$defaultRootFm}
-        [model-root-Text]=${GBT_CAR_STATUS_FORMAT:-' {{ Symbol }} '}
+        [model-root-Text]=${GBT_CAR_STATUS_FORMAT-' {{ Symbol }} '}
 
         [model-Error-Bg]=${GBT_CAR_STATUS_ERROR_BG:-${GBT_CAR_STATUS_SYMBOL_BG:-${GBT_CAR_STATUS_BG:-$defaultErrorBg}}}
         [model-Error-Fg]=${GBT_CAR_STATUS_ERROR_FG:-${GBT_CAR_STATUS_SYMBOL_FG:-${GBT_CAR_STATUS_FG:-$defaultErrorFg}}}
@@ -93,7 +93,7 @@ function GbtCarStatus() {
         [model-Symbol-Bg]=${GBT_CAR_STATUS_SYMBOL_BG:-${GBT_CAR_STATUS_BG:-$defaultRootBg}}
         [model-Symbol-Fg]=${GBT_CAR_STATUS_SYMBOL_FG-${GBT_CAR_STATUS_FG:-$defaultRootFg}}
         [model-Symbol-Fm]=${GBT_CAR_STATUS_SYMBOL_FM:-${GBT_CAR_STATUS_FM:-$defaultRootFm}}
-        [model-Symbol-Text]=${GBT_CAR_STATUS_SYMBOL_FORMAT:-$defaultSymbolFormat}
+        [model-Symbol-Text]=${GBT_CAR_STATUS_SYMBOL_FORMAT-$defaultSymbolFormat}
 
         [model-Details-Bg]=${GBT_CAR_STATUS_DETAILS_BG:-${GBT_CAR_STATUS_BG:-$defaultDetailsBg}}
         [model-Details-Fg]=${GBT_CAR_STATUS_DETAILS_FG:-${GBT_CAR_STATUS_FG:-$defaultDetailsFg}}
@@ -103,15 +103,15 @@ function GbtCarStatus() {
         [model-Code-Bg]=${GBT_CAR_STATUS_CODE_BG:-${GBT_CAR_STATUS_BG:-$defaultRootBg}}
         [model-Code-Fg]=${GBT_CAR_STATUS_CODE_FG:-${GBT_CAR_STATUS_FG:-$defaultRootFg}}
         [model-Code-Fm]=${GBT_CAR_STATUS_CODE_FM:-${GBT_CAR_STATUS_FM:-$defaultRootFm}}
-        [model-Code-Text]=${GBT_CAR_STATUS_CODE_TEXT:-$defaultCodeText}
+        [model-Code-Text]=${GBT_CAR_STATUS_CODE_TEXT-$defaultCodeText}
 
         [model-Signal-Bg]=${GBT_CAR_STATUS_SIGNAL_BG:-${GBT_CAR_STATUS_BG:-$defaultRootBg}}
         [model-Signal-Fg]=${GBT_CAR_STATUS_SIGNAL_FG:-${GBT_CAR_STATUS_FG:-$defaultRootFg}}
         [model-Signal-Fm]=${GBT_CAR_STATUS_SIGNAL_FM:-${GBT_CAR_STATUS_FM:-$defaultRootFm}}
-        [model-Signal-Text]=${GBT_CAR_STATUS_SIGNAL_TEXT:-${GBT__STATUS_SIGNALS[$defaultCodeText]:-UNK}}
+        [model-Signal-Text]=${GBT_CAR_STATUS_SIGNAL_TEXT-${GBT__STATUS_SIGNALS[$defaultCodeText]:-UNK}}
 
         [wrap]=${GBT_CAR_STATUS_WRAP:-0}
-        [sep]=${GBT_CAR_STATUS_SEP:-'\x00'}
+        [sep]=${GBT_CAR_STATUS_SEP-'\x00'}
     )
 
     if [[ $1 == 0 ]]; then

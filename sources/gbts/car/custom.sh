@@ -42,14 +42,14 @@ function GbtCarCustom() {
         [model-root-Bg]=${!C_BG:-$defaultRootBg}
         [model-root-Fg]=${!C_FG:-$defaultRootFg}
         [model-root-Fm]=${!C_FM:-$defaultRootFm}
-        [model-root-Text]=${!C_FORMAT:-' {{ Text }} '}
+        [model-root-Text]=${!C_FORMAT-' {{ Text }} '}
         [model-Text-Bg]=${!C_TEXT_BG:-${!C_BG:-$defaultRootBg}}
         [model-Text-Fg]=${!C_TEXT_FG:-${!C_FG:-$defaultRootFg}}
         [model-Text-Fm]=${!C_TEXT_FM:-${!C_FM:-$defaultRootFm}}
-        [model-Text-Text]=${!C_TEXT_TEXT:-$defaultTextText}
+        [model-Text-Text]=${!C_TEXT_TEXT-$defaultTextText}
 
         [display]=${!C_DISPLAY:-$defaultDisplay}
         [wrap]=${!C_WRAP:-0}
-        [sep]=${!C_SEP:-'\x00'}
+        [sep]=${!C_SEP-'\x00'}
     )
 }

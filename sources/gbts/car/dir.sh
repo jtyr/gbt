@@ -11,9 +11,9 @@ function GbtCarDir() {
     if [ -n "$homesign" ] && [[ $PWD == $HOME ]]; then
         text=$homesign
     elif [[ $PWD == '/' ]]; then
-        text=${GBT_CAR_DIR_DIRSEP:-/}
+        text=${GBT_CAR_DIR_DIRSEP-/}
     elif [[ $PWD == '//' ]]; then
-        text=${GBT_CAR_DIR_DIRSEP:-/}${GBT_CAR_DIR_DIRSEP:-/}
+        text=${GBT_CAR_DIR_DIRSEP-/}${GBT_CAR_DIR_DIRSEP-/}
     else
         local first=1
         local cur=1
@@ -25,7 +25,7 @@ function GbtCarDir() {
                 fi
 
                 if [[ $first != 1 ]]; then
-                    text+=${GBT_CAR_DIR_DIRSEP:-/}
+                    text+=${GBT_CAR_DIR_DIRSEP-/}
                 fi
 
                 text+=$d
@@ -45,15 +45,15 @@ function GbtCarDir() {
         [model-root-Bg]=${GBT_CAR_DIR_BG:-$defaultRootBg}
         [model-root-Fg]=${GBT_CAR_DIR_FG:-$defaultRootFg}
         [model-root-Fm]=${GBT_CAR_DIR_FM:-$defaultRootFm}
-        [model-root-Text]=${GBT_CAR_DIR_FORMAT:-' {{ Dir }} '}
+        [model-root-Text]=${GBT_CAR_DIR_FORMAT-' {{ Dir }} '}
 
         [model-Dir-Bg]=${GBT_CAR_DIR_DIR_BG:-${GBT_CAR_DIR_BG:-$defaultRootBg}}
         [model-Dir-Fg]=${GBT_CAR_DIR_DIR_FG:-${GBT_CAR_DIR_FG:-$defaultRootFg}}
         [model-Dir-Fm]=${GBT_CAR_DIR_DIR_FM:-${GBT_CAR_DIR_FM:-$defaultRootFm}}
-        [model-Dir-Text]=${GBT_CAR_DIR_DIR_TEXT:-$text}
+        [model-Dir-Text]=${GBT_CAR_DIR_DIR_TEXT-$text}
 
         [display]=${GBT_CAR_DIR_DISPLAY:-1}
         [wrap]=${GBT_CAR_DIR_WRAP:-0}
-        [sep]=${GBT_CAR_DIR_SEP:-'\x00'}
+        [sep]=${GBT_CAR_DIR_SEP-'\x00'}
     )
 }

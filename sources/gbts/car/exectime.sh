@@ -22,14 +22,14 @@ function GbtCarExecTime() {
         [model-root-Bg]=${GBT_CAR_EXECTIME_BG:-$defaultRootBg}
         [model-root-Fg]=${GBT_CAR_EXECTIME_FG:-$defaultRootFg}
         [model-root-Fm]=${GBT_CAR_EXECTIME_FM:-$defaultRootFm}
-        [model-root-Text]=${GBT_CAR_EXECTIME_FORMAT:-' {{ Time }} '}
+        [model-root-Text]=${GBT_CAR_EXECTIME_FORMAT-' {{ Time }} '}
         [model-Time-Bg]=${GBT_CAR_EXECTIME_TIME_BG:-${GBT_CAR_EXECTIME_BG:-$defaultRootBg}}
         [model-Time-Fg]=${GBT_CAR_EXECTIME_TIME_FG:-${GBT_CAR_EXECTIME_FG:-$defaultRootFg}}
         [model-Time-Fm]=${GBT_CAR_EXECTIME_TIME_FM:-${GBT_CAR_EXECTIME_FM:-$defaultRootFm}}
-        [model-Time-Text]=${GBT_CAR_EXECTIME_TIME_TEXT:-$exectime}
+        [model-Time-Text]=${GBT_CAR_EXECTIME_TIME_TEXT-$exectime}
 
         [display]=${GBT_CAR_EXECTIME_DISPLAY:-1}
         [wrap]=${GBT_CAR_EXECTIME_WRAP:-0}
-        [sep]=${GBT_CAR_EXECTIME_SEP:-'\x00'}
+        [sep]=${GBT_CAR_EXECTIME_SEP-'\x00'}
     )
 }

@@ -61,14 +61,14 @@ function GbtCarOs() {
     local defaultRootFg=${GBT_CAR_FG:-white}
     local defaultRootFm=${GBT_CAR_FM:-none}
 
-    GbtDecorateUnicode ${GBT_CAR_OS_SYMBOL_TEXT:-${GBT__OS_SYMBOLS[$os]}}
+    GbtDecorateUnicode ${GBT_CAR_OS_SYMBOL_TEXT-${GBT__OS_SYMBOLS[$os]}}
     local defaultSymbolText=$GBT__RETVAL
 
     GBT_CAR=(
         [model-root-Bg]=${GBT_CAR_OS_BG:-$defaultRootBg}
         [model-root-Fg]=${GBT_CAR_OS_FG:-$defaultRootFg}
         [model-root-Fm]=${GBT_CAR_OS_FM:-$defaultRootFm}
-        [model-root-Text]=${GBT_CAR_OS_FORMAT:-' {{ Symbol }} '}
+        [model-root-Text]=${GBT_CAR_OS_FORMAT-' {{ Symbol }} '}
 
         [model-Symbol-Bg]=${GBT_CAR_OS_SYMBOL_BG:-${GBT_CAR_OS_BG:-$defaultRootBg}}
         [model-Symbol-Fg]=${GBT_CAR_OS_SYMBOL_FG:-${GBT_CAR_OS_FG:-${GBT__OS_SYMBOLS["${os}_color"]}}}
@@ -77,6 +77,6 @@ function GbtCarOs() {
 
         [display]=${GBT_CAR_OS_DISPLAY:-1}
         [wrap]=${GBT_CAR_OS_WRAP:-0}
-        [sep]=${GBT_CAR_OS_SEP:-'\x00'}
+        [sep]=${GBT_CAR_OS_SEP-'\x00'}
     )
 }

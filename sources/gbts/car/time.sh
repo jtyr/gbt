@@ -27,21 +27,21 @@ function GbtCarTime() {
     local defaultRootFg=${GBT_CAR_FG:-light_gray}
     local defaultRootFm=${GBT_CAR_FM:-none}
 
-    GbtCarTimeFormat "${GBT_CAR_TIME_DATE_FORMAT:-Mon 02 Jan}"
+    GbtCarTimeFormat "${GBT_CAR_TIME_DATE_FORMAT-Mon 02 Jan}"
     local defaultDateText=$(${GBT__SOURCE_DATE:-date} "+$GBT__RETVAL")
-    GbtCarTimeFormat "${GBT_CAR_TIME_TIME_FORMAT:-15:04:05}"
+    GbtCarTimeFormat "${GBT_CAR_TIME_TIME_FORMAT-15:04:05}"
     local defaultTimeText=$(${GBT__SOURCE_DATE:-date} "+$GBT__RETVAL")
 
     GBT_CAR=(
         [model-root-Bg]=${GBT_CAR_TIME_BG:-$defaultRootBg}
         [model-root-Fg]=${GBT_CAR_TIME_FG:-$defaultRootFg}
         [model-root-Fm]=${GBT_CAR_TIME_FM:-$defaultRootFm}
-        [model-root-Text]=${GBT_CAR_TIME_FORMAT:-' {{ DateTime }} '}
+        [model-root-Text]=${GBT_CAR_TIME_FORMAT-' {{ DateTime }} '}
 
         [model-DateTime-Bg]=${GBT_CAR_TIME_DATETIME_BG:-${GBT_CAR_TIME_BG:-$defaultRootBg}}
         [model-DateTime-Fg]=${GBT_CAR_TIME_DATETIME_FG:-${GBT_CAR_TIME_FG:-$defaultRootFg}}
         [model-DateTime-Fm]=${GBT_CAR_TIME_DATETIME_FM:-${GBT_CAR_TIME_FM:-$defaultRootFm}}
-        [model-DateTime-Text]=${GBT_CAR_TIME_DATETIME_FORMAT:-'{{ Date }} {{ Time }}'}
+        [model-DateTime-Text]=${GBT_CAR_TIME_DATETIME_FORMAT-'{{ Date }} {{ Time }}'}
 
         [model-Date-Bg]=${GBT_CAR_TIME_DATE_BG:-${GBT_CAR_TIME_DATETIME_FG:-${GBT_CAR_TIME_BG:-$defaultRootBg}}}
         [model-Date-Fg]=${GBT_CAR_TIME_DATE_FG:-${GBT_CAR_TIME_DATETIME_BG:-${GBT_CAR_TIME_FG:-$defaultRootFg}}}
@@ -55,6 +55,6 @@ function GbtCarTime() {
 
         [display]=${GBT_CAR_TIME_DISPLAY:-1}
         [wrap]=${GBT_CAR_TIME_WRAP:-0}
-        [sep]=${GBT_CAR_TIME_SEP:-'\x00'}
+        [sep]=${GBT_CAR_TIME_SEP-'\x00'}
     )
 }
