@@ -6,89 +6,125 @@ import (
 
 func TestInit(t *testing.T) {
     tests := []struct {
-        runIsGitDir []string
-        runGetBranch []string
-        runGetTag []string
-        runGetCommit []string
-        runIsDirty []string
+        runIsGitDir      []string
+        runGetBranch     []string
+        runGetTag        []string
+        runGetCommit     []string
+        runIsDirty       []string
         runCompareRemote []string
-        field string
-        expectedDisplay bool
-        expectedOutput string
+        runStash         []string
+        field            string
+        expectedDisplay  bool
+        expectedOutput   string
     }{
         {
-            runIsGitDir: []string{"echo"},
+            runIsGitDir:     []string{"echo"},
             expectedDisplay: true,
         },
         {
-            runIsGitDir: []string{"nothing"},
+            runIsGitDir:     []string{"nothing"},
             expectedDisplay: false,
         },
         {
-            runIsGitDir: []string{"echo"},
-            runIsDirty: []string{"echo", "-n"},
-            field: "Status",
-            expectedOutput: "{{ Clean }}",
+            runIsGitDir:     []string{"echo"},
+            runIsDirty:      []string{"echo", "-n"},
+            field:           "Status",
+            expectedOutput:  "{{ StatusClean }}",
             expectedDisplay: true,
         },
         {
-            runIsGitDir: []string{"echo"},
-            runIsDirty: []string{"echo", "YES"},
-            field: "Status",
-            expectedOutput: "{{ Dirty }}",
+            runIsGitDir:     []string{"echo"},
+            runIsDirty:      []string{"echo", "-e", "AA added\n C copied\n D deleted\n ! ignored\n M modified\n R renamed\n   staged\n U unmerged\n?? untracked"},
+            field:           "Status",
+            expectedOutput:  "{{ StatusDirty }}",
             expectedDisplay: true,
         },
         {
-            runIsGitDir: []string{"echo"},
-            runGetBranch: []string{"echo", "refs/heads/master"},
-            field: "Head",
-            expectedOutput: "master",
+            runIsGitDir:     []string{"echo"},
+            runGetBranch:    []string{"echo", "refs/heads/master"},
+            field:           "Head",
+            expectedOutput:  "master",
             expectedDisplay: true,
         },
         {
-            runIsGitDir: []string{"echo"},
-            runGetBranch: []string{"nothing"},
-            runGetTag: []string{"echo", "v1.2.3"},
-            field: "Head",
-            expectedOutput: "v1.2.3",
+            runIsGitDir:     []string{"echo"},
+            runGetBranch:    []string{"nothing"},
+            runGetTag:       []string{"echo", "v1.2.3"},
+            field:           "Head",
+            expectedOutput:  "v1.2.3",
             expectedDisplay: true,
         },
         {
-            runIsGitDir: []string{"echo"},
-            runGetBranch: []string{"nothing"},
-            runGetTag: []string{"nothing"},
-            runGetCommit: []string{"echo", "92387be"},
-            field: "Head",
-            expectedOutput: "92387be",
+            runIsGitDir:     []string{"echo"},
+            runGetBranch:    []string{"nothing"},
+            runGetTag:       []string{"nothing"},
+            runGetCommit:    []string{"echo", "92387be"},
+            field:           "Head",
+            expectedOutput:  "92387be",
             expectedDisplay: true,
         },
         {
-            runIsGitDir: []string{"echo"},
+            runIsGitDir:      []string{"echo"},
             runCompareRemote: []string{"nothing"},
-            field: "Ahead",
-            expectedOutput: "",
-            expectedDisplay: true,
+            field:            "Ahead",
+            expectedOutput:   "{{ AheadSymbol }}",
+            expectedDisplay:  true,
         },
         {
-            runIsGitDir: []string{"echo"},
+            runIsGitDir:      []string{"echo"},
+            runCompareRemote: []string{"echo", "4"},
+            field:            "AheadCount",
+            expectedOutput:   "4",
+            expectedDisplay:  true,
+        },
+        {
+            runIsGitDir:      []string{"echo"},
+            runCompareRemote: []string{"echo", "1"},
+            field:            "AheadSymbol",
+            expectedOutput:   " ⬆",
+            expectedDisplay:  true,
+        },
+        {
+            runIsGitDir:      []string{"echo"},
             runCompareRemote: []string{"nothing"},
-            field: "Behind",
-            expectedOutput: "",
-            expectedDisplay: true,
+            field:            "Behind",
+            expectedOutput:   "{{ BehindSymbol }}",
+            expectedDisplay:  true,
         },
         {
-            runIsGitDir: []string{"echo"},
-            runCompareRemote: []string{"echo", "1"},
-            field: "Ahead",
-            expectedOutput: " ⬆",
-            expectedDisplay: true,
+            runIsGitDir:      []string{"echo"},
+            runCompareRemote: []string{"echo", "3"},
+            field:            "BehindCount",
+            expectedOutput:   "3",
+            expectedDisplay:  true,
         },
         {
-            runIsGitDir: []string{"echo"},
+            runIsGitDir:      []string{"echo"},
             runCompareRemote: []string{"echo", "1"},
-            field: "Behind",
-            expectedOutput: " ⬇",
-            expectedDisplay: true,
+            field:            "BehindSymbol",
+            expectedOutput:   " ⬇",
+            expectedDisplay:  true,
+        },
+        {
+            runIsGitDir:      []string{"echo"},
+            runStash:         []string{"nothing"},
+            field:            "Stash",
+            expectedOutput:   "{{ StashSymbol }}",
+            expectedDisplay:  true,
+        },
+        {
+            runIsGitDir:      []string{"echo"},
+            runStash:         []string{"echo", "-e", "a\nb\nc"},
+            field:            "StashCount",
+            expectedOutput:   "3",
+            expectedDisplay:  true,
+        },
+        {
+            runIsGitDir:      []string{"echo"},
+            runStash:         []string{"echo", "1"},
+            field:            "StashSymbol",
+            expectedOutput:   " ⚑",
+            expectedDisplay:  true,
         },
     }
 
@@ -128,6 +164,14 @@ func TestInit(t *testing.T) {
         } else {
             runCompareRemote = []string{"git", "rev-list", "--count"}
         }
+
+        if test.runStash != nil {
+            runStash = test.runStash
+        } else {
+            runStash = []string{"git", "stash", "list"}
+        }
+
+        defaultRootFormat = " {{ Icon }} {{ Head }} {{ Status }}{{ Ahead }}{{ Behind }}{{ Stash }} "
 
         car := Car{}
 

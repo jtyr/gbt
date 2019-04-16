@@ -179,18 +179,19 @@ func TestGetEnvFloat(t *testing.T) {
 func TestRun(t *testing.T) {
     tests := []struct {
         cmd []string
+        trim bool
         rc int
         stdout string
         stderr string
     }{
-        { cmd: []string{"find", "/", "-maxdepth", "1", "-name", "tmp"}, rc: 0, stdout: "/tmp", stderr: "", },
-        { cmd: []string{"curl", "-s", "-S", "http://localhost:12345"},  rc: 7, stdout: "",     stderr: "curl: (7) Failed to connect to localhost port 12345: Connection refused", },
-        { cmd: []string{"unknown_command"},                             rc: 1, stdout: "",     stderr: "exec: \"unknown_command\": executable file not found in $PATH", },
+        { cmd: []string{"find", "/", "-maxdepth", "1", "-name", "tmp"}, trim: true,  rc: 0, stdout: "/tmp", stderr: "", },
+        { cmd: []string{"curl", "-s", "-S", "http://localhost:12345"},  trim: true,  rc: 7, stdout: "",     stderr: "curl: (7) Failed to connect to localhost port 12345: Connection refused", },
+        { cmd: []string{"unknown_command"},                             trim: false, rc: 1, stdout: "",     stderr: "exec: \"unknown_command\": executable file not found in $PATH", },
     }
 
     for i, test := range tests {
         testPrefix := getTestPrefix(i)
-        rc, stdout, stderr := Run(test.cmd)
+        rc, stdout, stderr := Run(test.cmd, test.trim)
 
         if test.rc != rc || test.stdout != stdout || test.stderr != stderr {
             t.Errorf(

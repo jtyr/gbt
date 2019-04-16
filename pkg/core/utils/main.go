@@ -84,7 +84,13 @@ func GetEnvFloat(key string, fallback float64) float64 {
 const defaultFailedCode = 1
 
 // Run runs a command and returns the exit code, stdour and stderr output.
-func Run(args []string) (rc int, stdout string, stderr string) {
+func Run(args []string, params ...bool) (rc int, stdout string, stderr string) {
+    trim := true
+
+    if len(params) != 0 && ! params[0] {
+        trim = false
+    }
+
     var outbuf, errbuf bytes.Buffer
     cmd := exec.Command(args[0], args[1:]...)
     cmd.Stdout = &outbuf
@@ -110,8 +116,10 @@ func Run(args []string) (rc int, stdout string, stderr string) {
         rc = ws.ExitStatus()
     }
 
-    stdout = strings.TrimSpace(stdout)
-    stderr = strings.TrimSpace(stderr)
+    if trim {
+        stdout = strings.TrimSpace(stdout)
+        stderr = strings.TrimSpace(stderr)
+    }
 
     return
 }
