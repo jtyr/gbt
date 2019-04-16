@@ -3,6 +3,7 @@ false
 true
 export GBT_CAR_STATUS_FORMAT=' {{ Symbol }} {{ Code }} '
 ls /root
+export GBT_CAR_STATUS_FORMAT=' {{ Symbol }} {{ Signal }} '
 asdasd
 clear                                                                      
 ### Os car demo
@@ -81,6 +82,11 @@ export VIRTUAL_ENV_DISABLE_PROMPT='1'
 source /tmp/test/bin/activate
 deactivate
 rm -fr /tmp/test
+unset GBT_CARS
+clear                                                                      
+### Kubectl car demo
+export GBT_CARS='Status, Os, Hostname, Dir, Kubectl, Sign'
+kubectl config use-context minikube
 unset GBT_CARS
 clear                                                                      
 ### Custom car demo
