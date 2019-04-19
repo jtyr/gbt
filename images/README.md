@@ -1,7 +1,6 @@
-Set terminal window to the size of 118x14 characters and set cursor color to be
-black. Disable KDE effects and make sure [Peek](https://github.com/phw/peek)
-is installed and configured to start recording after 1 second by pressing
-CTRL+ALT+E.
+Set terminal window to the size of 118x14 characters. Disable KDE effects and
+make sure [Peek](https://github.com/phw/peek) is installed and configured to
+start recording after 1 second by pressing `CTRL+ALT+E` and using 10 FPS.
 
 Then get the window ID where the typing will happen:
 
@@ -9,7 +8,8 @@ Then get the window ID where the typing will happen:
 WIN_ID=$(printf '%d' $(xwininfo | grep -Po '(?<=xwininfo: Window id: )(0x[a-f0-9]+)'))
 ```
 
-Automatically start recording, typing and then stop recording:
+Automatically start recording and typing and then stop recording:
+
 
 ```shell
 xdotool \
