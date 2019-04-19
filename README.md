@@ -747,452 +747,452 @@ displayed only if the current directory is a Git repository.
 
   Text content of the `{{ StatusClean }}` element.
 
-- `GBT_CAR_GIT_ADDED_BG`
+- `GBT_CAR_GIT_STATUS_ADDED_BG`
 
   Background color of the `{{ StatusAdded }}` element.
 
-- `GBT_CAR_GIT_ADDED_FG`
+- `GBT_CAR_GIT_STATUS_ADDED_FG`
 
   Foreground color of the `{{ StatusAdded }}` element.
 
-- `GBT_CAR_GIT_ADDED_FM`
+- `GBT_CAR_GIT_STATUS_ADDED_FM`
 
   Formatting of the `{{ StatusAdded }}` element.
 
-- `GBT_CAR_GIT_ADDED_FORMAT='{{ StatusAddedSymbol }}'`
+- `GBT_CAR_GIT_STATUS_ADDED_FORMAT='{{ StatusAddedSymbol }}'`
 
   Format of the the `{{ StatusAdded }}` element. It can be
   `{{ StatusAddedSymbol }}` or `{{ StatusAddedCount }}`.
 
-- `GBT_CAR_GIT_ADDED_SYMBOL_BG`
+- `GBT_CAR_GIT_STATUS_ADDED_SYMBOL_BG`
 
   Background color of the `{{ StatusAddedSymbol }}` element.
 
-- `GBT_CAR_GIT_ADDED_SYMBOL_FG`
+- `GBT_CAR_GIT_STATUS_ADDED_SYMBOL_FG`
 
   Foreground color of the `{{ StatusAddedSymbol }}` element.
 
-- `GBT_CAR_GIT_ADDED_SYMBOL_FM`
+- `GBT_CAR_GIT_STATUS_ADDED_SYMBOL_FM`
 
   Formatting of the `{{ StatusAddedSymbol }}` element.
 
-- `GBT_CAR_GIT_ADDED_SYMBOL_TEXT=' ⟴'`
+- `GBT_CAR_GIT_STATUS_ADDED_SYMBOL_TEXT=' ⟴'`
 
   Text content of the `{{ StatusAddedSymbol }}` element.
 
-- `GBT_CAR_GIT_ADDED_COUNT_BG`
+- `GBT_CAR_GIT_STATUS_ADDED_COUNT_BG`
 
   Background color of the `{{ StatusAddedCount }}` element.
 
-- `GBT_CAR_GIT_ADDED_COUNT_FG`
+- `GBT_CAR_GIT_STATUS_ADDED_COUNT_FG`
 
   Foreground color of the `{{ StatusAddedCount }}` element.
 
-- `GBT_CAR_GIT_ADDED_COUNT_FM`
+- `GBT_CAR_GIT_STATUS_ADDED_COUNT_FM`
 
   Formatting of the `{{ StatusAddedSymbol }}` element.
 
-- `GBT_CAR_GIT_ADDED_COUNT_TEXT`
+- `GBT_CAR_GIT_STATUS_ADDED_COUNT_TEXT`
 
   Text content of the `{{ StatusAddedCount }}` element. By default it contains
   a number of added files.
 
-- `GBT_CAR_GIT_COPIED_BG`
+- `GBT_CAR_GIT_STATUS_COPIED_BG`
 
   Background color of the `{{ StatusCopied }}` element.
 
-- `GBT_CAR_GIT_COPIED_FG`
+- `GBT_CAR_GIT_STATUS_COPIED_FG`
 
   Foreground color of the `{{ StatusCopied }}` element.
 
-- `GBT_CAR_GIT_COPIED_FM`
+- `GBT_CAR_GIT_STATUS_COPIED_FM`
 
   Formatting of the `{{ StatusCopied }}` element.
 
-- `GBT_CAR_GIT_COPIED_FORMAT='{{ StatusCopiedSymbol }}'`
+- `GBT_CAR_GIT_STATUS_COPIED_FORMAT='{{ StatusCopiedSymbol }}'`
 
   Format of the the `{{ StatusCopied }}` element. It can be
   `{{ StatusCopiedSymbol }}` or `{{ StatusCopiedCount }}`.
 
-- `GBT_CAR_GIT_COPIED_SYMBOL_BG`
+- `GBT_CAR_GIT_STATUS_COPIED_SYMBOL_BG`
 
   Background color of the `{{ StatusCopiedSymbol }}` element.
 
-- `GBT_CAR_GIT_COPIED_SYMBOL_FG`
+- `GBT_CAR_GIT_STATUS_COPIED_SYMBOL_FG`
 
   Foreground color of the `{{ StatusCopiedSymbol }}` element.
 
-- `GBT_CAR_GIT_COPIED_SYMBOL_FM`
+- `GBT_CAR_GIT_STATUS_COPIED_SYMBOL_FM`
 
   Formatting of the `{{ StatusCopiedSymbol }}` element.
 
-- `GBT_CAR_GIT_COPIED_SYMBOL_TEXT=' ⥈'`
+- `GBT_CAR_GIT_STATUS_COPIED_SYMBOL_TEXT=' ⥈'`
 
   Text content of the `{{ StatusCopiedSymbol }}` element.
 
-- `GBT_CAR_GIT_COPIED_COUNT_BG`
+- `GBT_CAR_GIT_STATUS_COPIED_COUNT_BG`
 
   Background color of the `{{ StatusCopiedCount }}` element.
 
-- `GBT_CAR_GIT_COPIED_COUNT_FG`
+- `GBT_CAR_GIT_STATUS_COPIED_COUNT_FG`
 
   Foreground color of the `{{ StatusCopiedCount }}` element.
 
-- `GBT_CAR_GIT_COPIED_COUNT_FM`
+- `GBT_CAR_GIT_STATUS_COPIED_COUNT_FM`
 
   Formatting of the `{{ StatusCopiedSymbol }}` element.
 
-- `GBT_CAR_GIT_COPIED_COUNT_TEXT`
+- `GBT_CAR_GIT_STATUS_COPIED_COUNT_TEXT`
 
   Text content of the `{{ StatusCopiedCount }}` element. By default it contains
   a number of files copied.
 
-- `GBT_CAR_GIT_DELETED_BG`
+- `GBT_CAR_GIT_STATUS_DELETED_BG`
 
   Background color of the `{{ StatusDeleted }}` element.
 
-- `GBT_CAR_GIT_DELETED_FG`
+- `GBT_CAR_GIT_STATUS_DELETED_FG`
 
   Foreground color of the `{{ StatusDeleted }}` element.
 
-- `GBT_CAR_GIT_DELETED_FM`
+- `GBT_CAR_GIT_STATUS_DELETED_FM`
 
   Formatting of the `{{ StatusDeleted }}` element.
 
-- `GBT_CAR_GIT_DELETED_FORMAT='{{ StatusDeletedSymbol }}'`
+- `GBT_CAR_GIT_STATUS_DELETED_FORMAT='{{ StatusDeletedSymbol }}'`
 
   Format of the the `{{ StatusDeleted }}` element. It can be
   `{{ StatusDeletedSymbol }}` or `{{ StatusDeletedCount }}`.
 
-- `GBT_CAR_GIT_DELETED_SYMBOL_BG`
+- `GBT_CAR_GIT_STATUS_DELETED_SYMBOL_BG`
 
   Background color of the `{{ StatusDeletedSymbol }}` element.
 
-- `GBT_CAR_GIT_DELETED_SYMBOL_FG`
+- `GBT_CAR_GIT_STATUS_DELETED_SYMBOL_FG`
 
   Foreground color of the `{{ StatusDeletedSymbol }}` element.
 
-- `GBT_CAR_GIT_DELETED_SYMBOL_FM`
+- `GBT_CAR_GIT_STATUS_DELETED_SYMBOL_FM`
 
   Formatting of the `{{ StatusDeletedSymbol }}` element.
 
-- `GBT_CAR_GIT_DELETED_SYMBOL_TEXT=' ➖'`
+- `GBT_CAR_GIT_STATUS_DELETED_SYMBOL_TEXT=' ➖'`
 
   Text content of the `{{ StatusDeletedSymbol }}` element.
 
-- `GBT_CAR_GIT_DELETED_COUNT_BG`
+- `GBT_CAR_GIT_STATUS_DELETED_COUNT_BG`
 
   Background color of the `{{ StatusDeletedCount }}` element.
 
-- `GBT_CAR_GIT_DELETED_COUNT_FG`
+- `GBT_CAR_GIT_STATUS_DELETED_COUNT_FG`
 
   Foreground color of the `{{ StatusDeletedCount }}` element.
 
-- `GBT_CAR_GIT_DELETED_COUNT_FM`
+- `GBT_CAR_GIT_STATUS_DELETED_COUNT_FM`
 
   Formatting of the `{{ StatusDeletedSymbol }}` element.
 
-- `GBT_CAR_GIT_DELETED_COUNT_TEXT`
+- `GBT_CAR_GIT_STATUS_DELETED_COUNT_TEXT`
 
   Text content of the `{{ StatusDeletedCount }}` element. By default it contains
   a number of deleted files.
 
-- `GBT_CAR_GIT_IGNORED_BG`
+- `GBT_CAR_GIT_STATUS_IGNORED_BG`
 
   Background color of the `{{ StatusIgnored }}` element.
 
-- `GBT_CAR_GIT_IGNORED_FG`
+- `GBT_CAR_GIT_STATUS_IGNORED_FG`
 
   Foreground color of the `{{ StatusIgnored }}` element.
 
-- `GBT_CAR_GIT_IGNORED_FM`
+- `GBT_CAR_GIT_STATUS_IGNORED_FM`
 
   Formatting of the `{{ StatusIgnored }}` element.
 
-- `GBT_CAR_GIT_IGNORED_FORMAT='{{ StatusIgnoredSymbol }}'`
+- `GBT_CAR_GIT_STATUS_IGNORED_FORMAT='{{ StatusIgnoredSymbol }}'`
 
   Format of the the `{{ StatusIgnored }}` element. It can be
   `{{ StatusIgnoredSymbol }}` or `{{ StatusIgnoredCount }}`.
 
-- `GBT_CAR_GIT_IGNORED_SYMBOL_BG`
+- `GBT_CAR_GIT_STATUS_IGNORED_SYMBOL_BG`
 
   Background color of the `{{ StatusIgnoredSymbol }}` element.
 
-- `GBT_CAR_GIT_IGNORED_SYMBOL_FG`
+- `GBT_CAR_GIT_STATUS_IGNORED_SYMBOL_FG`
 
   Foreground color of the `{{ StatusIgnoredSymbol }}` element.
 
-- `GBT_CAR_GIT_IGNORED_SYMBOL_FM`
+- `GBT_CAR_GIT_STATUS_IGNORED_SYMBOL_FM`
 
   Formatting of the `{{ StatusIgnoredSymbol }}` element.
 
-- `GBT_CAR_GIT_IGNORED_SYMBOL_TEXT=' ⬆'`
+- `GBT_CAR_GIT_STATUS_IGNORED_SYMBOL_TEXT=' ⬆'`
 
   Text content of the `{{ StatusIgnoredSymbol }}` element.
 
-- `GBT_CAR_GIT_IGNORED_COUNT_BG`
+- `GBT_CAR_GIT_STATUS_IGNORED_COUNT_BG`
 
   Background color of the `{{ StatusIgnoredCount }}` element.
 
-- `GBT_CAR_GIT_IGNORED_COUNT_FG`
+- `GBT_CAR_GIT_STATUS_IGNORED_COUNT_FG`
 
   Foreground color of the `{{ StatusIgnoredCount }}` element.
 
-- `GBT_CAR_GIT_IGNORED_COUNT_FM`
+- `GBT_CAR_GIT_STATUS_IGNORED_COUNT_FM`
 
   Formatting of the `{{ StatusIgnoredSymbol }}` element.
 
-- `GBT_CAR_GIT_IGNORED_COUNT_TEXT`
+- `GBT_CAR_GIT_STATUS_IGNORED_COUNT_TEXT`
 
   Text content of the `{{ StatusIgnoredCount }}` element. By default it contains
   a number of ignored files.
 
-- `GBT_CAR_GIT_MODIFIED_BG`
+- `GBT_CAR_GIT_STATUS_MODIFIED_BG`
 
   Background color of the `{{ StatusModified }}` element.
 
-- `GBT_CAR_GIT_MODIFIED_FG`
+- `GBT_CAR_GIT_STATUS_MODIFIED_FG`
 
   Foreground color of the `{{ StatusModified }}` element.
 
-- `GBT_CAR_GIT_MODIFIED_FM`
+- `GBT_CAR_GIT_STATUS_MODIFIED_FM`
 
   Formatting of the `{{ StatusModified }}` element.
 
-- `GBT_CAR_GIT_MODIFIED_FORMAT='{{ StatusModifiedSymbol }}'`
+- `GBT_CAR_GIT_STATUS_MODIFIED_FORMAT='{{ StatusModifiedSymbol }}'`
 
   Format of the the `{{ StatusModified }}` element. It can be
   `{{ StatusModifiedSymbol }}` or `{{ StatusModifiedCount }}`.
 
-- `GBT_CAR_GIT_MODIFIED_SYMBOL_BG`
+- `GBT_CAR_GIT_STATUS_MODIFIED_SYMBOL_BG`
 
   Background color of the `{{ StatusModifiedSymbol }}` element.
 
-- `GBT_CAR_GIT_MODIFIED_SYMBOL_FG`
+- `GBT_CAR_GIT_STATUS_MODIFIED_SYMBOL_FG`
 
   Foreground color of the `{{ StatusModifiedSymbol }}` element.
 
-- `GBT_CAR_GIT_MODIFIED_SYMBOL_FM`
+- `GBT_CAR_GIT_STATUS_MODIFIED_SYMBOL_FM`
 
   Formatting of the `{{ StatusModifiedSymbol }}` element.
 
-- `GBT_CAR_GIT_MODIFIED_SYMBOL_TEXT=' ⬆'`
+- `GBT_CAR_GIT_STATUS_MODIFIED_SYMBOL_TEXT=' ⬆'`
 
   Text content of the `{{ StatusModifiedSymbol }}` element.
 
-- `GBT_CAR_GIT_MODIFIED_COUNT_BG`
+- `GBT_CAR_GIT_STATUS_MODIFIED_COUNT_BG`
 
   Background color of the `{{ StatusModifiedCount }}` element.
 
-- `GBT_CAR_GIT_MODIFIED_COUNT_FG`
+- `GBT_CAR_GIT_STATUS_MODIFIED_COUNT_FG`
 
   Foreground color of the `{{ StatusModifiedCount }}` element.
 
-- `GBT_CAR_GIT_MODIFIED_COUNT_FM`
+- `GBT_CAR_GIT_STATUS_MODIFIED_COUNT_FM`
 
   Formatting of the `{{ StatusModifiedSymbol }}` element.
 
-- `GBT_CAR_GIT_MODIFIED_COUNT_TEXT`
+- `GBT_CAR_GIT_STATUS_MODIFIED_COUNT_TEXT`
 
   Text content of the `{{ StatusModifiedCount }}` element. By default it
   contains a number of modified files.
 
-- `GBT_CAR_GIT_RENAMED_BG`
+- `GBT_CAR_GIT_STATUS_RENAMED_BG`
 
   Background color of the `{{ StatusRenamed }}` element.
 
-- `GBT_CAR_GIT_RENAMED_FG`
+- `GBT_CAR_GIT_STATUS_RENAMED_FG`
 
   Foreground color of the `{{ StatusRenamed }}` element.
 
-- `GBT_CAR_GIT_RENAMED_FM`
+- `GBT_CAR_GIT_STATUS_RENAMED_FM`
 
   Formatting of the `{{ StatusRenamed }}` element.
 
-- `GBT_CAR_GIT_RENAMED_FORMAT='{{ StatusRenamedSymbol }}'`
+- `GBT_CAR_GIT_STATUS_RENAMED_FORMAT='{{ StatusRenamedSymbol }}'`
 
   Format of the the `{{ StatusRenamed }}` element. It can be
   `{{ StatusRenamedSymbol }}` or `{{ StatusRenamedCount }}`.
 
-- `GBT_CAR_GIT_RENAMED_SYMBOL_BG`
+- `GBT_CAR_GIT_STATUS_RENAMED_SYMBOL_BG`
 
   Background color of the `{{ StatusRenamedSymbol }}` element.
 
-- `GBT_CAR_GIT_RENAMED_SYMBOL_FG`
+- `GBT_CAR_GIT_STATUS_RENAMED_SYMBOL_FG`
 
   Foreground color of the `{{ StatusRenamedSymbol }}` element.
 
-- `GBT_CAR_GIT_RENAMED_SYMBOL_FM`
+- `GBT_CAR_GIT_STATUS_RENAMED_SYMBOL_FM`
 
   Formatting of the `{{ StatusRenamedSymbol }}` element.
 
-- `GBT_CAR_GIT_RENAMED_SYMBOL_TEXT=' ⬆'`
+- `GBT_CAR_GIT_STATUS_RENAMED_SYMBOL_TEXT=' ⬆'`
 
   Text content of the `{{ StatusRenamedSymbol }}` element.
 
-- `GBT_CAR_GIT_RENAMED_COUNT_BG`
+- `GBT_CAR_GIT_STATUS_RENAMED_COUNT_BG`
 
   Background color of the `{{ StatusRenamedCount }}` element.
 
-- `GBT_CAR_GIT_RENAMED_COUNT_FG`
+- `GBT_CAR_GIT_STATUS_RENAMED_COUNT_FG`
 
   Foreground color of the `{{ StatusRenamedCount }}` element.
 
-- `GBT_CAR_GIT_RENAMED_COUNT_FM`
+- `GBT_CAR_GIT_STATUS_RENAMED_COUNT_FM`
 
   Formatting of the `{{ StatusRenamedSymbol }}` element.
 
-- `GBT_CAR_GIT_RENAMED_COUNT_TEXT`
+- `GBT_CAR_GIT_STATUS_RENAMED_COUNT_TEXT`
 
   Text content of the `{{ StatusRenamedCount }}` element. By default it contains
   a number of renamed files.
 
-- `GBT_CAR_GIT_STAGED_BG`
+- `GBT_CAR_GIT_STATUS_STAGED_BG`
 
   Background color of the `{{ StatusStaged }}` element.
 
-- `GBT_CAR_GIT_STAGED_FG`
+- `GBT_CAR_GIT_STATUS_STAGED_FG`
 
   Foreground color of the `{{ StatusStaged }}` element.
 
-- `GBT_CAR_GIT_STAGED_FM`
+- `GBT_CAR_GIT_STATUS_STAGED_FM`
 
   Formatting of the `{{ StatusStaged }}` element.
 
-- `GBT_CAR_GIT_STAGED_FORMAT='{{ StatusStagedSymbol }}'`
+- `GBT_CAR_GIT_STATUS_STAGED_FORMAT='{{ StatusStagedSymbol }}'`
 
   Format of the the `{{ StatusStaged }}` element. It can be
   `{{ StatusStagedSymbol }}` or `{{ StatusStagedCount }}`.
 
-- `GBT_CAR_GIT_STAGED_SYMBOL_BG`
+- `GBT_CAR_GIT_STATUS_STAGED_SYMBOL_BG`
 
   Background color of the `{{ StatusStagedSymbol }}` element.
 
-- `GBT_CAR_GIT_STAGED_SYMBOL_FG`
+- `GBT_CAR_GIT_STATUS_STAGED_SYMBOL_FG`
 
   Foreground color of the `{{ StatusStagedSymbol }}` element.
 
-- `GBT_CAR_GIT_STAGED_SYMBOL_FM`
+- `GBT_CAR_GIT_STATUS_STAGED_SYMBOL_FM`
 
   Formatting of the `{{ StatusStagedSymbol }}` element.
 
-- `GBT_CAR_GIT_STAGED_SYMBOL_TEXT=' ⬆'`
+- `GBT_CAR_GIT_STATUS_STAGED_SYMBOL_TEXT=' ⬆'`
 
   Text content of the `{{ StatusStagedSymbol }}` element.
 
-- `GBT_CAR_GIT_STAGED_COUNT_BG`
+- `GBT_CAR_GIT_STATUS_STAGED_COUNT_BG`
 
   Background color of the `{{ StatusStagedCount }}` element.
 
-- `GBT_CAR_GIT_STAGED_COUNT_FG`
+- `GBT_CAR_GIT_STATUS_STAGED_COUNT_FG`
 
   Foreground color of the `{{ StatusStagedCount }}` element.
 
-- `GBT_CAR_GIT_STAGED_COUNT_FM`
+- `GBT_CAR_GIT_STATUS_STAGED_COUNT_FM`
 
   Formatting of the `{{ StatusStagedSymbol }}` element.
 
-- `GBT_CAR_GIT_STAGED_COUNT_TEXT`
+- `GBT_CAR_GIT_STATUS_STAGED_COUNT_TEXT`
 
   Text content of the `{{ StatusStagedCount }}` element. By default it contains
   a number of staged files.
 
-- `GBT_CAR_GIT_UNMERGED_BG`
+- `GBT_CAR_GIT_STATUS_UNMERGED_BG`
 
   Background color of the `{{ StatusUnmerged }}` element.
 
-- `GBT_CAR_GIT_UNMERGED_FG`
+- `GBT_CAR_GIT_STATUS_UNMERGED_FG`
 
   Foreground color of the `{{ StatusUnmerged }}` element.
 
-- `GBT_CAR_GIT_UNMERGED_FM`
+- `GBT_CAR_GIT_STATUS_UNMERGED_FM`
 
   Formatting of the `{{ StatusUnmerged }}` element.
 
-- `GBT_CAR_GIT_UNMERGED_FORMAT='{{ StatusUnmergedSymbol }}'`
+- `GBT_CAR_GIT_STATUS_UNMERGED_FORMAT='{{ StatusUnmergedSymbol }}'`
 
   Format of the the `{{ StatusUnmerged }}` element. It can be
   `{{ StatusUnmergedSymbol }}` or `{{ StatusUnmergedCount }}`.
 
-- `GBT_CAR_GIT_UNMERGED_SYMBOL_BG`
+- `GBT_CAR_GIT_STATUS_UNMERGED_SYMBOL_BG`
 
   Background color of the `{{ StatusUnmergedSymbol }}` element.
 
-- `GBT_CAR_GIT_UNMERGED_SYMBOL_FG`
+- `GBT_CAR_GIT_STATUS_UNMERGED_SYMBOL_FG`
 
   Foreground color of the `{{ StatusUnmergedSymbol }}` element.
 
-- `GBT_CAR_GIT_UNMERGED_SYMBOL_FM`
+- `GBT_CAR_GIT_STATUS_UNMERGED_SYMBOL_FM`
 
   Formatting of the `{{ StatusUnmergedSymbol }}` element.
 
-- `GBT_CAR_GIT_UNMERGED_SYMBOL_TEXT=' ⬆'`
+- `GBT_CAR_GIT_STATUS_UNMERGED_SYMBOL_TEXT=' ⬆'`
 
   Text content of the `{{ StatusUnmergedSymbol }}` element.
 
-- `GBT_CAR_GIT_UNMERGED_COUNT_BG`
+- `GBT_CAR_GIT_STATUS_UNMERGED_COUNT_BG`
 
   Background color of the `{{ StatusUnmergedCount }}` element.
 
-- `GBT_CAR_GIT_UNMERGED_COUNT_FG`
+- `GBT_CAR_GIT_STATUS_UNMERGED_COUNT_FG`
 
   Foreground color of the `{{ StatusUnmergedCount }}` element.
 
-- `GBT_CAR_GIT_UNMERGED_COUNT_FM`
+- `GBT_CAR_GIT_STATUS_UNMERGED_COUNT_FM`
 
   Formatting of the `{{ StatusUnmergedSymbol }}` element.
 
-- `GBT_CAR_GIT_UNMERGED_COUNT_TEXT`
+- `GBT_CAR_GIT_STATUS_UNMERGED_COUNT_TEXT`
 
   Text content of the `{{ StatusUnmergedCount }}` element. By default it
   contains a number of unmerged files.
 
-- `GBT_CAR_GIT_UNTRACKED_BG`
+- `GBT_CAR_GIT_STATUS_UNTRACKED_BG`
 
   Background color of the `{{ StatusUntracked }}` element.
 
-- `GBT_CAR_GIT_UNTRACKED_FG`
+- `GBT_CAR_GIT_STATUS_UNTRACKED_FG`
 
   Foreground color of the `{{ StatusUntracked }}` element.
 
-- `GBT_CAR_GIT_UNTRACKED_FM`
+- `GBT_CAR_GIT_STATUS_UNTRACKED_FM`
 
   Formatting of the `{{ StatusUntracked }}` element.
 
-- `GBT_CAR_GIT_UNTRACKED_FORMAT='{{ StatusUntrackedSymbol }}'`
+- `GBT_CAR_GIT_STATUS_UNTRACKED_FORMAT='{{ StatusUntrackedSymbol }}'`
 
   Format of the the `{{ StatusUntracked }}` element. It can be
   `{{ StatusUntrackedSymbol }}` or `{{ StatusUntrackedCount }}`.
 
-- `GBT_CAR_GIT_UNTRACKED_SYMBOL_BG`
+- `GBT_CAR_GIT_STATUS_UNTRACKED_SYMBOL_BG`
 
   Background color of the `{{ StatusUntrackedSymbol }}` element.
 
-- `GBT_CAR_GIT_UNTRACKED_SYMBOL_FG`
+- `GBT_CAR_GIT_STATUS_UNTRACKED_SYMBOL_FG`
 
   Foreground color of the `{{ StatusUntrackedSymbol }}` element.
 
-- `GBT_CAR_GIT_UNTRACKED_SYMBOL_FM`
+- `GBT_CAR_GIT_STATUS_UNTRACKED_SYMBOL_FM`
 
   Formatting of the `{{ StatusUntrackedSymbol }}` element.
 
-- `GBT_CAR_GIT_UNTRACKED_SYMBOL_TEXT=' ⬆'`
+- `GBT_CAR_GIT_STATUS_UNTRACKED_SYMBOL_TEXT=' ⬆'`
 
   Text content of the `{{ StatusUntrackedSymbol }}` element.
 
-- `GBT_CAR_GIT_UNTRACKED_COUNT_BG`
+- `GBT_CAR_GIT_STATUS_UNTRACKED_COUNT_BG`
 
   Background color of the `{{ StatusUntrackedCount }}` element.
 
-- `GBT_CAR_GIT_UNTRACKED_COUNT_FG`
+- `GBT_CAR_GIT_STATUS_UNTRACKED_COUNT_FG`
 
   Foreground color of the `{{ StatusUntrackedCount }}` element.
 
-- `GBT_CAR_GIT_UNTRACKED_COUNT_FM`
+- `GBT_CAR_GIT_STATUS_UNTRACKED_COUNT_FM`
 
   Formatting of the `{{ StatusUntrackedSymbol }}` element.
 
-- `GBT_CAR_GIT_UNTRACKED_COUNT_TEXT`
+- `GBT_CAR_GIT_STATUS_UNTRACKED_COUNT_TEXT`
 
   Text content of the `{{ StatusUntrackedCount }}` element. By default it
   contains a number of untracked files.
