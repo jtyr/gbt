@@ -67,7 +67,7 @@ func TestInit(t *testing.T) {
             runIsGitDir:      []string{"echo"},
             runCompareRemote: []string{"nothing"},
             field:            "Ahead",
-            expectedOutput:   "{{ AheadSymbol }}",
+            expectedOutput:   "",
             expectedDisplay:  true,
         },
         {
@@ -88,7 +88,7 @@ func TestInit(t *testing.T) {
             runIsGitDir:      []string{"echo"},
             runCompareRemote: []string{"nothing"},
             field:            "Behind",
-            expectedOutput:   "{{ BehindSymbol }}",
+            expectedOutput:   "",
             expectedDisplay:  true,
         },
         {
@@ -109,7 +109,7 @@ func TestInit(t *testing.T) {
             runIsGitDir:      []string{"echo"},
             runStash:         []string{"nothing"},
             field:            "Stash",
-            expectedOutput:   "{{ StashSymbol }}",
+            expectedOutput:   "",
             expectedDisplay:  true,
         },
         {

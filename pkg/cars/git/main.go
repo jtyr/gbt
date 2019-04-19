@@ -137,7 +137,7 @@ func getStash() string {
 
     rc, out, _ := utils.Run(runStash)
 
-    if rc == 0 {
+    if rc == 0 && len(out) > 0 {
         ret = strconv.Itoa(len(strings.Split(out, "\n")))
     }
 
@@ -154,28 +154,40 @@ func (c *Car) Init() {
 
     defaultHeadText := ""
     defaultStatusFormat := "{{ StatusClean }}"
+    defaultStatusAddedFormat := ""
     defaultStatusAddedSymbolText := ""
     defaultStatusAddedCountText := ""
+    defaultStatusCopiedFormat := ""
     defaultStatusCopiedSymbolText := ""
     defaultStatusCopiedCountText := ""
+    defaultStatusDeletedFormat := ""
     defaultStatusDeletedSymbolText := ""
     defaultStatusDeletedCountText := ""
+    defaultStatusIgnoredFormat := ""
     defaultStatusIgnoredSymbolText := ""
     defaultStatusIgnoredCountText := ""
+    defaultStatusModifiedFormat := ""
     defaultStatusModifiedSymbolText := ""
     defaultStatusModifiedCountText := ""
+    defaultStatusRenamedFormat := ""
     defaultStatusRenamedSymbolText := ""
     defaultStatusRenamedCountText := ""
+    defaultStatusStagedFormat := ""
     defaultStatusStagedSymbolText := ""
     defaultStatusStagedCountText := ""
+    defaultStatusUnmergedFormat := ""
     defaultStatusUnmergedSymbolText := ""
     defaultStatusUnmergedCountText := ""
+    defaultStatusUntrackedFormat := ""
     defaultStatusUntrackedSymbolText := ""
     defaultStatusUntrackedCountText := ""
+    defaultAheadFormat := ""
     defaultAheadSymbolText := ""
     defaultAheadCountText := ""
+    defaultBehindFormat := ""
     defaultBehindSymbolText := ""
     defaultBehindCountText := ""
+    defaultStashFormat := ""
     defaultStashSymbolText := ""
     defaultStashCountText := ""
 
@@ -191,46 +203,55 @@ func (c *Car) Init() {
                 defaultStatusFormat = "{{ StatusDirty }}"
 
                 if status.added > 0 {
+                    defaultStatusAddedFormat = utils.GetEnv("GBT_CAR_GIT_STATUS_ADDED_FORMAT", "{{ StatusAddedSymbol }}")
                     defaultStatusAddedSymbolText = utils.GetEnv("GBT_CAR_GIT_STATUS_ADDED_SYMBOL_TEXT", " \u27f4")
                     defaultStatusAddedCountText = utils.GetEnv("GBT_CAR_GIT_STATUS_ADDED_COUNT_TEXT", strconv.Itoa(status.added))
                 }
 
                 if status.copied > 0 {
+                    defaultStatusCopiedFormat = utils.GetEnv("GBT_CAR_GIT_STATUS_COPIED_FORMAT", "{{ StatusCopiedSymbol }}")
                     defaultStatusCopiedSymbolText = utils.GetEnv("GBT_CAR_GIT_STATUS_COPIED_SYMBOL_TEXT", " \u2948")
                     defaultStatusCopiedCountText = utils.GetEnv("GBT_CAR_GIT_STATUS_COPIED_COUNT_TEXT", strconv.Itoa(status.copied))
                 }
 
                 if status.deleted > 0 {
+                    defaultStatusDeletedFormat = utils.GetEnv("GBT_CAR_GIT_STATUS_DELETED_FORMAT", "{{ StatusDeletedSymbol }}")
                     defaultStatusDeletedSymbolText = utils.GetEnv("GBT_CAR_GIT_STATUS_DELETED_SYMBOL_TEXT", " \u2796")
                     defaultStatusDeletedCountText = utils.GetEnv("GBT_CAR_GIT_STATUS_DELETED_COUNT_TEXT", strconv.Itoa(status.deleted))
                 }
 
                 if status.ignored > 0 {
+                    defaultStatusIgnoredFormat = utils.GetEnv("GBT_CAR_GIT_STATUS_IGNORED_FORMAT", "{{ StatusIgnoredSymbol }}")
                     defaultStatusIgnoredSymbolText = utils.GetEnv("GBT_CAR_GIT_STATUS_IGNORED_SYMBOL_TEXT", " \u25cb")
                     defaultStatusIgnoredCountText = utils.GetEnv("GBT_CAR_GIT_STATUS_IGNORED_COUNT_TEXT", strconv.Itoa(status.ignored))
                 }
 
                 if status.modified > 0 {
+                    defaultStatusModifiedFormat = utils.GetEnv("GBT_CAR_GIT_STATUS_MODIFIED_FORMAT", "{{ StatusModifiedSymbol }}")
                     defaultStatusModifiedSymbolText = utils.GetEnv("GBT_CAR_GIT_STATUS_MODIFIED_SYMBOL_TEXT", " \u271a")
                     defaultStatusModifiedCountText = utils.GetEnv("GBT_CAR_GIT_STATUS_MODIFIED_COUNT_TEXT", strconv.Itoa(status.modified))
                 }
 
                 if status.renamed > 0 {
+                    defaultStatusRenamedFormat = utils.GetEnv("GBT_CAR_GIT_STATUS_RENAMED_FORMAT", "{{ StatusRenamedSymbol }}")
                     defaultStatusRenamedSymbolText = utils.GetEnv("GBT_CAR_GIT_STATUS_RENAMED_SYMBOL_TEXT", " \u2972")
                     defaultStatusRenamedCountText = utils.GetEnv("GBT_CAR_GIT_STATUS_RENAMED_COUNT_TEXT", strconv.Itoa(status.renamed))
                 }
 
                 if status.staged > 0 {
+                    defaultStatusStagedFormat = utils.GetEnv("GBT_CAR_GIT_STATUS_STAGED_FORMAT", "{{ StatusStagedSymbol }}")
                     defaultStatusStagedSymbolText = utils.GetEnv("GBT_CAR_GIT_STATUS_STAGED_SYMBOL_TEXT", " \u25cf")
                     defaultStatusStagedCountText = utils.GetEnv("GBT_CAR_GIT_STATUS_STAGED_COUNT_TEXT", strconv.Itoa(status.staged))
                 }
 
                 if status.unmerged > 0 {
+                    defaultStatusUnmergedFormat = utils.GetEnv("GBT_CAR_GIT_STATUS_UNMERGED_FORMAT", "{{ StatusUnmergedSymbol }}")
                     defaultStatusUnmergedSymbolText = utils.GetEnv("GBT_CAR_GIT_STATUS_UNMERGED_SYMBOL_TEXT", " \u2716")
                     defaultStatusUnmergedCountText = utils.GetEnv("GBT_CAR_GIT_STATUS_UNMERGED_COUNT_TEXT", strconv.Itoa(status.unmerged))
                 }
 
                 if status.untracked > 0 {
+                    defaultStatusUntrackedFormat = utils.GetEnv("GBT_CAR_GIT_STATUS_UNTRACKED_FORMAT", "{{ StatusUntrackedSymbol }}")
                     defaultStatusUntrackedSymbolText = utils.GetEnv("GBT_CAR_GIT_STATUS_UNTRACKED_SYMBOL_TEXT", " \u2026")
                     defaultStatusUntrackedCountText = utils.GetEnv("GBT_CAR_GIT_STATUS_UNTRACKED_COUNT_TEXT", strconv.Itoa(status.untracked))
                 }
@@ -242,6 +263,7 @@ func (c *Car) Init() {
             aheadCount := compareRemote(ahead)
 
             if aheadCount != "0" {
+                defaultAheadFormat = utils.GetEnv("GBT_CAR_GIT_AHEAD_FORMAT", "{{ AheadSymbol }}")
                 defaultAheadSymbolText = utils.GetEnv("GBT_CAR_GIT_AHEAD_SYMBOL_TEXT", " \u2b06")
                 defaultAheadCountText = utils.GetEnv("GBT_CAR_GIT_AHEAD_COUNT_TEXT", aheadCount)
             }
@@ -252,6 +274,7 @@ func (c *Car) Init() {
             behindCount := compareRemote(behind)
 
             if behindCount != "0" {
+                defaultBehindFormat = utils.GetEnv("GBT_CAR_GIT_BEHIND_FORMAT", "{{ BehindSymbol }}")
                 defaultBehindSymbolText = utils.GetEnv("GBT_CAR_GIT_BEHIND_SYMBOL_TEXT", " \u2b07")
                 defaultBehindCountText = utils.GetEnv("GBT_CAR_GIT_BEHIND_COUNT_TEXT", behindCount)
             }
@@ -261,6 +284,7 @@ func (c *Car) Init() {
             stashCount := getStash()
 
             if stashCount != "0" {
+                defaultStashFormat = utils.GetEnv("GBT_CAR_GIT_STASH_FORMAT", "{{ StashSymbol }}")
                 defaultStashSymbolText = utils.GetEnv("GBT_CAR_GIT_STASH_SYMBOL_TEXT", " \u2691")
                 defaultStashCountText = utils.GetEnv("GBT_CAR_GIT_STASH_COUNT_TEXT", stashCount)
             }
@@ -355,8 +379,7 @@ func (c *Car) Init() {
             Fm: utils.GetEnv(
                 "GBT_CAR_GIT_STATUS_ADDED_FM", utils.GetEnv(
                     "GBT_CAR_GIT_FM", defaultRootFm)),
-            Text: utils.GetEnv(
-                "GBT_CAR_GIT_STATUS_ADDED_FORMAT", "{{ StatusAddedSymbol }}"),
+            Text: defaultStatusAddedFormat,
         },
         "StatusAddedSymbol": {
             Bg: utils.GetEnv(
@@ -399,8 +422,7 @@ func (c *Car) Init() {
             Fm: utils.GetEnv(
                 "GBT_CAR_GIT_STATUS_COPIED_FM", utils.GetEnv(
                     "GBT_CAR_GIT_FM", defaultRootFm)),
-            Text: utils.GetEnv(
-                "GBT_CAR_GIT_STATUS_COPIED_FORMAT", "{{ StatusCopiedSymbol }}"),
+            Text: defaultStatusCopiedFormat,
         },
         "StatusCopiedSymbol": {
             Bg: utils.GetEnv(
@@ -443,8 +465,7 @@ func (c *Car) Init() {
             Fm: utils.GetEnv(
                 "GBT_CAR_GIT_STATUS_DELETED_FM", utils.GetEnv(
                     "GBT_CAR_GIT_FM", defaultRootFm)),
-            Text: utils.GetEnv(
-                "GBT_CAR_GIT_STATUS_DELETED_FORMAT", "{{ StatusDeletedSymbol }}"),
+            Text: defaultStatusDeletedFormat,
         },
         "StatusDeletedSymbol": {
             Bg: utils.GetEnv(
@@ -487,8 +508,7 @@ func (c *Car) Init() {
             Fm: utils.GetEnv(
                 "GBT_CAR_GIT_STATUS_IGNORED_FM", utils.GetEnv(
                     "GBT_CAR_GIT_FM", defaultRootFm)),
-            Text: utils.GetEnv(
-                "GBT_CAR_GIT_STATUS_IGNORED_FORMAT", "{{ StatusIgnoredSymbol }}"),
+            Text: defaultStatusIgnoredFormat,
         },
         "StatusIgnoredSymbol": {
             Bg: utils.GetEnv(
@@ -532,8 +552,7 @@ func (c *Car) Init() {
             Fm: utils.GetEnv(
                 "GBT_CAR_GIT_STATUS_MODIFIED_FM", utils.GetEnv(
                     "GBT_CAR_GIT_FM", defaultRootFm)),
-            Text: utils.GetEnv(
-                "GBT_CAR_GIT_STATUS_MODIFIED_FORMAT", "{{ StatusModifiedSymbol }}"),
+            Text: defaultStatusModifiedFormat,
         },
         "StatusModifiedSymbol": {
             Bg: utils.GetEnv(
@@ -577,8 +596,7 @@ func (c *Car) Init() {
             Fm: utils.GetEnv(
                 "GBT_CAR_GIT_STATUS_RENAMED_FM", utils.GetEnv(
                     "GBT_CAR_GIT_FM", defaultRootFm)),
-            Text: utils.GetEnv(
-                "GBT_CAR_GIT_STATUS_RENAMED_FORMAT", "{{ StatusRenamedSymbol }}"),
+            Text: defaultStatusRenamedFormat,
         },
         "StatusRenamedSymbol": {
             Bg: utils.GetEnv(
@@ -621,8 +639,7 @@ func (c *Car) Init() {
             Fm: utils.GetEnv(
                 "GBT_CAR_GIT_STATUS_STAGED_FM", utils.GetEnv(
                     "GBT_CAR_GIT_FM", defaultRootFm)),
-            Text: utils.GetEnv(
-                "GBT_CAR_GIT_STATUS_STAGED_FORMAT", "{{ StatusStagedSymbol }}"),
+            Text: defaultStatusStagedFormat,
         },
         "StatusStagedSymbol": {
             Bg: utils.GetEnv(
@@ -666,8 +683,7 @@ func (c *Car) Init() {
             Fm: utils.GetEnv(
                 "GBT_CAR_GIT_STATUS_UNMERGED_FM", utils.GetEnv(
                     "GBT_CAR_GIT_FM", defaultRootFm)),
-            Text: utils.GetEnv(
-                "GBT_CAR_GIT_STATUS_UNMERGED_FORMAT", "{{ StatusUnmergedSymbol }}"),
+            Text: defaultStatusUnmergedFormat,
         },
         "StatusUnmergedSymbol": {
             Bg: utils.GetEnv(
@@ -711,8 +727,7 @@ func (c *Car) Init() {
             Fm: utils.GetEnv(
                 "GBT_CAR_GIT_STATUS_UNTRACKED_FM", utils.GetEnv(
                     "GBT_CAR_GIT_FM", defaultRootFm)),
-            Text: utils.GetEnv(
-                "GBT_CAR_GIT_STATUS_UNTRACKED_FORMAT", "{{ StatusUntrackedSymbol }}"),
+            Text: defaultStatusUntrackedFormat,
         },
         "StatusUntrackedSymbol": {
             Bg: utils.GetEnv(
@@ -755,8 +770,7 @@ func (c *Car) Init() {
             Fm: utils.GetEnv(
                 "GBT_CAR_GIT_AHEAD_FM", utils.GetEnv(
                     "GBT_CAR_GIT_FM", defaultRootFm)),
-            Text: utils.GetEnv(
-                "GBT_CAR_GIT_AHEAD_FORMAT", "{{ AheadSymbol }}"),
+            Text: defaultAheadFormat,
         },
         "AheadSymbol": {
             Bg: utils.GetEnv(
@@ -799,8 +813,7 @@ func (c *Car) Init() {
             Fm: utils.GetEnv(
                 "GBT_CAR_GIT_BEHIND_FM", utils.GetEnv(
                     "GBT_CAR_GIT_FM", defaultRootFm)),
-            Text: utils.GetEnv(
-                "GBT_CAR_GIT_BEHIND_FORMAT", "{{ BehindSymbol }}"),
+            Text: defaultBehindFormat,
         },
         "BehindSymbol": {
             Bg: utils.GetEnv(
@@ -843,8 +856,7 @@ func (c *Car) Init() {
             Fm: utils.GetEnv(
                 "GBT_CAR_GIT_STASH_FM", utils.GetEnv(
                     "GBT_CAR_GIT_FM", defaultRootFm)),
-            Text: utils.GetEnv(
-                "GBT_CAR_GIT_STASH_FORMAT", "{{ StashSymbol }}"),
+            Text: defaultStashFormat,
         },
         "StashSymbol": {
             Bg: utils.GetEnv(
