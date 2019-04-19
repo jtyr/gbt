@@ -36,7 +36,7 @@ type Cars interface {
     GetWrap() bool
 }
 
-const version = "1.2.0"
+const version = "2.0.0"
 
 func printCars(cars []Cars, right bool) {
     prevBg := "\000"
