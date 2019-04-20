@@ -4,5 +4,5 @@ function gbt_screen() {
 
     gbt__check_md5
 
-    $SCREEN_BIN -U -s "$GBT__CONF.bash" -t bash "$@"
+    TERM=${GBT__SCREEN_TERM-xterm-256color} $SCREEN_BIN -U -s "$GBT__CONF.bash" -t bash "$@"
 }
