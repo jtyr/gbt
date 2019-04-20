@@ -1,6 +1,7 @@
-Set terminal window to the size of 118x14 characters. Disable KDE effects and
-make sure [Peek](https://github.com/phw/peek) is installed and configured to
-start recording after 1 second by pressing `CTRL+ALT+E` and using 10 FPS.
+Set terminal window to the size of 104x14 characters (834x240px). Disable KDE
+effects and make sure [Peek](https://github.com/phw/peek) is installed and
+configured to start recording after 1 second by pressing `CTRL+ALT+E` and using
+20 FPS.
 
 Then get the window ID where the typing will happen:
 
@@ -21,3 +22,6 @@ xdotool \
   sleep 2 \
   key ctrl+alt+e
 ```
+
+Optimize final GIF by using [ezgif.com](https://ezgif.com/optimize),
+compression level 35.

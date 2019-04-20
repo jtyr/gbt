@@ -32,7 +32,9 @@ cd ~
 clear
 ### Sign car demo
 sudo su -
-exit
+exit
+sudo -i
+exit
 clear
 ### Time car demo
 export GBT_CARS='Status, Os, Time, Hostname, Dir, Sign'
@@ -67,24 +69,26 @@ touch README
 git add -A
 git commit -am 'Adding README'
 git push
-git tag v1.0.0
+export GBT_CAR_GIT_STASH_FORMAT='{{ StashSymbol }}({{ StashCount }})'
+export GBT_CAR_GIT_FORMAT=' {{ Icon }} {{ Head }} {{ Status }}{{ Stash }}{{ Ahead }}{{ Behind }} '
+echo 'test1' > .gitignore
+git stash
+echo 'test2' > README
+git stash
+git stash pop
+git tag v1.0.0
 git checkout v1.0.0
 git checkout HEAD~1
 git checkout master
 git reset --hard HEAD~1
 git commit --amend -am 'Amending'
-export GBT_CAR_GIT_STASH_FORMAT='{{ StashSymbol }}({{ StashCount }})'
-export GBT_CAR_GIT_FORMAT=' {{ Icon }} {{ Head }} {{ Status }}{{ Stash }}{{ Ahead }}{{ Behind }} '
-echo 'test1' > .gitignore
-git stash
-echo 'test2' > .gitignore
-git stash
+echo 'test' > .gitignore
 unset GBT_CAR_GIT_FORMAT GBT_CAR_GIT_STASH_FORMAT
 cd ~
 clear
 ### PyVirtEnv car demo
 virtualenv /tmp/pytest
-export GBT_CARS='Status, Os, Hostname, Dir, PyVirtEnv, Sign'
+export GBT_CARS='Status, Os, Hostname, Dir, PyVirtEnv, Sign'
 export VIRTUAL_ENV_DISABLE_PROMPT='1'
 source /tmp/pytest/bin/activate
 deactivate
@@ -94,9 +98,9 @@ unset GBT_CARS
 ### Kubectl car demo
 export GBT_CARS='Status, Os, Hostname, Dir, Kubectl, Sign'
 kubectl config use-context minikube2
-kubectl config get-contexts
-kubectl config use-context minikube
-unset GBT_CARS
+kubectl config get-contexts
+kubectl config use-context minikube
+unset GBT_CARS
 clear
 ### Custom car demo
 export GBT_CARS='Status, Os, Custom, Hostname, Dir, Sign'
