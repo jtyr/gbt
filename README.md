@@ -11,8 +11,12 @@ GBT comes with an interesting feature called
 [prompt forwarding](#prompt-forwarding) which allows to forward prompt generated
 by GBT to a remote machine. With this feature it's possible to have the
 same-looking prompt across all remote machines via SSH but also in Docker,
-Vagrant, MySQL or in Screen. All that works well on Linux (Terminator, Konsole,
-Gnome Terminal), Mac (Terminal, iTerm) and Android (Termux).
+Vagrant, MySQL or in Screen.
+
+![Prompt forwarding demo](https://raw.githubusercontent.com/jtyr/gbt/master/images/prompt_forwarding.gif "Prompt forwarding demo")
+
+All the above works well on Linux (Terminator, Konsole, Gnome Terminal), Mac
+(Terminal, iTerm) and Android (Termux).
 
 [![Release](https://img.shields.io/github/release/jtyr/gbt.svg)](https://github.com/jtyr/gbt/releases)
 [![Build status](https://travis-ci.org/jtyr/gbt.svg?branch=master)](https://travis-ci.org/jtyr/gbt)
@@ -2170,9 +2174,7 @@ alias gbt__ll='ls -l'
 
 After the prompt forwarding is configured, just SSH to some remote server or
 enter some Docker container or Vagrant box and you should get GBT-like looking
-prompt:
-
-![Prompt forwarding demo](https://raw.githubusercontent.com/jtyr/gbt/master/images/prompt_forwarding.gif "Prompt forwarding demo")
+prompt.
 
 The idea of prompt forwarding is coming from Vladimir Babichev (@mrdrup) who was
 using it for several years before GBT even existed. After seeing the potential of
