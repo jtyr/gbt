@@ -131,7 +131,9 @@ function GbtDecorateUnicode() {
 function GbtDecorateShell() {
     local seq=$1
 
-    if [[ $GBT_SHELL == 'zsh' ]]; then
+    if [[ -z $seq ]]; then
+        GBT__RETVAL=''
+    elif [[ $GBT_SHELL == 'zsh' ]]; then
         GBT__RETVAL="%{${seq}%}"
     elif [[ $GBT_SHELL == '_bash' ]]; then
         GBT__RETVAL="\\[${seq}\\]"

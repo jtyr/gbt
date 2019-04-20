@@ -243,7 +243,9 @@ func (c *Car) GetFormat(name string, end bool) (ret string) {
 
 // decorateShell decorates the string with shell-specific closure.
 func decorateShell(seq string) (ret string) {
-    if Shell == "zsh" {
+    if len(seq) == 0 {
+        ret = ""
+    } else if Shell == "zsh" {
         ret = fmt.Sprintf("%%{%s%%}", seq)
     } else if Shell == "_bash" {
         ret = fmt.Sprintf("\\[%s\\]", seq)

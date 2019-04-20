@@ -384,14 +384,14 @@ func TestGetFormat(t *testing.T) {
         { name: "strikeout", isEnd: true,  expectedOutput: "\001\x1b[29m\002", shell: "bash",  },
         { name: "strikeout", isEnd: true,  expectedOutput: "\x1b[29m",         shell: "plain", },
         { name: "strikeout", isEnd: true,  expectedOutput: "\\[\\e[29m\\]",    shell: "_bash", },
-        { name: "none",      isEnd: false, expectedOutput: "%{%}",             shell: "zsh",   },
-        { name: "none",      isEnd: false, expectedOutput: "\001\002",         shell: "bash",  },
+        { name: "none",      isEnd: false, expectedOutput: "",                 shell: "zsh",   },
+        { name: "none",      isEnd: false, expectedOutput: "",                 shell: "bash",  },
         { name: "none",      isEnd: false, expectedOutput: "",                 shell: "plain", },
-        { name: "none",      isEnd: false, expectedOutput: "\\[\\]",           shell: "_bash", },
-        { name: "none",      isEnd: true,  expectedOutput: "%{%}",             shell: "zsh",   },
-        { name: "none",      isEnd: true,  expectedOutput: "\001\002",         shell: "bash",  },
+        { name: "none",      isEnd: false, expectedOutput: "",                 shell: "_bash", },
+        { name: "none",      isEnd: true,  expectedOutput: "",                 shell: "zsh",   },
+        { name: "none",      isEnd: true,  expectedOutput: "",                 shell: "bash",  },
         { name: "none",      isEnd: true,  expectedOutput: "",                 shell: "plain", },
-        { name: "none",      isEnd: true,  expectedOutput: "\\[\\]",           shell: "_bash", },
+        { name: "none",      isEnd: true,  expectedOutput: "",                 shell: "_bash", },
     }
 
     car := Car{
