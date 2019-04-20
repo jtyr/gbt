@@ -1,14 +1,3 @@
-# Allow to override the date command (e.g. by 'gdate' on Mac)
-if [ -z "$GBT__SOURCE_DATE" ]; then
-    export GBT__SOURCE_DATE='date'
-fi
-
-# Allow to override the date argument.
-# See https://github.com/jtyr/gbt/issues/14
-if [ -z "$GBT__SOURCE_DATE_ARG" ]; then
-    export GBT__SOURCE_DATE_ARG='+%s.%N'
-fi
-
 # Function executed before every command run by the shell
 function gbt_exectime_pre() {
     if [ -z $GBT__EXECTIME_TMP ]; then
@@ -17,7 +6,7 @@ function gbt_exectime_pre() {
 
     unset GBT__EXECTIME_TMP
 
-    export GBT_CAR_EXECTIME_SECS=$($GBT__SOURCE_DATE "$GBT__SOURCE_DATE_ARG")
+    export GBT_CAR_EXECTIME_SECS=$(${GBT__SOURCE_DATE:-date} "${GBT__SOURCE_DATE_ARG:-+%s.%N}")
 }
 
 # Function executed after every command run by the shell
