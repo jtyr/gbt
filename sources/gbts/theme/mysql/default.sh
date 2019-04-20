@@ -8,7 +8,7 @@ export GBT_CAR_TIME_TIME_TEXT='\R:\m:\s'
 export GBT_CAR_HOSTNAME_FORMAT=' {{ User }}@{{ Host }} '
 export GBT_CAR_HOSTNAME_USER_FG='cyan'
 export GBT_CAR_HOSTNAME_USER_TEXT='\u'
-export GBT_CAR_HOSTNAME_HOST_TEXT="$HOSTNAME"
+export GBT_CAR_HOSTNAME_HOST_TEXT="${HOSTNAME:-$HOST}"
 
 export GBT_CAR_DIR_DIR_TEXT='\d'
 
