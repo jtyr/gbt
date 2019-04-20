@@ -4,7 +4,7 @@ function gbt_screen() {
 
     local GBT__CONF=$(gbt__local_rcfile)
 
-    $SCREEN_BIN -s "$GBT__CONF.bash" -t bash "$@"
+    $SCREEN_BIN -U -s "$GBT__CONF.bash" -t bash "$@"
 
     rm -f $GBT__CONF $GBT__CONF.bash
 }
