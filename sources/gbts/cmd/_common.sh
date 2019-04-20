@@ -70,9 +70,9 @@ function gbt__err() {
 
 function gbt__finish() {
     local MY_PID=$$
-    local MY_PPID=$(ps -o ppid= $MY_PID)
+    local MY_PPID=$(ps -o ppid= $MY_PID 2>/dev/null)
 
-    if [ $MY_PPID -gt 0 ] && [[ "$(ps -o comm= $MY_PPID)" == 'sshd' ]]; then
+    if [[ ! $MY_PPID =~ ^\s*0\s*$ ]] && [[ "$(ps -o comm= $MY_PPID)" == 'sshd' ]]; then
         # Cleanup at the end of the 'ssh' or 'vagrant' session
         rm -f $GBT__CONF $GBT__CONF.bash
     fi
