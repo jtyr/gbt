@@ -5,8 +5,8 @@ export GBT_CAR_BG="default"
 export GBT_CAR_DIR_FG="cyan"
 
 export GBT_CAR_GIT_FG="default"
-export GBT_CAR_GIT_DIRTY_FG="red"
-export GBT_CAR_GIT_CLEAN_FG="green"
+export GBT_CAR_GIT_STATUS_DIRTY_FG="red"
+export GBT_CAR_GIT_STATUS_CLEAN_FG="green"
 
 export GBT_CAR_EXECTIME_FG="green"
 
