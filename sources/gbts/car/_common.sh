@@ -115,9 +115,13 @@ function GbtGetFormat() {
 function GbtDecorateUnicode() {
     local unicode=$1
 
-    # Shell decorate UTF-8 and UTF-16 sequences
-    if [[ $unicode =~ ^(\\x[0-9a-f]{2}){3}$ ]] || [[ $unicode =~ ^(\\x[0-9a-f]{2}){5}$ ]]; then
-        GbtDecorateShell $unicode
+    # Shell decorate all characters but the last four
+    if [[ ${unicode} =~ ^(\\x[0-9a-f]{2}){5}$ ]]; then
+        GbtDecorateShell ${unicode:0:${#unicode}-4}
+        GBT__RETVAL="$GBT__RETVAL${unicode:16}"
+    elif [[ ${unicode} =~ ^(\\x[0-9a-f]{2}){3}$ ]]; then
+        GbtDecorateShell ${unicode:0:${#unicode}-4}
+        GBT__RETVAL="$GBT__RETVAL${unicode:8}"
     else
         GBT__RETVAL=$unicode
     fi
