@@ -28,6 +28,11 @@ if [ ! -e "$GBT__CONF.bash" ]; then
     chmod $GBT__CONF_BASH_MODE $GBT__CONF.bash
 fi
 
+# Add sbin paths if defined
+if [ -n "$GBT__CONF_SBIN_PATH" ]; then
+    export PATH="$GBT__CONF_SBIN_PATH:$PATH"
+fi
+
 # Load remote Bash profile if it exists
 if [ -f ~/.bash_profile ]; then
     source ~/.bash_profile

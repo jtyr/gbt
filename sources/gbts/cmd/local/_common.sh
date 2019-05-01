@@ -47,6 +47,7 @@ function gbt__get_sources() {
 
     (
         echo "export GBT__CONF='$GBT__CONF'"
+        echo "export GBT__CONF_SBIN_PATH='$GBT__CONF_SBIN_PATH'"
         cat $GBT__HOME/sources/gbts/{cmd{,/remote},car}/_common.sh
 
         # Include SSH common function if car is present
