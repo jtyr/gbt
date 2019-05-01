@@ -2,7 +2,7 @@ GBT__PLUGINS_LOCAL__HASH=". $(echo ${GBT__PLUGINS_LOCAL:-docker,mysql,screen,ssh
 GBT__PLUGINS_REMOTE__HASH=". $(echo ${GBT__PLUGINS_REMOTE:-docker,mysql,screen,ssh,su,sudo,vagrant} | sed -E 's/,\ */ /g' | tr '[:upper:]' '[:lower:]') ."
 GBT__CARS_REMOTE__HASH=". $(echo ${GBT__CARS_REMOTE:-dir,git,hostname,os,sign,status,time} | sed -E 's/,\ */ /g' | tr '[:upper:]' '[:lower:]') ."
 
-[ -z "$GBT__SOURCE_BASE64_LOCAL" ] && GBT__SOURCE_BASE64_LOCAL='base64'
+GBT__SOURCE_BASE64_LOCAL=${GBT__SOURCE_BASE64_LOCAL:-base64}
 
 
 function gbt__local_rcfile() {
@@ -10,7 +10,7 @@ function gbt__local_rcfile() {
     local MD5SUM=$(gbt__get_sources | tee $GBT__CONF | $GBT__SOURCE_MD5_LOCAL 2>/dev/null | cut -d' ' -f$GBT__SOURCE_MD5_CUT_LOCAL 2>/dev/null)
 
     if [ -z "$GBT__SOURCE_SEC_DISABLE" ]; then
-        echo "[ -z \"\$GBT__CONF_MD5\" ] && export GBT__CONF_MD5=$MD5SUM" >> $GBT__CONF
+        echo "export GBT__CONF_MD5=\${GBT__CONF_MD5:-$MD5SUM}" >> $GBT__CONF
     else
         echo 'export GBT__SOURCE_SEC_DISABLE=1' >> $GBT__CONF
     fi
@@ -39,11 +39,11 @@ function gbt__get_sources_cars() {
 function gbt__get_sources() {
     [ -z "$GBT__HOME" ] && gbt__err "'GBT__HOME' not defined" && return 1
 
-    [ -z "$GBT__SOURCE_MINIMIZE" ] && GBT__SOURCE_MINIMIZE="sed -E -e '/^\\ *#.*/d' -e '/^\\ *$/d' -e 's/^\\ +//g' -e 's/default([A-Z])/d\\1/g' -e 's/model-/m-/g' -e 's/\\ {2,}/ /g'"
+    GBT__SOURCE_MINIMIZE=${GBT__SOURCE_MINIMIZE:-"sed -E -e '/^\\ *#.*/d' -e '/^\\ *$/d' -e 's/^\\ +//g' -e 's/default([A-Z])/d\\1/g' -e 's/model-/m-/g' -e 's/\\ {2,}/ /g'"}
 
     # Conditional for remote only (GBT__PLUGINS_REMOTE)
-    [[ ${GBT__PLUGINS_REMOTE__HASH[@]} == *' ssh '* ]] && [ -z "$GBT__THEME_SSH" ] && local GBT__THEME_SSH="$GBT__HOME/sources/gbts/theme/ssh/${GBT__THEME_SSH_NAME:-default}.sh"
-    [[ ${GBT__PLUGINS_REMOTE__HASH[@]} == *' mysql '* ]] && [ -z "$GBT__THEME_MYSQL" ] && local GBT__THEME_MYSQL="$GBT__HOME/sources/gbts/theme/mysql/${GBT__THEME_MYSQL_NAME:-default}.sh"
+    [[ ${GBT__PLUGINS_REMOTE__HASH[@]} == *' ssh '* ]] && local GBT__THEME_SSH=${GBT__THEME_SSH:-$GBT__HOME/sources/gbts/theme/ssh/${GBT__THEME_SSH_NAME:-default}.sh}
+    [[ ${GBT__PLUGINS_REMOTE__HASH[@]} == *' mysql '* ]] && local GBT__THEME_MYSQL=${GBT__THEME_MYSQL:-$GBT__HOME/sources/gbts/theme/mysql/${GBT__THEME_MYSQL_NAME:-default}.sh}
 
     (
         echo "export GBT__CONF='$GBT__CONF'"
