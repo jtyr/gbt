@@ -14,5 +14,9 @@ function gbt_sudo() {
         $SUDO_BIN $SU_BIN -s "$GBT__CONF.bash" "$@"
     fi
 
+    local rv=$?
+
     rm -f $GBT__CONF $GBT__CONF.bash
+
+    return $rv
 }
