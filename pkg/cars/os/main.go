@@ -54,7 +54,7 @@ var symbols = map[string]iconColor {
     "opensuse-leap":       { icon: "\uf314", color: "113", }, // nf-linux-opensuse
     "opensuse-tumbleweed": { icon: "\uf314", color: "113", }, // nf-linux-opensuse
     "raspbian":            { icon: "\uf315", color: "125", }, // nf-linux-raspberry_pi
-    "redhat":              { icon: "\ue7bb", color: "1",   }, // nf-dev-redhat
+    "rhel":                { icon: "\ue7bb", color: "1",   }, // nf-dev-redhat
     "sabayon":             { icon: "\uf317", color: "255", }, // nf-linux-sabayon
     "slackware":           { icon: "\uf318", color: "63",  }, // nf-linux-slackware
     "sles":                { icon: "\uf314", color: "113", }, // nf-linux-opensuse
@@ -68,13 +68,16 @@ var osName string
 // Path to the os-release file.
 var osReleaseFile = "/etc/os-release"
 
+// OS type
+var goos = runtime.GOOS
+
 // Returns the OS name.
 func getOsName() string {
     if osName != "" {
         return osName
     }
 
-    osName = runtime.GOOS
+    osName = goos
 
     if _, err := os.Stat(osReleaseFile); ! os.IsNotExist(err) {
         file, err := os.Open(osReleaseFile)
@@ -92,8 +95,12 @@ func getOsName() string {
             line := scanner.Text()
 
             if len(line) > 3 && line[:3] == "ID=" {
-                osName = strings.Replace(
+                id := strings.Replace(
                     strings.Replace(line[3:], "\"", "", -1), "'", "", -1)
+
+                if _, ok := symbols[id]; ok {
+                    osName = id
+                }
             }
         }
     }

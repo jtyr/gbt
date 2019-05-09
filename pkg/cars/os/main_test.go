@@ -1,37 +1,69 @@
 package os
 
 import (
+    "io/ioutil"
+    "log"
     "os"
     "testing"
 )
 
 func TestInitDefault(t *testing.T) {
     tests := []struct {
+        goos string
         name string
-        osRelease string
+        osReleaseFile string
         expectedOutput string
     }{
         {
+            goos: "linux",
             name: "linux",
-            osRelease: "/proc/1/environ",
+            osReleaseFile: "/proc/1/environ",
             expectedOutput: "\uf17c",
         },
         {
+            goos: "linux",
             name: "unknown",
-            osRelease: "/etc/os-release",
-            expectedOutput: "?",
+            expectedOutput: "\uf17c",
         },
         {
+            goos: "linux",
+            name: "arch",
+            expectedOutput: "\uf303",
+        },
+        {
+            goos: "unknown",
             name: "unknown",
-            osRelease: "/etc/os-release",
+            osReleaseFile: "/etc/os-release.unknown",
             expectedOutput: "?",
         },
     }
 
     for i, test := range tests {
-        os.Setenv("GBT_CAR_OS_NAME", test.name)
-        osReleaseFile = test.osRelease
         osName = ""
+        goos = test.goos
+
+        if test.osReleaseFile == "" {
+            content := []byte("ID=" + test.name)
+            tmpfile, err := ioutil.TempFile("", "test")
+
+            if err != nil {
+                log.Fatal(err)
+            }
+
+            osReleaseFile = tmpfile.Name()
+
+            defer os.Remove(tmpfile.Name())
+
+            if _, err := tmpfile.Write(content); err != nil {
+                log.Fatal(err)
+            }
+
+            if err := tmpfile.Close(); err != nil {
+                log.Fatal(err)
+            }
+        } else {
+            osReleaseFile = test.osReleaseFile
+        }
 
         car := Car{}
 
