@@ -28,7 +28,6 @@ GBT__OS_SYMBOLS=(
     [opensuse-leap]='\xef\x8c\x94'       [opensuse-leap_color]=113
     [opensuse-tumbleweed]='\xef\x8c\x94' [opensuse-tumbleweed_color]=113
     [raspbian]='\xef\x8c\x95'            [raspbian_color]=125
-    [redhat]='\xee\x9e\xbb'              [redhat_color]=1
     [rhel]='\xee\x9e\xbb'                [rhel_color]=1
     [sabayon]='\xef\x8c\x97'             [sabayon_color]=255
     [slackware]='\xef\x8c\x98'           [slackware_color]=63
