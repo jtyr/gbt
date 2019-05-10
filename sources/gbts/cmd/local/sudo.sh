@@ -5,10 +5,9 @@ function gbt_sudo() {
     [ -z "$SUDO_BIN" ] && return 1
 
     local rv
+
     if [ "$1" != 'su' ] && [[ " $@ " != *" -i "* ]]; then
         $SUDO_BIN "$@"
-
-        rv=$?
     else
         shift
 
@@ -17,9 +16,9 @@ function gbt_sudo() {
         $SUDO_BIN $SU_BIN -s "$GBT__CONF.bash" "$@"
 
         rv=$?
-        
+
         rm -f $GBT__CONF $GBT__CONF.bash
     fi
 
-    return $rv
+    return ${rv:-$?}
 }
