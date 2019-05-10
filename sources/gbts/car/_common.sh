@@ -43,12 +43,15 @@ function GbtGetColor() {
         if [ ${GBT_COLORS[$name]+1} ]; then
             # Named color
             seq="${esc}[${kind}8;5;${GBT_COLORS[$name]}m"
-        elif (( ${#name} <= 3 )); then
+        elif [[ $name =~ ^[0-9]{1,3}$ ]]; then
             # Color number
             seq="${esc}[${kind}8;5;${name}m"
-        else
+        elif [[ $name =~ ^[0-9]{1,3}\;[0-9]{1,3}\;[0-9]{1,3}$ ]]; then
             # RGB color
             seq="${esc}[${kind}8;2;${name}m"
+        else
+            # If anything else, use default
+            seq="${esc}[${kind}9m"
         fi
     fi
 
