@@ -10,7 +10,7 @@ function gbt__local_rcfile() {
     local MD5SUM=$(gbt__get_sources | tee $GBT__CONF | $GBT__SOURCE_MD5_LOCAL 2>/dev/null | cut -d' ' -f$GBT__SOURCE_MD5_CUT_LOCAL 2>/dev/null)
 
     if [ -z "$GBT__SOURCE_SEC_DISABLE" ]; then
-        echo "export GBT__CONF_MD5=\${GBT__CONF_MD5:-$MD5SUM}" >> $GBT__CONF
+        echo "export GBT__CONF_MD5=${GBT__CONF_MD5:-$MD5SUM}" >> $GBT__CONF
     else
         echo 'export GBT__SOURCE_SEC_DISABLE=1' >> $GBT__CONF
     fi
