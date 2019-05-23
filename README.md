@@ -28,6 +28,14 @@ Table of contents
 -----------------
 
 - [Installation](#installation)
+  - [Arch Linux](#arch-linux)
+  - [CentOS/RHEL](#centosrhel)
+  - [Ubuntu/Debian](#ubuntudebian)
+  - [Mac](#mac)
+  - [Android](#android)
+  - [From the source code](#from-the-source-code)
+  - [Activation](#activation)
+  - [Fonts and colors](#fonts-and-colors)
 - [Usage](#usage)
 - [Configuration](#configuration)
   - [Colors](#colors)
@@ -118,9 +126,13 @@ apt update
 apt install gbt
 ```
 
-### From source code
+### From the source code
+
+Make sure Go is installed and then run:
 
 ```shell
+mkdir ~/go
+export GOPATH=~/go
 go get -u github.com/jtyr/gbt/cmd/gbt
 go install github.com/jtyr/gbt/cmd/gbt
 ```
@@ -143,8 +155,25 @@ PROMPT='$(gbt $?)'
 
 In order to display all characters of the prompt correctly, the shell should
 support UTF-8 and [Nerd](https://github.com/ryanoasis/nerd-fonts) fonts (or at
-least the [Nerd BitstreamVeraSansMono](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/BitstreamVeraSansMono)
-font) should be installed and set in the terminal application.
+least the [DejaVuSansMono Nerd](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/DejaVuSansMono/Regular/complete)
+font) should be installed. On Linux, you can install it like this:
+
+```shell
+mkdir ~/.fonts
+curl -L -o ~/.fonts/DejaVuSansMonoNerdFontCompleteMono.ttf https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DejaVuSansMono/Regular/complete/DejaVu%20Sans%20Mono%20Nerd%20Font%20Complete%20Mono.ttf
+fc-cache
+```
+
+On Mac, it can be installed via `brew`:
+
+```shell
+brew tap homebrew/cask-fonts
+brew cask install font-hack-nerd-font-mono
+```
+
+Once the font is installed, the font has to be set in the terminal application
+to render all prompt characters correctly. Search for the font name
+`DejaVuSansMono Nerd Font Mono` on Linux and for `Hack Nerd Font Mono` on Mac.
 
 In order to have the Nerd fonts in Termux on Android, you have to install
 [Termux:Styling](https://play.google.com/store/apps/details?id=com.termux.styling)
