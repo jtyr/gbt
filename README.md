@@ -135,6 +135,7 @@ mkdir ~/go
 export GOPATH=~/go
 go get -u github.com/jtyr/gbt/cmd/gbt
 go install github.com/jtyr/gbt/cmd/gbt
+export PATH="$PATH:$GOPATH/bin"
 ```
 
 ---
