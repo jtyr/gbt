@@ -15,6 +15,20 @@ function gbt__check_md5() {
     fi
 }
 
+
+function gbt__finish() {
+    local MY_PID=$$
+    local MY_PPID=$(ps -o ppid= $MY_PID 2>/dev/null)
+
+    if [[ ! $MY_PPID =~ ^\s*0\s*$ ]] && [[ "$(ps -o comm= $MY_PPID)" == 'sshd' ]]; then
+        rm -f $GBT__CONF $GBT__CONF.bash
+    fi
+}
+
+
+# Cleanup at the end of the 'ssh' or 'vagrant' session
+trap gbt__finish EXIT
+
 # Check Bash version
 if [[ ${BASH_VERSINFO[0]} -lt 4 ]]; then
   gbt__err 'ERROR: Bash v4.x is required to run GBTS.'
