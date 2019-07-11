@@ -20,7 +20,7 @@ function gbt__finish() {
     local MY_PID=$$
     local MY_PPID=$(ps -o ppid= $MY_PID 2>/dev/null)
 
-    if [[ ! $MY_PPID =~ ^\s*0\s*$ ]] && [[ "$(ps -o comm= $MY_PPID)" == 'sshd' ]]; then
+    if [[ ${MY_PPID// /} != '0' ]] && [[ "$(ps -o comm= $MY_PPID)" == 'sshd' ]]; then
         rm -f $GBT__CONF $GBT__CONF.bash
     fi
 }
