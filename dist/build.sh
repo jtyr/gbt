@@ -20,6 +20,7 @@ declare -a PLATFORMS=(
 
 NAME='gbt'
 VER="${TRAVIS_TAG:1}"
+BUILD="${TRAVIS_COMMIT::6}"
 TMP="/tmp/$NAME"
 
 rm -fr "$TMP"
@@ -38,7 +39,7 @@ for P in "${PLATFORMS[@]}"; do
 
     # Compile GBT
     if [ "$ARCH" == "$ARM" ]; then
-        GOOS="$OS" GOARCH="$ARCH" CGO_ENABLED=0 go build -ldflags='-s -w' -o "$PTMP/$NAME" github.com/jtyr/gbt/cmd/gbt
+        GOOS="$OS" GOARCH="$ARCH" CGO_ENABLED=0 go build -ldflags="-s -w -X main.version=$VER -X main.build=$BUILD" -o "$PTMP/$NAME" github.com/jtyr/gbt/cmd/gbt
     else
         ARCH="${ARCH%%:*}"
         PKG="$NAME-$VER-$OS-$ARCH$ARM.tar.gz"

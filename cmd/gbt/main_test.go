@@ -47,4 +47,10 @@ func TestMain(t *testing.T) {
     if ! ran {
         t.Error("Expected myPrint() to be called, but it wasn't.")
     }
+
+    // Cover the version and build code
+    version = "1.2.3"
+    build = "abcdef"
+
+    main()
 }

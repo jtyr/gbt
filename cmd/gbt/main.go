@@ -36,7 +36,10 @@ type Cars interface {
     GetWrap() bool
 }
 
-const version = "2.0.0"
+var (
+    build string
+    version string
+)
 
 func printCars(cars []Cars, right bool) {
     prevBg := "\000"
@@ -140,7 +143,11 @@ func main() {
     }
 
     if argsVersion {
-        myPrint(fmt.Sprintf("GBT v%s\n", version))
+        if version == "" || build == "" {
+            myPrint("GBT version wasn't provided at the build time.\n")
+        } else {
+            myPrint(fmt.Sprintf("GBT version %s, build %s\n", version, build))
+        }
         exit(0)
     }
 
