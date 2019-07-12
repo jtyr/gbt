@@ -59,6 +59,7 @@ Table of contents
   - [Additional settings](#additional-settings)
   - [MacOS users](#macos-users)
   - [Limitations](#limitations)
+- [TODO](#todo)
 - [Author](#author)
 - [License](#license)
 
@@ -2307,6 +2308,28 @@ export GBT__SOURCE_BASE64_DEC='-D'
   unicode characters](https://bugs.mysql.com/89359) for MySQL is broken in MySQL
   5.6 and above. But it works just fine in all versions of Percona and MariaDB.
 - Plugins `su` and `sudo` are not supported on MacOS.
+
+
+TODO
+----
+
+Contribution to the following is more than welcome:
+
+- Optimize generated escape sequence
+    - Don't decorate empty string
+    - Don't decorate child element with the same attributes used by the parent
+- Implement templating language to allow more dynamic configuration
+    - Jinja2-like syntax
+    - Should be able to refer variables from the local car
+        - `GBT_CAR_GIT_BG="{% 'red' if Status == '{{ StatusDirty }}' else 'light_gray' %}"`
+    - Should be able to refer ENV variables (e.g. `env('HOME')`)
+    - Could be able to refer variables from another car
+    - Advanced functionality via pipes (e.g. `<expr> | substr(1,3)`)
+- Add support for GBT [plugins](https://golang.org/pkg/plugin/)
+    - Load plugins with `GBT_PLUGINS='mycar1:/path/to/mycar1.so;mycar2:/path/to/mycar2.so'`
+    - Load the plugin, read the `Car` symbol and assign the reference to the
+      `mycar1` in the `carsFactory`
+- Add more themes
 
 
 Author
