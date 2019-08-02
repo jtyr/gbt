@@ -8,10 +8,9 @@ Train](https://github.com/caiogondim/bullet-train.zsh) theme.
 ![Demo](https://raw.githubusercontent.com/jtyr/gbt/master/images/demo.gif "Demo")
 
 GBT comes with an interesting feature called
-[prompt forwarding](#prompt-forwarding) which allows to forward prompt generated
-by GBT to a remote machine. With this feature it's possible to have the
-same-looking prompt across all remote machines via SSH but also in Docker,
-Vagrant, MySQL or in Screen.
+[prompt forwarding](#prompt-forwarding) which allows to forward user-defined
+prompt to a remote machine and have the same-looking prompt across all machines
+via SSH but also in Docker, Vagrant, MySQL or in Screen.
 
 ![Prompt forwarding demo](https://raw.githubusercontent.com/jtyr/gbt/master/images/prompt_forwarding.gif "Prompt forwarding demo")
 
