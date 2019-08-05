@@ -99,7 +99,7 @@ function gbt__get_sources() {
         fi
 
         [[ ${GBT__CARS_REMOTE__HASH[@]} == *' ssh '* ]] && [ -n "$GBT__THEME_SSH_CARS" ] && echo "export GBT__THEME_SSH_CARS='$GBT__THEME_SSH_CARS'"
-        alias | awk '/gbt_/ {sub(/^(alias )?(gbt___)?/, "", $0); print "alias "$0}'
+        alias | awk '/gbt___/ {sub(/^(alias )?(gbt___)?/, "", $0); print "alias "$0}'
         echo "PS1='\$(GbtMain \$?)'"
     ) | eval "$GBT__SOURCE_MINIMIZE"
 }
