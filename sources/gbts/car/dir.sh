@@ -1,39 +1,51 @@
 function GbtCarDir() {
     local text=''
-    local pwd_len=0
 
-    for d in ${PWD//\// }; do
-        pwd_len=$(( pwd_len + 1 ))
-    done
-
-    local homesign=${GBT_CAR_DIR_HOMESIGN:-'~'}
+    local homesign=${GBT_CAR_DIR_HOMESIGN-'~'}
+    local dirsep=${GBT_CAR_DIR_DIRSEP-/}
 
     if [ -n "$homesign" ] && [[ $PWD == $HOME ]]; then
         text=$homesign
     elif [[ $PWD == '/' ]]; then
-        text=${GBT_CAR_DIR_DIRSEP-/}
+        text=$dirsep
     elif [[ $PWD == '//' ]]; then
-        text=${GBT_CAR_DIR_DIRSEP-/}${GBT_CAR_DIR_DIRSEP-/}
+        text=$dirsep$dirsep
     else
         local first=1
         local cur=1
+        local pwd=$PWD
+        local pwd_len=0
 
-        for d in ${PWD//\// }; do
-            if (( $pwd_len - ${GBT_CAR_DIR_DEPTH:-1} < $cur )); then
-                if (( $pwd_len <= ${GBT_CAR_DIR_DEPTH:-1} )); then
+        local depth=${GBT_CAR_DIR_DEPTH:-1}
+
+        if [[ -n $homesign ]]; then
+            pwd=${pwd/$HOME/$homesign}
+        fi
+
+        for d in ${pwd//\// }; do
+            pwd_len=$(( pwd_len + 1 ))
+        done
+
+        for d in ${pwd//\// }; do
+            if (( $pwd_len - $depth < $cur )); then
+                if (( $pwd_len <= $depth )); then
                     first=0
                 fi
 
-                if [[ $first != 1 ]]; then
-                    text+=${GBT_CAR_DIR_DIRSEP-/}
+                if [[ $first != 1 ]] && [[ $d != $homesign ]]; then
+                    text+=$dirsep
                 fi
 
-                text+=$d
+                if (( $cur < $pwd_len )); then
+                    text+=${d::${GBT_CAR_DIR_NONCURLEN:-255}}
+                else
+                    text+=$d
+                fi
 
                 first=0
             fi
 
-            cur=$(($cur + 1))
+            cur=$(( $cur + 1 ))
         done
     fi
 

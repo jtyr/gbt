@@ -6,11 +6,11 @@ import (
 )
 
 func TestInit(t *testing.T) {
-    os.Setenv("GBT_CAR_DIR_DEPTH", "2")
-
     tests := []struct {
         pwd string
         expectedOutput string
+        depth string
+        nonCurLen string
     }{
         {
             pwd: "/",
@@ -27,10 +27,18 @@ func TestInit(t *testing.T) {
         {
             pwd: "/usr",
             expectedOutput: "/usr",
+            depth: "999",
         },
         {
             pwd: "/usr/share/ssl",
             expectedOutput: "share/ssl",
+            depth: "2",
+        },
+        {
+            pwd: "/usr/share/ssl",
+            expectedOutput: "s/ssl",
+            depth: "2",
+            nonCurLen: "1",
         },
     }
 
@@ -38,6 +46,15 @@ func TestInit(t *testing.T) {
         car := Car{}
 
         os.Setenv("PWD", test.pwd)
+
+        if len(test.depth) > 0 {
+            os.Setenv("GBT_CAR_DIR_DEPTH", test.depth)
+        }
+
+        if len(test.nonCurLen) > 0 {
+            os.Setenv("GBT_CAR_DIR_NONCURLEN", test.nonCurLen)
+        }
+
         car.Init()
 
         if car.Model["Dir"].Text != test.expectedOutput {

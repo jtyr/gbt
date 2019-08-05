@@ -15,6 +15,9 @@ type Car struct {
     car.Car
 }
 
+// Max length of a dir name
+const maxDirNameLen = 255
+
 // getDir returns the directory name.
 func getDir() (ret string) {
     wd, _ := os.Getwd()
@@ -23,6 +26,8 @@ func getDir() (ret string) {
     pwd := utils.GetEnv("PWD", wd)
     dirSep := utils.GetEnv("GBT_CAR_DIR_DIRSEP", sep)
     userDirSign := utils.GetEnv("GBT_CAR_DIR_HOMESIGN", "~")
+    depth := utils.GetEnvInt("GBT_CAR_DIR_DEPTH", 1)
+    nonCurLen := utils.GetEnvInt("GBT_CAR_DIR_NONCURLEN", maxDirNameLen)
 
     if userDirSign != "" {
         usr, _ := user.Current()
@@ -31,10 +36,21 @@ func getDir() (ret string) {
 
     dirs := strings.Split(pwd, sep)
     dirsLen := len(dirs)
-    depth := utils.GetEnvInt("GBT_CAR_DIR_DEPTH", 1)
 
     if depth > dirsLen {
         depth = dirsLen
+    }
+
+    if depth > 1 && nonCurLen < maxDirNameLen {
+        for i := 0; i < dirsLen - 1; i++ {
+            l := nonCurLen
+
+            if len(dirs[i]) < nonCurLen {
+                l = len(dirs[i])
+            }
+
+            dirs[i] = dirs[i][:l]
+        }
     }
 
     if pwd == sep {

@@ -3,14 +3,16 @@ Go Bullet Train (GBT)
 
 Highly configurable prompt builder for Bash and ZSH written in Go. It's
 inspired by the [Oh My ZSH](https://github.com/robbyrussell/oh-my-zsh) [Bullet
-Train](https://github.com/caiogondim/bullet-train.zsh) theme.
+Train](https://github.com/caiogondim/bullet-train.zsh) theme but runs
+significantly faster.
 
 ![Demo](https://raw.githubusercontent.com/jtyr/gbt/master/images/demo.gif "Demo")
 
 GBT comes with an interesting feature called
 [prompt forwarding](#prompt-forwarding) which allows to forward user-defined
 prompt to a remote machine and have the same-looking prompt across all machines
-via SSH but also in Docker, Vagrant, MySQL or in Screen.
+via SSH but also in Docker, Vagrant, MySQL or in Screen without the need to
+install anything remotely.
 
 ![Prompt forwarding demo](https://raw.githubusercontent.com/jtyr/gbt/master/images/prompt_forwarding.gif "Prompt forwarding demo")
 
@@ -583,6 +585,12 @@ Car that displays current directory name.
 - `GBT_CAR_DIR_DEPTH='1'`
 
   Number of directories to show.
+
+- `GBT_CAR_DIR_NONCURLEN='255'`
+
+  Indicates how many characters of the non-current directory name should be
+  displayed. This can be set to `1` to display only the first character of the
+  directory name when using `GBT_CAR_DIR_DEPTH` with value grater than one.
 
 - `GBT_CAR_DIR_DISPLAY='1'`
 
