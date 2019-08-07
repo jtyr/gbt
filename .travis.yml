@@ -21,21 +21,22 @@ before_script:
   - golint -set_exit_status ./...
   - go vet ./... | grep ':' && false || true
   - go test -v -cover ./...
+
+script:
   - >-
         if [ -n "$TRAVIS_TAG" ]; then
         CGO_ENABLED=0 go build -ldflags="-s -w -X main.version=${TRAVIS_TAG:1} -X main.build=${TRAVIS_COMMIT::6}" -o $GOPATH/bin/gbt ./cmd/gbt;
         $GOPATH/bin/gbt -version | egrep " ${TRAVIS_TAG:1}, build ${TRAVIS_COMMIT::6}\$";
+        dist/build.sh;
+        else
+        go install github.com/jtyr/gbt/cmd/gbt;
+        $GOPATH/bin/gbt -version;
         fi
-
-script:
-  - go install github.com/jtyr/gbt/cmd/gbt
-  - $GOPATH/bin/gbt -version
-  - if [ -n "$TRAVIS_TAG" ]; then dist/build.sh; fi
   - >-
-        if [ "$TRAVIS_PULL_REQUEST" = 'true' ]; then
-        for N in $(go list ./...); do go test -v -covermode=count -coverprofile=${N//\//_}.out $N 1>/dev/null; done;
-        echo 'mode:'' count' > coverage.out && cat *.out | grep -v 'mode:' | sort -r | awk '{if($1 != last) {print $0;last=$1}}' >> coverage.out;
-        $HOME/gopath/bin/goveralls -coverprofile=coverage.out -service=travis-ci -repotoken $COVERALLS_TOKEN;
+        if [ "$TRAVIS_PULL_REQUEST" = 'false' ]; then
+        for N in $(go list ./...); do go test -v -covermode=count -coverprofile=${N//\//_}.out ${N/_$PWD\//.\/} 1>/dev/null; done;
+        echo 'mode: count' > coverage.out && cat *.out | grep -v 'mode:' | sort -r | awk '{if($1 != last) {print $0;last=$1}}' >> coverage.out;
+        $GOPATH/bin/goveralls -coverprofile=coverage.out -service=travis-ci;
         fi
 
 deploy:
