@@ -27,7 +27,8 @@ cd /
 cd /usr/share/doc/sudo
 export GBT_CAR_DIR_DEPTH='3'
 export GBT_CAR_DIR_DEPTH='9999'
-unset GBT_CAR_DIR_DEPTH
+export GBT_CAR_DIR_NONCURLEN='1'
+unset GBT_CAR_DIR_DEPTH GBT_CAR_DIR_NONCURLEN
 cd ~
 clear
 ### Sign car demo
