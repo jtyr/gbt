@@ -86,8 +86,10 @@ echo '[gbt]
 name=GBT YUM repo
 baseurl=https://packagecloud.io/gbt/release/el/7/$basearch
 gpgkey=https://packagecloud.io/gbt/release/gpgkey
-gpgcheck=1' | sudo tee /tmp/gbt.repo >/dev/null
-yum install gbt
+       https://packagecloud.io/gbt/release/gpgkey/gbt-release-4C6E79EFF45439B6.pub.gpg
+gpgcheck=1
+repo_gpgcheck=1' | sudo tee /etc/yum.repos.d/gbt.repo >/dev/null
+sudo yum install gbt
 ```
 
 Use the exact repository definition from above for all RedHat-based
@@ -100,8 +102,8 @@ Packages hosted by [Packagecloud](https://packagecloud.io/gbt/release)):
 ```shell
 curl -L https://packagecloud.io/gbt/release/gpgkey | sudo apt-key add -
 echo 'deb https://packagecloud.io/gbt/release/ubuntu/ xenial main' | sudo tee /etc/apt/sources.list.d/gbt.list >/dev/null
-apt-get update
-apt-get install gbt
+sudo apt-get update
+sudo apt-get install gbt
 ```
 
 Use the exact repository definition from above for all Debian-based
@@ -135,9 +137,8 @@ Make sure Go is installed and then run:
 ```shell
 mkdir ~/go
 export GOPATH=~/go
-go get -u github.com/jtyr/gbt/cmd/gbt
-go install github.com/jtyr/gbt/cmd/gbt
 export PATH="$PATH:$GOPATH/bin"
+go install github.com/jtyr/gbt/cmd/gbt
 ```
 
 ---
