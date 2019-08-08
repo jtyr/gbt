@@ -155,6 +155,16 @@ PS1='$(gbt $?)'
 PROMPT='$(gbt $?)'
 ```
 
+If you are using ZSH together with some shell framework (e.g. [Oh My
+ZSH](https://github.com/robbyrussell/oh-my-zsh)), your shell is processing a
+fair amount of shell scripts upon ever prompt appearence. You can speed up your
+shell by removing the framework dependency from your configuration and replacing
+it with GBT and a [simple ZSH
+configuration](https://gist.github.com/jtyr/be0e6007bd22c9d51e8702a70430d116#file-zshrc-L1-L43).
+Combining pure ZSH configuration with GBT will provide the best possible
+performance for your shell.
+
+
 ### Fonts and colors
 
 In order to display all characters of the prompt correctly, the shell should
