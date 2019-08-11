@@ -4,6 +4,15 @@ GBT__CARS_REMOTE__HASH=". $(echo ${GBT__CARS_REMOTE:-dir,git,hostname,os,sign,st
 
 GBT__SOURCE_BASE64_LOCAL=${GBT__SOURCE_BASE64_LOCAL:-base64}
 
+declare -A GBT__ALIASES
+GBT__ALIASES[docker]=${GBT__DOCKER_ALIAS:-docker}
+GBT__ALIASES[mysql]=${GBT__MYSQL_ALIAS:-mysql}
+GBT__ALIASES[screen]=${GBT__SCREEN_ALIAS:-screen}
+GBT__ALIASES[ssh]=${GBT__SSH_ALIAS:-ssh}
+GBT__ALIASES[su]=${GBT__SU_ALIAS:-su}
+GBT__ALIASES[sudo]=${GBT__SUDO_ALIAS:-sudo}
+GBT__ALIASES[vagrant]=${GBT__VAGRANT_ALIAS:-vagrant}
+
 
 function gbt__local_rcfile() {
     local GBT__CONF="/tmp/.gbt.$RANDOM"
@@ -49,6 +58,19 @@ function gbt__get_sources() {
         echo "export GBT__CONF='$GBT__CONF'"
         echo "export GBT__CONF_SBIN_PATH='$GBT__CONF_SBIN_PATH'"
         cat $GBT__HOME/sources/gbts/{cmd{,/remote},car}/_common.sh
+
+        # Automatic aliases
+        if [[ ${GBT__AUTO_ALIASES:-1} == 1 ]]; then
+            for plugin in $(echo $GBT__PLUGINS_REMOTE__HASH | sed 's/\ /\n/g'); do
+                if [[ $plugin != '.' ]]; then
+                    echo "alias ${GBT__ALIASES[$plugin]}='gbt_$plugin'"
+                fi
+            done
+
+            if [[ -n $GBT__UNALIAS_REMOTE ]]; then
+                echo "unalias $GBT__UNALIAS_REMOTE 2>/dev/null"
+            fi
+        fi
 
         # Include SSH common function if car is present
         if [[ ${GBT__PLUGINS_REMOTE__HASH[@]} == *' ssh '* ]]; then

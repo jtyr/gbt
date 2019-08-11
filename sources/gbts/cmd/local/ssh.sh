@@ -22,3 +22,5 @@ chmod $GBT__CONF_MODE \$GBT__CONF;
 exec -a gbt.bash bash --rcfile \$GBT__CONF"
     fi
 }
+
+[[ ${GBT__AUTO_ALIASES:-1} == 1 ]] && alias "${GBT__ALIASES[ssh]}"='gbt_ssh'

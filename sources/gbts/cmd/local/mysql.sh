@@ -6,3 +6,5 @@ function gbt_mysql() {
 
     $MYSQL_BIN --prompt "$(source $GBT__THEME_MYSQL; $GBT__HOME/sources/gbts/gbts)" "$@"
 }
+
+[[ ${GBT__AUTO_ALIASES:-1} == 1 ]] && alias "${GBT__ALIASES[mysql]}"='gbt_mysql'

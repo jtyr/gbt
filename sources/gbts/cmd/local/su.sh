@@ -8,3 +8,5 @@ function gbt_su() {
 
     rm -f $GBT__CONF $GBT__CONF.bash
 }
+
+[[ ${GBT__AUTO_ALIASES:-1} == 1 ]] && alias "${GBT__ALIASES[su]}"='gbt_su'

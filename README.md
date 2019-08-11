@@ -2195,40 +2195,33 @@ You can start using it by doing the following:
 
 ```shell
 export GBT__HOME='/usr/share/gbt'
-source "$GBT__HOME/sources/gbts/cmd/local.sh"
-alias docker='gbt_docker'
-alias mysql='gbt_mysql'
-alias screen='gbt_screen'
-alias ssh='gbt_ssh'
-alias su='gbt_su'
-alias sudo='gbt_sudo'
-alias vagrant='gbt_vagrant'
+source $GBT__HOME/sources/gbts/cmd/local.sh
 ```
 
-If you want to have the alias available only on the remote machine, prepend the
-alias by `gbt___`. For example to have the `sudo` alias, using the `gbt_sudo`
-function, available only on the remote machine, define the alias like this:
+This will automatically create command line aliases for all enabled plugins (by
+default `docker`, `mysql`, `screen`, `ssh`, `su`, `sudo` and `vagrant`). Then
+just SSH to some remote server or enter some Docker container or Vagrant box
+and you should get GBT prompt there.
+
+If you want to have some of the default aliase available only on the remote
+site, just un-alias them locally:
 
 ```shell
-alias gbt__sudo='gbt_sudo'
+unalias sudo su
 ```
 
-The same principle applies to any alias you want to have available on the
-remote machine. For example to have `alias ll='ls -l'` on any remote machine,
-just create the following alias and it will be automatically forwarded:
+You can also forward your own aliases which will be then available on any remote
+site. For example to have `alias ll='ls -l'` on any remote site, just create the
+following alias and it will be automatically forwarded:
 
 ```shell
-alias gbt__ll='ls -l'
+alias gbt___ll='ls -l'
 ```
 
-After the prompt forwarding is configured, just SSH to some remote server or
-enter some Docker container or Vagrant box and you should get GBT-like looking
-prompt.
-
-The idea of prompt forwarding is coming from Vladimir Babichev (@mrdrup) who was
-using it for several years before GBT even existed. After seeing the potential of
-GBT, he sparked the implementation of prompt forwarding into GBT which later
-turned into GBTS.
+The idea behind prompt forwarding is coming from Vladimir Babichev
+(@[mrdrup](https://github.com/mrdrup)) who was using it for several years
+before GBT even existed. After seeing the potential of GBT, he sparked the
+implementation of prompt forwarding into GBT which later turned into GBTS.
 
 
 ### Principle
@@ -2259,10 +2252,8 @@ The same or very similar principle applies to other supported commands like
 
 ### Additional settings
 
-GBTS has few settings which can be used to influence which functionality to pass
-on the remote site how the much the sources compress should be compressed. See
-the details
-[here](https://github.com/jtyr/gbt/tree/master/sources/gbts/README.md).
+GBTS has few settings which can be used to influence its behaviour. See the
+details [here](https://github.com/jtyr/gbt/tree/master/sources/gbts/README.md).
 
 
 ### MacOS users

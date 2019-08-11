@@ -22,3 +22,5 @@ function gbt_sudo() {
 
     return ${rv:-$?}
 }
+
+[[ ${GBT__AUTO_ALIASES:-1} == 1 ]] && alias "${GBT__ALIASES[sudo]}"='gbt_sudo'

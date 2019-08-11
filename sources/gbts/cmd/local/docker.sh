@@ -16,3 +16,5 @@ function gbt_docker() {
         unset GBT__CONF
     fi
 }
+
+[[ ${GBT__AUTO_ALIASES:-1} == 1 ]] && alias "${GBT__ALIASES[docker]}"='gbt_docker'
