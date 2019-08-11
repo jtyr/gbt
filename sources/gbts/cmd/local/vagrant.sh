@@ -23,3 +23,5 @@ exec -a gbt.bash bash --rcfile \$GBT__CONF" "$@"
         $VAGRANT_BIN "$@"
     fi
 }
+
+[[ ${GBT__AUTO_ALIASES:-1} == 1 ]] && alias "${GBT__ALIASES[vagrant]}"='gbt_vagrant'

@@ -52,6 +52,15 @@ export GBT__PLUGINS_REMOTE='docker,mysql,screen,ssh,su,sudo,vagrant'
 # List of plugins to pack for local commands
 export GBT__PLUGINS_LOCAL='docker,mysql,screen,ssh,su,sudo,vagrant'
 
+# Change default name of the alias for SSH (similarly of other plugins)
+export GBT__SSH_ALIAS='sssh'
+
+# Unalias some of the remotely created aliases
+export GBT__UNALIAS_REMOTE='sudo su'
+
+# Disable automatic aliases
+export GBT__AUTO_ALIASES='0'
+
 # Suppress code minimizing
 export GBT__SOURCE_MINIMIZE='cat'
 
@@ -71,7 +80,6 @@ export GBT__SOURCE_MD5_CUT_REMOTE=4
 # When logging from MacOS to Linux (needded for the verification of the GBT script content)
 export GBT__SOURCE_MD5_LOCAL=md5
 export GBT__SOURCE_MD5_CUT_LOCAL=4
-source $GBT__HOME/sources/gbts/cmd/local.sh
 ```
 
 
@@ -88,4 +96,16 @@ Use the following command to convert Unicode character to code:
 
 ```shell
 printf '\\u%02x\n' "'"
+```
+
+Use the following command to convert Unicode code to byte sequence:
+
+```shell
+echo -ne "\ue0b0" | xxd -plain | sed 's/\(..\)/\\x\1/g'
+```
+
+Use the following command to convert byte sequence to Unicode code:
+
+```shell
+printf '\\u%02x\n' "'"$'\xee\x82\xb0'
 ```
