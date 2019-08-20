@@ -2338,6 +2338,8 @@ Contribution to the following is more than welcome:
     - Load plugins with `GBT_PLUGINS='mycar1:/path/to/mycar1.so;mycar2:/path/to/mycar2.so'`
     - Load the plugin, read the `Car` symbol and assign the reference to the
       `mycar1` in the `carsFactory`
+- Implement Vim statusline using GBT as the generator
+- Add support for Tmux
 - Add more themes
 
 
