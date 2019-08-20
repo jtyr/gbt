@@ -2340,6 +2340,10 @@ Contribution to the following is more than welcome:
       `mycar1` in the `carsFactory`
 - Implement Vim statusline using GBT as the generator
 - Add support for Tmux
+- Add weather car
+    - Using Yahoo Weather API
+    - Needs to cache the results in a file and refresh only if its timestamp is
+      older than certain time.
 - Add more themes
 
 
