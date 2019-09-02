@@ -19,7 +19,7 @@ function gbt_exectime_post() {
     local BELL=${GBT_CAR_EXECTIME_BELL:-0}
 
     if [ "$BELL" -gt 0 ] && [ "$SECS" -gt 0 ]; then
-        local EXECS=$(echo "$(GBT_CAR_EXECTIME__DATE "$GBT_CAR_EXECTIME__DATE_ARG") - $GBT_CAR_EXECTIME_SECS" | bc)
+        local EXECS=$(echo "$(${GBT__SOURCE_DATE:-date} "${GBT__SOURCE_DATE_ARG:-+%s.%N}") - $GBT_CAR_EXECTIME_SECS" | bc)
 
         if [ "$EXECS" -gt "$BELL" ]; then
             echo -en '\a'
