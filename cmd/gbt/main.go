@@ -175,6 +175,7 @@ func main() {
     cars := []Cars{}
 
     for _, cn := range carsNames {
+        cn = strings.TrimSpace(cn)
         custom := "\000"
 
         if len(cn) >= 6 && cn[:6] == "custom" {
