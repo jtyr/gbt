@@ -8,8 +8,10 @@ function gbt__check_md5() {
         if [ -z "$CAT_BIN" ] || [ -z "$CUT_BIN" ] || [ -z "$GREP_BIN" ] || [ -z "$MD5SUM_BIN" ]; then
             gbt__err 'WARNING: Cannot verify content of the GBT config!'
         elif [ "$($CAT_BIN $GBT__CONF | $GREP_BIN -v 'export GBT__CONF_MD5=[0-9a-f]' | $MD5SUM_BIN | $CUT_BIN -d' ' -f$GBT__SOURCE_MD5_CUT_REMOTE)" != "$GBT__CONF_MD5" ]; then
+            trap '' 2
             gbt__err 'SECURITY WARNING: GBT script has been changed! Exiting...'
             sleep 3
+            trap 2
             exit 1
         fi
     fi
@@ -31,9 +33,9 @@ trap gbt__finish EXIT
 
 # Check Bash version
 if [[ ${BASH_VERSINFO[0]} -lt 4 ]]; then
-  gbt__err 'ERROR: Bash v4.x is required to run GBTS.'
-  sleep 3
-  exit 1
+  gbt__err 'WARNING: Bash v4.x is required to run GBTS. Executing Bash without GBTS.'
+  bash
+  exit $?
 fi
 
 # Create executable that is used as shell in 'su'
