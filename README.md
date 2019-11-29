@@ -138,7 +138,7 @@ Make sure Go is installed and then run:
 mkdir ~/go
 export GOPATH=~/go
 export PATH="$PATH:$GOPATH/bin"
-go install github.com/jtyr/gbt/cmd/gbt
+go get github.com/jtyr/gbt/cmd/gbt
 ```
 
 ---
