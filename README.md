@@ -2339,11 +2339,11 @@ Contribution to the following is more than welcome:
     - Load the plugin, read the `Car` symbol and assign the reference to the
       `mycar1` in the `carsFactory`
 - Implement Vim statusline using GBT as the generator
-- Add support for Tmux
+- Implement Tmux statusline using GBT as the generator
 - Add weather car
     - Using Yahoo Weather API
     - Needs to cache the results in a file and refresh only if its timestamp is
-      older than certain time.
+      older than certain time. Or perhaps store the last update in env var?
 - Add more themes
 
 
