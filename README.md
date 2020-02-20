@@ -174,16 +174,16 @@ performance for your shell.
 To activate GBT in PowerShell, run the following in the console:
 
 ```powershell
-# For PowerShell
 function prompt {
     $rc = [int]$(-Not $?)
     $Env:GBT_SHELL = "plain"
     $Env:PWD = get-location
-    $gbt_output = & gbt.exe $rc | Out-String
+    $gbt_output = & @({gbt $rc},{gbt.exe $rc})[$IsWindows] | Out-String
     $gbt_output = $gbt_output -replace ([Environment]::NewLine + "$"), ""
     Write-Host -NoNewline $gbt_output
     return [char]0
 }
+# Needed only on Windows
 [console]::InputEncoding = [console]::OutputEncoding = New-Object System.Text.UTF8Encoding
 ```
 
