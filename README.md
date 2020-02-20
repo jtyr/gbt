@@ -1,9 +1,9 @@
 Go Bullet Train (GBT)
 =====================
 
-Highly configurable prompt builder for Bash and ZSH written in Go. It's
-inspired by the [Oh My ZSH](https://github.com/robbyrussell/oh-my-zsh) [Bullet
-Train](https://github.com/caiogondim/bullet-train.zsh) theme but runs
+Highly configurable prompt builder for Bash, ZSH and PowerShell written in Go.
+It's inspired by the [Oh My ZSH](https://github.com/robbyrussell/oh-my-zsh)
+[Bullet Train](https://github.com/caiogondim/bullet-train.zsh) theme but runs
 significantly faster.
 
 ![Demo](https://raw.githubusercontent.com/jtyr/gbt/master/images/demo.gif "Demo")
@@ -33,6 +33,7 @@ Table of contents
   - [CentOS/RHEL](#centosrhel)
   - [Ubuntu/Debian](#ubuntudebian)
   - [Mac](#mac)
+  - [Windows](#windows)
   - [Android](#android)
   - [From the source code](#from-the-source-code)
   - [Activation](#activation)
@@ -120,6 +121,11 @@ brew install gbt
 Or install `gbt-git` if you would like to run the latest greatest from the
 `master` branch.
 
+### Windows
+
+Copy the `gbt.exe` file into a directory listed in the `PATH` environment
+variable (e.g. `C:\Windows\system32`).
+
 ### Android
 
 Install [Termux](https://termux.com) from [Google Play Store](https://play.google.com/store/apps/details?id=com.termux)
@@ -151,6 +157,7 @@ variable:
 ```shell
 # For Bash
 PS1='$(gbt $?)'
+
 # For ZSH
 PROMPT='$(gbt $?)'
 ```
@@ -163,6 +170,22 @@ it with GBT and a [simple ZSH
 configuration](https://gist.github.com/jtyr/be0e6007bd22c9d51e8702a70430d116#file-zshrc-L1-L43).
 Combining pure ZSH configuration with GBT will provide the best possible
 performance for your shell.
+
+To activate GBT in PowerShell, run the following in the console:
+
+```powershell
+# For PowerShell
+function prompt {
+    $rc = [int]$(-Not $?)
+    $Env:GBT_SHELL = "plain"
+    $Env:PWD = get-location
+    $gbt_output = & gbt.exe $rc | Out-String
+    $gbt_output = $gbt_output -replace ([Environment]::NewLine + "$"), ""
+    Write-Host -NoNewline $gbt_output
+    return [char]0
+}
+[console]::InputEncoding = [console]::OutputEncoding = New-Object System.Text.UTF8Encoding
+```
 
 
 ### Fonts and colors

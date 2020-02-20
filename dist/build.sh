@@ -11,6 +11,7 @@ chmod +x ~/rpm-sign.exp
 
 # Archs to build for
 declare -a PLATFORMS=(
+    'windows/amd64'
     'darwin/amd64'
     'linux/amd64'
     'linux/arm:5'
@@ -37,9 +38,14 @@ for P in "${PLATFORMS[@]}"; do
 
     mkdir -p "$PTMP"
 
+    # Declare file extension for Windows
+    if [[ $OS == 'windows' ]]; then
+        EXT='.exe'
+    fi
+
     # Compile GBT
     if [ "$ARCH" == "$ARM" ]; then
-        GOOS="$OS" GOARCH="$ARCH" CGO_ENABLED=0 go build -ldflags="-s -w -X main.version=$VER -X main.build=$BUILD" -o "$PTMP/$NAME" github.com/jtyr/gbt/cmd/gbt
+        GOOS="$OS" GOARCH="$ARCH" CGO_ENABLED=0 go build -ldflags="-s -w -X main.version=$VER -X main.build=$BUILD" -o "$PTMP/$NAME$EXT" github.com/jtyr/gbt/cmd/gbt
     else
         ARCH="${ARCH%%:*}"
         PKG="$NAME-$VER-$OS-$ARCH$ARM.tar.gz"
