@@ -208,9 +208,13 @@ brew tap homebrew/cask-fonts
 brew cask install font-hack-nerd-font-mono
 ```
 
+On Windows, [download](https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DejaVuSansMono/Regular/complete/DejaVu%20Sans%20Mono%20Nerd%20Font%20Complete%20Mono%20Windows%20Compatible.ttf)
+the font, open and then install it.
+
 Once the font is installed, the font has to be set in the terminal application
 to render all prompt characters correctly. Search for the font name
-`DejaVuSansMono Nerd Font Mono` on Linux and for `Hack Nerd Font Mono` on Mac.
+`DejaVuSansMono Nerd Font Mono` on Linux, `Hack Nerd Font Mono` on Mac and
+`DejaVuSansMono NF` on Windows.
 
 In order to have the Nerd fonts in Termux on Android, you have to install
 [Termux:Styling](https://play.google.com/store/apps/details?id=com.termux.styling)
