@@ -3,6 +3,8 @@ function GbtCarHostname() {
     local defaultRootFg=${GBT_CAR_FG:-252}
     local defaultRootFm=${GBT_CAR_FM:-none}
 
+    local defaultSep="\x00"
+
     local hostname=$(hostname)
 
     if [[ -z "$hostname" ]]; then
@@ -41,8 +43,12 @@ function GbtCarHostname() {
         [model-Host-Fm]=${GBT_CAR_HOSTNAME_HOST_FM:-${GBT_CAR_HOSTNAME_FM:-$defaultRootFm}}
         [model-Host-Text]=${GBT_CAR_HOSTNAME_HOST_TEXT-${hostname%%.*}}
 
+        [model-Sep-Bg]=${GBT_CAR_HOSTNAME_SEP_BG:-$defaultSep}
+        [model-Sep-Fg]=${GBT_CAR_HOSTNAME_SEP_FG:-$defaultSep}
+        [model-Sep-Fm]=${GBT_CAR_HOSTNAME_SEP_FM:-$defaultSep}
+        [model-Sep-Text]=${GBT_CAR_HOSTNAME_SEP_TEXT:-${GBT_CAR_HOSTNAME_SEP:-$defaultSep}}
+
         [display]=${GBT_CAR_HOSTNAME_DISPLAY:-1}
         [wrap]=${GBT_CAR_HOSTNAME_WRAP:-0}
-        [sep]=${GBT_CAR_HOSTNAME_SEP-'\x00'}
     )
 }

@@ -66,6 +66,8 @@ function GbtCarOs() {
     GbtDecorateUnicode ${GBT_CAR_OS_SYMBOL_TEXT-${GBT__OS_SYMBOLS[$os]:-?}}
     local defaultSymbolText=$GBT__RETVAL
 
+    local defaultSep="\x00"
+
     GBT_CAR=(
         [model-root-Bg]=${GBT_CAR_OS_BG:-$defaultRootBg}
         [model-root-Fg]=${GBT_CAR_OS_FG:-$defaultRootFg}
@@ -77,8 +79,12 @@ function GbtCarOs() {
         [model-Symbol-Fm]=${GBT_CAR_OS_SYMBOL_FM:-${GBT_CAR_OS_FM:-$defaultRootFm}}
         [model-Symbol-Text]=$defaultSymbolText
 
+        [model-Sep-Bg]=${GBT_CAR_OS_SEP_BG:-$defaultSep}
+        [model-Sep-Fg]=${GBT_CAR_OS_SEP_FG:-$defaultSep}
+        [model-Sep-Fm]=${GBT_CAR_OS_SEP_FM:-$defaultSep}
+        [model-Sep-Text]=${GBT_CAR_OS_SEP_TEXT:-${GBT_CAR_OS_SEP:-$defaultSep}}
+
         [display]=${GBT_CAR_OS_DISPLAY:-1}
         [wrap]=${GBT_CAR_OS_WRAP:-0}
-        [sep]=${GBT_CAR_OS_SEP-'\x00'}
     )
 }

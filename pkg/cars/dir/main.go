@@ -71,6 +71,7 @@ func (c *Car) Init() {
     defaultRootBg := utils.GetEnv("GBT_CAR_BG", "blue")
     defaultRootFg := utils.GetEnv("GBT_CAR_FG", "light_gray")
     defaultRootFm := utils.GetEnv("GBT_CAR_FM", "none")
+    defaultSep := "\000"
 
     c.Model = map[string]car.ModelElement {
         "root": {
@@ -91,9 +92,23 @@ func (c *Car) Init() {
                     "GBT_CAR_DIR_FM", defaultRootFm)),
             Text: utils.GetEnv("GBT_CAR_DIR_DIR_TEXT", getDir()),
         },
+        "Sep": {
+            Bg: utils.GetEnv(
+                "GBT_CAR_DIR_SEP_BG", utils.GetEnv(
+                    "GBT_SEPARATOR_BG", defaultSep)),
+            Fg: utils.GetEnv(
+                "GBT_CAR_DIR_SEP_FG", utils.GetEnv(
+                    "GBT_SEPARATOR_FG", defaultSep)),
+            Fm: utils.GetEnv(
+                "GBT_CAR_DIR_SEP_FM", utils.GetEnv(
+                    "GBT_SEPARATOR_FM", defaultSep)),
+            Text: utils.GetEnv(
+                "GBT_CAR_DIR_SEP", utils.GetEnv(
+                    "GBT_CAR_DIR_SEP_TEXT", utils.GetEnv(
+                        "GBT_SEPARATOR", defaultSep))),
+        },
     }
 
     c.Display = utils.GetEnvBool("GBT_CAR_DIR_DISPLAY", true)
     c.Wrap = utils.GetEnvBool("GBT_CAR_DIR_WRAP", false)
-    c.Sep = utils.GetEnv("GBT_CAR_DIR_SEP", "\000")
 }

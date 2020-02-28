@@ -59,6 +59,7 @@ function GbtCarStatus() {
     local defaultDetailsFormat=' {{ Signal }}'
     local defaultSymbolFormat='{{ Error }}'
     local defaultCodeText='?'
+    local defaultSep="\x00"
 
     if (( ${#@} > 0 )); then
         defaultCodeText=$1
@@ -110,8 +111,12 @@ function GbtCarStatus() {
         [model-Signal-Fm]=${GBT_CAR_STATUS_SIGNAL_FM:-${GBT_CAR_STATUS_FM:-$defaultRootFm}}
         [model-Signal-Text]=${GBT_CAR_STATUS_SIGNAL_TEXT-${GBT__STATUS_SIGNALS[$defaultCodeText]:-UNK}}
 
+        [model-Sep-Bg]=${GBT_CAR_STATUS_SEP_BG:-$defaultSep}
+        [model-Sep-Fg]=${GBT_CAR_STATUS_SEP_FG:-$defaultSep}
+        [model-Sep-Fm]=${GBT_CAR_STATUS_SEP_FM:-$defaultSep}
+        [model-Sep-Text]=${GBT_CAR_STATUS_SEP_TEXT:-${GBT_CAR_STATUS_SEP:-$defaultSep}}
+
         [wrap]=${GBT_CAR_STATUS_WRAP:-0}
-        [sep]=${GBT_CAR_STATUS_SEP-'\x00'}
     )
 
     if [[ $1 == 0 ]]; then

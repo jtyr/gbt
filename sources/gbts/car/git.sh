@@ -34,6 +34,7 @@ function GbtCarGit() {
     local defaultBehindSymbolText=''
     local defaultStashCountText=''
     local defaultStashSymbolText=''
+    local defaultSep="\x00"
 
     GbtDecorateUnicode ${GBT_CAR_GIT_ICON_TEXT-'\xee\x82\xa0'}
     local defaultIconText=$GBT__RETVAL
@@ -403,8 +404,12 @@ function GbtCarGit() {
         [model-StashCount-Fm]=${GBT_CAR_GIT_STASH_COUNT_FM:-${GBT_CAR_GIT_STASH_BG:-${GBT_CAR_GIT_FM:-$defaultRootFm}}}
         [model-StashCount-Text]=$defaultStashCountText
 
+        [model-Sep-Bg]=${GBT_CAR_GIT_SEP_BG:-$defaultSep}
+        [model-Sep-Fg]=${GBT_CAR_GIT_SEP_FG:-$defaultSep}
+        [model-Sep-Fm]=${GBT_CAR_GIT_SEP_FM:-$defaultSep}
+        [model-Sep-Text]=${GBT_CAR_GIT_SEP_TEXT:-${GBT_CAR_GIT_SEP:-$defaultSep}}
+
         [display]=${GBT_CAR_GIT_DISPLAY:-$isGitDir}
         [wrap]=${GBT_CAR_GIT_WRAP:-0}
-        [sep]=${GBT_CAR_GIT_SEP-'\x00'}
     )
 }

@@ -20,6 +20,7 @@ func (c *Car) Init() {
     defaultRootBg := utils.GetEnv("GBT_CAR_BG", "light_blue")
     defaultRootFg := utils.GetEnv("GBT_CAR_FG", "light_gray")
     defaultRootFm := utils.GetEnv("GBT_CAR_FM", "none")
+    defaultSep := "\000"
 
     c.Model = map[string]car.ModelElement {
         "root": {
@@ -73,9 +74,23 @@ func (c *Car) Init() {
             Text: tnow().Format(
                 utils.GetEnv("GBT_CAR_TIME_TIME_FORMAT", "15:04:05")),
         },
+        "Sep": {
+            Bg: utils.GetEnv(
+                "GBT_CAR_TIME_SEP_BG", utils.GetEnv(
+                    "GBT_SEPARATOR_BG", defaultSep)),
+            Fg: utils.GetEnv(
+                "GBT_CAR_TIME_SEP_FG", utils.GetEnv(
+                    "GBT_SEPARATOR_FG", defaultSep)),
+            Fm: utils.GetEnv(
+                "GBT_CAR_TIME_SEP_FM", utils.GetEnv(
+                    "GBT_SEPARATOR_FM", defaultSep)),
+            Text: utils.GetEnv(
+                "GBT_CAR_TIME_SEP", utils.GetEnv(
+                    "GBT_CAR_TIME_SEP_TEXT", utils.GetEnv(
+                        "GBT_SEPARATOR", defaultSep))),
+        },
     }
 
     c.Display = utils.GetEnvBool("GBT_CAR_TIME_DISPLAY", true)
     c.Wrap = utils.GetEnvBool("GBT_CAR_TIME_WRAP", false)
-    c.Sep = utils.GetEnv("GBT_CAR_TIME_SEP", "\000")
 }

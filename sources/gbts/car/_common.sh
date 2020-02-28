@@ -232,12 +232,15 @@ function GbtMsg() {
 
 function GbtMain() {
     local first=1
+    local right=${GBT_RIGHT:-0}
 
     local prevBg="\x00"
     local prevDisplay=1
-    local right=${GBT_RIGHT:-0}
+    local defaultSeparator='\xee\x82\xb0'
 
-    declare -A GBT_CAR
+    if [[ $right == 1 ]]; then
+        defaultSeparator='\xee\x82\xb2'
+    fi
 
     if [[ $right != 1 ]] && [ "$GBT_BEGINNING_TEXT" != "" ]; then
         GbtGetColor ${GBT_BEGINNING_BG:-default} 0
@@ -250,6 +253,8 @@ function GbtMain() {
         GbtDecorateElement '' $beginning_bg $beginning_fg $beginning_fm $GBT_BEGINNING_TEXT
         echo -en $GBT__RETVAL
     fi
+
+    declare -A GBT_CAR
 
     for car in $(echo ${GBT_CARS:-status,os,hostname,dir,git,sign} | sed -E 's/,\ */ /g' | tr '[:upper:]' '[:lower:]'); do
         GBT_CAR=()
@@ -283,17 +288,13 @@ function GbtMain() {
             unknown=1
         fi
 
-        local separator='\xee\x82\xb0'
-        [ ! -z "${GBT_SEPARATOR+set}" ] && separator=${GBT_SEPARATOR}
-
-        GbtDecorateUnicode $separator
-        local separator=$GBT__RETVAL
-
-        if [[ ${GBT_CAR[sep]} != "\x00" ]]; then
-            separator=${GBT_CAR[sep]}
-        fi
-
         if [[ $unknown == 0 ]] && [[ ${GBT_CAR[display]} == 1 ]]; then
+            local separator=$defaultSeparator
+
+            if [[ ${GBT_CAR[model-Sep-Text]} != "\x00" ]]; then
+                separator=${GBT_CAR[model-Sep-Text]}
+            fi
+
             GbtGetColor 'RESETALL' 0
             echo -en $GBT__RETVAL
 
@@ -302,6 +303,7 @@ function GbtMain() {
                 local bg=$GBT__RETVAL
                 GbtGetColor ${GBT_CAR[model-root-Bg]} 1
                 local fg=$GBT__RETVAL
+                local fm=''
 
                 if [[ ${GBT_CAR[wrap]} == 1 ]]; then
                     GbtGetColor 'default' 0
@@ -312,15 +314,32 @@ function GbtMain() {
 
                 if [[ $right == 1 ]]; then
                     GbtGetColor $prevBg 0
-                    local sep_bg=$GBT__RETVAL
-                    GbtDecorateElement '' "$separator" $sep_bg $fg ''
-                    echo -en "$GBT__RETVAL"
+                    bg=$GBT__RETVAL
                 else
                     GbtGetColor $prevBg 1
-                    local sep_bg=$GBT__RETVAL
-                    GbtDecorateElement '' "$separator" $bg $sep_bg ''
-                    echo -en "$GBT__RETVAL"
+                    fg=$GBT__RETVAL
                 fi
+
+                if [[ ${GBT_CAR[model-Sep-Bg]} != "\x00" ]]; then
+                    GbtGetColor ${GBT_CAR[model-Sep-Bg]} 0
+                    bg=$GBT__RETVAL
+                fi
+
+                if [[ ${GBT_CAR[model-Sep-Fg]} != "\x00" ]]; then
+                    GbtGetColor ${GBT_CAR[model-Sep-Fg]} 1
+                    fg=$GBT__RETVAL
+                fi
+
+                if [[ ${GBT_CAR[model-Sep-Fm]} != "\x00" ]]; then
+                    GbtGetFormat ${GBT_CAR[model-Sep-Fm]} 0
+                    fm=$GBT__RETVAL
+                fi
+
+                GbtDecorateUnicode $separator
+                separator=$GBT__RETVAL
+
+                GbtDecorateElement '' "$separator" $bg $fg $fm
+                echo -en "$GBT__RETVAL"
 
                 if [[ ${GBT_CAR[wrap]} == 1 ]]; then
                     echo

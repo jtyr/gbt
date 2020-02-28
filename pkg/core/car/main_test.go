@@ -84,28 +84,6 @@ func TestGetDisplay(t *testing.T) {
     }
 }
 
-func TestSep(t *testing.T) {
-    tests := []struct {
-        sep string
-        expectedOutput string
-    }{
-        { sep: "x", expectedOutput: "x", },
-    }
-
-    for i, test := range tests {
-        testPrefix := getTestPrefix(i)
-        car := Car{
-            Sep: test.sep,
-        }
-
-        output := car.GetSep()
-
-        if output != test.expectedOutput {
-            t.Errorf("%sExpected '%s', found '%s'.", testPrefix, test.expectedOutput, output)
-        }
-    }
-}
-
 func TestGetWrap(t *testing.T) {
     tests := []struct {
         wrap bool

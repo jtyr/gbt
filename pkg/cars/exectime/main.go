@@ -42,6 +42,7 @@ func (c *Car) Init() {
     defaultRootBg := utils.GetEnv("GBT_CAR_BG", "light_gray")
     defaultRootFg := utils.GetEnv("GBT_CAR_FG", "black")
     defaultRootFm := utils.GetEnv("GBT_CAR_FM", "none")
+    defaultSep := "\000"
 
     c.Model = map[string]car.ModelElement {
         "root": {
@@ -62,9 +63,23 @@ func (c *Car) Init() {
                     "GBT_CAR_EXECTIME_FM", defaultRootFm)),
             Text: utils.GetEnv("GBT_CAR_EXECTIME_TIME_TEXT", getTime()),
         },
+        "Sep": {
+            Bg: utils.GetEnv(
+                "GBT_CAR_EXECTIME_SEP_BG", utils.GetEnv(
+                    "GBT_SEPARATOR_BG", defaultSep)),
+            Fg: utils.GetEnv(
+                "GBT_CAR_EXECTIME_SEP_FG", utils.GetEnv(
+                    "GBT_SEPARATOR_FG", defaultSep)),
+            Fm: utils.GetEnv(
+                "GBT_CAR_EXECTIME_SEP_FM", utils.GetEnv(
+                    "GBT_SEPARATOR_FM", defaultSep)),
+            Text: utils.GetEnv(
+                "GBT_CAR_EXECTIME_SEP", utils.GetEnv(
+                    "GBT_CAR_EXECTIME_SEP_TEXT", utils.GetEnv(
+                        "GBT_SEPARATOR", defaultSep))),
+        },
     }
 
     c.Display = utils.GetEnvBool("GBT_CAR_EXECTIME_DISPLAY", true)
     c.Wrap = utils.GetEnvBool("GBT_CAR_EXECTIME_WRAP", false)
-    c.Sep = utils.GetEnv("GBT_CAR_EXECTIME_SEP", "\000")
 }

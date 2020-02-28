@@ -14,7 +14,10 @@ func TestMain(t *testing.T) {
     os.Setenv("GBT_CARS", "Status, Os, Time, Custom, Hostname, Dir, PyVirtEnv, Git, Sign")
     os.Setenv("GBT_CAR_SIGN_WRAP", "1")
     os.Setenv("GBT_BEGINNING_TEXT", "test")
-    os.Setenv("GBT_CAR_CUSTOM_SEP", ">")
+    os.Setenv("GBT_CAR_CUSTOM_SEP_TEXT", ">")
+    os.Setenv("GBT_CAR_CUSTOM_SEP_BG", "red")
+    os.Setenv("GBT_CAR_CUSTOM_SEP_FG", "green")
+    os.Setenv("GBT_CAR_CUSTOM_SEP_FM", "bold")
 
     os.Args = append(os.Args, "-help")
     os.Args = append(os.Args, "-version")

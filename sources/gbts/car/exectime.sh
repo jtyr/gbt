@@ -3,6 +3,8 @@ function GbtCarExecTime() {
     local defaultRootFg=${GBT_CAR_FG:-black}
     local defaultRootFm=${GBT_CAR_FM:-none}
 
+    local defaultSep="\x00"
+
     local precision=${GBT_CAR_EXECTIME_PRECISION:-0}
     local now=$(${GBT__SOURCE_DATE:-date} ${GBT__SOURCE_DATE_ARG:-'+%s.%N'})
     local execs=$(echo "$precision $now ${GBT_CAR_EXECTIME_SECS:-$now}" | awk '{printf "%0.*f", $1, $2 - $3}')
@@ -23,13 +25,18 @@ function GbtCarExecTime() {
         [model-root-Fg]=${GBT_CAR_EXECTIME_FG:-$defaultRootFg}
         [model-root-Fm]=${GBT_CAR_EXECTIME_FM:-$defaultRootFm}
         [model-root-Text]=${GBT_CAR_EXECTIME_FORMAT-' {{ Time }} '}
+
         [model-Time-Bg]=${GBT_CAR_EXECTIME_TIME_BG:-${GBT_CAR_EXECTIME_BG:-$defaultRootBg}}
         [model-Time-Fg]=${GBT_CAR_EXECTIME_TIME_FG:-${GBT_CAR_EXECTIME_FG:-$defaultRootFg}}
         [model-Time-Fm]=${GBT_CAR_EXECTIME_TIME_FM:-${GBT_CAR_EXECTIME_FM:-$defaultRootFm}}
         [model-Time-Text]=${GBT_CAR_EXECTIME_TIME_TEXT-$exectime}
 
+        [model-Sep-Bg]=${GBT_CAR_EXECTIME_SEP_BG:-$defaultSep}
+        [model-Sep-Fg]=${GBT_CAR_EXECTIME_SEP_FG:-$defaultSep}
+        [model-Sep-Fm]=${GBT_CAR_EXECTIME_SEP_FM:-$defaultSep}
+        [model-Sep-Text]=${GBT_CAR_EXECTIME_SEP_TEXT:-${GBT_CAR_EXECTIME_SEP:-$defaultSep}}
+
         [display]=${GBT_CAR_EXECTIME_DISPLAY:-1}
         [wrap]=${GBT_CAR_EXECTIME_WRAP:-0}
-        [sep]=${GBT_CAR_EXECTIME_SEP-'\x00'}
     )
 }

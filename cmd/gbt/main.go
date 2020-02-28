@@ -29,10 +29,10 @@ type Cars interface {
     Format() string
     SetParamStr(string, string)
     GetColor(string, bool) string
+    GetFormat(string, bool) string
     DecorateElement(element, bg, fg, fm, text string) string
     GetModel() map[string]car.ModelElement
     GetDisplay() bool
-    GetSep() string
     GetWrap() bool
 }
 
@@ -57,7 +57,7 @@ func printCars(cars []Cars, right bool) {
                 "",
                 fakeCar.GetColor(utils.GetEnv("GBT_BEGINNING_BG", "default"), false),
                 fakeCar.GetColor(utils.GetEnv("GBT_BEGINNING_FG", "default"), true),
-                fakeCar.GetColor(utils.GetEnv("GBT_BEGINNING_FM", "none"), false),
+                fakeCar.GetFormat(utils.GetEnv("GBT_BEGINNING_FM", "none"), false),
                 utils.GetEnv("GBT_BEGINNING_TEXT", "")))
     }
 
@@ -66,21 +66,23 @@ func printCars(cars []Cars, right bool) {
 
         cModel := c.GetModel()
         cDisplay := c.GetDisplay()
-        cSep := c.GetSep()
-        cWrap := c.GetWrap()
-
-        separator := defaultSeparator
-
-        if cSep != "\000" {
-            separator = cSep
-        }
 
         if cDisplay {
+            cWrap := c.GetWrap()
+            cSep := cModel["Sep"]
+
+            separator := defaultSeparator
+
+            if cSep.Text != "\000" {
+                separator = cSep.Text
+            }
+
             myPrint(fakeCar.GetColor("RESETALL", false))
 
             if prevBg != "\000" && prevDisplay {
                 bg := c.GetColor(cModel["root"].Bg, false)
                 fg := c.GetColor(cModel["root"].Bg, true)
+                fm := ""
 
                 if cWrap {
                     bg = c.GetColor("default", false)
@@ -88,22 +90,30 @@ func printCars(cars []Cars, right bool) {
                 }
 
                 if right {
-                    myPrint(
-                        c.DecorateElement(
-                            "",
-                            c.GetColor(prevBg, false),
-                            fg,
-                            "",
-                            separator))
+                    bg = c.GetColor(prevBg, false)
                 } else {
-                    myPrint(
-                        c.DecorateElement(
-                            "",
-                            bg,
-                            c.GetColor(prevBg, true),
-                            "",
-                            separator))
+                    fg = c.GetColor(prevBg, true)
                 }
+
+                if cSep.Bg != "\000" {
+                    bg = c.GetColor(cSep.Bg, false)
+                }
+
+                if cSep.Fg != "\000" {
+                    fg = c.GetColor(cSep.Fg, true)
+                }
+
+                if cSep.Fm != "\000" {
+                    fm = c.GetFormat(cSep.Fm, false)
+                }
+
+                myPrint(
+                    c.DecorateElement(
+                        "",
+                        bg,
+                        fg,
+                        fm,
+                        separator))
 
                 if cWrap {
                     myPrint("\n")

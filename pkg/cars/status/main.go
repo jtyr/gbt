@@ -85,6 +85,7 @@ func (c *Car) Init() {
     defaultRootBg := defaultErrorBg
     defaultRootFg := defaultErrorFg
     defaultRootFm := defaultErrorFm
+    defaultSep := "\000"
 
     defaultDetailsFormat := " {{ Signal }}"
     defaultSymbolFormat := "{{ Error }}"
@@ -193,6 +194,21 @@ func (c *Car) Init() {
             Text: utils.GetEnv(
                 "GBT_CAR_STATUS_SIGNAL_TEXT", c.getSignal()),
         },
+        "Sep": {
+            Bg: utils.GetEnv(
+                "GBT_CAR_STATUS_SEP_BG", utils.GetEnv(
+                    "GBT_SEPARATOR_BG", defaultSep)),
+            Fg: utils.GetEnv(
+                "GBT_CAR_STATUS_SEP_FG", utils.GetEnv(
+                    "GBT_SEPARATOR_FG", defaultSep)),
+            Fm: utils.GetEnv(
+                "GBT_CAR_STATUS_SEP_FM", utils.GetEnv(
+                    "GBT_SEPARATOR_FM", defaultSep)),
+            Text: utils.GetEnv(
+                "GBT_CAR_STATUS_SEP", utils.GetEnv(
+                    "GBT_CAR_STATUS_SEP_TEXT", utils.GetEnv(
+                        "GBT_SEPARATOR", defaultSep))),
+        },
     }
 
     if c.isOk() {
@@ -202,5 +218,4 @@ func (c *Car) Init() {
     }
 
     c.Wrap = utils.GetEnvBool("GBT_CAR_STATUS_WRAP", false)
-    c.Sep = utils.GetEnv("GBT_CAR_STATUS_SEP", "\000")
 }

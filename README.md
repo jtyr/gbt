@@ -555,9 +555,21 @@ custom text.
 
   Whether to wrap the prompt line in front of this car.
 
-- `GBT_CAR_CUSTOM_SEP`
+- `GBT_CAR_CUSTOM_SEP_TEXT`
 
-  Custom separator string for this car.
+  Text content of the separator for this car.
+
+- `GBT_CAR_CUSTOM_SEP_BG`
+
+  Background color of the separator for this car.
+
+- `GBT_CAR_CUSTOM_SEP_FG`
+
+  Foreground color of the separator for this car.
+
+- `GBT_CAR_CUSTOM_SEP_FM`
+
+  Formatting of the separator for this car.
 
 Multiple `Custom` cars can be used in the `GBT_CARS` variable. Just add some
 identifier behind the car name. To set properties of the new car, just add the
@@ -638,9 +650,21 @@ Car that displays current directory name.
 
   Whether to wrap the prompt line in front of this car.
 
-- `GBT_CAR_DIR_SEP`
+- `GBT_CAR_DIR_SEP_TEXT`
 
-  Custom separator string for this car.
+  Text content of the separator for this car.
+
+- `GBT_CAR_DIR_SEP_BG`
+
+  Background color of the separator for this car.
+
+- `GBT_CAR_DIR_SEP_FG`
+
+  Foreground color of the separator for this car.
+
+- `GBT_CAR_DIR_SEP_FM`
+
+  Formatting of the separator for this car.
 
 
 #### `ExecTime` car
@@ -705,9 +729,21 @@ Car that displays how long each shell command run.
 
   Whether to wrap the prompt line in front of this car.
 
-- `GBT_CAR_EXECTIME_SEP`
+- `GBT_CAR_EXECTIME_SEP_TEXT`
 
-  Custom separator string for this car.
+  Text content of the separator for this car.
+
+- `GBT_CAR_EXECTIME_SEP_BG`
+
+  Background color of the separator for this car.
+
+- `GBT_CAR_EXECTIME_SEP_FG`
+
+  Foreground color of the separator for this car.
+
+- `GBT_CAR_EXECTIME_SEP_FM`
+
+  Formatting of the separator for this car.
 
 In order to allow this car to calculate the execution time, the following must
 be loaded in the shell:
@@ -1435,9 +1471,21 @@ displayed only if the current directory is a Git repository.
 
   Whether to wrap the prompt line in front of this car.
 
-- `GBT_CAR_GIT_SEP`
+- `GBT_CAR_GIT_SEP_TEXT`
 
-  Custom separator string for this car.
+  Text content of the separator for this car.
+
+- `GBT_CAR_GIT_SEP_BG`
+
+  Background color of the separator for this car.
+
+- `GBT_CAR_GIT_SEP_FG`
+
+  Foreground color of the separator for this car.
+
+- `GBT_CAR_GIT_SEP_FM`
+
+  Formatting of the separator for this car.
 
 
 #### `Hostname` car
@@ -1535,9 +1583,21 @@ local machine.
 
   Whether to wrap the prompt line in front of this car.
 
-- `GBT_CAR_HOSTNAME_SEP`
+- `GBT_CAR_HOSTNAME_SEP_TEXT`
 
-  Custom separator string for this car.
+  Text content of the separator for this car.
+
+- `GBT_CAR_HOSTNAME_SEP_BG`
+
+  Background color of the separator for this car.
+
+- `GBT_CAR_HOSTNAME_SEP_FG`
+
+  Foreground color of the separator for this car.
+
+- `GBT_CAR_HOSTNAME_SEP_FM`
+
+  Formatting of the separator for this car.
 
 
 #### `Kubectl` car
@@ -1723,9 +1783,21 @@ Car that displays icon of the operating system.
 
   Whether to wrap the prompt line in front of this car.
 
-- `GBT_CAR_OS_SEP`
+- `GBT_CAR_OS_SEP_TEXT`
 
-  Custom separator string for this car.
+  Text content of the separator for this car.
+
+- `GBT_CAR_OS_SEP_BG`
+
+  Background color of the separator for this car.
+
+- `GBT_CAR_OS_SEP_FG`
+
+  Foreground color of the separator for this car.
+
+- `GBT_CAR_OS_SEP_FM`
+
+  Formatting of the separator for this car.
 
 
 #### `PyVirtEnv` car
@@ -1798,9 +1870,21 @@ Variables used by the car:
 
   Whether to wrap the prompt line in front of this car.
 
-- `GBT_CAR_PYVIRTENV_SEP`
+- `GBT_CAR_PYVIRTENV_SEP_TEXT`
 
-  Custom separator string for this car.
+  Text content of the separator for this car.
+
+- `GBT_CAR_PYVIRTENV_SEP_BG`
+
+  Background color of the separator for this car.
+
+- `GBT_CAR_PYVIRTENV_SEP_FG`
+
+  Foreground color of the separator for this car.
+
+- `GBT_CAR_PYVIRTENV_SEP_FM`
+
+  Formatting of the separator for this car.
 
 
 #### `Sign` car
@@ -1881,9 +1965,21 @@ train.
 
   Whether to wrap the prompt line in front of this car.
 
-- `GBT_CAR_SIGN_SEP`
+- `GBT_CAR_SIGN_SEP_TEXT`
 
-  Custom separator string for this car.
+  Text content of the separator for this car.
+
+- `GBT_CAR_SIGN_SEP_BG`
+
+  Background color of the separator for this car.
+
+- `GBT_CAR_SIGN_SEP_FG`
+
+  Foreground color of the separator for this car.
+
+- `GBT_CAR_SIGN_SEP_FM`
+
+  Formatting of the separator for this car.
 
 
 #### `Status` car
@@ -2036,9 +2132,21 @@ Variables used by the car:
 
   Whether to wrap the prompt line in front of this car.
 
-- `GBT_CAR_STATUS_SEP`
+- `GBT_CAR_STATUS_SEP_TEXT`
 
-  Custom separator string for this car.
+  Text content of the separator for this car.
+
+- `GBT_CAR_STATUS_SEP_BG`
+
+  Background color of the separator for this car.
+
+- `GBT_CAR_STATUS_SEP_FG`
+
+  Foreground color of the separator for this car.
+
+- `GBT_CAR_STATUS_SEP_FM`
+
+  Formatting of the separator for this car.
 
 
 #### `Time` car
@@ -2125,9 +2233,21 @@ Car that displays current date and time.
 
   Whether to wrap the prompt line in front of this car.
 
-- `GBT_CAR_TIME_SEP`
+- `GBT_CAR_TIME_SEP_TEXT`
 
-  Custom separator string for this car.
+  Text content of the separator for this car.
+
+- `GBT_CAR_TIME_SEP_BG`
+
+  Background color of the separator for this car.
+
+- `GBT_CAR_TIME_SEP_FG`
+
+  Foreground color of the separator for this car.
+
+- `GBT_CAR_TIME_SEP_FM`
+
+  Formatting of the separator for this car.
 
 
 Benchmark

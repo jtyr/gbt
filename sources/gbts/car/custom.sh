@@ -15,7 +15,11 @@ function GbtCarCustom() {
     local C_TEXT_TEXT="${prefix}_TEXT_TEXT"
     local C_DISPLAY="${prefix}_DISPLAY"
     local C_WRAP="${prefix}_WRAP"
+    local C_SEP_BG="${prefix}_SEP_BG"
+    local C_SEP_FG="${prefix}_SEP_FG"
+    local C_SEP_FM="${prefix}_SEP_FM"
     local C_SEP="${prefix}_SEP"
+    local C_SEP_TEXT="${prefix}_SEP_TEXT"
 
     local defaultRootBg=${GBT_CAR_BG:-yellow}
     local defaultRootFg=${GBT_CAR_FG:-default}
@@ -23,6 +27,7 @@ function GbtCarCustom() {
 
     local defaultTextText='?'
     local defaultTextCmd=${!C_TEXT_CMD}
+    local defaultSep="\x00"
     local defaultDisplayCmd=${!C_DISPLAY_CMD}
     local defaultDisplay=1
 
@@ -43,13 +48,18 @@ function GbtCarCustom() {
         [model-root-Fg]=${!C_FG:-$defaultRootFg}
         [model-root-Fm]=${!C_FM:-$defaultRootFm}
         [model-root-Text]=${!C_FORMAT-' {{ Text }} '}
+
         [model-Text-Bg]=${!C_TEXT_BG:-${!C_BG:-$defaultRootBg}}
         [model-Text-Fg]=${!C_TEXT_FG:-${!C_FG:-$defaultRootFg}}
         [model-Text-Fm]=${!C_TEXT_FM:-${!C_FM:-$defaultRootFm}}
         [model-Text-Text]=${!C_TEXT_TEXT-$defaultTextText}
 
+        [model-Sep-Bg]=${!C_SEP_BG:-$defaultSep}
+        [model-Sep-Fg]=${!C_SEP_FG:-$defaultSep}
+        [model-Sep-Fm]=${!C_SEP_FM:-$defaultSep}
+        [model-Sep-Text]=${!C_SEP_TEXT:-${!C_SEP:-$defaultSep}}
+
         [display]=${!C_DISPLAY:-$defaultDisplay}
         [wrap]=${!C_WRAP:-0}
-        [sep]=${!C_SEP-'\x00'}
     )
 }

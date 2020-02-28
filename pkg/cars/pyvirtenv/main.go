@@ -17,6 +17,7 @@ func (c *Car) Init() {
     defaultRootBg := utils.GetEnv("GBT_CAR_BG", "222")
     defaultRootFg := utils.GetEnv("GBT_CAR_FG", "black")
     defaultRootFm := utils.GetEnv("GBT_CAR_FM", "none")
+    defaultSep := "\000"
 
     c.Model = map[string]car.ModelElement {
         "root": {
@@ -51,6 +52,21 @@ func (c *Car) Init() {
                 "GBT_CAR_PYVIRTENV_NAME_TEXT",
                 path.Base(utils.GetEnv("VIRTUAL_ENV", ""))),
         },
+        "Sep": {
+            Bg: utils.GetEnv(
+                "GBT_CAR_PYVIRTENV_SEP_BG", utils.GetEnv(
+                    "GBT_SEPARATOR_BG", defaultSep)),
+            Fg: utils.GetEnv(
+                "GBT_CAR_PYVIRTENV_SEP_FG", utils.GetEnv(
+                    "GBT_SEPARATOR_FG", defaultSep)),
+            Fm: utils.GetEnv(
+                "GBT_CAR_PYVIRTENV_SEP_FM", utils.GetEnv(
+                    "GBT_SEPARATOR_FM", defaultSep)),
+            Text: utils.GetEnv(
+                "GBT_CAR_PYVIRTENV_SEP", utils.GetEnv(
+                    "GBT_CAR_PYVIRTENV_SEP_TEXT", utils.GetEnv(
+                        "GBT_SEPARATOR", defaultSep))),
+        },
     }
 
     if utils.GetEnv("VIRTUAL_ENV", "") != "" {
@@ -60,5 +76,4 @@ func (c *Car) Init() {
     }
 
     c.Wrap = utils.GetEnvBool("GBT_CAR_PYVIRTENV_WRAP", false)
-    c.Sep = utils.GetEnv("GBT_CAR_PYVIRTENV_SEP", "\000")
 }

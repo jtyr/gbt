@@ -68,11 +68,6 @@ func (c *Car) GetDisplay() bool {
     return c.Display
 }
 
-// GetSep returns the Sep value.
-func (c *Car) GetSep() string {
-    return c.Sep
-}
-
 // GetWrap returns the Wrap value.
 func (c *Car) GetWrap() bool {
     return c.Wrap

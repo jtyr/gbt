@@ -9,6 +9,8 @@ function GbtCarSign() {
     local defaultRootFg=${GBT_CAR_FG:-default}
     local defaultRootFm=${GBT_CAR_FM:-none}
 
+    local defaultSep="\x00"
+
     GBT_CAR=(
         [model-root-Bg]=${GBT_CAR_SIGN_BG:-$defaultRootBg}
         [model-root-Fg]=${GBT_CAR_SIGN_FG:-$defaultRootFg}
@@ -30,8 +32,12 @@ function GbtCarSign() {
         [model-Admin-Fm]=${GBT_CAR_SIGN_ADMIN_FM:-${GBT_CAR_SIGN_FM:-bold}}
         [model-Admin-Text]=${GBT_CAR_SIGN_ADMIN_TEXT-'#'}
 
+        [model-Sep-Bg]=${GBT_CAR_SIGN_SEP_BG:-$defaultSep}
+        [model-Sep-Fg]=${GBT_CAR_SIGN_SEP_FG:-$defaultSep}
+        [model-Sep-Fm]=${GBT_CAR_SIGN_SEP_FM:-$defaultSep}
+        [model-Sep-Text]=${GBT_CAR_SIGN_SEP_TEXT:-${GBT_CAR_SIGN_SEP:-$defaultSep}}
+
         [display]=${GBT_CAR_SIGN_DISPLAY:-1}
         [wrap]=${GBT_CAR_SIGN_WRAP:-0}
-        [sep]=${GBT_CAR_SIGN_SEP-'\x00'}
     )
 }

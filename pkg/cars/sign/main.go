@@ -20,6 +20,7 @@ func (c *Car) Init() {
     defaultRootBg := utils.GetEnv("GBT_CAR_BG", "default")
     defaultRootFg := utils.GetEnv("GBT_CAR_FG", "default")
     defaultRootFm := utils.GetEnv("GBT_CAR_FM", "none")
+    defaultSep := "\000"
 
     symbolFormat := "{{ User }}"
     curUser, _ := user.Current()
@@ -67,9 +68,23 @@ func (c *Car) Init() {
                     "GBT_CAR_SIGN_FM", defaultRootFm)),
             Text: utils.GetEnv("GBT_CAR_SIGN_ADMIN_TEXT", "#"),
         },
+        "Sep": {
+            Bg: utils.GetEnv(
+                "GBT_CAR_SIGN_SEP_BG", utils.GetEnv(
+                    "GBT_SEPARATOR_BG", defaultSep)),
+            Fg: utils.GetEnv(
+                "GBT_CAR_SIGN_SEP_FG", utils.GetEnv(
+                    "GBT_SEPARATOR_FG", defaultSep)),
+            Fm: utils.GetEnv(
+                "GBT_CAR_SIGN_SEP_FM", utils.GetEnv(
+                    "GBT_SEPARATOR_FM", defaultSep)),
+            Text: utils.GetEnv(
+                "GBT_CAR_SIGN_SEP", utils.GetEnv(
+                    "GBT_CAR_SIGN_SEP_TEXT", utils.GetEnv(
+                        "GBT_SEPARATOR", defaultSep))),
+        },
     }
 
     c.Display = utils.GetEnvBool("GBT_CAR_SIGN_DISPLAY", true)
     c.Wrap = utils.GetEnvBool("GBT_CAR_SIGN_WRAP", false)
-    c.Sep = utils.GetEnv("GBT_CAR_SIGN_SEP", "\000")
 }

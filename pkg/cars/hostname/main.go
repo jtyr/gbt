@@ -23,6 +23,7 @@ func (c *Car) Init() {
     defaultRootBg := utils.GetEnv("GBT_CAR_BG", "dark_gray")
     defaultRootFg := utils.GetEnv("GBT_CAR_FG", "252")
     defaultRootFm := utils.GetEnv("GBT_CAR_FM", "none")
+    defaultSep := "\000"
 
     curUser, _ := user.Current()
     hostname, _ := os.Hostname()
@@ -96,9 +97,23 @@ func (c *Car) Init() {
                     "GBT_CAR_HOSTNAME_FM", defaultRootFm)),
             Text: utils.GetEnv("GBT_CAR_HOSTNAME_HOST_TEXT", hostname),
         },
+        "Sep": {
+            Bg: utils.GetEnv(
+                "GBT_CAR_HOSTNAME_SEP_BG", utils.GetEnv(
+                    "GBT_SEPARATOR_BG", defaultSep)),
+            Fg: utils.GetEnv(
+                "GBT_CAR_HOSTNAME_SEP_FG", utils.GetEnv(
+                    "GBT_SEPARATOR_FG", defaultSep)),
+            Fm: utils.GetEnv(
+                "GBT_CAR_HOSTNAME_SEP_FM", utils.GetEnv(
+                    "GBT_SEPARATOR_FM", defaultSep)),
+            Text: utils.GetEnv(
+                "GBT_CAR_HOSTNAME_SEP", utils.GetEnv(
+                    "GBT_CAR_HOSTNAME_SEP_TEXT", utils.GetEnv(
+                        "GBT_SEPARATOR", defaultSep))),
+        },
     }
 
     c.Display = utils.GetEnvBool("GBT_CAR_HOSTNAME_DISPLAY", true)
     c.Wrap = utils.GetEnvBool("GBT_CAR_HOSTNAME_WRAP", false)
-    c.Sep = utils.GetEnv("GBT_CAR_HOSTNAME_SEP", "\000")
 }

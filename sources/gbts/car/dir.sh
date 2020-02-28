@@ -53,6 +53,8 @@ function GbtCarDir() {
     local defaultRootFg=${GBT_CAR_FG:-light_gray}
     local defaultRootFm=${GBT_CAR_FM:-none}
 
+    local defaultSep="\x00"
+
     GBT_CAR=(
         [model-root-Bg]=${GBT_CAR_DIR_BG:-$defaultRootBg}
         [model-root-Fg]=${GBT_CAR_DIR_FG:-$defaultRootFg}
@@ -64,8 +66,12 @@ function GbtCarDir() {
         [model-Dir-Fm]=${GBT_CAR_DIR_DIR_FM:-${GBT_CAR_DIR_FM:-$defaultRootFm}}
         [model-Dir-Text]=${GBT_CAR_DIR_DIR_TEXT-$text}
 
+        [model-Sep-Bg]=${GBT_CAR_DIR_SEP_BG:-$defaultSep}
+        [model-Sep-Fg]=${GBT_CAR_DIR_SEP_FG:-$defaultSep}
+        [model-Sep-Fm]=${GBT_CAR_DIR_SEP_FM:-$defaultSep}
+        [model-Sep-Text]=${GBT_CAR_DIR_SEP_TEXT:-${GBT_CAR_DIR_SEP:-$defaultSep}}
+
         [display]=${GBT_CAR_DIR_DISPLAY:-1}
         [wrap]=${GBT_CAR_DIR_WRAP:-0}
-        [sep]=${GBT_CAR_DIR_SEP-'\x00'}
     )
 }
