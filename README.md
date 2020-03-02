@@ -171,7 +171,8 @@ configuration](https://gist.github.com/jtyr/be0e6007bd22c9d51e8702a70430d116#fil
 Combining pure ZSH configuration with GBT will provide the best possible
 performance for your shell.
 
-To activate GBT in PowerShell, run the following in the console:
+To activate GBT in PowerShell, run the following in the console or store it to
+the PowerShell profile file (`echo $profile`):
 
 ```powershell
 function prompt {
