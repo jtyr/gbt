@@ -688,6 +688,40 @@ Car that displays how long each shell command run.
 
   Format of the car.
 
+- `GBT_CAR_EXECTIME_DURATION_BG`
+
+  Background color of the `{{ Duration }}` element.
+
+- `GBT_CAR_EXECTIME_DURATION_FG`
+
+  Foreground color of the `{{ Duration }}` element.
+
+- `GBT_CAR_EXECTIME_DURATION_FM`
+
+  Formatting of the `{{ Duration }}` element.
+
+- `GBT_CAR_EXECTIME_DURATION_TEXT`
+
+  Text content of the `{{ Duration }}` element. The duration of the execution
+  time (e.g `1h8m19s135ms` for precision set to `3`).
+
+- `GBT_CAR_EXECTIME_SECONDS_BG`
+
+  Background color of the `{{ Seconds }}` element.
+
+- `GBT_CAR_EXECTIME_SECONDS_FG`
+
+  Foreground color of the `{{ Seconds }}` element.
+
+- `GBT_CAR_EXECTIME_SECONDS_FM`
+
+  Formatting of the `{{ Seconds }}` element.
+
+- `GBT_CAR_EXECTIME_SECONDS_TEXT`
+
+  Text content of the `{{ Seconds }}` element. The execution time in seconds
+  (e.g. `4099.1358` for precision set to `4`).
+
 - `GBT_CAR_EXECTIME_TIME_BG`
 
   Background color of the `{{ Time }}` element.
@@ -702,11 +736,8 @@ Car that displays how long each shell command run.
 
 - `GBT_CAR_EXECTIME_TIME_TEXT`
 
-  Text content of the `{{ Time }}` element. The execution time.
-
-- `GBT_CAR_EXECTIME_DIRSEP`
-
-  OS-default character used to separate directories.
+  Text content of the `{{ Time }}` element. The execution time (e.g.
+  `01:08:19.1358` for precision set to `4`).
 
 - `GBT_CAR_EXECTIME_PRECISION='0'`
 

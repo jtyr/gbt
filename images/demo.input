@@ -52,7 +52,11 @@ source /usr/share/gbt/sources/exectime/zsh.sh
 export GBT_CAR_EXECTIME_PRECISION=4
 ls -la /usr/share/gbt/
 sleep 1.2
-unset GBT_CAR_EXECTIME_PRECISION GBT_CARS
+export GBT_CAR_EXECTIME_FORMAT=" {{ Duration }} "
+sleep 1.2
+export GBT_CAR_EXECTIME_FORMAT=" {{ Seconds }} "
+sleep 1.2
+unset GBT_CAR_EXECTIME_FORMAT GBT_CAR_EXECTIME_PRECISION GBT_CARS
 clear
 ### Git car demo
 rm -fr /tmp/test{,.git}

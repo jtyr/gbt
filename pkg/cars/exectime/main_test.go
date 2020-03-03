@@ -7,7 +7,7 @@ import (
 )
 
 func TestInit(t *testing.T) {
-    os.Setenv("GBT_CAR_EXECTIME_SECS", "1515278961.234567890")
+    os.Setenv("GBT_CAR_EXECTIME_SECS", "1515278961.987654321")
 
     fakedDate := time.Date(2018, time.January, 6, 23, 57, 41, 123456789, time.UTC)
     tnow = func() time.Time {
@@ -15,16 +15,39 @@ func TestInit(t *testing.T) {
     }
 
     tests := []struct {
+        format string
         precision string
         expectedOutput string
     }{
         {
+            format: "Duration",
+            precision: "0",
+            expectedOutput: "1h8m19s",
+        },
+        {
+            format: "Duration",
+            precision: "7",
+            expectedOutput: "1h8m19s135ms802µs507ns",
+        },
+        {
+            format: "Seconds",
+            precision: "0",
+            expectedOutput: "4099",
+        },
+        {
+            format: "Seconds",
+            precision: "4",
+            expectedOutput: "4099.1358",
+        },
+        {
+            format: "Time",
             precision: "0",
             expectedOutput: "01:08:19",
         },
         {
+            format: "Time",
             precision: "4",
-            expectedOutput: "01:08:19.8889",
+            expectedOutput: "01:08:19.1358",
         },
     }
 
@@ -34,8 +57,8 @@ func TestInit(t *testing.T) {
         car := Car{}
         car.Init()
 
-        if car.Model["Time"].Text != test.expectedOutput {
-            t.Errorf("Test [%d]: Expected '%s', found '%s'.", i, test.expectedOutput, car.Model["Time"].Text)
+        if car.Model[test.format].Text != test.expectedOutput {
+            t.Errorf("Test [%d]: Expected '%s', found '%s'.", i, test.expectedOutput, car.Model[test.format].Text)
         }
     }
 }
