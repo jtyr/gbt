@@ -6,7 +6,7 @@ GBT__SOURCE_BASE64_LOCAL=${GBT__SOURCE_BASE64_LOCAL:-base64}
 
 declare -A GBT__ALIASES
 GBT__ALIASES[docker]=${GBT__DOCKER_ALIAS:-docker}
-GBT__ALIASES[kubectl]=${GBT__DOCKER_ALIAS:-kubectl}
+GBT__ALIASES[kubectl]=${GBT__KUBECTL_ALIAS:-kubectl}
 GBT__ALIASES[mysql]=${GBT__MYSQL_ALIAS:-mysql}
 GBT__ALIASES[screen]=${GBT__SCREEN_ALIAS:-screen}
 GBT__ALIASES[ssh]=${GBT__SSH_ALIAS:-ssh}
