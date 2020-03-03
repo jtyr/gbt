@@ -1,11 +1,12 @@
-GBT__PLUGINS_LOCAL__HASH=". $(echo ${GBT__PLUGINS_LOCAL:-docker,mysql,screen,ssh,su,sudo,vagrant} | sed -E 's/,\ */ /g' | tr '[:upper:]' '[:lower:]') ."
-GBT__PLUGINS_REMOTE__HASH=". $(echo ${GBT__PLUGINS_REMOTE:-docker,mysql,screen,ssh,su,sudo,vagrant} | sed -E 's/,\ */ /g' | tr '[:upper:]' '[:lower:]') ."
+GBT__PLUGINS_LOCAL__HASH=". $(echo ${GBT__PLUGINS_LOCAL:-docker,kubectl,mysql,screen,ssh,su,sudo,vagrant} | sed -E 's/,\ */ /g' | tr '[:upper:]' '[:lower:]') ."
+GBT__PLUGINS_REMOTE__HASH=". $(echo ${GBT__PLUGINS_REMOTE:-docker,kubectl,mysql,screen,ssh,su,sudo,vagrant} | sed -E 's/,\ */ /g' | tr '[:upper:]' '[:lower:]') ."
 GBT__CARS_REMOTE__HASH=". $(echo ${GBT__CARS_REMOTE:-dir,git,hostname,os,sign,status,time} | sed -E 's/,\ */ /g' | tr '[:upper:]' '[:lower:]') ."
 
 GBT__SOURCE_BASE64_LOCAL=${GBT__SOURCE_BASE64_LOCAL:-base64}
 
 declare -A GBT__ALIASES
 GBT__ALIASES[docker]=${GBT__DOCKER_ALIAS:-docker}
+GBT__ALIASES[kubectl]=${GBT__DOCKER_ALIAS:-kubectl}
 GBT__ALIASES[mysql]=${GBT__MYSQL_ALIAS:-mysql}
 GBT__ALIASES[screen]=${GBT__SCREEN_ALIAS:-screen}
 GBT__ALIASES[ssh]=${GBT__SSH_ALIAS:-ssh}

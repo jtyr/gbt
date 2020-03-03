@@ -4,6 +4,9 @@ source $GBT__HOME/sources/gbts/cmd/local/_common.sh
 if [[ ${GBT__PLUGINS_LOCAL__HASH[@]} == *' docker '* ]]; then
     source $GBT__HOME/sources/gbts/cmd/local/docker.sh
 fi
+if [[ ${GBT__PLUGINS_LOCAL__HASH[@]} == *' kubectl '* ]]; then
+    source $GBT__HOME/sources/gbts/cmd/local/kubectl.sh
+fi
 if [[ ${GBT__PLUGINS_LOCAL__HASH[@]} == *' mysql '* ]]; then
     source $GBT__HOME/sources/gbts/cmd/local/mysql.sh
 fi
