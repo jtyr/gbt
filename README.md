@@ -17,7 +17,7 @@ install anything remotely.
 ![Prompt forwarding demo](https://raw.githubusercontent.com/jtyr/gbt/master/images/prompt_forwarding.gif "Prompt forwarding demo")
 
 All the above works well on Linux (Terminator, Konsole, Gnome Terminal), Mac
-(Terminal, iTerm) and Android (Termux).
+(Terminal, iTerm), Android (Termux) and Windows (PowerShell, Windows Terminal).
 
 [![Release](https://img.shields.io/github/release/jtyr/gbt.svg)](https://github.com/jtyr/gbt/releases)
 [![Build status](https://travis-ci.org/jtyr/gbt.svg?branch=master)](https://travis-ci.org/jtyr/gbt)
