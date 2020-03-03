@@ -16,13 +16,6 @@ PS1='$($GBT__HOME/sources/gbts/gbts $?)'
 
 source $GBT__HOME/sources/gbts/cmd/local.sh
 
-# Local aliases
-alias docker=gbt_docker
-alias mysql=gbt_mysql
-alias screen=gbt_screen
-alias ssh=gbt_ssh
-alias vagrant=gbt_vagrant
-
 # Remote aliases
 alias gbt___sudo=gbt_sudo
 alias gbt___su=gbt_su
