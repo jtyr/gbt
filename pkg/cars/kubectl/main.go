@@ -57,6 +57,8 @@ func getCurrentContext(display bool) *kubeContextInfo {
 
                 if len(fields) == 5 {
                     kubectlInfo.namespace = fields[4]
+                } else {
+                    kubectlInfo.namespace = "default"
                 }
 
                 break

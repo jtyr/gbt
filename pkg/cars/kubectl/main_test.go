@@ -21,7 +21,7 @@ func TestInit(t *testing.T) {
             expectedContext:          "kubename",
             expectedCluster:          "kubecluster",
             expectedAuthInfo:         "kubeauth",
-            expectedNamespace:        "",
+            expectedNamespace:        "default",
         },
         {
             runKubectlCurrentContext: []string{"echo", "minikube"},
@@ -81,7 +81,7 @@ func TestInit(t *testing.T) {
             t.Errorf("Test [%d]: Expected car.Model.AuthInfo.Text to be '%s', got '%s'.", i, test.expectedAuthInfo, car.Model["AuthInfo"].Text)
         }
 
-        if test.expectedNamespace != "" && car.Model["Namespace"].Text != test.expectedNamespace {
+        if car.Model["Namespace"].Text != test.expectedNamespace {
             t.Errorf("Test [%d]: Expected car.Model.Namespace.Text to be '%s', got '%s'.", i, test.expectedNamespace, car.Model["Namespace"].Text)
         }
     }

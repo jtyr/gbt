@@ -12,6 +12,7 @@ function GbtCarKubectl() {
         isKubectlCurrentContextSet=1
 
         declare -A contextInfo
+        contextInfo[namespace]='default'
         local i=0
         for N in $(kubectl config get-contexts | grep '^*' | sed -E 's/^\*\ +//'); do
             if [[ $i == 0 ]]; then
