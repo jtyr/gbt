@@ -28,17 +28,17 @@ All the above works well on Linux (Terminator, Konsole, Gnome Terminal), Mac
 Table of contents
 -----------------
 
-- [Installation](#installation)
-  - [Arch Linux](#arch-linux)
-  - [CentOS/RHEL](#centosrhel)
-  - [Ubuntu/Debian](#ubuntudebian)
-  - [Mac](#mac)
-  - [Windows](#windows)
-  - [Android](#android)
-  - [From the source code](#from-the-source-code)
+- [Setup](#setup)
+  - [Installation](#installation)
+    - [Arch Linux](#arch-linux)
+    - [CentOS/RHEL](#centosrhel)
+    - [Ubuntu/Debian](#ubuntudebian)
+    - [Mac](#mac)
+    - [Windows](#windows)
+    - [Android](#android)
+    - [From the source code](#from-the-source-code)
   - [Activation](#activation)
   - [Fonts and colors](#fonts-and-colors)
-- [Usage](#usage)
 - [Configuration](#configuration)
   - [Colors](#colors)
   - [Formatting](#formatting)
@@ -66,10 +66,16 @@ Table of contents
 - [License](#license)
 
 
-Installation
-------------
+Setup
+-----
 
-### Arch Linux
+In order to setup GBT on your machine, you have to [install](#installation) it,
+[activate](#activation) it and setup a special [font](#fonts-and-colors) in your
+terminal (optional).
+
+### Installation
+
+#### Arch Linux
 
 ```shell
 yaourt -S gbt
@@ -78,9 +84,9 @@ yaourt -S gbt
 Or install `gbt-git` if you would like to run the latest greatest from the
 `master` branch.
 
-### CentOS/RHEL
+#### CentOS/RHEL
 
-Packages hosted by [Packagecloud](https://packagecloud.io/gbt/release)):
+Packages hosted by [Packagecloud](https://packagecloud.io/gbt/release):
 
 ```shell
 echo '[gbt]
@@ -96,9 +102,9 @@ sudo yum install gbt
 Use the exact repository definition from above for all RedHat-based
 distribution regardless its version.
 
-### Ubuntu/Debian
+#### Ubuntu/Debian
 
-Packages hosted by [Packagecloud](https://packagecloud.io/gbt/release)):
+Packages hosted by [Packagecloud](https://packagecloud.io/gbt/release):
 
 ```shell
 curl -L https://packagecloud.io/gbt/release/gpgkey | sudo apt-key add -
@@ -110,9 +116,9 @@ sudo apt-get install gbt
 Use the exact repository definition from above for all Debian-based
 distribution regardless its version.
 
-### Mac
+#### Mac
 
-Using [`Homebrew`](https://brew.sh):
+Using [`brew`](https://brew.sh):
 
 ```shell
 brew tap jtyr/repo
@@ -121,12 +127,12 @@ brew install gbt
 Or install `gbt-git` if you would like to run the latest greatest from the
 `master` branch.
 
-### Windows
+#### Windows
 
 Copy the `gbt.exe` file into a directory listed in the `PATH` environment
 variable (e.g. `C:\Windows\system32`).
 
-### Android
+#### Android
 
 Install [Termux](https://termux.com) from [Google Play Store](https://play.google.com/store/apps/details?id=com.termux)
 and then type this in the Termux app:
@@ -136,7 +142,7 @@ apt update
 apt install gbt
 ```
 
-### From the source code
+#### From the source code
 
 Make sure Go is installed and then run:
 
@@ -164,7 +170,7 @@ PROMPT='$(gbt $?)'
 
 If you are using ZSH together with some shell framework (e.g. [Oh My
 ZSH](https://github.com/robbyrussell/oh-my-zsh)), your shell is processing a
-fair amount of shell scripts upon ever prompt appearence. You can speed up your
+fair amount of shell scripts upon ever prompt appearance. You can speed up your
 shell by removing the framework dependency from your configuration and replacing
 it with GBT and a [simple ZSH
 configuration](https://gist.github.com/jtyr/be0e6007bd22c9d51e8702a70430d116#file-zshrc-L1-L43).
@@ -188,12 +194,17 @@ function prompt {
 [console]::InputEncoding = [console]::OutputEncoding = New-Object System.Text.UTF8Encoding
 ```
 
+---
 
 ### Fonts and colors
 
-In order to display all characters of the prompt correctly, the shell should
-support UTF-8 and [Nerd](https://github.com/ryanoasis/nerd-fonts) fonts (or at
-least the [DejaVuSansMono Nerd](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/DejaVuSansMono/Regular/complete)
+Although GBT can be configured to use only ASCII characters (see
+[`basic`](blob/master/themes/basic.sh) theme), the default configuration uses
+some UTF-8 characters which require special font. In order to display all
+characters of the default prompt correctly, the shell should support UTF-8 and
+[Nerd](https://github.com/ryanoasis/nerd-fonts) fonts (or at least the
+[DejaVuSansMono
+Nerd](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/DejaVuSansMono/Regular/complete)
 font) should be installed. On Linux, you can install it like this:
 
 ```shell
@@ -227,48 +238,6 @@ following must be set:
 
 ```shell
 export TERM='xterm-256color'
-```
-
-
-Usage
------
-
-```shell
-### Test the Status car
-false
-true
-### Test the Dir car
-cd /
-cd /usr/share/doc/sudo
-# Display only last 3 elements of the path
-export GBT_CAR_DIR_DEPTH='3'
-# Display full path
-export GBT_CAR_DIR_DEPTH='9999'
-# Show only last element of the path
-unset GBT_CAR_DIR_DEPTH
-cd ~
-### Test Time car
-# Add the Time car into the train
-export GBT_CARS='Status, Os, Time, Hostname, Dir, Sign'
-# Set 12h format
-export GBT_CAR_TIME_TIME_FORMAT='03:04:05 PM'
-# Change background color of the all car
-export GBT_CAR_TIME_BG='yellow'
-# Change color of Date part
-export GBT_CAR_TIME_DATE_FG='black'
-# Reset the color of the Date part
-unset GBT_CAR_TIME_DATE_FG
-# Reset the background color of all Time car
-unset GBT_CAR_TIME_BG
-# Remove the Date part from the car
-export GBT_CAR_TIME_FORMAT=' {{ Time }} '
-# Reset the format of the car
-unset GBT_CAR_TIME_FORMAT
-# Reset the original train
-unset GBT_CARS
-### Themes
-# Load theme
-source /usr/share/gbt/themes/local/square_brackets_multiline
 ```
 
 
@@ -2366,7 +2335,7 @@ Prompt forwarding
 -----------------
 
 In order to enjoy GBT prompt via SSH but also in Docker, Vagrant, MySQL or in
-Screen without the need to install GBT everywhere, you can use GBTS (GBT witten
+Screen without the need to install GBT everywhere, you can use GBTS (GBT written
 in Shell). GBTS is a set of scripts which get forwarded to applications and
 remote connections and then executed to generate the nice looking prompt.
 
