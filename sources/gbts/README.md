@@ -2,7 +2,7 @@ GBTS - GBT written in Shell
 ===========================
 
 It's possible to use `gbts` instead of `gbt` as the prompt generator. It's not
-recomended as `gbts` is abou 10x slower than `gbt`. If you want to do it anyway,
+recommended as `gbts` is abou 10x slower than `gbt`. If you want to do it anyway,
 here is how:
 
 ```shell
