@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>gbt</id>
+    <version>2.0.0</version>
+    <packageSourceUrl>https://github.com/jtyr/gbt/tree/master/contrib/windows</packageSourceUrl>
+    <owners>Jiri Tyr</owners>
+    <title>Go Bullet Train (GBT)</title>
+    <authors>Jiri Tyr</authors>
+    <projectUrl>https://github.com/jtyr/gbt</projectUrl>
+    <licenseUrl>https://github.com/jtyr/gbt/blob/master/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectSourceUrl>https://github.com/jtyr/gbt</projectSourceUrl>
+    <docsUrl>https://github.com/jtyr/gbt/blob/master/README.md</docsUrl>
+    <bugTrackerUrl>https://github.com/jtyr/gbt/issues</bugTrackerUrl>
+    <tags>gbt prompt zsh go shell gbt ssh docker vagrant mysql termux screen gbts sudo su kubectl python powershell</tags>
+    <summary>Highly configurable prompt builder for Bash, ZSH and PowerShell written in Go.</summary>
+    <description>Highly configurable prompt builder for Bash, ZSH and PowerShell written in Go. It's inspired by the [Oh My ZSH](https://github.com/robbyrussell/oh-my-zsh)[Bullet Train](https://github.com/caiogondim/bullet-train.zsh) theme but runs significantly faster.</description>
+  </metadata>
+  <files>
+    <file src="tools\**" target="tools" />
+  </files>
+</package>

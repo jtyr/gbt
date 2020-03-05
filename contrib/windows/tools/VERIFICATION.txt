@@ -1,0 +1,5 @@
+VERIFICATION
+
+Checksum can be verified in the release gbt-<version>-checksums-sha256.txt` file:
+
+https://github.com/jtyr/gbt/releases
