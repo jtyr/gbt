@@ -11,12 +11,13 @@ chmod +x ~/rpm-sign.exp
 
 # Archs to build for
 declare -a PLATFORMS=(
-    'windows/amd64'
     'darwin/amd64'
     'linux/amd64'
     'linux/arm:5'
     'linux/arm:6'
     'linux/arm64'
+    'windows/386'
+    'windows/amd64'
 )
 
 NAME='gbt'
