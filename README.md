@@ -129,8 +129,14 @@ Or install `gbt-git` if you would like to run the latest greatest from the
 
 #### Windows
 
-Copy the `gbt.exe` file into a directory listed in the `PATH` environment
-variable (e.g. `C:\Windows\system32`).
+Using [`choco`](https://chocolatey.org):
+
+```powershell
+choco install gbt
+```
+
+Or manually by copying the `gbt.exe` file into a directory listed in the `PATH`
+environment variable (e.g. `C:\Windows\system32`).
 
 #### Android
 
