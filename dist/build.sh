@@ -41,6 +41,7 @@ for P in "${PLATFORMS[@]}"; do
     # Declare file extension for Windows
     if [[ $OS == 'windows' ]]; then
         EXT='.exe'
+        PKG="$NAME-$VER-$OS-$ARCH.zip"
     fi
 
     # Compile GBT
@@ -56,7 +57,14 @@ for P in "${PLATFORMS[@]}"; do
     # Create .tar.gz package
     (
         cp -r "$TRAVIS_BUILD_DIR"/{README.md,LICENSE,themes,sources} "$PTMP"
-        tar -C "$PTMP/.." -czf "$TMP/$PKG" ./
+
+        if [[ $OS == 'windows' ]]; then
+            cd "$PTMP/.."
+            zip -9rv "$TMP/$PKG" ./
+        else
+            tar -C "$PTMP/.." -czf "$TMP/$PKG" ./
+        fi
+
         cd "$TMP"
     )
 
@@ -97,4 +105,4 @@ done
 
 # Create checksums
 cd "$TMP"
-sha256sum *.tar.gz *.deb *.rpm | sort -k2 > "$NAME-$VER-checksums-sha256.txt"
+sha256sum *.tar.gz *.deb *.rpm *.zip | sort -k2 > "$NAME-$VER-checksums-sha256.txt"
