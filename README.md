@@ -150,12 +150,22 @@ apt install gbt
 
 #### From the source code
 
-Make sure Go is installed and then run:
+Make sure [Go](https://golang.org) is installed and then run the following on
+Linux and Mac:
 
 ```shell
 mkdir ~/go
 export GOPATH=~/go
 export PATH="$PATH:$GOPATH/bin"
+go get github.com/jtyr/gbt/cmd/gbt
+```
+
+Or the following on Windows using PowerShell:
+
+```powershell
+mkdir ~/go
+$Env:GOPATH = '~/go'
+$Env:PATH = "~/go/bin;$Env:PATH"
 go get github.com/jtyr/gbt/cmd/gbt
 ```
 
