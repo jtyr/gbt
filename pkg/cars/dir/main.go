@@ -18,10 +18,13 @@ type Car struct {
 // Max length of a dir name
 const maxDirNameLen = 255
 
+// To be able to mock the OS path separator
+var osSep = string(os.PathSeparator)
+
 // getDir returns the directory name.
 func getDir() (ret string) {
     wd, _ := os.Getwd()
-    sep := string(os.PathSeparator)
+    sep := osSep
 
     pwd := utils.GetEnv("PWD", wd)
     dirSep := utils.GetEnv("GBT_CAR_DIR_DIRSEP", sep)
@@ -42,25 +45,23 @@ func getDir() (ret string) {
     }
 
     if depth > 1 && nonCurLen < maxDirNameLen {
-        for i := 0; i < dirsLen - 1; i++ {
+        for i := 1; i < dirsLen - 1; i++ {
             l := nonCurLen
-
-            if len(dirs[i]) < nonCurLen {
-                l = len(dirs[i])
-            }
 
             dirs[i] = dirs[i][:l]
         }
+    } else if depth == 1 && dirsLen == 2 && len(dirs[1]) == 0 {
+        ret += dirs[0]
     }
 
     if pwd == sep {
-        ret = dirSep
+        ret += dirSep
     } else if pwd == fmt.Sprintf("%s%s", sep, sep) {
-        ret = fmt.Sprintf("%s%s", dirSep, dirSep)
+        ret += fmt.Sprintf("%s%s", dirSep, dirSep)
     } else if pwd == "~" {
-        ret = pwd
+        ret += pwd
     } else {
-        ret = strings.Join(dirs[(dirsLen - depth):], dirSep)
+        ret += strings.Join(dirs[(dirsLen - depth):], dirSep)
     }
 
     return
