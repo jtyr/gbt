@@ -1644,6 +1644,10 @@ Car that displays `kubectl` information.
   Format of the car. `{{ Cluster }}`, `{{ AuthInfo }}` and `{{ Namespace }}`
   can be used here as well.
 
+- `GBT_CAR_KUBECTL_DISPLAY='1'`
+
+  Whether to display this car if it's in the list of cars (`GBT_CARS`).
+
 - `GBT_CAR_KUBECTL_ICON_BG`
 
   Background color of the `{{ Icon }}` element.
