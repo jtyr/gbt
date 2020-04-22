@@ -1644,10 +1644,6 @@ Car that displays `kubectl` information.
   Format of the car. `{{ Cluster }}`, `{{ AuthInfo }}` and `{{ Namespace }}`
   can be used here as well.
 
-- `GBT_CAR_KUBECTL_DISPLAY='1'`
-
-  Whether to display this car if it's in the list of cars (`GBT_CARS`).
-
 - `GBT_CAR_KUBECTL_ICON_BG`
 
   Background color of the `{{ Icon }}` element.
@@ -1727,6 +1723,30 @@ Car that displays `kubectl` information.
 - `GBT_CAR_KUBECTL_NAMESPACE_TEXT`
 
   Text content of the `{{ Namespace }}` element.
+
+- `GBT_CAR_KUBECTL_DISPLAY='1'`
+
+  Whether to display this car if it's in the list of cars (`GBT_CARS`).
+
+- `GBT_CAR_KUBECTL_WRAP='0'`
+
+  Whether to wrap the prompt line in front of this car.
+
+- `GBT_CAR_KUBECTL_SEP_TEXT`
+
+  Text content of the separator for this car.
+
+- `GBT_CAR_KUBECTL_SEP_BG`
+
+  Background color of the separator for this car.
+
+- `GBT_CAR_KUBECTL_SEP_FG`
+
+  Foreground color of the separator for this car.
+
+- `GBT_CAR_KUBECTL_SEP_FM`
+
+  Formatting of the separator for this car.
 
 
 #### `Os` car
