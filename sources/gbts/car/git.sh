@@ -407,7 +407,7 @@ function GbtCarGit() {
         [model-Sep-Bg]=${GBT_CAR_GIT_SEP_BG:-$defaultSep}
         [model-Sep-Fg]=${GBT_CAR_GIT_SEP_FG:-$defaultSep}
         [model-Sep-Fm]=${GBT_CAR_GIT_SEP_FM:-$defaultSep}
-        [model-Sep-Text]=${GBT_CAR_GIT_SEP_TEXT:-${GBT_CAR_GIT_SEP:-$defaultSep}}
+        [model-Sep-Text]=${GBT_CAR_GIT_SEP_TEXT:-${GBT_CAR_GIT_SEP:-${GBT_SEPARATOR:-$defaultSep}}}
 
         [display]=${GBT_CAR_GIT_DISPLAY:-$isGitDir}
         [wrap]=${GBT_CAR_GIT_WRAP:-0}

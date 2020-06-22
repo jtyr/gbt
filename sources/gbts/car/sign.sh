@@ -35,7 +35,7 @@ function GbtCarSign() {
         [model-Sep-Bg]=${GBT_CAR_SIGN_SEP_BG:-$defaultSep}
         [model-Sep-Fg]=${GBT_CAR_SIGN_SEP_FG:-$defaultSep}
         [model-Sep-Fm]=${GBT_CAR_SIGN_SEP_FM:-$defaultSep}
-        [model-Sep-Text]=${GBT_CAR_SIGN_SEP_TEXT:-${GBT_CAR_SIGN_SEP:-$defaultSep}}
+        [model-Sep-Text]=${GBT_CAR_SIGN_SEP_TEXT:-${GBT_CAR_SIGN_SEP:-${GBT_SEPARATOR:-$defaultSep}}}
 
         [display]=${GBT_CAR_SIGN_DISPLAY:-1}
         [wrap]=${GBT_CAR_SIGN_WRAP:-0}

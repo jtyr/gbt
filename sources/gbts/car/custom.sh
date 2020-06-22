@@ -57,7 +57,7 @@ function GbtCarCustom() {
         [model-Sep-Bg]=${!C_SEP_BG:-$defaultSep}
         [model-Sep-Fg]=${!C_SEP_FG:-$defaultSep}
         [model-Sep-Fm]=${!C_SEP_FM:-$defaultSep}
-        [model-Sep-Text]=${!C_SEP_TEXT:-${!C_SEP:-$defaultSep}}
+        [model-Sep-Text]=${!C_SEP_TEXT:-${!C_SEP:-${GBT_SEPARATOR:-$defaultSep}}}
 
         [display]=${!C_DISPLAY:-$defaultDisplay}
         [wrap]=${!C_WRAP:-0}

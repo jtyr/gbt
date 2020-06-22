@@ -114,7 +114,7 @@ function GbtCarStatus() {
         [model-Sep-Bg]=${GBT_CAR_STATUS_SEP_BG:-$defaultSep}
         [model-Sep-Fg]=${GBT_CAR_STATUS_SEP_FG:-$defaultSep}
         [model-Sep-Fm]=${GBT_CAR_STATUS_SEP_FM:-$defaultSep}
-        [model-Sep-Text]=${GBT_CAR_STATUS_SEP_TEXT:-${GBT_CAR_STATUS_SEP:-$defaultSep}}
+        [model-Sep-Text]=${GBT_CAR_STATUS_SEP_TEXT:-${GBT_CAR_STATUS_SEP:-${GBT_SEPARATOR:-$defaultSep}}}
 
         [wrap]=${GBT_CAR_STATUS_WRAP:-0}
     )
