@@ -242,7 +242,7 @@ function GbtMain() {
         defaultSeparator='\xee\x82\xb2'
     fi
 
-    if [[ $right != 1 ]] && [ "$GBT_BEGINNING_TEXT" != "" ]; then
+    if [[ $right != 1 ]] && [ "$GBT_BEGINNING_TEXT" != '' ]; then
         GbtGetColor ${GBT_BEGINNING_BG:-default} 0
         local beginning_bg=$GBT__RETVAL
         GbtGetColor ${GBT_BEGINNING_FG:-default} 1
@@ -272,17 +272,17 @@ function GbtMain() {
             GbtCarGit
         elif [ "$car" = 'hostname' ]; then
             GbtCarHostname
-        elif [ $car = 'kubectl' ]; then
+        elif [ "$car" = 'kubectl' ]; then
             GbtCarKubectl
-        elif [ $car = 'os' ]; then
+        elif [ "$car" = 'os' ]; then
             GbtCarOs
-        elif [ $car = 'pyvirtenv' ]; then
+        elif [ "$car" = 'pyvirtenv' ]; then
             GbtCarPyVirtEnv
-        elif [ $car = 'sign' ]; then
+        elif [ "$car" = 'sign' ]; then
             GbtCarSign
-        elif [ $car = 'status' ]; then
+        elif [ "$car" = 'status' ]; then
             GbtCarStatus $@
-        elif [ $car = 'time' ]; then
+        elif [ "$car" = 'time' ]; then
             GbtCarTime
         else
             unknown=1
