@@ -233,7 +233,7 @@ On Mac, it can be installed via `brew`:
 
 ```shell
 brew tap homebrew/cask-fonts
-brew cask install font-hack-nerd-font-mono
+brew cask install font-dejavusansmono-nerd-font
 ```
 
 On Windows, it can be installed via `choco`:
@@ -247,8 +247,7 @@ the font, open it and then install it.
 
 Once the font is installed, it has to be set in the terminal application to
 render all prompt characters correctly. Search for the font name `DejaVuSansMono
-Nerd Font Mono` on Linux, `Hack Nerd Font Mono` on Mac and `DejaVuSansMono NF`
-on Windows.
+Nerd Font Mono` on Linux and Mac and `DejaVuSansMono NF` on Windows.
 
 In order to have the Nerd font in Termux on Android, you have to install
 [Termux:Styling](https://play.google.com/store/apps/details?id=com.termux.styling)
