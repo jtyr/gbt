@@ -233,7 +233,7 @@ On Mac, it can be installed via `brew`:
 
 ```shell
 brew tap homebrew/cask-fonts
-brew cask install font-dejavusansmono-nerd-font
+brew cask install font-dejavu-sans-mono-nerd-font
 ```
 
 On Windows, it can be installed via `choco`:
