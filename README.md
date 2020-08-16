@@ -135,6 +135,12 @@ Using [`choco`](https://chocolatey.org):
 choco install gbt
 ```
 
+Using [`scoop`](https://scoop.sh):
+
+```powershell
+scoop install gbt
+```
+
 Or manually by copying the `gbt.exe` file into a directory listed in the `PATH`
 environment variable (e.g. `C:\Windows\system32`).
 
@@ -242,6 +248,13 @@ On Windows, it can be installed via `choco`:
 choco install font-nerd-DejaVuSansMono
 ```
 
+Or via `scoop`:
+
+```powershell
+scoop bucket add nerd-fonts
+scoop install DejaVuSansMono-NF
+```
+
 Or just [download](https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DejaVuSansMono/Regular/complete/DejaVu%20Sans%20Mono%20Nerd%20Font%20Complete%20Mono%20Windows%20Compatible.ttf)
 the font, open it and then install it.
 
@@ -267,7 +280,8 @@ Configuration
 
 The prompt (train) is assembled from several elements (cars). The look and
 behavior of whole train as well as each car can be influenced by a set of
-environment variables. Majority of the
+environment variables. To set the environment variable, use `export` in the
+Linux and Mac shell and `$Env:` on Windows.
 
 
 ### Colors
@@ -306,6 +320,7 @@ export GBT_CAR_DIR_BG='red'
 # Set the foreground color of the `Dir` car to white
 export GBT_CAR_DIR_FG='white'
 ```
+
 
 #### Color number
 
