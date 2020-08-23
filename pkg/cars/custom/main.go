@@ -27,11 +27,23 @@ func (c *Car) Init() {
     defaultDisplay := true
 
     if defaultTextCmd != "" {
-        _, defaultTextText, _ = utils.Run([]string{"sh", "-c", defaultTextCmd})
+        shellExecutor := utils.GetEnv(
+            fmt.Sprintf("%s_TEXT_EXECUTOR", prefix),
+            utils.GetEnv("GBT_CAR_CUSTOM_EXECUTOR", "sh"))
+        shellExecutorParam := utils.GetEnv(
+            fmt.Sprintf("%s_TEXT_EXECUTOR_PARAM", prefix),
+            utils.GetEnv("GBT_CAR_CUSTOM_EXECUTOR_PARAM", "-c"))
+        _, defaultTextText, _ = utils.Run([]string{shellExecutor, shellExecutorParam, defaultTextCmd})
     }
 
     if defaultDisplayCmd != "" {
-        _, defaultDisplayOutput, _ := utils.Run([]string{"sh", "-c", defaultDisplayCmd})
+        shellExecutor := utils.GetEnv(
+            fmt.Sprintf("%s_DISPLAY_EXECUTOR", prefix),
+            utils.GetEnv("GBT_CAR_CUSTOM_EXECUTOR", "sh"))
+        shellExecutorParam := utils.GetEnv(
+            fmt.Sprintf("%s_TEXT_DISPLAY_EXECUTOR_PARAM", prefix),
+            utils.GetEnv("GBT_CAR_CUSTOM_EXECUTOR_PARAM", "-c"))
+        _, defaultDisplayOutput, _ := utils.Run([]string{shellExecutor, shellExecutorParam, defaultDisplayCmd})
 
         if ! utils.IsTrue(defaultDisplayOutput) {
             defaultDisplay = false

@@ -4,7 +4,11 @@ function GbtCarCustom() {
     local prefix="GBT_CAR_CUSTOM$name"
 
     local C_TEXT_CMD="${prefix}_TEXT_CMD"
+    local C_TEXT_EXECUTOR="${prefix}_TEXT_EXECUTOR"
+    local C_TEXT_EXECUTOR_PARAM="${prefix}_TEXT_EXECUTOR_PARAM"
     local C_DISPLAY_CMD="${prefix}_DISPLAY_CMD"
+    local C_DISPLAY_EXECUTOR="${prefix}_DISPLAY_EXECUTOR"
+    local C_DISPLAY_EXECUTOR_PARAM="${prefix}_DISPLAY_EXECUTOR_PARAM"
     local C_BG="${prefix}_BG"
     local C_FG="${prefix}_FG"
     local C_FM="${prefix}_FM"
@@ -32,11 +36,11 @@ function GbtCarCustom() {
     local defaultDisplay=1
 
     if [ -n "$defaultTextCmd" ]; then
-        defaultTextText=$(sh -c "$defaultTextCmd")
+        defaultTextText=$(${!C_TEXT_EXECUTOR:-${GBT_CAR_CUSTOM_EXECUTOR:-sh}} ${!C_TEXT_EXECUTOR_PARAM:-${GBT_CAR_CUSTOM_EXECUTOR_PARAM:--c}} "$defaultTextCmd")
     fi
 
     if [ -n "$defaultDisplayCmd" ]; then
-        local defaultDisplayOutput=$(sh -c "$defaultDisplayCmd")
+        local defaultDisplayOutput=$(${!C_DISPLAY_EXECUTOR:-${GBT_CAR_CUSTOM_EXECUTOR:-sh}} ${!C_DISPLAY_EXECUTOR_PARAM:-${GBT_CAR_CUSTOM_EXECUTOR_PARAM:--c}} "$defaultDisplayCmd")
 
         if [[ ! $defaultDisplayOutput =~ ^([Yy][Ee][Ss]|[Tt][Rr][Uu][Ee]|1)$ ]]; then
             defaultDisplay=0

@@ -207,6 +207,8 @@ function prompt {
     $rc = [int]$(-Not $?)
     $Env:GBT_SHELL = 'plain'
     $Env:PWD = get-location
+    $Env:GBT_CAR_CUSTOM_EXECUTOR='powershell.exe'
+    $Env:GBT_CAR_CUSTOM_EXECUTOR_PARAM='-Command
     $gbt_output = & @({gbt $rc},{gbt.exe $rc})[$PSVersionTable.PSVersion.Major -lt 6 -or $IsWindows] | Out-String
     $gbt_output = $gbt_output -replace ([Environment]::NewLine + '$'), ''
     Write-Host -NoNewline $gbt_output
@@ -540,6 +542,14 @@ custom text.
   export GBT_CAR_CUSTOM_TEXT_CMD="uptime | sed -e 's/.*load average: //' -e 's/,.*//'"
   ```
 
+- `GBT_CAR_CUSTOM_TEXT_EXECUTOR='sh'`
+
+  Executor used to execute all text command (`_TEXT_CMD`).
+
+- `GBT_CAR_CUSTOM_TEXT_EXECUTOR='-c'`
+
+  Parameter for the executor used to execute text command (`_TEXT_CMD`).
+
 - `GBT_CAR_CUSTOM_DISPLAY='1'`
 
   Whether to display this car if it's in the list of cars (`GBT_CARS`).
@@ -549,6 +559,14 @@ custom text.
   Command which gets executed in order to evaluate whether the car should be
   displayed or not. Content of the `GBT_CAR_CUSTOM_DISPLAY` variable takes
   precedence over this variable.
+
+- `GBT_CAR_CUSTOM_DISPLAY_EXECUTOR='sh'`
+
+  Executor used to execute all display command (`_TEXT_CMD`).
+
+- `GBT_CAR_CUSTOM_DISPLAY_EXECUTOR='-c'`
+
+  Parameter for the executor used to execute display command (`_TEXT_CMD`).
 
   ```shell
   # Show percentage of used disk space of the root partition
@@ -560,6 +578,15 @@ custom text.
 - `GBT_CAR_CUSTOM_WRAP='0'`
 
   Whether to wrap the prompt line in front of this car.
+
+- `GBT_CAR_CUSTOM_EXECUTOR='sh'`
+
+  Executor used to execute all custom commands (`_TEXT_CMD` and `_DISPLAY_CMD`).
+
+- `GBT_CAR_CUSTOM_EXECUTOR='-c'`
+
+  Parameter for the executor used to execute all custom commands (`_TEXT_CMD`
+  and `_DISPLAY_CMD`).
 
 - `GBT_CAR_CUSTOM_SEP_TEXT`
 
@@ -582,7 +609,7 @@ identifier behind the car name. To set properties of the new car, just add the
 same identifier into the environment variable:
 
 ```shell
-# Adding Custom and Custo1 car
+# Adding Custom and Custom1 car
 export GBT_CARS='Status, Os, Custom, Custom1, Hostname, Dir, Git, Sign'
 # The text of the default Custom car
 export GBT_CAR_CUSTOM_TEXT_TEXT='default'
