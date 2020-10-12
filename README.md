@@ -2434,9 +2434,9 @@ source $GBT__HOME/sources/gbts/cmd/local.sh
 ```
 
 This will automatically create command line aliases for all enabled plugins (by
-default `docker`, `mysql`, `screen`, `ssh`, `su`, `sudo` and `vagrant`). Then
-just SSH to some remote server or enter some Docker container or Vagrant box
-and you should get GBT prompt there.
+default `docker`, `gssh`, `mysql`, `screen`, `ssh`, `su`, `sudo` and `vagrant`)
+Then just SSH to some remote server or enter some Docker container or Vagrant
+box and you should get GBT prompt there.
 
 If you want to have some of the default aliase available only on the remote
 site, just un-alias them locally:
@@ -2482,7 +2482,9 @@ alias ssh='gbt_ssh'
 ```
 
 The same or very similar principle applies to other supported commands like
-`docker`, `mysql`, `screen`, `su`, `sudo` and `vagrant`.
+`docker`, `gssh` ([GCP
+SSH](https://cloud.google.com/sdk/gcloud/reference/compute/ssh)), `mysql`,
+`screen`, `su`, `sudo` and `vagrant`.
 
 
 ### Additional settings

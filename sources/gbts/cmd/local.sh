@@ -4,6 +4,10 @@ source $GBT__HOME/sources/gbts/cmd/local/_common.sh
 if [[ ${GBT__PLUGINS_LOCAL__HASH[@]} == *' docker '* ]]; then
     source $GBT__HOME/sources/gbts/cmd/local/docker.sh
 fi
+if [[ ${GBT__PLUGINS_LOCAL__HASH[@]} == *' gssh '* ]]; then
+    source $GBT__HOME/sources/gbts/cmd/local/gssh.sh
+    source $GBT__HOME/sources/gbts/cmd/_common_ssh.sh
+fi
 if [[ ${GBT__PLUGINS_LOCAL__HASH[@]} == *' kubectl '* ]]; then
     source $GBT__HOME/sources/gbts/cmd/local/kubectl.sh
 fi
