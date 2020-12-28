@@ -10,6 +10,7 @@ import (
     customCar    "github.com/jtyr/gbt/pkg/cars/custom"
     dirCar       "github.com/jtyr/gbt/pkg/cars/dir"
     exectimeCar  "github.com/jtyr/gbt/pkg/cars/exectime"
+    gcpCar       "github.com/jtyr/gbt/pkg/cars/gcp"
     gitCar       "github.com/jtyr/gbt/pkg/cars/git"
     hostnameCar  "github.com/jtyr/gbt/pkg/cars/hostname"
     kubectlCar   "github.com/jtyr/gbt/pkg/cars/kubectl"
@@ -173,6 +174,7 @@ func main() {
         "custom":    &customCar.Car{},
         "dir":       &dirCar.Car{},
         "exectime":  &exectimeCar.Car{},
+        "gcp":       &gcpCar.Car{},
         "git":       &gitCar.Car{},
         "hostname":  &hostnameCar.Car{},
         "kubectl":   &kubectlCar.Car{},

@@ -268,6 +268,8 @@ function GbtMain() {
             GbtCarDir
         elif [ "$car" = 'exectime' ]; then
             GbtCarExecTime
+        elif [ "$car" = 'gcp' ]; then
+            GbtCarGcp
         elif [ "$car" = 'git' ]; then
             GbtCarGit
         elif [ "$car" = 'hostname' ]; then

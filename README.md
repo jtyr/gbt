@@ -47,6 +47,7 @@ Table of contents
     - [`Custom` car](#custom-car)
     - [`Dir` car](#dir-car)
     - [`ExecTime` car](#exectime-car)
+    - [`Gcp` car](#gcp-car)
     - [`Git` car](#git-car)
     - [`Hostname` car](#hostname-car)
     - [`Kubectl` car](#kubectl-car)
@@ -821,6 +822,117 @@ source /usr/share/gbt/sources/exectime/zsh.sh
 
 On macOS the `date` command does not support `%N` format for milliseconds and
 you need to override the environment variable `GBT__SOURCE_DATE_ARG='+%s`.
+
+
+#### `Gcp` car
+
+Car that displays information about the local [GCP](https://cloud.google.com/)
+configuration.
+
+- `GBT_CAR_GCP_BG='light_gray'`
+
+  Background color of the car.
+
+- `GBT_CAR_GCP_FG='black'`
+
+  Foreground color of the car.
+
+- `GBT_CAR_GCP_FM='none'`
+
+  Formatting of the car.
+
+- `GBT_CAR_GCP_FORMAT=' {{ Icon }} {{ Project }} '`
+
+  Format of the car.
+
+- `GBT_CAR_GCP_ICON_BG`
+
+  Background color of the `{{ Icon }}` element.
+
+- `GBT_CAR_GCP_ICON_FG`
+
+  Foreground color of the `{{ Icon }}` element.
+
+- `GBT_CAR_GCP_ICON_FM`
+
+  Formatting of the `{{ Icon }}` element.
+
+- `GBT_CAR_GCP_ICON_TEXT=''`
+
+  Text content of the `{{ Icon }}` element.
+
+- `GBT_CAR_GCP_ACCOUNT_BG`
+
+  Background color of the `{{ Account }}` element.
+
+- `GBT_CAR_GCP_ACCOUNT_FG`
+
+  Foreground color of the `{{ Account }}` element.
+
+- `GBT_CAR_GCP_ACCOUNT_FM`
+
+  Formatting of the `{{ Account }}` element.
+
+- `GBT_CAR_GCP_ACCOUNT_TEXT`
+
+  Text content of the `{{ Account }}` element specifying the configured account.
+
+- `GBT_CAR_GCP_CONFIG_BG`
+
+  Background color of the `{{ Config }}` element.
+
+- `GBT_CAR_GCP_CONFIG_FG`
+
+  Foreground color of the `{{ Config }}` element.
+
+- `GBT_CAR_GCP_CONFIG_FM`
+
+  Formatting of the `{{ Config }}` element.
+
+- `GBT_CAR_GCP_CONFIG_TEXT`
+
+  Text content of the `{{ Config }}` element specifying the active
+  configuration.
+
+- `GBT_CAR_GCP_PROJECT_BG`
+
+  Background color of the `{{ Project }}` element.
+
+- `GBT_CAR_GCP_PROJECT_FG`
+
+  Foreground color of the `{{ Project }}` element.
+
+- `GBT_CAR_GCP_PROJECT_FM`
+
+  Formatting of the `{{ Project }}` element.
+
+- `GBT_CAR_GCP_PROJECT_TEXT`
+
+  Text content of the `{{ Project }}` element specifying the configured project.
+
+- `GBT_CAR_GCP_DISPLAY`
+
+  Whether to display this car if it's in the list of cars (`GBT_CARS`).
+
+- `GBT_CAR_GCP_WRAP='0'`
+
+  Whether to wrap the prompt line in front of this car.
+
+- `GBT_CAR_GCP_SEP_TEXT`
+
+  Text content of the separator for this car.
+
+- `GBT_CAR_GCP_SEP_BG`
+
+  Background color of the separator for this car.
+
+- `GBT_CAR_GCP_SEP_FG`
+
+  Foreground color of the separator for this car.
+
+- `GBT_CAR_GCP_SEP_FM`
+
+  Formatting of the separator for this car.
 
 
 #### `Git` car
