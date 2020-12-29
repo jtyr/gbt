@@ -262,7 +262,9 @@ function GbtMain() {
         local unknown=0
 
         # Fill in the model
-        if [ "${car:0:6}" = 'custom' ]; then
+        if [ "$car" = 'aws' ]; then
+            GbtCarAws
+        elif [ "${car:0:6}" = 'custom' ]; then
             GbtCarCustom ${car:6}
         elif [ "$car" = 'dir' ]; then
             GbtCarDir

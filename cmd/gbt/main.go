@@ -7,6 +7,7 @@ import (
     "regexp"
     "strings"
 
+    awsCar       "github.com/jtyr/gbt/pkg/cars/aws"
     customCar    "github.com/jtyr/gbt/pkg/cars/custom"
     dirCar       "github.com/jtyr/gbt/pkg/cars/dir"
     exectimeCar  "github.com/jtyr/gbt/pkg/cars/exectime"
@@ -171,6 +172,7 @@ func main() {
     reCarSplit := regexp.MustCompile(`\s*,\s*`)
     carsNames := reCarSplit.Split(carsStr, -1)
     carsFactory := map[string]Cars{
+        "aws":       &awsCar.Car{},
         "custom":    &customCar.Car{},
         "dir":       &dirCar.Car{},
         "exectime":  &exectimeCar.Car{},

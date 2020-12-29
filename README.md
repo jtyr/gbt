@@ -44,6 +44,7 @@ Table of contents
   - [Formatting](#formatting)
   - [Train variables](#train-variables)
   - [Cars variables](#cars-variables)
+    - [`Aws` car](#aws-car)
     - [`Custom` car](#custom-car)
     - [`Dir` car](#dir-car)
     - [`ExecTime` car](#exectime-car)
@@ -494,6 +495,100 @@ Formatting is done via `_FM` variables. The possible values are:
 
 
 ### Cars variables
+
+#### `Aws` car
+
+Car that displays information about the local [AWS](https://aws.amazon.com/)
+configuration.
+
+- `GBT_CAR_AWS_BG='yellow'`
+
+  Background color of the car.
+
+- `GBT_CAR_AWS_FG='white'`
+
+  Foreground color of the car.
+
+- `GBT_CAR_AWS_FM='none'`
+
+  Formatting of the car.
+
+- `GBT_CAR_AWS_FORMAT=' {{ Icon }} {{ Project }} '`
+
+  Format of the car.
+
+- `GBT_CAR_AWS_ICON_BG`
+
+  Background color of the `{{ Icon }}` element.
+
+- `GBT_CAR_AWS_ICON_FG`
+
+  Foreground color of the `{{ Icon }}` element.
+
+- `GBT_CAR_AWS_ICON_FM`
+
+  Formatting of the `{{ Icon }}` element.
+
+- `GBT_CAR_AWS_ICON_TEXT=''`
+
+  Text content of the `{{ Icon }}` element.
+
+- `GBT_CAR_AWS_PROFILE_BG`
+
+  Background color of the `{{ Profile }}` element.
+
+- `GBT_CAR_AWS_PROFILE_FG`
+
+  Foreground color of the `{{ Profile }}` element.
+
+- `GBT_CAR_AWS_PROFILE_FM`
+
+  Formatting of the `{{ Profile }}` element.
+
+- `GBT_CAR_AWS_PROFILE_TEXT`
+
+  Text content of the `{{ Profile }}` element specifying the configured profile.
+
+- `GBT_CAR_AWS_REGION_BG`
+
+  Background color of the `{{ Region }}` element.
+
+- `GBT_CAR_AWS_REGION_FG`
+
+  Foreground color of the `{{ Region }}` element.
+
+- `GBT_CAR_AWS_REGION_FM`
+
+  Formatting of the `{{ Region }}` element.
+
+- `GBT_CAR_AWS_REGION_TEXT`
+
+  Text content of the `{{ Region }}` element specifying the configured region.
+
+- `GBT_CAR_AWS_DISPLAY`
+
+  Whether to display this car if it's in the list of cars (`GBT_CARS`).
+
+- `GBT_CAR_AWS_WRAP='0'`
+
+  Whether to wrap the prompt line in front of this car.
+
+- `GBT_CAR_AWS_SEP_TEXT`
+
+  Text content of the separator for this car.
+
+- `GBT_CAR_AWS_SEP_BG`
+
+  Background color of the separator for this car.
+
+- `GBT_CAR_AWS_SEP_FG`
+
+  Foreground color of the separator for this car.
+
+- `GBT_CAR_AWS_SEP_FM`
+
+  Formatting of the separator for this car.
+
 
 #### `Custom` car
 
