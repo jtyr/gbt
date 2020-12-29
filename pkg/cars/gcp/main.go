@@ -1,4 +1,4 @@
-package dir
+package gcp
 
 import (
     "encoding/json"
@@ -67,44 +67,48 @@ func (c *Car) Init() {
     account := os.Getenv("CLOUDSDK_CORE_ACCOUNT")
     project := os.Getenv("CLOUDSDK_CORE_PROJECT")
 
-    if os.Getenv("CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE") != "" {
-        jsonFile := os.Getenv("CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE")
-        byteValue, err := ioutil.ReadFile(jsonFile)
+    c.Display = utils.GetEnvBool("GBT_CAR_GCP_DISPLAY", true)
 
-        if err == nil {
-            var data map[string]interface{}
-            json.Unmarshal([]byte(byteValue), &data)
+    if c.Display {
+        if os.Getenv("CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE") != "" {
+            jsonFile := os.Getenv("CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE")
+            byteValue, err := ioutil.ReadFile(jsonFile)
 
-            if val, ok := data["client_email"]; ok {
-                account = val.(string)
+            if err == nil {
+                var data map[string]interface{}
+                json.Unmarshal([]byte(byteValue), &data)
+
+                if val, ok := data["client_email"]; ok {
+                    account = val.(string)
+                }
             }
         }
-    }
 
-    configDir := utils.GetEnv("CLOUDSDK_CONFIG", getDefaultConfDir())
-    config = getActiveConfig(configDir)
+        configDir := utils.GetEnv("CLOUDSDK_CONFIG", getDefaultConfDir())
+        config = getActiveConfig(configDir)
 
-    configFile := strings.Join([]string{configDir, "configurations", fmt.Sprintf("config_%s", config)}, osSep)
-    cfg, err := ini.Load(configFile)
+        configFile := strings.Join([]string{configDir, "configurations", fmt.Sprintf("config_%s", config)}, osSep)
+        cfg, err := ini.Load(configFile)
 
-    if err == nil {
-        if account == "" {
-            account = cfg.Section("core").Key("account").String()
+        if err == nil {
+            if account == "" {
+                account = cfg.Section("core").Key("account").String()
+            }
+
+            if project == "" {
+                project = cfg.Section("core").Key("project").String()
+            }
         }
 
-        if project == "" {
-            project = cfg.Section("core").Key("project").String()
-        }
-    }
+        if os.Getenv("GBT_CAR_GCP_PROJECT_ALIASES") != "" {
+            for _, pair := range strings.Split(os.Getenv("GBT_CAR_GCP_PROJECT_ALIASES"), ",") {
+                kv := strings.Split(pair, "=")
 
-    if os.Getenv("GBT_CAR_GCP_PROJECT_ALIASES") != "" {
-        for _, pair := range strings.Split(os.Getenv("GBT_CAR_GCP_PROJECT_ALIASES"), ",") {
-            kv := strings.Split(pair, "=")
+                if len(kv) == 2 && project == strings.TrimSpace(kv[0]) {
+                    project = strings.TrimSpace(kv[1])
 
-            if len(kv) == 2 && project == strings.TrimSpace(kv[0]) {
-                project = strings.TrimSpace(kv[1])
-
-                break
+                    break
+                }
             }
         }
     }
@@ -181,6 +185,5 @@ func (c *Car) Init() {
         },
     }
 
-    c.Display = utils.GetEnvBool("GBT_CAR_GCP_DISPLAY", true)
     c.Wrap = utils.GetEnvBool("GBT_CAR_GCP_WRAP", false)
 }
