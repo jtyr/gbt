@@ -829,11 +829,11 @@ you need to override the environment variable `GBT__SOURCE_DATE_ARG='+%s`.
 Car that displays information about the local [GCP](https://cloud.google.com/)
 configuration.
 
-- `GBT_CAR_GCP_BG='light_gray'`
+- `GBT_CAR_GCP_BG='66;133;244'`
 
   Background color of the car.
 
-- `GBT_CAR_GCP_FG='black'`
+- `GBT_CAR_GCP_FG='white'`
 
   Foreground color of the car.
 
@@ -909,6 +909,20 @@ configuration.
 - `GBT_CAR_GCP_PROJECT_TEXT`
 
   Text content of the `{{ Project }}` element specifying the configured project.
+
+- `GBT_CAR_GCP_PROJECT_ALIASES`
+
+  List of aliases that allow to display different project name based on the
+  original name. The following example shows how to change the project
+  `my-dev-project-123456` to `dev` and the project `my-prod-project-654321` to
+  `prod`.
+
+  ```shell
+  export GBT_CAR_GCP_PROJECT_ALIASES='
+    my-dev-project-123456=dev,
+    my-prod-project-654321=prod,
+  '
+  ```
 
 - `GBT_CAR_GCP_DISPLAY`
 
