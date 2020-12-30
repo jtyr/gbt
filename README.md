@@ -501,7 +501,7 @@ Formatting is done via `_FM` variables. The possible values are:
 Car that displays information about the local [AWS](https://aws.amazon.com/)
 configuration.
 
-- `GBT_CAR_AWS_BG='yellow'`
+- `GBT_CAR_AWS_BG='180;85;10'`
 
   Background color of the car.
 
