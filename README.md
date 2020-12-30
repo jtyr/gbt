@@ -210,7 +210,7 @@ function prompt {
     $Env:GBT_SHELL = 'plain'
     $Env:PWD = get-location
     $Env:GBT_CAR_CUSTOM_EXECUTOR='powershell.exe'
-    $Env:GBT_CAR_CUSTOM_EXECUTOR_PARAM='-Command
+    $Env:GBT_CAR_CUSTOM_EXECUTOR_PARAM='-Command'
     $gbt_output = & @({gbt $rc},{gbt.exe $rc})[$PSVersionTable.PSVersion.Major -lt 6 -or $IsWindows] | Out-String
     $gbt_output = $gbt_output -replace ([Environment]::NewLine + '$'), ''
     Write-Host -NoNewline $gbt_output
