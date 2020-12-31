@@ -18,6 +18,53 @@ GBT_COLORS=(
     [white]=15
 )
 
+function getTrueColor() {
+    local code=$1
+
+    local r
+    local g
+    local b
+
+    if [[ $code -gt -1 ]] && [[ $code -lt 7 ]]; then
+        local num=$code
+        local seq=(0 128)
+
+        b=${seq[$(($num / 4 % 2))]}
+        g=${seq[$(($num / 2 % 2))]}
+        r=${seq[$(($num % 2))]}
+    elif [[ $code == 7 ]]; then
+        r=192
+        g=$r
+        b=$r
+    elif [[ $code == 8 ]]; then
+        r=128
+        g=$r
+        b=$r
+    elif [[ $code -gt 8 ]] && [[ $code -lt 16 ]]; then
+        local num=$(($code - 8))
+        local seq=(0 255)
+
+        b=${seq[$(($num / 4 % 2))]}
+        g=${seq[$(($num / 2 % 2))]}
+        r=${seq[$(($num % 2))]}
+    elif [[ $code -gt 15 ]] && [[ $code -lt 232 ]]; then
+        local num=$(($code - 16))
+        local seq=(0 95 135 175 215 255)
+
+        r=${seq[$(($num / 36 % 6))]}
+        g=${seq[$(($num / 6 % 6))]}
+        b=${seq[$(($num % 6))]}
+    elif [[ $code -gt 231 ]] && [[ $code -lt 256 ]]; then
+        local num=$(($code - 232))
+
+        r=$(($num * 10 + 8))
+        g=$r
+        b=$r
+    fi
+
+    GBT__RETVAL="$r;$g;$b"
+}
+
 function GbtGetColor() {
     local name=$1
     local isFg=$2
@@ -41,11 +88,29 @@ function GbtGetColor() {
         seq="${esc}[${kind}9m"
     else
         if [ ${GBT_COLORS[$name]+1} ]; then
+            local depth=5
+            local val=${GBT_COLORS[$name]}
+
+            if [[ ${GBT_FORCE_TRUE_COLORS:-0} == 1 ]]; then
+                getTrueColor $val
+                val=$GBT__RETVAL
+                depth=2
+            fi
+
             # Named color
-            seq="${esc}[${kind}8;5;${GBT_COLORS[$name]}m"
+            seq="${esc}[${kind}8;${depth};${val}m"
         elif [[ $name =~ ^[0-9]{1,3}$ ]]; then
+            local depth=5
+            local val=$name
+
+            if [[ ${GBT_FORCE_TRUE_COLORS:-0} == 1 ]]; then
+                getTrueColor $name
+                val=$GBT__RETVAL
+                depth=2
+            fi
+
             # Color number
-            seq="${esc}[${kind}8;5;${name}m"
+            seq="${esc}[${kind}8;${depth};${val}m"
         elif [[ $name =~ ^[0-9]{1,3}\;[0-9]{1,3}\;[0-9]{1,3}$ ]]; then
             # RGB color
             seq="${esc}[${kind}8;2;${name}m"
@@ -185,7 +250,6 @@ function GbtDecorateElement() {
 
     GBT__RETVAL="$bg$fg$fm$text$fmEnd$root"
 }
-
 
 function GbtFormatCar() {
     GbtDecorateElement 'root' "${GBT_CAR[model-root-Text]}"

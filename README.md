@@ -343,7 +343,7 @@ export GBT_CAR_DIR_BG='1'
 export GBT_CAR_DIR_FG='15'
 ```
 
-#### RGB number
+#### RGB color
 
 Arbitrary color can be expressed in the form of RGB triplet.
 
@@ -355,6 +355,18 @@ export GBT_CAR_DIR_BG='170;0;0'
 # Set the foreground color of the `Dir` car to white
 export GBT_CAR_DIR_FG='255;255;255'
 ```
+
+Any [color name](https://github.com/jtyr/gbt#color-name) or [color
+number](https://github.com/jtyr/gbt#color-number) can be automatically converted
+to RGB number by using to following env variable:
+
+```shell
+export GBT_FORCE_TRUE_COLORS=1
+```
+
+That will convert all 8-bit colors specified by a name or a number into 24-bit
+true colors. As a result, this will produce consistent color output regardless
+of the color pallete used by the terminal (e.g. Solarized colore scheme).
 
 
 ### Formatting
