@@ -1,7 +1,6 @@
 package ttime
 
 import (
-    "os"
     "testing"
     "time"
 
@@ -17,32 +16,27 @@ func TestInit(t *testing.T) {
     ccar.Shell = "plain"
 
     tests := []struct {
-        format string
+        field string
         expectedOutput string
     }{
         {
-            format: "{{ DateTime }}",
-            expectedOutput: "\x1b[48;5;12m\x1b[38;5;7m\x1b[48;5;12m\x1b[38;5;7m\x1b[48;5;12m\x1b[38;5;7mSat 06 Jan\x1b[48;5;12m\x1b[38;5;7m \x1b[48;5;12m\x1b[38;5;11m23:57:41\x1b[48;5;12m\x1b[38;5;7m\x1b[48;5;12m\x1b[38;5;7m",
+            field: "Date",
+            expectedOutput: "Sat 06 Jan",
         },
         {
-            format: "{{ Date }}",
-            expectedOutput: "\x1b[48;5;12m\x1b[38;5;7m\x1b[48;5;12m\x1b[38;5;7mSat 06 Jan\x1b[48;5;12m\x1b[38;5;7m",
-        },
-        {
-            format: "{{ Time }}",
-            expectedOutput: "\x1b[48;5;12m\x1b[38;5;7m\x1b[48;5;12m\x1b[38;5;11m23:57:41\x1b[48;5;12m\x1b[38;5;7m",
+            field: "Time",
+            expectedOutput: "23:57:41",
         },
     }
 
     for i, test := range tests {
-        os.Setenv("GBT_CAR_TIME_FORMAT", test.format)
-
         car := Car{}
         car.Init()
-        output := car.Format()
 
-        if output != test.expectedOutput {
-            t.Errorf("Test [%d]: Expected '%x', found '%x'.", i, test.expectedOutput, output)
+        val := car.Model[test.field].Text
+
+        if val != test.expectedOutput {
+            t.Errorf("Test [%d]: Expected '%s', found '%s'.", i, test.expectedOutput, val)
         }
     }
 }
