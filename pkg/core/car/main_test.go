@@ -119,7 +119,7 @@ func TestFormat(t *testing.T) {
                 "root": { Bg: "222", Fg: "red", Fm: "bold", Text: "test", },
             },
             // TODO: This isn't what's actually generated on the command line.
-            expectedOutput: "\x1b[48;5;222m\x1b[38;5;1m\x1b[1m\x1b[22mtest",
+            expectedOutput: "\x1b[48;5;222m\x1b[38;5;124m\x1b[1m\x1b[22mtest",
             display: true,
             shell: "plain",
         },
@@ -128,7 +128,7 @@ func TestFormat(t *testing.T) {
                 "root": { Bg: "222", Fg: "red", Fm: "bold", Text: "{{ Unknown }}", },
             },
             // TODO: This isn't what's actually generated on the command line.
-            expectedOutput: "\x1b[48;5;222m\x1b[38;5;1m\x1b[1m\x1b[22m{{ Unknown }}",
+            expectedOutput: "\x1b[48;5;222m\x1b[38;5;124m\x1b[1m\x1b[22m{{ Unknown }}",
             display: true,
             shell: "plain",
         },
@@ -138,7 +138,7 @@ func TestFormat(t *testing.T) {
                 "User": { Bg: "222", Fg: "red", Fm: "default", Text: "text", },
             },
             // TODO: This isn't what's actually generated on the command line.
-            expectedOutput: "\x1b[48;5;222m\x1b[38;5;1m\x1b[1m\x1b[22m\x1b[48;5;222m\x1b[38;5;1mtext\x1b[48;5;222m\x1b[38;5;1m\x1b[1m\x1b[22m",
+            expectedOutput: "\x1b[48;5;222m\x1b[38;5;124m\x1b[1m\x1b[22m\x1b[48;5;222m\x1b[38;5;124mtext\x1b[48;5;222m\x1b[38;5;124m\x1b[1m\x1b[22m",
             display: true,
             shell: "plain",
         },
@@ -181,7 +181,7 @@ func TestDecorateElement(t *testing.T) {
             model: map[string]ModelElement{
                 "root": { Bg: "222", Fg: "red", Fm: "bold", Text: "test", },
             },
-            expectedOutput: "\x1b[48;5;222m\x1b[38;5;1m\x1b[1m\x1b[22m",
+            expectedOutput: "\x1b[48;5;222m\x1b[38;5;124m\x1b[1m\x1b[22m",
             display: true,
             shell: "plain",
         },
@@ -190,7 +190,7 @@ func TestDecorateElement(t *testing.T) {
             model: map[string]ModelElement{
                 "User": { Bg: "222", Fg: "red", Fm: "bold", Text: "test", },
             },
-            expectedOutput: "\x1b[48;5;222m\x1b[38;5;1m\x1b[1mtest\x1b[22m",
+            expectedOutput: "\x1b[48;5;222m\x1b[38;5;124m\x1b[1mtest\x1b[22m",
             display: true,
             shell: "plain",
         },
@@ -224,7 +224,7 @@ func TestGetColor(t *testing.T) {
         isFg bool
         expectedOutput string
         shell string
-        trueColors bool
+        higherColors bool
     }{
         { name: "red",      isFg: false, expectedOutput: "%{\x1b[48;5;1m%}",            shell: "zsh",   },
         { name: "red",      isFg: false, expectedOutput: "\001\x1b[48;5;1m\002",        shell: "bash",  },
@@ -274,14 +274,8 @@ func TestGetColor(t *testing.T) {
         { name: "_unknown", isFg: true,  expectedOutput: "\001\x1b[39m\002",            shell: "bash",  },
         { name: "_unknown", isFg: true,  expectedOutput: "\x1b[39m",                    shell: "plain", },
         { name: "_unknown", isFg: true,  expectedOutput: "\\[\\e[39m\\]",               shell: "_bash", },
-        { name: "red",      isFg: true,  expectedOutput: "\\[\\e[38;2;128;0;0m\\]",     shell: "_bash", trueColors: true },
-        { name: "222",      isFg: true,  expectedOutput: "\\[\\e[38;2;255;215;135m\\]", shell: "_bash", trueColors: true },
-        { name: "0",        isFg: true,  expectedOutput: "\\[\\e[38;2;0;0;0m\\]",       shell: "_bash", trueColors: true },
-        { name: "7",        isFg: true,  expectedOutput: "\\[\\e[38;2;192;192;192m\\]", shell: "_bash", trueColors: true },
-        { name: "8",        isFg: true,  expectedOutput: "\\[\\e[38;2;128;128;128m\\]", shell: "_bash", trueColors: true },
-        { name: "15",       isFg: true,  expectedOutput: "\\[\\e[38;2;255;255;255m\\]", shell: "_bash", trueColors: true },
-        { name: "20",       isFg: true,  expectedOutput: "\\[\\e[38;2;0;0;215m\\]",     shell: "_bash", trueColors: true },
-        { name: "235",      isFg: true,  expectedOutput: "\\[\\e[38;2;38;38;38m\\]",    shell: "_bash", trueColors: true },
+        { name: "red",      isFg: true,  expectedOutput: "\\[\\e[38;5;124m\\]",         shell: "_bash", higherColors: true },
+        { name: "1",        isFg: true,  expectedOutput: "\\[\\e[38;5;124m\\]",         shell: "_bash", higherColors: true },
     }
 
     car := Car{
@@ -290,10 +284,10 @@ func TestGetColor(t *testing.T) {
     }
 
     for i, test := range tests {
-        if test.trueColors {
-            trueColors = true
+        if test.higherColors {
+            forceHigherColors = true
         } else {
-            trueColors = false
+            forceHigherColors = false
         }
 
         Shell = test.shell

@@ -3,7 +3,7 @@ function GbtCarAws() {
         return
     fi
 
-    local defaultRootBg=${GBT_CAR_BG:-180;85;10}
+    local defaultRootBg=${GBT_CAR_BG:-166}
     local defaultRootFg=${GBT_CAR_FG:-white}
     local defaultRootFm=${GBT_CAR_FM:-none}
 

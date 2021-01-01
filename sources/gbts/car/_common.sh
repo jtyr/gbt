@@ -18,52 +18,25 @@ GBT_COLORS=(
     [white]=15
 )
 
-function getTrueColor() {
-    local code=$1
-
-    local r
-    local g
-    local b
-
-    if [[ $code -gt -1 ]] && [[ $code -lt 7 ]]; then
-        local num=$code
-        local seq=(0 128)
-
-        b=${seq[$(($num / 4 % 2))]}
-        g=${seq[$(($num / 2 % 2))]}
-        r=${seq[$(($num % 2))]}
-    elif [[ $code == 7 ]]; then
-        r=192
-        g=$r
-        b=$r
-    elif [[ $code == 8 ]]; then
-        r=128
-        g=$r
-        b=$r
-    elif [[ $code -gt 8 ]] && [[ $code -lt 16 ]]; then
-        local num=$(($code - 8))
-        local seq=(0 255)
-
-        b=${seq[$(($num / 4 % 2))]}
-        g=${seq[$(($num / 2 % 2))]}
-        r=${seq[$(($num % 2))]}
-    elif [[ $code -gt 15 ]] && [[ $code -lt 232 ]]; then
-        local num=$(($code - 16))
-        local seq=(0 95 135 175 215 255)
-
-        r=${seq[$(($num / 36 % 6))]}
-        g=${seq[$(($num / 6 % 6))]}
-        b=${seq[$(($num % 6))]}
-    elif [[ $code -gt 231 ]] && [[ $code -lt 256 ]]; then
-        local num=$(($code - 232))
-
-        r=$(($num * 10 + 8))
-        g=$r
-        b=$r
-    fi
-
-    GBT__RETVAL="$r;$g;$b"
-}
+declare -A GBT_HIGHER_COLORS
+GBT_HIGHER_COLORS=(
+    [black]=16
+    [red]=124
+    [green]=34
+    [yellow]=100
+    [blue]=19
+    [magenta]=90
+    [cyan]=30
+    [light_gray]=248
+    [dark_gray]=240
+    [light_red]=196
+    [light_green]=46
+    [light_yellow]=226
+    [light_blue]=63
+    [light_magenta]=201
+    [light_cyan]=51
+    [white]=231
+)
 
 function GbtGetColor() {
     local name=$1
@@ -88,29 +61,27 @@ function GbtGetColor() {
         seq="${esc}[${kind}9m"
     else
         if [ ${GBT_COLORS[$name]+1} ]; then
-            local depth=5
             local val=${GBT_COLORS[$name]}
 
-            if [[ ${GBT_FORCE_TRUE_COLORS:-0} == 1 ]]; then
-                getTrueColor $val
-                val=$GBT__RETVAL
-                depth=2
+            if [[ ${GBT_FORCE_HIGHER_COLORS:-1} == 1 ]]; then
+                val=${GBT_HIGHER_COLORS[$name]}
             fi
 
             # Named color
-            seq="${esc}[${kind}8;${depth};${val}m"
+            seq="${esc}[${kind}8;5;${val}m"
         elif [[ $name =~ ^[0-9]{1,3}$ ]]; then
-            local depth=5
             local val=$name
 
-            if [[ ${GBT_FORCE_TRUE_COLORS:-0} == 1 ]]; then
-                getTrueColor $name
-                val=$GBT__RETVAL
-                depth=2
+            if [[ ${GBT_FORCE_HIGHER_COLORS:-1} == 1 ]]; then
+                for k in ${!GBT_COLORS[@]}; do
+                    if [[ ${GBT_COLORS[$k]} == $name ]]; then
+                        val=${GBT_HIGHER_COLORS[$k]}
+                    fi
+                done
             fi
 
             # Color number
-            seq="${esc}[${kind}8;${depth};${val}m"
+            seq="${esc}[${kind}8;5;${val}m"
         elif [[ $name =~ ^[0-9]{1,3}\;[0-9]{1,3}\;[0-9]{1,3}$ ]]; then
             # RGB color
             seq="${esc}[${kind}8;2;${name}m"

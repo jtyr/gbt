@@ -15,8 +15,8 @@ type Car struct {
 
 // Init initializes the car.
 func (c *Car) Init() {
-    defaultRootBg := utils.GetEnv("GBT_CAR_BG", "yellow")
-    defaultRootFg := utils.GetEnv("GBT_CAR_FG", "default")
+    defaultRootBg := utils.GetEnv("GBT_CAR_BG", "130")
+    defaultRootFg := utils.GetEnv("GBT_CAR_FG", "white")
     defaultRootFm := utils.GetEnv("GBT_CAR_FM", "none")
     defaultSep := "\000"
 

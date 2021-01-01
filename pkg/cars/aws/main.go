@@ -22,7 +22,7 @@ var usr, _ = user.Current()
 
 // Init initializes the car.
 func (c *Car) Init() {
-    defaultRootBg := utils.GetEnv("GBT_CAR_BG", "180;85;10")
+    defaultRootBg := utils.GetEnv("GBT_CAR_BG", "166")
     defaultRootFg := utils.GetEnv("GBT_CAR_FG", "white")
     defaultRootFm := utils.GetEnv("GBT_CAR_FM", "none")
     defaultSep := "\000"

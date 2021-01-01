@@ -299,20 +299,20 @@ specified in 3 ways:
 Only a limited number of named colors is supported:
 
 - ![black](https://placehold.it/10/000000/000000?text=+) `black`
-- ![red](https://placehold.it/10/aa0000/000000?text=+) `red`
-- ![green](https://placehold.it/10/00aa00/000000?text=+) `green`
-- ![yellow](https://placehold.it/10/aa5500/000000?text=+) `yellow`
-- ![blue](https://placehold.it/10/0000aa/000000?text=+) `blue`
-- ![magenta](https://placehold.it/10/aa00aa/000000?text=+) `magenta`
-- ![cyan](https://placehold.it/10/00aaaa/000000?text=+) `cyan`
-- ![light_gray](https://placehold.it/10/aaaaaa/000000?text=+) `light_gray`
-- ![dark_gray](https://placehold.it/10/555555/000000?text=+) `dark_gray`
-- ![light_red](https://placehold.it/10/ff5555/000000?text=+) `light_red`
-- ![light_green](https://placehold.it/10/55ff55/000000?text=+) `light_green`
-- ![light_green](https://placehold.it/10/ffff55/000000?text=+) `light_yellow`
-- ![light_blue](https://placehold.it/10/5555ff/000000?text=+) `light_blue`
-- ![light_magenta](https://placehold.it/10/ff55ff/000000?text=+) `light_magenta`
-- ![light_cyan](https://placehold.it/10/55ffff/000000?text=+) `light_cyan`
+- ![red](https://placehold.it/10/800000/000000?text=+) `red`
+- ![green](https://placehold.it/10/008000/000000?text=+) `green`
+- ![yellow](https://placehold.it/10/808000/000000?text=+) `yellow`
+- ![blue](https://placehold.it/10/000080/000000?text=+) `blue`
+- ![magenta](https://placehold.it/10/800080/000000?text=+) `magenta`
+- ![cyan](https://placehold.it/10/008080/000000?text=+) `cyan`
+- ![light_gray](https://placehold.it/10/c0c0c0/000000?text=+) `light_gray`
+- ![dark_gray](https://placehold.it/10/808080/000000?text=+) `dark_gray`
+- ![light_red](https://placehold.it/10/ff0000/000000?text=+) `light_red`
+- ![light_green](https://placehold.it/10/00ff00/000000?text=+) `light_green`
+- ![light_green](https://placehold.it/10/ffff00/000000?text=+) `light_yellow`
+- ![light_blue](https://placehold.it/10/0000ff/000000?text=+) `light_blue`
+- ![light_magenta](https://placehold.it/10/ff00ff/000000?text=+) `light_magenta`
+- ![light_cyan](https://placehold.it/10/00ffff/000000?text=+) `light_cyan`
 - ![white](https://placehold.it/10/ffffff/000000?text=+) `white`
 - `default` (default color of the terminal)
 
@@ -324,7 +324,6 @@ export GBT_CAR_DIR_BG='red'
 # Set the foreground color of the `Dir` car to white
 export GBT_CAR_DIR_FG='white'
 ```
-
 
 #### Color number
 
@@ -356,17 +355,26 @@ export GBT_CAR_DIR_BG='170;0;0'
 export GBT_CAR_DIR_FG='255;255;255'
 ```
 
-Any [color name](https://github.com/jtyr/gbt#color-name) or [color
-number](https://github.com/jtyr/gbt#color-number) can be automatically converted
-to RGB number by using to following env variable:
+#### Color scheme resistance
+
+GBT is using [8-bit color
+palette](https://en.wikipedia.org/wiki/ANSI_escape_code#8-bit) to color
+individual cars of the train. First 16 colors (Standart and High-intensity
+colors) of the palette are prone to a change if the terminal is using some color
+scheme (e.g.
+[Solarized](https://en.wikipedia.org/wiki/Solarized_(color_scheme))). That means
+that if one GBT train uses mixture of the first 16 and the remaining 240 colors,
+the look might be inconsistent because some of the colors might change
+(depending on the color scheme) and some not. Luckily the first 16 colors can be
+found in the remaining 240 colors and therefore GBT can automatically convert
+the first 16 colors into higher colors which provides consistent look regardless
+the color scheme. This works automatically for [color names](#color-name) as
+well as for [color numbers](#color-number). If needed, the automatic conversion
+can be disabled with the following variable:
 
 ```shell
-export GBT_FORCE_TRUE_COLORS=1
+export GBT_FORCE_HIGHER_COLORS='0'
 ```
-
-That will convert all 8-bit colors specified by a name or a number into 24-bit
-true colors. As a result, this will produce consistent color output regardless
-of the color pallete used by the terminal (e.g. Solarized colore scheme).
 
 
 ### Formatting

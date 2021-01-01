@@ -4,7 +4,6 @@ import (
     "fmt"
     "path"
     "regexp"
-    "strconv"
     "strings"
 
     "github.com/jtyr/gbt/pkg/core/utils"
@@ -30,10 +29,10 @@ type Car struct {
 // Shell type.
 var Shell = utils.GetEnv("GBT_SHELL", path.Base(utils.GetEnv("SHELL", "bash")))
 
-// True colors convertor flag.
-var trueColors = utils.GetEnvBool("GBT_FORCE_TRUE_COLORS", false)
+// Higher colors convertor flag.
+var forceHigherColors = utils.GetEnvBool("GBT_FORCE_HIGHER_COLORS", true)
 
-// List of named colors and their codes.
+// List of named Standard and High-intensity colors and their ANSI codes.
 var colors = map[string]string {
     "black":          "0",
     "red":            "1",
@@ -51,6 +50,26 @@ var colors = map[string]string {
     "light_magenta": "13",
     "light_cyan":    "14",
     "white":         "15",
+}
+
+// List of named Standard and High-intensity colors represented as 216 and Grayscale colors.
+var higherColors = map[string]string {
+    "black":          "16",
+    "red":           "124",
+    "green":          "34",
+    "yellow":        "100",
+    "blue":           "19",
+    "magenta":        "90",
+    "cyan":           "30",
+    "light_gray":    "248",
+    "dark_gray":     "240",
+    "light_red":     "196",
+    "light_green":    "46",
+    "light_yellow":  "226",
+    "light_blue":     "63",
+    "light_magenta": "201",
+    "light_cyan":     "51",
+    "white":         "231",
 }
 
 // SetParamStr sets string value to a parameter.
@@ -166,25 +185,25 @@ func (c *Car) GetColor(name string, isFg bool) (ret string) {
         seq = fmt.Sprintf("%s[%s9m", esc, kind)
     } else {
         if val, ok := colors[name]; ok {
-            depth := 5
-
-            if trueColors {
-                val = getTrueColor(val)
-                depth = 2
+            if forceHigherColors {
+                val = higherColors[name]
             }
 
             // Named color
-            seq = fmt.Sprintf("%s[%s8;%d;%sm", esc, kind, depth, val)
+            seq = fmt.Sprintf("%s[%s8;5;%sm", esc, kind,  val)
         } else if match := reColorNumber.MatchString(name); match {
-            depth := 5
+            val := name
 
-            if trueColors {
-                name = getTrueColor(name)
-                depth = 2
+            if forceHigherColors {
+                for k, v := range colors {
+                    if v == name {
+                        val = higherColors[k]
+                    }
+                }
             }
 
             // Color number
-            seq = fmt.Sprintf("%s[%s8;%d;%sm", esc, kind, depth, name)
+            seq = fmt.Sprintf("%s[%s8;5;%sm", esc, kind, val)
         } else if match := reRgbTriplet.MatchString(name); match {
             // RGB color
             seq = fmt.Sprintf("%s[%s8;2;%sm", esc, kind, name)
@@ -270,48 +289,4 @@ func decorateShell(seq string) (ret string) {
     }
 
     return
-}
-
-func getTrueColor(codeString string) (string) {
-    code, _ := strconv.Atoi(codeString)
-    var r, g, b int
-
-    if code > -1 && code < 7 {
-        num := code
-        seq := [2]int{0, 128}
-
-        b = seq[num / 4 % 2]
-        g = seq[num / 2 % 2]
-        r = seq[num % 2]
-    } else if code == 7 {
-        r = 192
-        g = r
-        b = r
-    } else if code == 8 {
-        r = 128
-        g = r
-        b = r
-    } else if code > 8 && code < 16 {
-        num := code - 8
-        seq := [2]int{0, 255}
-
-        b = seq[num / 4 % 2]
-        g = seq[num / 2 % 2]
-        r = seq[num % 2]
-    } else if code > 15 && code < 232 {
-        num := code - 16
-        seq := [6]int{0, 95, 135, 175, 215, 255}
-
-        r = seq[num / 36 % 6]
-        g = seq[num / 6 % 6]
-        b = seq[num % 6]
-    } else if code > 231 && code < 256 {
-        num := code - 232
-
-        r = num * 10 + 8
-        g = r
-        b = r
-    }
-
-    return fmt.Sprintf("%d;%d;%d", r, g, b)
 }

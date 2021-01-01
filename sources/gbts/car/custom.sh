@@ -25,8 +25,8 @@ function GbtCarCustom() {
     local C_SEP="${prefix}_SEP"
     local C_SEP_TEXT="${prefix}_SEP_TEXT"
 
-    local defaultRootBg=${GBT_CAR_BG:-yellow}
-    local defaultRootFg=${GBT_CAR_FG:-default}
+    local defaultRootBg=${GBT_CAR_BG:-130}
+    local defaultRootFg=${GBT_CAR_FG:-white}
     local defaultRootFm=${GBT_CAR_FM:-none}
 
     local defaultTextText='?'

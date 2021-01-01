@@ -58,7 +58,7 @@ func getActiveConfig(configDir string) (config string) {
 
 // Init initializes the car.
 func (c *Car) Init() {
-    defaultRootBg := utils.GetEnv("GBT_CAR_BG", "66;133;244")
+    defaultRootBg := utils.GetEnv("GBT_CAR_BG", "33")
     defaultRootFg := utils.GetEnv("GBT_CAR_FG", "white")
     defaultRootFm := utils.GetEnv("GBT_CAR_FM", "none")
     defaultSep := "\000"
