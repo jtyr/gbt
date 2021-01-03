@@ -89,10 +89,14 @@ func TestInit(t *testing.T) {
 
         if test.depth != "" {
             os.Setenv("GBT_CAR_DIR_DEPTH", test.depth)
+        } else {
+            os.Unsetenv("GBT_CAR_DIR_DEPTH")
         }
 
         if test.nonCurLen != "" {
             os.Setenv("GBT_CAR_DIR_NONCURLEN", test.nonCurLen)
+        } else {
+            os.Unsetenv("GBT_CAR_DIR_NONCURLEN")
         }
 
         if test.sep != "" {
