@@ -27,4 +27,4 @@ export GBT_CAR_TIME_FG='dark_gray'
 export GBT_CAR_TIME_FM='bold'
 export GBT_CAR_TIME_FORMAT=' {{ Time }}'
 
-export GBT_SEPARATOR=''
+export GBT_SEPARATOR='\x01'
