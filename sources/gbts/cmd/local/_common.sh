@@ -63,7 +63,7 @@ function gbt__get_sources() {
 
         # Automatic aliases
         if [[ ${GBT__AUTO_ALIASES:-1} == 1 ]]; then
-            for plugin in $(echo $GBT__PLUGINS_REMOTE__HASH | sed 's/\ /\n/g'); do
+            for plugin in $(echo $GBT__PLUGINS_REMOTE__HASH | tr ' ' '\n'); do
                 if [[ $plugin != '.' ]]; then
                     echo "alias ${GBT__ALIASES[$plugin]}='gbt_$plugin'"
                 fi
