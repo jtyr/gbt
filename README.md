@@ -127,7 +127,12 @@ brew tap jtyr/repo
 brew install gbt
 ```
 Or install `gbt-git` if you would like to run the latest greatest from the
-`master` branch.
+`master` branch:
+
+```shell
+brew tap jtyr/repo
+brew install --HEAD gbt-git
+```
 
 #### Windows
 
@@ -243,7 +248,7 @@ On Mac, it can be installed via `brew`:
 
 ```shell
 brew tap homebrew/cask-fonts
-brew cask install font-dejavu-sans-mono-nerd-font
+brew install --cask font-dejavu-sans-mono-nerd-font
 ```
 
 On Windows, it can be installed via `choco`:
