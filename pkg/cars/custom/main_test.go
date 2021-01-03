@@ -3,9 +3,13 @@ package custom
 import (
     "os"
     "testing"
+
+    "github.com/jtyr/gbt/pkg/core/utils"
 )
 
 func TestInit(t *testing.T) {
+    utils.ResetEnv()
+
     tests := []struct {
         cmdText string
         cmdDisplay string

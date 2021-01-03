@@ -3,9 +3,13 @@ package hostname
 import (
     "os/user"
     "testing"
+
+    "github.com/jtyr/gbt/pkg/core/utils"
 )
 
 func TestInit(t *testing.T) {
+    utils.ResetEnv()
+
     curUser, _ := user.Current()
 
     tests := []struct {

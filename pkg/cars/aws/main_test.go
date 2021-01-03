@@ -6,9 +6,13 @@ import (
     "os/user"
     "path/filepath"
     "testing"
+
+    "github.com/jtyr/gbt/pkg/core/utils"
 )
 
 func TestInit(t *testing.T) {
+    utils.ResetEnv()
+
     tests := []struct {
         configContent   string
         profileName     string

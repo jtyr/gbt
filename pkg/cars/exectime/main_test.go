@@ -4,9 +4,13 @@ import (
     "os"
     "testing"
     "time"
+
+    "github.com/jtyr/gbt/pkg/core/utils"
 )
 
 func TestInit(t *testing.T) {
+    utils.ResetEnv()
+
     os.Setenv("GBT_CAR_EXECTIME_SECS", "1515278961.987654321")
 
     fakedDate := time.Date(2018, time.January, 6, 23, 57, 41, 123456789, time.UTC)

@@ -3,9 +3,13 @@ package sign
 import (
     "os/user"
     "testing"
+
+    "github.com/jtyr/gbt/pkg/core/utils"
 )
 
 func TestInitUser(t *testing.T) {
+    utils.ResetEnv()
+
     curUser, _ := user.Current()
 
     tests := []struct {

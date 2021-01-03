@@ -2,9 +2,13 @@ package kubectl
 
 import (
     "testing"
+
+    "github.com/jtyr/gbt/pkg/core/utils"
 )
 
 func TestInit(t *testing.T) {
+    utils.ResetEnv()
+
     tests := []struct {
         runKubectlCurrentContext []string
         runGetContexts           []string

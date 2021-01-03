@@ -5,9 +5,12 @@ import (
     "time"
 
     ccar "github.com/jtyr/gbt/pkg/core/car"
+    "github.com/jtyr/gbt/pkg/core/utils"
 )
 
 func TestInit(t *testing.T) {
+    utils.ResetEnv()
+
     fakedDate := time.Date(2018, time.January, 6, 23, 57, 41, 0, time.UTC)
     tnow = func() time.Time {
         return fakedDate

@@ -7,9 +7,13 @@ import (
     "os/user"
     "path/filepath"
     "testing"
+
+    "github.com/jtyr/gbt/pkg/core/utils"
 )
 
 func TestInit(t *testing.T) {
+    utils.ResetEnv()
+
     tests := []struct {
         configName      string
         configContent   string
@@ -115,7 +119,6 @@ func TestInit(t *testing.T) {
             }
         }
 
-        car := Car{}
         runtimeOs = test.os
 
         if test.credFileContent != "" {
@@ -138,6 +141,7 @@ func TestInit(t *testing.T) {
             os.Unsetenv("GBT_CAR_GCP_PROJECT_ALIASES")
         }
 
+        car := Car{}
         car.Init()
 
         if car.Model["Config"].Text != test.expectedConfig {

@@ -5,9 +5,13 @@ import (
     "log"
     "os"
     "testing"
+
+    "github.com/jtyr/gbt/pkg/core/utils"
 )
 
 func TestInitDefault(t *testing.T) {
+    utils.ResetEnv()
+
     tests := []struct {
         goos string
         name string
