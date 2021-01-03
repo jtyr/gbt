@@ -3,11 +3,11 @@ package status
 import (
     "testing"
 
-    "github.com/jtyr/gbt/pkg/core/utils"
+    ct "github.com/jtyr/gbt/pkg/core/testing"
 )
 
 func TestInit(t *testing.T) {
-    utils.ResetEnv()
+    ct.ResetEnv()
 
     tests := []struct {
         args string

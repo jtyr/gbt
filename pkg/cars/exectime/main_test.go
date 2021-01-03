@@ -5,11 +5,11 @@ import (
     "testing"
     "time"
 
-    "github.com/jtyr/gbt/pkg/core/utils"
+    ct "github.com/jtyr/gbt/pkg/core/testing"
 )
 
 func TestInit(t *testing.T) {
-    utils.ResetEnv()
+    ct.ResetEnv()
 
     os.Setenv("GBT_CAR_EXECTIME_SECS", "1515278961.987654321")
 
