@@ -1,4 +1,4 @@
-function gbt_KUBECTL() {
+function gbt_kubectl() {
     local KUBECTL_BIN=$(gbt__which KUBECTL)
     [ -z "$KUBECTL_BIN" ] && return 1
 
