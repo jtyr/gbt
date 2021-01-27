@@ -11,8 +11,8 @@ significantly faster.
 GBT comes with an interesting feature called
 [prompt forwarding](#prompt-forwarding) which allows to forward user-defined
 prompt to a remote machine and have the same-looking prompt across all machines
-via SSH but also in Docker, Vagrant, MySQL or in Screen without the need to
-install anything remotely.
+via SSH but also in Docker, Kubectl, Vagrant, MySQL or in Screen without the
+need to install anything remotely.
 
 ![Prompt forwarding demo](https://raw.githubusercontent.com/jtyr/gbt/master/images/prompt_forwarding.gif "Prompt forwarding demo")
 
@@ -2667,10 +2667,10 @@ support in Go.
 Prompt forwarding
 -----------------
 
-In order to enjoy GBT prompt via SSH but also in Docker, Vagrant, MySQL or in
-Screen without the need to install GBT everywhere, you can use GBTS (GBT written
-in Shell). GBTS is a set of scripts which get forwarded to applications and
-remote connections and then executed to generate the nice looking prompt.
+In order to enjoy GBT prompt via SSH but also in Docker, Kubectl, Vagrant, MySQL
+or in Screen without the need to install GBT everywhere, you can use GBTS (GBT
+written in Shell). GBTS is a set of scripts which get forwarded to applications
+and remote connections and then executed to generate the nice looking prompt.
 
 You can start using it by doing the following:
 
@@ -2680,9 +2680,9 @@ source $GBT__HOME/sources/gbts/cmd/local.sh
 ```
 
 This will automatically create command line aliases for all enabled plugins (by
-default `docker`, `gssh`, `mysql`, `screen`, `ssh`, `su`, `sudo` and `vagrant`)
-Then just SSH to some remote server or enter some Docker container or Vagrant
-box and you should get GBT prompt there.
+default `docker`, `gssh`, `kubectl`, `mysql`, `screen`, `ssh`, `su`, `sudo` and
+`vagrant`). Then just SSH to some remote server or enter some Docker container
+(even via `kubectl`) or Vagrant box and you should get GBT prompt there.
 
 If you want to have some of the default aliase available only on the remote
 site, just un-alias them locally:
@@ -2729,8 +2729,8 @@ alias ssh='gbt_ssh'
 
 The same or very similar principle applies to other supported commands like
 `docker`, `gssh` ([GCP
-SSH](https://cloud.google.com/sdk/gcloud/reference/compute/ssh)), `mysql`,
-`screen`, `su`, `sudo` and `vagrant`.
+SSH](https://cloud.google.com/sdk/gcloud/reference/compute/ssh)), `kubectl`,
+`mysql`, `screen`, `su`, `sudo` and `vagrant`.
 
 
 ### Additional settings
