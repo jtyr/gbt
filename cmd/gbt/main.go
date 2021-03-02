@@ -8,6 +8,7 @@ import (
     "strings"
 
     awsCar       "github.com/jtyr/gbt/pkg/cars/aws"
+    azureCar     "github.com/jtyr/gbt/pkg/cars/azure"
     customCar    "github.com/jtyr/gbt/pkg/cars/custom"
     dirCar       "github.com/jtyr/gbt/pkg/cars/dir"
     exectimeCar  "github.com/jtyr/gbt/pkg/cars/exectime"
@@ -173,6 +174,7 @@ func main() {
     carsNames := reCarSplit.Split(carsStr, -1)
     carsFactory := map[string]Cars{
         "aws":       &awsCar.Car{},
+        "azure":     &azureCar.Car{},
         "custom":    &customCar.Car{},
         "dir":       &dirCar.Car{},
         "exectime":  &exectimeCar.Car{},

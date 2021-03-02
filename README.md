@@ -45,6 +45,7 @@ Table of contents
   - [Train variables](#train-variables)
   - [Cars variables](#cars-variables)
     - [`Aws` car](#aws-car)
+    - [`Azure` car](#azure-car)
     - [`Custom` car](#custom-car)
     - [`Dir` car](#dir-car)
     - [`ExecTime` car](#exectime-car)
@@ -526,7 +527,7 @@ Formatting is done via `_FM` variables. The possible values are:
 Car that displays information about the local [AWS](https://aws.amazon.com/)
 configuration.
 
-- `GBT_CAR_AWS_BG='180;85;10'`
+- `GBT_CAR_AWS_BG='166'`
 
   Background color of the car.
 
@@ -611,6 +612,169 @@ configuration.
   Foreground color of the separator for this car.
 
 - `GBT_CAR_AWS_SEP_FM`
+
+  Formatting of the separator for this car.
+
+
+#### `Azure` car
+
+Car that displays information about the local [Azure](https://azure.microsoft.com/)
+configuration.
+
+- `GBT_CAR_AZURE_BG='32'`
+
+  Background color of the car.
+
+- `GBT_CAR_AZURE_FG='white'`
+
+  Foreground color of the car.
+
+- `GBT_CAR_AZURE_FM='none'`
+
+  Formatting of the car.
+
+- `GBT_CAR_AZURE_FORMAT=' {{ Icon }} {{ Subscription }} '`
+
+  Format of the car.
+
+- `GBT_CAR_AZURE_ICON_BG`
+
+  Background color of the `{{ Icon }}` element.
+
+- `GBT_CAR_AZURE_ICON_FG`
+
+  Foreground color of the `{{ Icon }}` element.
+
+- `GBT_CAR_AZURE_ICON_FM`
+
+  Formatting of the `{{ Icon }}` element.
+
+- `GBT_CAR_AZURE_ICON_TEXT='ﴃ'`
+
+  Text content of the `{{ Icon }}` element.
+
+- `GBT_CAR_AZURE_CLOUD_BG`
+
+  Background color of the `{{ Cloud }}` element.
+
+- `GBT_CAR_AZURE_CLOUD_FG`
+
+  Foreground color of the `{{ Cloud }}` element.
+
+- `GBT_CAR_AZURE_CLOUD_FM`
+
+  Formatting of the `{{ Cloud }}` element.
+
+- `GBT_CAR_AZURE_CLOUD_TEXT`
+
+  Text content of the `{{ Cloud }}` element specifying the configured cloud.
+
+- `GBT_CAR_AZURE_SUBSCRIPTION_BG`
+
+  Background color of the `{{ Subscription }}` element.
+
+- `GBT_CAR_AZURE_SUBSCRIPTION_FG`
+
+  Foreground color of the `{{ Subscription }}` element.
+
+- `GBT_CAR_AZURE_SUBSCRIPTION_FM`
+
+  Formatting of the `{{ Subscription }}` element.
+
+- `GBT_CAR_AZURE_SUBSCRIPTION_TEXT`
+
+  Text content of the `{{ Subscription }}` element specifying the configured
+  subscription.
+
+- `GBT_CAR_AZURE_USERNAME_BG`
+
+  Background color of the `{{ UserName }}` element.
+
+- `GBT_CAR_AZURE_USERNAME_FG`
+
+  Foreground color of the `{{ UserName }}` element.
+
+- `GBT_CAR_AZURE_USERNAME_FM`
+
+  Formatting of the `{{ UserName }}` element.
+
+- `GBT_CAR_AZURE_USERNAME_TEXT`
+
+  Text content of the `{{ UserName }}` element specifying the configured user
+  name.
+
+- `GBT_CAR_AZURE_USERTYPE_BG`
+
+  Background color of the `{{ UserType }}` element.
+
+- `GBT_CAR_AZURE_USERTYPE_FG`
+
+  Foreground color of the `{{ UserType }}` element.
+
+- `GBT_CAR_AZURE_USERTYPE_FM`
+
+  Formatting of the `{{ UserType }}` element.
+
+- `GBT_CAR_AZURE_USERTYPE_TEXT`
+
+  Text content of the `{{ UserType }}` element specifying the configured user
+  type.
+
+- `GBT_CAR_AZURE_STATE_BG`
+
+  Background color of the `{{ State }}` element.
+
+- `GBT_CAR_AZURE_STATE_FG`
+
+  Foreground color of the `{{ State }}` element.
+
+- `GBT_CAR_AZURE_STATE_FM`
+
+  Formatting of the `{{ State }}` element.
+
+- `GBT_CAR_AZURE_STATE_TEXT`
+
+  Text content of the `{{ State }}` element specifying the configured
+  subscription state.
+
+- `GBT_CAR_AZURE_DEFAULTS_GROUP_BG`
+
+  Background color of the `{{ DefaultsGroup }}` element.
+
+- `GBT_CAR_AZURE_DEFAULTS_GROUP_FG`
+
+  Foreground color of the `{{ DefaultsGroup }}` element.
+
+- `GBT_CAR_AZURE_DEFAULTS_GROUP_FM`
+
+  Formatting of the `{{ DefaultsGroup }}` element.
+
+- `GBT_CAR_AZURE_DEFAULTS_GROUP_TEXT`
+
+  Text content of the `{{ DefaultsGroup }}` element specifying the configured
+  default resource group.
+
+- `GBT_CAR_AZURE_DISPLAY`
+
+  Whether to display this car if it's in the list of cars (`GBT_CARS`).
+
+- `GBT_CAR_AZURE_WRAP='0'`
+
+  Whether to wrap the prompt line in front of this car.
+
+- `GBT_CAR_AZURE_SEP_TEXT`
+
+  Text content of the separator for this car.
+
+- `GBT_CAR_AZURE_SEP_BG`
+
+  Background color of the separator for this car.
+
+- `GBT_CAR_AZURE_SEP_FG`
+
+  Foreground color of the separator for this car.
+
+- `GBT_CAR_AZURE_SEP_FM`
 
   Formatting of the separator for this car.
 
@@ -949,7 +1113,7 @@ you need to override the environment variable `GBT__SOURCE_DATE_ARG='+%s`.
 Car that displays information about the local [GCP](https://cloud.google.com/)
 configuration.
 
-- `GBT_CAR_GCP_BG='66;133;244'`
+- `GBT_CAR_GCP_BG='33'`
 
   Background color of the car.
 
