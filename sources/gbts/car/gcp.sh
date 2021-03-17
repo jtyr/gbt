@@ -3,7 +3,7 @@ function GbtCarGcp() {
         return
     fi
 
-    local defaultRootBg=${GBT_CAR_BG:-66;133;244}
+    local defaultRootBg=${GBT_CAR_BG:-33}
     local defaultRootFg=${GBT_CAR_FG:-white}
     local defaultRootFm=${GBT_CAR_FM:-none}
 
