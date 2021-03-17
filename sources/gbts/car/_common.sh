@@ -299,6 +299,8 @@ function GbtMain() {
         # Fill in the model
         if [ "$car" = 'aws' ]; then
             GbtCarAws
+        elif [ "$car" = 'azure' ]; then
+            GbtCarAzure
         elif [ "${car:0:6}" = 'custom' ]; then
             GbtCarCustom ${car:6}
         elif [ "$car" = 'dir' ]; then
