@@ -81,9 +81,11 @@ func (c *Car) Init() {
                 }
 
                 // Get the default Resource Group
-                if cloudSection, sErr := cfg.GetSection("defaults"); sErr == nil {
-                    if cName, kErr := cloudSection.GetKey("group"); kErr == nil {
-                        defaultsGroup = cName.String()
+                if defaultsGroup == "" {
+                    if cloudSection, sErr := cfg.GetSection("defaults"); sErr == nil {
+                        if cName, kErr := cloudSection.GetKey("group"); kErr == nil {
+                            defaultsGroup = cName.String()
+                        }
                     }
                 }
             }
