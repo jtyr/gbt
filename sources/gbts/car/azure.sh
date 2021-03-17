@@ -8,36 +8,39 @@ function GbtCarAzure() {
     local defaultRootFm=${GBT_CAR_FM:-none}
 
     local defaultRootFormat=${GBT_CAR_AZURE_FORMAT-' {{ Icon }} {{ Subscription }} '}
-    local defaultCloudText=$AZURE_CLOUD_NAME
-    local defaultSubscriptionText=''
-    local defaultUserNameText=''
-    local defaultUserTypeText=''
-    local defaultStateText=''
-    local defaultDefaultsGroupText=''
     local defaultSep="\x00"
+
+    local cloudText=$AZURE_CLOUD_NAME
+    local subscriptionText=''
+    local userNameText=''
+    local userTypeText=''
+    local stateText=''
+    local defaultsGroupText=$AZURE_DEFAULTS_GROUP
 
     confDir=${AZURE_CONFIG_DIR:-$HOME/.azure}
 
-    if [[ -z $defaultCloudText ]]; then
+    if [[ -z $cloudText ]]; then
         configFile="$confDir/config"
 
         # Get the current Cloud Name
-        defaultCloudText=$(sed -nr "/^\[cloud\]/ { :l /^name[ ]*=/ { s/.*=[ ]*//; p; q;}; n; b l;}" $configFile)
+        cloudText=$(sed -nr "/^\[cloud\]/ { :l /^name[ ]*=/ { s/.*=[ ]*//; p; q;}; n; b l;}" $configFile)
 
         # Get the default Resource Group
-        defaultDefaultsGroupText=$(sed -nr "/^\[defaults\]/ { :l /^group[ ]*=/ { s/.*=[ ]*//; p; q;}; n; b l;}" $configFile)
+        if [[ -z $defaultsGroupText ]]; then
+            defaultsGroupText=$(sed -nr "/^\[defaults\]/ { :l /^group[ ]*=/ { s/.*=[ ]*//; p; q;}; n; b l;}" $configFile)
+        fi
 
-        if [[ -z $defaultCloudText ]]; then
+        if [[ -z $cloudText ]]; then
             # Default Cloud Name
-            defaultCloudText='AzureCloud'
+            cloudText='AzureCloud'
         fi
     fi
 
     # Get the Subscription ID
-    if [[ -n $defaultCloudText ]]; then
+    if [[ -n $cloudText ]]; then
         cloudsConfigFile="$confDir/clouds.config"
 
-        subscrId=$(sed -nr "/^\[$defaultCloudText\]/ { :l /^subscription[ ]*=/ { s/.*=[ ]*//; p; q;}; n; b l;}" $cloudsConfigFile)
+        subscrId=$(sed -nr "/^\[$cloudText\]/ { :l /^subscription[ ]*=/ { s/.*=[ ]*//; p; q;}; n; b l;}" $cloudsConfigFile)
 
         # Get the Subscription Name, User Name, User Type and State
         if [[ -n $subscrId ]]; then
@@ -59,16 +62,16 @@ function GbtCarAzure() {
 
                     case $k in
                         name)
-                            defaultSubscriptionText=$v
+                            subscriptionText=$v
                             ;;
                         user_name)
-                            defaultUserNameText=$v
+                            userNameText=$v
                             ;;
                         user_type)
-                            defaultUserTypeText=$v
+                            userTypeText=$v
                             ;;
                         state)
-                            defaultStateText=$v
+                            stateText=$v
                             ;;
                     esac
                 done
@@ -95,32 +98,32 @@ function GbtCarAzure() {
         [model-Cloud-Bg]=${GBT_CAR_AZURE_CLOUD_BG:-${GBT_CAR_AZURE_BG:-$defaultRootBg}}
         [model-Cloud-Fg]=${GBT_CAR_AZURE_CLOUD_FG:-${GBT_CAR_AZURE_FG:-$defaultRootFg}}
         [model-Cloud-Fm]=${GBT_CAR_AZURE_CLOUD_FM:-${GBT_CAR_AZURE_FM:-$defaultRootFm}}
-        [model-Cloud-Text]=${GBT_CAR_AZURE_CLOUD_TEXT-$defaultCloudText}
+        [model-Cloud-Text]=${GBT_CAR_AZURE_CLOUD_TEXT-$cloudText}
 
         [model-Subscription-Bg]=${GBT_CAR_AZURE_SUBSCRIPTION_BG:-${GBT_CAR_AZURE_BG:-$defaultRootBg}}
         [model-Subscription-Fg]=${GBT_CAR_AZURE_SUBSCRIPTION_FG:-${GBT_CAR_AZURE_FG:-$defaultRootFg}}
         [model-Subscription-Fm]=${GBT_CAR_AZURE_SUBSCRIPTION_FM:-${GBT_CAR_AZURE_FM:-$defaultRootFm}}
-        [model-Subscription-Text]=${GBT_CAR_AZURE_SUBSCRIPTION_TEXT-$defaultSubscriptionText}
+        [model-Subscription-Text]=${GBT_CAR_AZURE_SUBSCRIPTION_TEXT-$subscriptionText}
 
         [model-UserName-Bg]=${GBT_CAR_AZURE_USERNAME_BG:-${GBT_CAR_AZURE_BG:-$defaultRootBg}}
         [model-UserName-Fg]=${GBT_CAR_AZURE_USERNAME_FG:-${GBT_CAR_AZURE_FG:-$defaultRootFg}}
         [model-UserName-Fm]=${GBT_CAR_AZURE_USERNAME_FM:-${GBT_CAR_AZURE_FM:-$defaultRootFm}}
-        [model-UserName-Text]=${GBT_CAR_AZURE_USERNAME_TEXT-$defaultUserNameText}
+        [model-UserName-Text]=${GBT_CAR_AZURE_USERNAME_TEXT-$userNameText}
 
         [model-UserType-Bg]=${GBT_CAR_AZURE_USERTYPE_BG:-${GBT_CAR_AZURE_BG:-$defaultRootBg}}
         [model-UserType-Fg]=${GBT_CAR_AZURE_USERTYPE_FG:-${GBT_CAR_AZURE_FG:-$defaultRootFg}}
         [model-UserType-Fm]=${GBT_CAR_AZURE_USERTYPE_FM:-${GBT_CAR_AZURE_FM:-$defaultRootFm}}
-        [model-UserType-Text]=${GBT_CAR_AZURE_USERTYPE_TEXT-$defaultUserTypeText}
+        [model-UserType-Text]=${GBT_CAR_AZURE_USERTYPE_TEXT-$userTypeText}
 
         [model-State-Bg]=${GBT_CAR_AZURE_STATE_BG:-${GBT_CAR_AZURE_BG:-$defaultRootBg}}
         [model-State-Fg]=${GBT_CAR_AZURE_STATE_FG:-${GBT_CAR_AZURE_FG:-$defaultRootFg}}
         [model-State-Fm]=${GBT_CAR_AZURE_STATE_FM:-${GBT_CAR_AZURE_FM:-$defaultRootFm}}
-        [model-State-Text]=${GBT_CAR_AZURE_STATE_TEXT-$defaultStateText}
+        [model-State-Text]=${GBT_CAR_AZURE_STATE_TEXT-$stateText}
 
         [model-DefaultsGroup-Bg]=${GBT_CAR_AZURE_DEFAULTS_GROUP_BG:-${GBT_CAR_AZURE_BG:-$defaultRootBg}}
         [model-DefaultsGroup-Fg]=${GBT_CAR_AZURE_DEFAULTS_GROUP_FG:-${GBT_CAR_AZURE_FG:-$defaultRootFg}}
         [model-DefaultsGroup-Fm]=${GBT_CAR_AZURE_DEFAULTS_GROUP_FM:-${GBT_CAR_AZURE_FM:-$defaultRootFm}}
-        [model-DefaultsGroup-Text]=${GBT_CAR_AZURE_DEFAULTS_GROUP_TEXT-$defaultDefaultsGroupText}
+        [model-DefaultsGroup-Text]=${GBT_CAR_AZURE_DEFAULTS_GROUP_TEXT-$defaultsGroupText}
 
         [model-Sep-Bg]=${GBT_CAR_AZURE_SEP_BG:-$defaultSep}
         [model-Sep-Fg]=${GBT_CAR_AZURE_SEP_FG:-$defaultSep}
