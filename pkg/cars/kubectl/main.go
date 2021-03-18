@@ -1,10 +1,12 @@
 package kubectl
 
 import (
-    "strings"
+    "os"
 
     "github.com/jtyr/gbt/pkg/core/car"
     "github.com/jtyr/gbt/pkg/core/utils"
+
+    "k8s.io/client-go/tools/clientcmd"
 )
 
 // Car inherits the core.Car.
@@ -19,54 +21,36 @@ type kubeContextInfo struct {
     namespace string
 }
 
-var runKubectlCurrentContext = []string{"kubectl", "config", "current-context"}
-var runGetContexts = []string{"kubectl", "config", "get-contexts"}
-
-// Returns true if kubectl command exists.
-func isKubectlCurrentContextSet() bool {
-    rc, output, _ := utils.Run(runKubectlCurrentContext)
-
-    return rc == 0 && strings.TrimSpace(output) != ""
-}
-
 // Return the current context information for kubectl.
-func getCurrentContext(display bool) *kubeContextInfo {
-    kubectlInfo := &kubeContextInfo{
-        namespace: "",
-        context:   "",
-        cluster:   "",
-        authInfo:  "",
+func getCurrentContext() *kubeContextInfo {
+    info := &kubeContextInfo{}
+
+    loadingRules := clientcmd.ClientConfigLoadingRules{
+        Precedence:       []string{os.Getenv(clientcmd.RecommendedConfigPathEnvVar), clientcmd.RecommendedHomeFile},
+        WarnIfAllMissing: false,
     }
 
-    if ! display {
-        return kubectlInfo
+    mergedConfig, err := loadingRules.Load()
+    if err != nil {
+        return info
     }
 
-    rc, out, _ := utils.Run(runGetContexts)
+    info.context = mergedConfig.CurrentContext
 
-    if rc == 0 {
-        lines := strings.Split(out, "\n")
+    for k, c := range mergedConfig.Contexts {
+        if k == mergedConfig.CurrentContext {
+            info.cluster   = c.Cluster
+            info.authInfo  = c.AuthInfo
 
-        for _, line := range lines {
-            if strings.HasPrefix(line, "*") {
-                fields := strings.Fields(line)
-
-                kubectlInfo.context = fields[1]
-                kubectlInfo.cluster = fields[2]
-                kubectlInfo.authInfo = fields[3]
-
-                if len(fields) == 5 {
-                    kubectlInfo.namespace = fields[4]
-                } else {
-                    kubectlInfo.namespace = "default"
-                }
-
-                break
+            if len(c.Namespace) == 0 {
+                info.namespace = "default"
+            } else {
+                info.namespace = c.Namespace
             }
         }
     }
 
-    return kubectlInfo
+    return info
 }
 
 // Init initializes the car.
@@ -76,8 +60,7 @@ func (c *Car) Init() {
     defaultRootFm := utils.GetEnv("GBT_CAR_FM", "none")
     defaultSep := "\000"
 
-    c.Display = utils.GetEnvBool("GBT_CAR_KUBECTL_DISPLAY", isKubectlCurrentContextSet())
-    contextInfo := getCurrentContext(c.Display)
+    contextInfo := getCurrentContext()
 
     c.Model = map[string]car.ModelElement{
         "root": {
@@ -163,5 +146,6 @@ func (c *Car) Init() {
         },
     }
 
+    c.Display = utils.GetEnvBool("GBT_CAR_KUBECTL_DISPLAY", len(contextInfo.context) > 0)
     c.Wrap = utils.GetEnvBool("GBT_CAR_KUBECTL_WRAP", false)
 }

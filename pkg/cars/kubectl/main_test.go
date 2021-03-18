@@ -1,6 +1,8 @@
 package kubectl
 
 import (
+    "io/ioutil"
+    "os"
     "testing"
 
     ct "github.com/jtyr/gbt/pkg/core/testing"
@@ -10,8 +12,7 @@ func TestInit(t *testing.T) {
     ct.ResetEnv()
 
     tests := []struct {
-        runKubectlCurrentContext []string
-        runGetContexts           []string
+        config                   string
         expectedDisplay          bool
         expectedContext          string
         expectedCluster          string
@@ -19,51 +20,58 @@ func TestInit(t *testing.T) {
         expectedNamespace        string
     }{
         {
-            runKubectlCurrentContext: []string{"echo", "minikube"},
-            runGetContexts:           []string{"echo", "CURRENT   NAME            CLUSTER         AUTHINFO        NAMESPACE\n*         kubename        kubecluster     kubeauth\n"},
-            expectedDisplay:          true,
-            expectedContext:          "kubename",
-            expectedCluster:          "kubecluster",
-            expectedAuthInfo:         "kubeauth",
-            expectedNamespace:        "default",
+            config:            "{apiVersion: v1, kind: Config, current-context: kubename, contexts: [{name: kubename, context: {cluster: kubecluster, user: kubeauth}}], clusters: [{name: kubecluster}], users: [{name: kubeauth}]}",
+            expectedDisplay:   true,
+            expectedContext:   "kubename",
+            expectedCluster:   "kubecluster",
+            expectedAuthInfo:  "kubeauth",
+            expectedNamespace: "default",
         },
         {
-            runKubectlCurrentContext: []string{"echo", "minikube"},
-            runGetContexts:           []string{"echo", "CURRENT   NAME            CLUSTER         AUTHINFO        NAMESPACE\n*         context        cluster        authinfo        namespace\n"},
-            expectedDisplay:          true,
-            expectedContext:          "context",
-            expectedCluster:          "cluster",
-            expectedAuthInfo:         "authinfo",
-            expectedNamespace:        "namespace",
+            config:            "{apiVersion: v1, kind: Config, current-context: context, contexts: [{name: context, context: {cluster: cluster, user: authinfo, namespace: namespace}}], clusters: [{name: cluster}], users: [{name: authinfo}]}",
+            expectedDisplay:   true,
+            expectedContext:   "context",
+            expectedCluster:   "cluster",
+            expectedAuthInfo:  "authinfo",
+            expectedNamespace: "namespace",
         },
         {
-            runKubectlCurrentContext: []string{"commandnotexists"},
-            runGetContexts:           []string{"nothing"},
-            expectedDisplay:          false,
-            expectedContext:          "",
-            expectedCluster:          "",
-            expectedAuthInfo:         "",
-            expectedNamespace:        "",
+            config:            ": : :",
+            expectedDisplay:   false,
+            expectedContext:   "",
+            expectedCluster:   "",
+            expectedAuthInfo:  "",
+            expectedNamespace: "",
         },
         {
-            runKubectlCurrentContext: []string{"echo"}, // no output
-            runGetContexts:           []string{"nothing"},
-            expectedDisplay:          false,
-            expectedContext:          "",
-            expectedCluster:          "",
-            expectedAuthInfo:         "",
-            expectedNamespace:        "",
+            config:            "",
+            expectedDisplay:   false,
+            expectedContext:   "",
+            expectedCluster:   "",
+            expectedAuthInfo:  "",
+            expectedNamespace: "",
+        },
+        {
+            config:            "",
+            expectedDisplay:   false,
+            expectedContext:   "",
+            expectedCluster:   "",
+            expectedAuthInfo:  "",
+            expectedNamespace: "",
         },
     }
 
     for i, test := range tests {
-        if test.runGetContexts != nil {
-            runGetContexts = test.runGetContexts
+        config, err := ioutil.TempFile("", "")
+        if err != nil {
+            t.Errorf("failed to create config file: %s", err)
         }
 
-        if len(test.runKubectlCurrentContext) > 0 {
-            runKubectlCurrentContext = test.runKubectlCurrentContext
+        if err := ioutil.WriteFile(config.Name(), []byte(test.config), 0644); err != nil {
+            t.Errorf("failed to write config file: %s", err)
         }
+
+        os.Setenv("KUBECONFIG", config.Name())
 
         car := Car{}
 
