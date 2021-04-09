@@ -31,12 +31,12 @@ function GbtCarHostname() {
         [model-Admin-Bg]=${GBT_CAR_HOSTNAME_ADMIN_BG:-${GBT_CAR_HOSTNAME_USERHOST_BG:-${GBT_CAR_HOSTNAME_BG:-$defaultRootBg}}}
         [model-Admin-Fg]=${GBT_CAR_HOSTNAME_ADMIN_FG:-${GBT_CAR_HOSTNAME_USERHOST_FG:-${GBT_CAR_HOSTNAME_FG:-$defaultRootFg}}}
         [model-Admin-Fm]=${GBT_CAR_HOSTNAME_ADMIN_FM:-${GBT_CAR_HOSTNAME_USERHOST_FM:-${GBT_CAR_HOSTNAME_FM:-$defaultRootFm}}}
-        [model-Admin-Text]=${GBT_CAR_HOSTNAME_ADMIN_TEXT-${USER:-$(id -un)}}
+        [model-Admin-Text]=${GBT_CAR_HOSTNAME_ADMIN_TEXT-${USER:-$UID}}
 
         [model-User-Bg]=${GBT_CAR_HOSTNAME_USER_BG:-${GBT_CAR_HOSTNAME_USERHOST_BG:-${GBT_CAR_HOSTNAME_BG:-$defaultRootBg}}}
         [model-User-Fg]=${GBT_CAR_HOSTNAME_USER_FG:-${GBT_CAR_HOSTNAME_USERHOST_FG:-${GBT_CAR_HOSTNAME_FG:-$defaultRootFg}}}
         [model-User-Fm]=${GBT_CAR_HOSTNAME_USER_FM:-${GBT_CAR_HOSTNAME_USERHOST_FM:-${GBT_CAR_HOSTNAME_FM:-$defaultRootFm}}}
-        [model-User-Text]=${GBT_CAR_HOSTNAME_USER_TEXT-${USER:-$(id -un)}}
+        [model-User-Text]=${GBT_CAR_HOSTNAME_USER_TEXT-${USER:-$UID}}
 
         [model-Host-Bg]=${GBT_CAR_HOSTNAME_HOST_BG:-${GBT_CAR_HOSTNAME_BG:-$defaultRootBg}}
         [model-Host-Fg]=${GBT_CAR_HOSTNAME_HOST_FG:-${GBT_CAR_HOSTNAME_FG:-$defaultRootFg}}
