@@ -5,6 +5,7 @@ import (
     "strings"
 )
 
+// ResetEnvIgnore holds list of env vars that won't be reset.
 var ResetEnvIgnore = []string{"PATH", "HOME"}
 
 func getEnvKeys() []string {
@@ -18,6 +19,7 @@ func getEnvKeys() []string {
     return keys
 }
 
+// ResetEnv resets env vars.
 func ResetEnv() {
     for _, k := range getEnvKeys() {
         ignore := false

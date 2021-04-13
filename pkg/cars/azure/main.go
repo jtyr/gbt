@@ -26,7 +26,7 @@ type azureProfile struct {
 
 // Subscription in the azureProfile.json file
 type azureProfileSubscription struct {
-    Id    string                       `json:"id"`
+    ID    string                       `json:"id"`
     Name  string                       `json:"name"`
     State string                       `json:"state"`
     User  azureProfileSubscriptionUser `json:"user"`
@@ -98,21 +98,21 @@ func (c *Car) Init() {
 
         // Get the Subscription ID
         if cloud != "" {
-            subscrId := ""
+            subscrID := ""
             cloudsConfigFile := strings.Join([]string{confDir, "clouds.config"}, osSep)
 
             cfg, err := ini.Load(cloudsConfigFile)
 
             if err == nil {
                 if cloudSection, sErr := cfg.GetSection(cloud); sErr == nil {
-                    if sId, kErr := cloudSection.GetKey("subscription"); kErr == nil {
-                        subscrId = sId.String()
+                    if sID, kErr := cloudSection.GetKey("subscription"); kErr == nil {
+                        subscrID = sID.String()
                     }
                 }
             }
 
             // Get the Subscription Name, User Name, User Type and State
-            if subscrId != "" {
+            if subscrID != "" {
                 azureProfileFile := strings.Join([]string{confDir, "azureProfile.json"}, osSep)
 
                 if byteValue, err := ioutil.ReadFile(azureProfileFile); err == nil {
@@ -125,7 +125,7 @@ func (c *Car) Init() {
                     json.Unmarshal(byteValue, &data)
 
                     for _, s := range data.Subscriptions {
-                        if s.Id == subscrId {
+                        if s.ID == subscrID {
                             subscription = s.Name
                             userName = s.User.Name
                             userType = s.User.Type
