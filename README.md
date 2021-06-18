@@ -304,22 +304,22 @@ specified in 3 ways:
 
 Only a limited number of named colors is supported:
 
-- ![black](https://placehold.it/10/000000/000000?text=+) `black`
-- ![red](https://placehold.it/10/800000/000000?text=+) `red`
-- ![green](https://placehold.it/10/008000/000000?text=+) `green`
-- ![yellow](https://placehold.it/10/808000/000000?text=+) `yellow`
-- ![blue](https://placehold.it/10/000080/000000?text=+) `blue`
-- ![magenta](https://placehold.it/10/800080/000000?text=+) `magenta`
-- ![cyan](https://placehold.it/10/008080/000000?text=+) `cyan`
-- ![light_gray](https://placehold.it/10/c0c0c0/000000?text=+) `light_gray`
-- ![dark_gray](https://placehold.it/10/808080/000000?text=+) `dark_gray`
-- ![light_red](https://placehold.it/10/ff0000/000000?text=+) `light_red`
-- ![light_green](https://placehold.it/10/00ff00/000000?text=+) `light_green`
-- ![light_green](https://placehold.it/10/ffff00/000000?text=+) `light_yellow`
-- ![light_blue](https://placehold.it/10/0000ff/000000?text=+) `light_blue`
-- ![light_magenta](https://placehold.it/10/ff00ff/000000?text=+) `light_magenta`
-- ![light_cyan](https://placehold.it/10/00ffff/000000?text=+) `light_cyan`
-- ![white](https://placehold.it/10/ffffff/000000?text=+) `white`
+- ![black](https://via.placeholder.com/10/000000/000000?text=+) `black`
+- ![red](https://via.placeholder.com/10/800000/000000?text=+) `red`
+- ![green](https://via.placeholder.com/10/008000/000000?text=+) `green`
+- ![yellow](https://via.placeholder.com/10/808000/000000?text=+) `yellow`
+- ![blue](https://via.placeholder.com/10/000080/000000?text=+) `blue`
+- ![magenta](https://via.placeholder.com/10/800080/000000?text=+) `magenta`
+- ![cyan](https://via.placeholder.com/10/008080/000000?text=+) `cyan`
+- ![light_gray](https://via.placeholder.com/10/c0c0c0/000000?text=+) `light_gray`
+- ![dark_gray](https://via.placeholder.com/10/808080/000000?text=+) `dark_gray`
+- ![light_red](https://via.placeholder.com/10/ff0000/000000?text=+) `light_red`
+- ![light_green](https://via.placeholder.com/10/00ff00/000000?text=+) `light_green`
+- ![light_green](https://via.placeholder.com/10/ffff00/000000?text=+) `light_yellow`
+- ![light_blue](https://via.placeholder.com/10/0000ff/000000?text=+) `light_blue`
+- ![light_magenta](https://via.placeholder.com/10/ff00ff/000000?text=+) `light_magenta`
+- ![light_cyan](https://via.placeholder.com/10/00ffff/000000?text=+) `light_cyan`
+- ![white](https://via.placeholder.com/10/ffffff/000000?text=+) `white`
 - `default` (default color of the terminal)
 
 Examples:
