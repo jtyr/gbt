@@ -109,8 +109,6 @@ distribution regardless its version.
 
 Packages hosted by [Packagecloud](https://packagecloud.io/gbt/release):
 
-Ubuntu 22.04
-
 ```shell
 # When you get message "Warning: apt-key is deprecated. Manage keyring files in trusted.gpg.d instead (see apt-key(8))."
 # use command:
