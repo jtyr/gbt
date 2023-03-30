@@ -22,6 +22,7 @@ GBT__OS_SYMBOLS=(
     [mageia]='\xef\x8c\x90'              [mageia_color]=24
     [mandriva]='\xef\x8c\x91'            [mandriva_color]=208
     [manjaro]='\xef\x8c\x92'             [manjaro_color]=34
+    [manjaro-arm]='\xef\x8c\x92'         [manjaro_color]=34
     [mysql]='\xee\x9c\x84'               [mysql_color]=30
     [nixos]='\xef\x8c\x93'               [nixos_color]=88
     [opensuse]='\xef\x8c\x94'            [opensuse_color]=113
