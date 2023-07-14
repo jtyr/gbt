@@ -180,7 +180,7 @@ Or the following on Windows using PowerShell:
 mkdir ~/go
 $Env:GOPATH = '~/go'
 $Env:PATH = "~/go/bin;$Env:PATH"
-go get github.com/jtyr/gbt/cmd/gbt
+go install github.com/jtyr/gbt/cmd/gbt@latest
 ```
 
 ---
