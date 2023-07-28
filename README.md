@@ -110,6 +110,9 @@ distribution regardless its version.
 Packages hosted by [Packagecloud](https://packagecloud.io/gbt/release):
 
 ```shell
+# When you get message "Warning: apt-key is deprecated. Manage keyring files in trusted.gpg.d instead (see apt-key(8))."
+# use command:
+# curl -L https://packagecloud.io/gbt/release/gpgkey | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/gbt.gpg >/dev/null
 curl -L https://packagecloud.io/gbt/release/gpgkey | sudo apt-key add -
 echo 'deb https://packagecloud.io/gbt/release/ubuntu/ xenial main' | sudo tee /etc/apt/sources.list.d/gbt.list >/dev/null
 sudo apt-get update
