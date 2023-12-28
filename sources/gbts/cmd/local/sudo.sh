@@ -1,26 +1,31 @@
+# shellcheck shell=bash
 function gbt_sudo() {
-    local SU_BIN=$(gbt__which su)
+    local SU_BIN SUDO_BIN
+
+    SU_BIN=$(gbt__which su)
     [ -z "$SU_BIN" ] && return 1
-    local SUDO_BIN=$(gbt__which sudo)
+    SUDO_BIN=$(gbt__which sudo)
     [ -z "$SUDO_BIN" ] && return 1
 
     local rv
 
-    if [ "$1" != 'su' ] && [[ " $@ " != *" -i "* ]]; then
+    if [ "$1" != 'su' ] && [[ " $* " != *" -i "* ]]; then
         $SUDO_BIN "$@"
     else
         shift
 
-        local GBT__CONF=$(gbt__local_rcfile)
+        local GBT__CONF
+        GBT__CONF=$(gbt__local_rcfile)
 
-        $SUDO_BIN $SU_BIN -s "$GBT__CONF.bash" "$@"
+        $SUDO_BIN "$SU_BIN" -s "$GBT__CONF.bash" "$@"
 
         rv=$?
 
-        rm -f $GBT__CONF $GBT__CONF.bash
+        rm -f "$GBT__CONF" "$GBT__CONF.bash"
     fi
 
     return ${rv:-$?}
 }
 
+# shellcheck disable=SC2139
 [[ ${GBT__AUTO_ALIASES:-1} == 1 ]] && alias "${GBT__ALIASES[sudo]}"='gbt_sudo'

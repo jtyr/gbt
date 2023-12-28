@@ -1,3 +1,5 @@
+# shellcheck shell=bash
+# shellcheck disable=SC2154,SC2034
 function GbtCarGit() {
     if [[ $GBT_CAR_GIT_DISPLAY == 0 ]]; then
         return
@@ -36,27 +38,25 @@ function GbtCarGit() {
     local defaultStashSymbolText=''
     local defaultSep="\x00"
 
-    GbtDecorateUnicode ${GBT_CAR_GIT_ICON_TEXT-'\xee\x82\xa0'}
+    GbtDecorateUnicode "${GBT_CAR_GIT_ICON_TEXT-'\xee\x82\xa0'}"
     local defaultIconText=$GBT__RETVAL
-    GbtDecorateUnicode ${GBT_CAR_GIT_STATUS_DIRTY_TEXT-'\xe2\x9c\x98'}
+    GbtDecorateUnicode "${GBT_CAR_GIT_STATUS_DIRTY_TEXT-'\xe2\x9c\x98'}"
     local defaultStatusDirtyText=$GBT__RETVAL
-    GbtDecorateUnicode ${GBT_CAR_GIT_STATUS_CLEAN_TEXT-'\xe2\x9c\x94'}
+    GbtDecorateUnicode "${GBT_CAR_GIT_STATUS_CLEAN_TEXT-'\xe2\x9c\x94'}"
     local defaultStatusCleanText=$GBT__RETVAL
 
     local isGitDir=0
 
-    git rev-parse --git-dir 1>/dev/null 2>/dev/null
-
-    if [[ $? == 0 ]]; then
+    if git rev-parse --git-dir 1>/dev/null 2>/dev/null; then
         isGitDir=1
 
         if [[ $defaultRootFormat =~ \{\{\ *Head\ *\}\} ]]; then
             defaultHeadText=$(git symbolic-ref HEAD 2>/dev/null)
 
-            if [[ -z "$defaultHeadText" ]]; then
+            if [ -z "$defaultHeadText" ]; then
                 defaultHeadText=$(git describe --tags --exact-match HEAD 2>/dev/null)
 
-                if [[ -z "$defaultHeadText" ]]; then
+                if [ -z "$defaultHeadText" ]; then
                     defaultHeadText=$(git rev-parse --short HEAD 2>/dev/null)
                 fi
             fi
@@ -67,7 +67,7 @@ function GbtCarGit() {
         if [[ $defaultRootFormat =~ \{\{\ *Status.*\ *\}\} ]]; then
             declare -a status
 
-            local IFS='\n'
+            local IFS=$'\n'
             for line in $(git status --porcelain 2>/dev/null); do
                 case "${line:1:1}" in
                     A)
@@ -91,68 +91,68 @@ function GbtCarGit() {
                 esac
             done
 
-            if [ ${#status[@]} -gt 0 ]; then
+            if [[ ${#status[@]} -gt 0 ]]; then
                 defaultStatusFormat='{{ StatusDirty }}'
 
-                if [ ${status[added]} -gt 0 ]; then
+                if [[ ${status[added]} -gt 0 ]]; then
                     defaultStatusAddedFormat=${GBT_CAR_GIT_STATUS_ADDED_FORMAT-'{{ StatusAddedSymbol }}'}
-                    GbtDecorateUnicode ${GBT_CAR_GIT_STATUS_ADDED_SYMBOL_TEXT-' \xe2\x9f\xb4'}
+                    GbtDecorateUnicode "${GBT_CAR_GIT_STATUS_ADDED_SYMBOL_TEXT-' \xe2\x9f\xb4'}"
                     defaultStatusAddedSymbolText=$GBT__RETVAL
                     defaultStatusAddedCountText=${GBT_CAR_GIT_STATUS_ADDED_COUNT_TEXT-${status[added]}}
                 fi
 
-                if [ ${status[copied]} -gt 0 ]; then
+                if [[ ${status[copied]} -gt 0 ]]; then
                     defaultStatusCopiedFormat=${GBT_CAR_GIT_STATUS_COPIED_FORMAT-'{{ StatusCopiedSymbol }}'}
-                    GbtDecorateUnicode ${GBT_CAR_GIT_STATUS_COPIED_SYMBOL_TEXT-' \xe2\xa5\x88'}
+                    GbtDecorateUnicode "${GBT_CAR_GIT_STATUS_COPIED_SYMBOL_TEXT-' \xe2\xa5\x88'}"
                     defaultStatusCopiedSymbolText=$GBT__RETVAL
                     defaultStatusCopiedCountText=${GBT_CAR_GIT_STATUS_COPIED_COUNT_TEXT-${status[copied]}}
                 fi
 
-                if [ ${status[deleted]} -gt 0 ]; then
+                if [[ ${status[deleted]} -gt 0 ]]; then
                     defaultStatusDeletedFormat=${GBT_CAR_GIT_STATUS_DELETED_FORMAT-'{{ StatusDeletedSymbol }}'}
-                    GbtDecorateUnicode ${GBT_CAR_GIT_STATUS_DELETED_SYMBOL_TEXT-' \xe2\x9e\x96'}
+                    GbtDecorateUnicode "${GBT_CAR_GIT_STATUS_DELETED_SYMBOL_TEXT-' \xe2\x9e\x96'}"
                     defaultStatusDeletedSymbolText=$GBT__RETVAL
                     defaultStatusDeletedCountText=${GBT_CAR_GIT_STATUS_DELETED_COUNT_TEXT-${status[deleted]}}
                 fi
 
-                if [ ${status[ignored]} -gt 0 ]; then
+                if [[ ${status[ignored]} -gt 0 ]]; then
                     defaultStatusIgnoredFormat=${GBT_CAR_GIT_STATUS_IGNORED_FORMAT-'{{ StatusIgnoredSymbol }}'}
-                    GbtDecorateUnicode ${GBT_CAR_GIT_STATUS_IGNORED_SYMBOL_TEXT-' \xe2\x97\x8b'}
+                    GbtDecorateUnicode "${GBT_CAR_GIT_STATUS_IGNORED_SYMBOL_TEXT-' \xe2\x97\x8b'}"
                     defaultStatusIgnoredSymbolText=$GBT__RETVAL
                     defaultStatusIgnoredCountText=${GBT_CAR_GIT_STATUS_IGNORED_COUNT_TEXT-${status[ignored]}}
                 fi
 
-                if [ ${status[modified]} -gt 0 ]; then
+                if [[ ${status[modified]} -gt 0 ]]; then
                     defaultStatusModifiedFormat=${GBT_CAR_GIT_STATUS_MODIFIED_FORMAT-'{{ StatusModifiedSymbol }}'}
-                    GbtDecorateUnicode ${GBT_CAR_GIT_STATUS_MODIFIED_SYMBOL_TEXT-' \xe2\x9c\x9a'}
+                    GbtDecorateUnicode "${GBT_CAR_GIT_STATUS_MODIFIED_SYMBOL_TEXT-' \xe2\x9c\x9a'}"
                     defaultStatusModifiedSymbolText=$GBT__RETVAL
                     defaultStatusModifiedCountText=${GBT_CAR_GIT_STATUS_MODIFIED_COUNT_TEXT-${status[modified]}}
                 fi
 
-                if [ ${status[renamed]} -gt 0 ]; then
+                if [[ ${status[renamed]} -gt 0 ]]; then
                     defaultStatusRenamedFormat=${GBT_CAR_GIT_STATUS_RENAMED_FORMAT-'{{ StatusRenamedSymbol }}'}
-                    GbtDecorateUnicode ${GBT_CAR_GIT_STATUS_RENAMED_SYMBOL_TEXT-' \xe2\xa5\xb2'}
+                    GbtDecorateUnicode "${GBT_CAR_GIT_STATUS_RENAMED_SYMBOL_TEXT-' \xe2\xa5\xb2'}"
                     defaultStatusRenamedSymbolText=$GBT__RETVAL
                     defaultStatusRenamedCountText=${GBT_CAR_GIT_STATUS_RENAMED_COUNT_TEXT-${status[renamed]}}
                 fi
 
-                if [ ${status[staged]} -gt 0 ]; then
+                if [[ ${status[staged]} -gt 0 ]]; then
                     defaultStatusStagedFormat=${GBT_CAR_GIT_STATUS_STAGED_FORMAT-'{{ StatusStagedSymbol }}'}
-                    GbtDecorateUnicode ${GBT_CAR_GIT_STATUS_STAGED_SYMBOL_TEXT-' \xe2\x97\x8f'}
+                    GbtDecorateUnicode "${GBT_CAR_GIT_STATUS_STAGED_SYMBOL_TEXT-' \xe2\x97\x8f'}"
                     defaultStatusStagedSymbolText=$GBT__RETVAL
                     defaultStatusStagedCountText=${GBT_CAR_GIT_STATUS_STAGED_COUNT_TEXT-${status[staged]}}
                 fi
 
-                if [ ${status[unmerged]} -gt 0 ]; then
+                if [[ ${status[unmerged]} -gt 0 ]]; then
                     defaultStatusUnmergedFormat=${GBT_CAR_GIT_STATUS_UNMERGED_FORMAT-'{{ StatusUnmergedSymbol }}'}
-                    GbtDecorateUnicode ${GBT_CAR_GIT_STATUS_UNMERGED_SYMBOL_TEXT-' \xe2\x9c\x96'}
+                    GbtDecorateUnicode "${GBT_CAR_GIT_STATUS_UNMERGED_SYMBOL_TEXT-' \xe2\x9c\x96'}"
                     defaultStatusUnmergedSymbolText=$GBT__RETVAL
                     defaultStatusUnmergedCountText=${GBT_CAR_GIT_STATUS_UNMERGED_COUNT_TEXT-${status[unmerged]}}
                 fi
 
-                if [ ${status[untracked]} -gt 0 ]; then
+                if [[ ${status[untracked]} -gt 0 ]]; then
                     defaultStatusUntrackedFormat=${GBT_CAR_GIT_STATUS_UNTRACKED_FORMAT-'{{ StatusUntrackedSymbol }}'}
-                    GbtDecorateUnicode ${GBT_CAR_GIT_STATUS_UNTRACKED_SYMBOL_TEXT-' \xe2\x80\xa6'}
+                    GbtDecorateUnicode "${GBT_CAR_GIT_STATUS_UNTRACKED_SYMBOL_TEXT-' \xe2\x80\xa6'}"
                     defaultStatusUntrackedSymbolText=$GBT__RETVAL
                     defaultStatusUntrackedCountText=${GBT_CAR_GIT_STATUS_UNTRACKED_COUNT_TEXT-${status[untracked]}}
                 fi
@@ -160,33 +160,36 @@ function GbtCarGit() {
         fi
 
         if [[ $defaultRootFormat =~ \{\{\ *Ahead.*\ *\}\} ]]; then
-            local ahead=$(git rev-list --count @{upstream}..HEAD 2>/dev/null || echo E)
+            local ahead
+            ahead=$(git rev-list --count '@{upstream}..HEAD' 2>/dev/null || echo E)
 
             if [[ $ahead != 0 ]] && [[ $ahead != 'E' ]]; then
                 defaultAheadFormat=${GBT_CAR_GIT_AHEAD_FORMAT-'{{ AheadSymbol }}'}
-                GbtDecorateUnicode ${GBT_CAR_GIT_AHEAD_SYMBOL:-' \xe2\xac\x86'}
+                GbtDecorateUnicode "${GBT_CAR_GIT_AHEAD_SYMBOL:-' \xe2\xac\x86'}"
                 defaultAheadSymbolText=$GBT__RETVAL
                 defaultAheadCountText=${GBT_CAR_GIT_AHEAD_COUNT_TEXT-$ahead}
             fi
         fi
 
         if [[ $defaultRootFormat =~ \{\{\ *Behind.*\ *\}\} ]]; then
-            local behind=$(git rev-list --count HEAD..@{upstream} 2>/dev/null || echo E)
+            local behind
+            behind=$(git rev-list --count 'HEAD..@{upstream}' 2>/dev/null || echo E)
 
             if [[ $behind != 0 ]] && [[ $behind != 'E' ]]; then
                 defaultBehindFormat=${GBT_CAR_GIT_BEHIND_FORMAT-'{{ BehindSymbol }}'}
-                GbtDecorateUnicode ${GBT_CAR_GIT_BEHIND_SYMBOL:-' \xe2\xac\x87'}
+                GbtDecorateUnicode "${GBT_CAR_GIT_BEHIND_SYMBOL:-' \xe2\xac\x87'}"
                 defaultBehindSymbolText=$GBT__RETVAL
                 defaultBehindCountText=${GBT_CAR_GIT_BEHIND_COUNT_TEXT-$behind}
             fi
         fi
 
         if [[ $defaultRootFormat =~ \{\{\ *Stash.*\ *\}\} ]]; then
-            local stash=$(git stash list 2>/dev/null | wc -l)
+            local stash
+            stash=$(git stash list 2>/dev/null | wc -l)
 
             if [[ $stash != 0 ]]; then
                 defaultStashFormat=${GBT_CAR_GIT_STASH_FORMAT-'{{ StashSymbol }}'}
-                GbtDecorateUnicode ${GBT_CAR_GIT_STASH_SYMBOL_TEXT-' \xe2\x9a\x91'}
+                GbtDecorateUnicode "${GBT_CAR_GIT_STASH_SYMBOL_TEXT-' \xe2\x9a\x91'}"
                 defaultStashSymbolText=$GBT__RETVAL
                 defaultStashCountText=${GBT_CAR_GIT_STASH_COUNT_TEXT-$stash}
             fi

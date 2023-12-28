@@ -1,38 +1,38 @@
 package pyvirtenv
 
 import (
-    "os"
-    "testing"
+	"os"
+	"testing"
 
-    ct "github.com/jtyr/gbt/pkg/core/testing"
+	ct "github.com/jtyr/gbt/pkg/core/testing"
 )
 
 func TestInit(t *testing.T) {
-    ct.ResetEnv()
+	ct.ResetEnv()
 
-    tests := []struct {
-        virtenv string
-        expectedDisplay bool
-    }{
-        {
-            virtenv: "",
-            expectedDisplay: false,
-        },
-        {
-            virtenv: "test",
-            expectedDisplay: true,
-        },
-    }
+	tests := []struct {
+		virtenv         string
+		expectedDisplay bool
+	}{
+		{
+			virtenv:         "",
+			expectedDisplay: false,
+		},
+		{
+			virtenv:         "test",
+			expectedDisplay: true,
+		},
+	}
 
-    for i, test := range tests {
-        os.Setenv("VIRTUAL_ENV", test.virtenv)
+	for i, test := range tests {
+		os.Setenv("VIRTUAL_ENV", test.virtenv)
 
-        car := Car{}
+		car := Car{}
 
-        car.Init()
+		car.Init()
 
-        if car.Display != test.expectedDisplay {
-            t.Errorf("Test [%d]: Expected %t, found %t.", i, test.expectedDisplay, car.Display)
-        }
-    }
+		if car.Display != test.expectedDisplay {
+			t.Errorf("Test [%d]: Expected %t, found %t.", i, test.expectedDisplay, car.Display)
+		}
+	}
 }

@@ -1,5 +1,7 @@
+# shellcheck shell=bash
 function GbtCarCustom() {
-    local name=$(echo $1 | tr '[:lower:]' '[:upper:]')
+    local name
+    name=$(echo "$1" | tr '[:lower:]' '[:upper:]')
 
     local prefix="GBT_CAR_CUSTOM$name"
 
@@ -36,17 +38,19 @@ function GbtCarCustom() {
     local defaultDisplay=1
 
     if [ -n "$defaultTextCmd" ]; then
-        defaultTextText=$(${!C_TEXT_EXECUTOR:-${GBT_CAR_CUSTOM_EXECUTOR:-sh}} ${!C_TEXT_EXECUTOR_PARAM:-${GBT_CAR_CUSTOM_EXECUTOR_PARAM:--c}} "$defaultTextCmd")
+        defaultTextText=$(${!C_TEXT_EXECUTOR:-${GBT_CAR_CUSTOM_EXECUTOR:-sh}} "${!C_TEXT_EXECUTOR_PARAM:-${GBT_CAR_CUSTOM_EXECUTOR_PARAM:--c}}" "$defaultTextCmd")
     fi
 
     if [ -n "$defaultDisplayCmd" ]; then
-        local defaultDisplayOutput=$(${!C_DISPLAY_EXECUTOR:-${GBT_CAR_CUSTOM_EXECUTOR:-sh}} ${!C_DISPLAY_EXECUTOR_PARAM:-${GBT_CAR_CUSTOM_EXECUTOR_PARAM:--c}} "$defaultDisplayCmd")
+        local defaultDisplayOutput
+        defaultDisplayOutput=$(${!C_DISPLAY_EXECUTOR:-${GBT_CAR_CUSTOM_EXECUTOR:-sh}} "${!C_DISPLAY_EXECUTOR_PARAM:-${GBT_CAR_CUSTOM_EXECUTOR_PARAM:--c}}" "$defaultDisplayCmd")
 
         if [[ ! $defaultDisplayOutput =~ ^([Yy][Ee][Ss]|[Tt][Rr][Uu][Ee]|1)$ ]]; then
             defaultDisplay=0
         fi
     fi
 
+    # shellcheck disable=SC2034
     GBT_CAR=(
         [model-root-Bg]=${!C_BG:-$defaultRootBg}
         [model-root-Fg]=${!C_FG:-$defaultRootFg}

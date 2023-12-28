@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 export GBT_CARS="${GBT__THEME_REMOTE_CARS:=Status, Os, Time, Hostname, Dir, Git, Sign}"
 
 export GBT_CAR_TIME_FORMAT=' {{ Time }} '

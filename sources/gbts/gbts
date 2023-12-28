@@ -1,15 +1,17 @@
 #!/bin/bash
 
-source $GBT__HOME/sources/gbts/car/_common.sh
+# shellcheck disable=SC1091
+source "$GBT__HOME/sources/gbts/car/_common.sh"
 
-for car in $(echo ${GBT_CARS:-status,os,hostname,dir,git,sign} | sed -E 's/,\ */ /g' | tr '[:upper:]' '[:lower:]'); do
+for car in $(echo "${GBT_CARS:-status,os,hostname,dir,git,sign}" | sed -E 's/,\ */ /g' | tr '[:upper:]' '[:lower:]'); do
     [ "${car:0:6}" == 'custom' ] && car=${car:0:6}
-    source $GBT__HOME/sources/gbts/car/$car.sh
+    # shellcheck disable=SC1090
+    source "$GBT__HOME/sources/gbts/car/$car.sh"
 done
 
-if [[ -z "$GBT_SHELL" ]]; then
+if [ -z "$GBT_SHELL" ]; then
     GBT_SHELL=${SHELL:-bash}
     GBT_SHELL=${GBT_SHELL##/*/}
 fi
 
-GbtMain $@
+GbtMain "$@"

@@ -1,12 +1,15 @@
+# shellcheck shell=bash
+
 # Function executed before every command run by the shell
 function gbt_exectime_pre() {
-    if [ -z $GBT__EXECTIME_TMP ]; then
+    if [ -z "$GBT__EXECTIME_TMP" ]; then
         return
     fi
 
     unset GBT__EXECTIME_TMP
 
-    export GBT_CAR_EXECTIME_SECS=$(${GBT__SOURCE_DATE:-date} "${GBT__SOURCE_DATE_ARG:-+%s.%N}")
+    GBT_CAR_EXECTIME_SECS=$(${GBT__SOURCE_DATE:-date} "${GBT__SOURCE_DATE_ARG:-+%s.%N}")
+    export GBT_CAR_EXECTIME_SECS
 }
 
 # Function executed after every command run by the shell
@@ -19,7 +22,8 @@ function gbt_exectime_post() {
     local BELL=${GBT_CAR_EXECTIME_BELL:-0}
 
     if [ "$BELL" -gt 0 ] && [ "$SECS" -gt 0 ]; then
-        local EXECS=$(echo "$(${GBT__SOURCE_DATE:-date} "${GBT__SOURCE_DATE_ARG:-+%s.%N}") - $GBT_CAR_EXECTIME_SECS" | bc)
+        local EXECS
+        EXECS=$(echo "$(${GBT__SOURCE_DATE:-date} "${GBT__SOURCE_DATE_ARG:-+%s.%N}") - $GBT_CAR_EXECTIME_SECS" | bc)
 
         if [ "$EXECS" -gt "$BELL" ]; then
             echo -en '\a'

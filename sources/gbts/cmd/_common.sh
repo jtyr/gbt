@@ -1,3 +1,5 @@
+# shellcheck shell=bash
+# shellcheck disable=SC2181
 GBT__SOURCE_COMPRESS=${GBT__SOURCE_COMPRESS:-gzip -qc9}
 GBT__SOURCE_DECOMPRESS=${GBT__SOURCE_DECOMPRESS:-gzip -qd}
 GBT__SOURCE_BASE64=${GBT__SOURCE_BASE64:-base64}
@@ -37,7 +39,7 @@ function gbt__which() {
                         GBT__WHICH_OPTS='--skip-alias'
                     fi
 
-                    GBT__WHICH=$(which $GBT__WHICH_OPTS which 2>/dev/null)
+                    GBT__WHICH=$(eval "which $GBT__WHICH_OPTS which 2>/dev/null")
 
                     if [ $? -ne 0 ] || [ ! -e "$GBT__WHICH" ]; then
                         # Fail if that didn't work or if the returned string isn't a path
@@ -53,14 +55,14 @@ function gbt__which() {
         return 1
     fi
 
-    GBT__WHICH_PROG_PATH=$($GBT__WHICH $GBT__WHICH_OPTS $PROG 2>/dev/null)
+    GBT__WHICH_PROG_PATH=$(eval "$GBT__WHICH $GBT__WHICH_OPTS $PROG 2>/dev/null")
 
     if [ $? -ne 0 ]; then
         gbt__err "ERROR: '$PROG' not found"
         return 1
     fi
 
-    echo $GBT__WHICH_PROG_PATH
+    echo "$GBT__WHICH_PROG_PATH"
 }
 
 

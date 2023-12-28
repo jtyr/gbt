@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 function gbt__is_ssh_command() {
     # Parse through ssh command options and determine if there is a remote
     # command to be executed
@@ -14,15 +15,13 @@ function gbt__is_ssh_command() {
             # Shift over ssh destination
             shift
 
-            if [[ -z "$@" ]]; then
+            if [ -z "$*" ]; then
                 # No command specified to be executed on remote host
                 return 1
             else
                 # Command specified to be exexuted
                 return 0
             fi
-
-            break
         fi
     done
 }

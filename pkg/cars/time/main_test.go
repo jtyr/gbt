@@ -1,45 +1,45 @@
 package ttime
 
 import (
-    "testing"
-    "time"
+	"testing"
+	"time"
 
-    ccar "github.com/jtyr/gbt/pkg/core/car"
-    ct "github.com/jtyr/gbt/pkg/core/testing"
+	ccar "github.com/jtyr/gbt/pkg/core/car"
+	ct "github.com/jtyr/gbt/pkg/core/testing"
 )
 
 func TestInit(t *testing.T) {
-    ct.ResetEnv()
+	ct.ResetEnv()
 
-    fakedDate := time.Date(2018, time.January, 6, 23, 57, 41, 0, time.UTC)
-    tnow = func() time.Time {
-        return fakedDate
-    }
+	fakedDate := time.Date(2018, time.January, 6, 23, 57, 41, 0, time.UTC)
+	tnow = func() time.Time {
+		return fakedDate
+	}
 
-    ccar.Shell = "plain"
+	ccar.Shell = "plain"
 
-    tests := []struct {
-        field string
-        expectedOutput string
-    }{
-        {
-            field: "Date",
-            expectedOutput: "Sat 06 Jan",
-        },
-        {
-            field: "Time",
-            expectedOutput: "23:57:41",
-        },
-    }
+	tests := []struct {
+		field          string
+		expectedOutput string
+	}{
+		{
+			field:          "Date",
+			expectedOutput: "Sat 06 Jan",
+		},
+		{
+			field:          "Time",
+			expectedOutput: "23:57:41",
+		},
+	}
 
-    for i, test := range tests {
-        car := Car{}
-        car.Init()
+	for i, test := range tests {
+		car := Car{}
+		car.Init()
 
-        val := car.Model[test.field].Text
+		val := car.Model[test.field].Text
 
-        if val != test.expectedOutput {
-            t.Errorf("Test [%d]: Expected '%s', found '%s'.", i, test.expectedOutput, val)
-        }
-    }
+		if val != test.expectedOutput {
+			t.Errorf("Test [%d]: Expected '%s', found '%s'.", i, test.expectedOutput, val)
+		}
+	}
 }

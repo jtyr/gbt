@@ -1,9 +1,10 @@
+# shellcheck shell=bash
 function GbtCarPyVirtEnv() {
     local defaultRootBg=${GBT_CAR_BG:-222}
     local defaultRootFg=${GBT_CAR_FG:-black}
     local defaultRootFm=${GBT_CAR_FM:-none}
 
-    GbtDecorateUnicode ${GBT_CAR_PYVIRTENV_NAME_TEXT-'\xee\x9c\xbc'}
+    GbtDecorateUnicode "${GBT_CAR_PYVIRTENV_NAME_TEXT-'\xee\x9c\xbc'}"
     local defaultIconText=$GBT__RETVAL
 
     local defaultSep="\x00"
@@ -29,12 +30,12 @@ function GbtCarPyVirtEnv() {
         [model-Sep-Fm]=${GBT_CAR_PYVIRTENV_SEP_FM:-$defaultSep}
         [model-Sep-Text]=${GBT_CAR_PYVIRTENV_SEP_TEXT:-${GBT_CAR_PYVIRTENV_SEP:-${GBT_SEPARATOR:-$defaultSep}}}
 
+        [display]=${GBT_CAR_PYVIRTENV_DISPLAY:-0}
         [wrap]=${GBT_CAR_PYVIRTENV_WRAP:-0}
     )
 
     if [ -n "$VIRTUAL_ENV" ]; then
+        # shellcheck disable=SC2034
         GBT_CAR[display]=${GBT_CAR_PYVIRTENV_DISPLAY:-1}
-    else
-        GBT_CAR[display]=${GBT_CAR_PYVIRTENV_DISPLAY:-0}
     fi
 }

@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 function GbtCarHostname() {
     local defaultRootBg=${GBT_CAR_BG:-dark_gray}
     local defaultRootFg=${GBT_CAR_FG:-252}
@@ -5,9 +6,10 @@ function GbtCarHostname() {
 
     local defaultSep="\x00"
 
-    local hostname=$(hostname)
+    local hostname
+    hostname=$(hostname)
 
-    if [[ -z "$hostname" ]]; then
+    if [ -z "$hostname" ]; then
         hostname='localhost'
     fi
 
@@ -17,6 +19,7 @@ function GbtCarHostname() {
         uaFormat='{{ Admin }}'
     fi
 
+    # shellcheck disable=SC2034
     GBT_CAR=(
         [model-root-Bg]=${GBT_CAR_HOSTNAME_BG:-$defaultRootBg}
         [model-root-Fg]=${GBT_CAR_HOSTNAME_FG:-$defaultRootFg}

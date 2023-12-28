@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 export GBT_CARS='Os, Time, Status, Hostname, Dir, Sign'
 
 export GBT_CAR_BG='default'

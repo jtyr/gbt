@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 export GBT_CARS="${GBT__THEME_MYSQL_CARS:=Os, Time, Hostname, Dir, Sign}"
 
 export GBT_CAR_OS_NAME='mysql'

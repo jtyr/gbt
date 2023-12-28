@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 function GbtCarTimeFormat() {
     local s=$1
 
@@ -28,12 +29,15 @@ function GbtCarTime() {
     local defaultRootFm=${GBT_CAR_FM:-none}
 
     GbtCarTimeFormat "${GBT_CAR_TIME_DATE_FORMAT-Mon 02 Jan}"
-    local defaultDateText=$(${GBT__SOURCE_DATE:-date} "+$GBT__RETVAL")
+    local defaultDateText
+    defaultDateText=$(${GBT__SOURCE_DATE:-date} "+$GBT__RETVAL")
     GbtCarTimeFormat "${GBT_CAR_TIME_TIME_FORMAT-15:04:05}"
-    local defaultTimeText=$(${GBT__SOURCE_DATE:-date} "+$GBT__RETVAL")
+    local defaultTimeText
+    defaultTimeText=$(${GBT__SOURCE_DATE:-date} "+$GBT__RETVAL")
 
     local defaultSep="\x00"
 
+    # shellcheck disable=SC2034
     GBT_CAR=(
         [model-root-Bg]=${GBT_CAR_TIME_BG:-$defaultRootBg}
         [model-root-Fg]=${GBT_CAR_TIME_FG:-$defaultRootFg}

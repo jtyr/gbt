@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 function GbtCarSign() {
     local symbolFormat='{{ User }}'
 
@@ -11,6 +12,7 @@ function GbtCarSign() {
 
     local defaultSep="\x00"
 
+    # shellcheck disable=SC2034
     GBT_CAR=(
         [model-root-Bg]=${GBT_CAR_SIGN_BG:-$defaultRootBg}
         [model-root-Fg]=${GBT_CAR_SIGN_FG:-$defaultRootFg}

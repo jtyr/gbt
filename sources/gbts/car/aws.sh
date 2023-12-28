@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 function GbtCarAws() {
     if [[ $GBT_CAR_AWS_DISPLAY == 0 ]]; then
         return
@@ -20,11 +21,12 @@ function GbtCarAws() {
         profileSection="profile $defaultProfileText"
     fi
 
-    defaultRegionText=$(sed -nr "/^\[$profileSection\]/ { :l /^region[ ]*=/ { s/.*=[ ]*//; p; q;}; n; b l;}" $configFile)
+    defaultRegionText=$(sed -nr "/^\[$profileSection\]/ { :l /^region[ ]*=/ { s/.*=[ ]*//; p; q;}; n; b l;}" "$configFile")
 
-    GbtDecorateUnicode ${GBT_CAR_AWS_ICON_TEXT-'\xef\x94\xad'}
+    GbtDecorateUnicode "${GBT_CAR_AWS_ICON_TEXT-'\xef\x94\xad'}"
     local defaultIconText=$GBT__RETVAL
 
+    # shellcheck disable=SC2034
     GBT_CAR=(
         [model-root-Bg]=${GBT_CAR_AWS_BG:-$defaultRootBg}
         [model-root-Fg]=${GBT_CAR_AWS_FG:-$defaultRootFg}

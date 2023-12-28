@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 declare -A GBT__STATUS_SIGNALS
 GBT__STATUS_SIGNALS=(
     # Usual exit codes
@@ -51,9 +52,9 @@ function GbtCarStatus() {
     local defaultRootFg=$defaultErrorFg
     local defaultRootFm=$defaultErrorFm
 
-    GbtDecorateUnicode ${GBT_CAR_STATUS_ERROR_TEXT-'\xe2\x9c\x98'}
+    GbtDecorateUnicode "${GBT_CAR_STATUS_ERROR_TEXT-'\xe2\x9c\x98'}"
     local defaultErrorText=$GBT__RETVAL
-    GbtDecorateUnicode ${GBT_CAR_STATUS_OK_TEXT-'\xe2\x9c\x94'}
+    GbtDecorateUnicode "${GBT_CAR_STATUS_OK_TEXT-'\xe2\x9c\x94'}"
     local defaultOkText=$GBT__RETVAL
 
     local defaultDetailsFormat=' {{ Signal }}'
@@ -116,12 +117,12 @@ function GbtCarStatus() {
         [model-Sep-Fm]=${GBT_CAR_STATUS_SEP_FM:-$defaultSep}
         [model-Sep-Text]=${GBT_CAR_STATUS_SEP_TEXT:-${GBT_CAR_STATUS_SEP:-${GBT_SEPARATOR:-$defaultSep}}}
 
+        [display]=${GBT_CAR_STATUS_DISPLAY:-1}
         [wrap]=${GBT_CAR_STATUS_WRAP:-0}
     )
 
     if [[ $1 == 0 ]]; then
+        # shellcheck disable=SC2034
         GBT_CAR[display]=${GBT_CAR_STATUS_DISPLAY:-0}
-    else
-        GBT_CAR[display]=${GBT_CAR_STATUS_DISPLAY:-1}
     fi
 }

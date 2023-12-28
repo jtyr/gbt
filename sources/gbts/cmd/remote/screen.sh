@@ -1,5 +1,7 @@
+# shellcheck shell=bash
 function gbt_screen() {
-    local SCREEN_BIN=$(gbt__which screen)
+    local SCREEN_BIN
+    SCREEN_BIN=$(gbt__which screen)
     [ -z "$SCREEN_BIN" ] && return 1
 
     gbt__check_md5

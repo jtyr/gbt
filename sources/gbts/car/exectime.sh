@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 function GbtCarExecTime() {
     local defaultRootBg=${GBT_CAR_BG:-light_gray}
     local defaultRootFg=${GBT_CAR_FG:-black}
@@ -6,13 +7,16 @@ function GbtCarExecTime() {
     local defaultSep="\x00"
 
     local precision=${GBT_CAR_EXECTIME_PRECISION:-0}
-    local now=$(${GBT__SOURCE_DATE:-date} ${GBT__SOURCE_DATE_ARG:-'+%s.%N'})
-    local execs=$(echo "$now ${GBT_CAR_EXECTIME_SECS:-$now}" | awk '{printf "%9f", $1 - $2}')
+    local now
+    now=$(${GBT__SOURCE_DATE:-date} "${GBT__SOURCE_DATE_ARG:-'+%s.%N'}")
+    local execs
+    execs=$(echo "$now ${GBT_CAR_EXECTIME_SECS:-$now}" | awk '{printf "%9f", $1 - $2}')
     local subsecs="0.${execs#*.}"
 
-    local hours=$(echo "$execs" | awk '{printf "%.0f", $1 / 3600}')
-    local mins=$(echo "$execs $hours" | awk '{printf "%.0f", ($1 - $2 * 3600) / 60}')
-    local secs=$(echo "$execs $hours $mins" | awk '{printf "%.0f", $1 - $2 * 3600 - $3 * 60}')
+    local hours mins secs
+    hours=$(echo "$execs" | awk '{printf "%.0f", $1 / 3600}')
+    mins=$(echo "$execs $hours" | awk '{printf "%.0f", ($1 - $2 * 3600) / 60}')
+    secs=$(echo "$execs $hours $mins" | awk '{printf "%.0f", $1 - $2 * 3600 - $3 * 60}')
 
     local durationtime=''
     local secondstime=''
@@ -24,56 +28,59 @@ function GbtCarExecTime() {
         local micros=0
         local nanos=0
 
-        if [[ $precision > 0 ]]; then
+        if [[ $precision -gt 0 ]]; then
             subsecs=$(echo "$subsecs" | awk '{printf "%0.9f", $1 * 1000}')
             millis="${subsecs%.*}"
 
-            if [[ $precision > 3 ]] || ( [[ $secs == 0 ]] && [[ $millis == 0 ]] ); then
+            if [[ $precision -gt 3 ]] || [[ $secs == 0 ]] && [[ $millis == 0 ]]; then
                 subsecs=$(echo "$subsecs ${subsecs%.*}" | awk '{printf "%.9f", ($1 - $2) * 1000}')
                 micros="${subsecs%.*}"
 
-                if [[ $precision > 6 ]] || ( [[ $secs == 0 ]] && [[ $millis == 0 ]] && [[ $micros == 0 ]] ); then
+                if [[ $precision -gt 6 ]] || [[ $secs == 0 ]] && [[ $millis == 0 ]] && [[ $micros == 0 ]]; then
                     subsecs=$(echo "$subsecs ${subsecs%.*}" | awk '{printf "%.9f", ($1 - $2) * 1000}')
                     nanos="${subsecs%.*}"
                 fi
             fi
         fi
 
-        if [[ $hours > 0 ]]; then
+        if [[ $hours -gt 0 ]]; then
             durationtime+="${hours}h"
         fi
 
-        if [[ $mins > 0 ]]; then
+        if [[ $mins -gt 0 ]]; then
             durationtime+="${mins}m"
         fi
 
-        if [[ $secs > 0 ]] || [[ $precision == 0 ]]; then
+        if [[ $secs -gt 0 ]] || [[ $precision == 0 ]]; then
             durationtime+="${secs}s"
         fi
 
-        if [[ $millis > 0 ]]; then
+        if [[ $millis -gt 0 ]]; then
             durationtime+="${millis}ms"
         fi
 
-        if [[ $micros > 0 ]]; then
+        if [[ $micros -gt 0 ]]; then
             durationtime+="${micros}µs"
         fi
 
-        if [[ $nanos > 0 ]]; then
+        if [[ $nanos -gt 0 ]]; then
             durationtime+="${nanos}ns"
         fi
     elif [[ ${GBT_CAR_EXECTIME_FORMAT-' {{ Time }} '} == *' {{ Seconds }} '* ]]; then
         # Seconds
-        local secondstime=$(echo "$precision $execs" | awk '{printf "%0.*f", $1, $2}')
+        local secondstime
+        secondstime=$(echo "$precision $execs" | awk '{printf "%0.*f", $1, $2}')
     elif [[ ${GBT_CAR_EXECTIME_FORMAT-' {{ Time }} '} == *' {{ Time }} '* ]]; then
         # Time
         if [[ $precision == 0 ]]; then
             subsecs=''
         fi
 
-        local exectime=$(echo "${hours%%.*} ${mins%%.*} ${secs%%.*} ${subsecs:1:$precision+1}" | awk '{printf "%.2d:%.2d:%02d%s", $1, $2, $3, $4 }')
+        local exectime
+        exectime=$(echo "${hours%%.*} ${mins%%.*} ${secs%%.*} ${subsecs:1:$precision+1}" | awk '{printf "%.2d:%.2d:%02d%s", $1, $2, $3, $4 }')
     fi
 
+    # shellcheck disable=SC2034
     GBT_CAR=(
         [model-root-Bg]=${GBT_CAR_EXECTIME_BG:-$defaultRootBg}
         [model-root-Fg]=${GBT_CAR_EXECTIME_FG:-$defaultRootFg}

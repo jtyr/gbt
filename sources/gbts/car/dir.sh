@@ -1,10 +1,11 @@
+# shellcheck shell=bash
 function GbtCarDir() {
     local text=''
 
     local homesign=${GBT_CAR_DIR_HOMESIGN-'~'}
     local dirsep=${GBT_CAR_DIR_DIRSEP-/}
 
-    if [ -n "$homesign" ] && [[ $PWD == $HOME ]]; then
+    if [ -n "$homesign" ] && [[ $PWD == "$HOME" ]]; then
         text=$homesign
     elif [[ $PWD == '/' ]]; then
         text=$dirsep
@@ -27,16 +28,16 @@ function GbtCarDir() {
         done
 
         for d in ${pwd//\// }; do
-            if (( $pwd_len - $depth < $cur )); then
-                if (( $pwd_len <= $depth )); then
+            if (( pwd_len - depth < cur )); then
+                if (( pwd_len <= depth )); then
                     first=0
                 fi
 
-                if [[ $first != 1 ]] && [[ $d != $homesign ]]; then
+                if [[ $first != 1 ]] && [[ $d != "$homesign" ]]; then
                     text+=$dirsep
                 fi
 
-                if (( $cur < $pwd_len )); then
+                if (( cur < pwd_len )); then
                     text+=${d::${GBT_CAR_DIR_NONCURLEN:-255}}
                 else
                     text+=$d
@@ -45,7 +46,7 @@ function GbtCarDir() {
                 first=0
             fi
 
-            cur=$(( $cur + 1 ))
+            cur=$(( cur + 1 ))
         done
     fi
 
@@ -55,6 +56,7 @@ function GbtCarDir() {
 
     local defaultSep="\x00"
 
+    # shellcheck disable=SC2034
     GBT_CAR=(
         [model-root-Bg]=${GBT_CAR_DIR_BG:-$defaultRootBg}
         [model-root-Fg]=${GBT_CAR_DIR_FG:-$defaultRootFg}

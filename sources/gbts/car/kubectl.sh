@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 function GbtCarKubectl() {
     local defaultRootBg=${GBT_CAR_BG:-26}
     local defaultRootFg=${GBT_CAR_FG:-white}
@@ -6,15 +7,18 @@ function GbtCarKubectl() {
     local defaultSep="\x00"
 
     local isKubectlCurrentContextSet=0
-    local output=$(kubectl config current-context 2>/dev/null)
+    local output
+    output=$(kubectl config current-context 2>/dev/null)
 
+    # shellcheck disable=SC2181
     if [[ $? == 0 ]] && [ -n "$output" ]; then
         isKubectlCurrentContextSet=1
 
         declare -A contextInfo
         contextInfo[namespace]='default'
-        local i=0
-        for N in $(kubectl config get-contexts | grep '^*' | sed -E 's/^\*\ +//'); do
+        local i
+        i=0
+        for N in $(kubectl config get-contexts | grep '^\*' | sed -E 's/^\*\ +//'); do
             if [[ $i == 0 ]]; then
                 contextInfo[context]=$N
             elif [[ $i == 1 ]]; then
@@ -29,9 +33,10 @@ function GbtCarKubectl() {
         done
     fi
 
-    GbtDecorateUnicode ${GBT_CAR_KUBECTL_ICON_TEXT-'\xe2\x8e\x88'}
+    GbtDecorateUnicode "${GBT_CAR_KUBECTL_ICON_TEXT-'\xe2\x8e\x88'}"
     local defaultIconText=$GBT__RETVAL
 
+    # shellcheck disable=SC2034
     GBT_CAR=(
         [model-root-Bg]=${GBT_CAR_KUBECTL_BG:-$defaultRootBg}
         [model-root-Fg]=${GBT_CAR_KUBECTL_FG:-$defaultRootFg}

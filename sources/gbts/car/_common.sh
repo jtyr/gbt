@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 declare -A GBT_COLORS
 GBT_COLORS=(
     [black]=0
@@ -55,7 +56,7 @@ function GbtGetColor() {
     fi
 
     if [[ $name == 'RESETALL' ]]; then
-        seq="$esc[0m"
+        seq="${esc}[0m"
     elif [[ $name == 'default' ]]; then
         # Default
         seq="${esc}[${kind}9m"
@@ -73,8 +74,8 @@ function GbtGetColor() {
             local val=$name
 
             if [[ ${GBT_FORCE_HIGHER_COLORS:-1} == 1 ]]; then
-                for k in ${!GBT_COLORS[@]}; do
-                    if [[ ${GBT_COLORS[$k]} == $name ]]; then
+                for k in "${!GBT_COLORS[@]}"; do
+                    if [[ ${GBT_COLORS[$k]} == "$name" ]]; then
                         val=${GBT_HIGHER_COLORS[$k]}
                     fi
                 done
@@ -111,11 +112,11 @@ function GbtGetFormat() {
         esc='\e'
     fi
 
-    if [[ $name != ${name//normal/} ]]; then
+    if [[ $name != "${name//normal/}" ]]; then
         seq+="${esc}[0m"
     fi
 
-    if [[ $name != ${name//bold/} ]]; then
+    if [[ $name != "${name//bold/}" ]]; then
         if [[ $end == 1 ]]; then
             seq+="${esc}[22m"
         else
@@ -123,27 +124,27 @@ function GbtGetFormat() {
         fi
     fi
 
-    if [[ $name != ${name//dim/} ]]; then
+    if [[ $name != "${name//dim/}" ]]; then
         seq+="${esc}[${kind}2m"
     fi
 
-    if [[ $name != ${name//underline/} ]]; then
+    if [[ $name != "${name//underline/}" ]]; then
         seq+="${esc}[${kind}4m"
     fi
 
-    if [[ $name != ${name//blink/} ]]; then
+    if [[ $name != "${name//blink/}" ]]; then
         seq+="${esc}[${kind}5m"
     fi
 
-    if [[ $name != ${name//invert/} ]]; then
+    if [[ $name != "${name//invert/}" ]]; then
         seq+="${esc}[${kind}7m"
     fi
 
-    if [[ $name != ${name//hide/} ]]; then
+    if [[ $name != "${name//hide/}" ]]; then
         seq+="${esc}[${kind}8m"
     fi
 
-    if [[ $name != ${name//strikeout/} ]]; then
+    if [[ $name != "${name//strikeout/}" ]]; then
         seq+="${esc}[${kind}9m"
     fi
 
@@ -156,10 +157,10 @@ function GbtDecorateUnicode() {
 
     # Shell decorate all characters but the last four
     if [[ ${unicode} =~ ^(\\x[0-9a-f]{2}){5}$ ]]; then
-        GbtDecorateShell ${unicode:0:${#unicode}-4}
+        GbtDecorateShell "${unicode:0:${#unicode}-4}"
         GBT__RETVAL="$GBT__RETVAL${unicode:16}"
     elif [[ ${unicode} =~ ^(\\x[0-9a-f]{2}){3}$ ]]; then
-        GbtDecorateShell ${unicode:0:${#unicode}-4}
+        GbtDecorateShell "${unicode:0:${#unicode}-4}"
         GBT__RETVAL="$GBT__RETVAL${unicode:8}"
     else
         GBT__RETVAL=$unicode
@@ -170,7 +171,7 @@ function GbtDecorateUnicode() {
 function GbtDecorateShell() {
     local seq=$1
 
-    if [[ -z $seq ]]; then
+    if [ -z "$seq" ]; then
         GBT__RETVAL=''
     elif [[ $GBT_SHELL == 'zsh' ]]; then
         GBT__RETVAL="%{${seq}%}"
@@ -196,11 +197,11 @@ function GbtDecorateElement() {
     local root=''
 
     if [[ $element != '' ]]; then
-        GbtGetColor ${GBT_CAR["model-${element}-Bg"]} 0
+        GbtGetColor "${GBT_CAR["model-${element}-Bg"]}" 0
         bg=$GBT__RETVAL
-        GbtGetColor ${GBT_CAR["model-${element}-Fg"]} 1
+        GbtGetColor "${GBT_CAR["model-${element}-Fg"]}" 1
         fg=$GBT__RETVAL
-        GbtGetFormat ${GBT_CAR["model-${element}-Fm"]} 0
+        GbtGetFormat "${GBT_CAR["model-${element}-Fm"]}" 0
         fm=$GBT__RETVAL
 
         if [[ $element == 'root' ]]; then
@@ -213,8 +214,8 @@ function GbtDecorateElement() {
 
         GbtGetFormat 'empty' 0
 
-        if [[ $fm != $GBT__RETVAL ]]; then
-            GbtGetFormat ${GBT_CAR["model-${element}-Fm"]} 1
+        if [[ $fm != "$GBT__RETVAL" ]]; then
+            GbtGetFormat "${GBT_CAR["model-${element}-Fm"]}" 1
             fmEnd=$GBT__RETVAL
         fi
     fi
@@ -227,19 +228,21 @@ function GbtFormatCar() {
     local text="$GBT__RETVAL${GBT_CAR[model-root-Text]}"
     local placeholder=',,,,'
 
-    for n in 0 1 2 3 4 5 6 7 8 9 10; do
-        local new_text=$(echo "$text" | sed -E 's/\{\{\ *[a-zA-Z0-9]+\ *\}\}/'$placeholder'/')
+    # shellcheck disable=SC2034
+    for n in {0..10}; do
+        local new_text
+        new_text=$(echo "$text" | sed -E 's/\{\{\ *[a-zA-Z0-9]+\ *\}\}/'$placeholder'/')
 
-        if [[ ${#new_text} == ${#text} ]]; then
+        if [[ ${#new_text} == "${#text}" ]]; then
             break
         fi
 
-        local before="${new_text%%${placeholder}*}"
-        local after="${new_text#*$placeholder}"
+        local before="${new_text%%"$placeholder"*}"
+        local after="${new_text#*"$placeholder"}"
         local element="${text:$(( ${#before} + 2 )):$((${#text} - ${#after} - ${#before} - 4))}"
         element=${element// }
 
-        GbtDecorateElement $element "${new_text//$placeholder/${GBT_CAR["model-${element}-Text"]}}"
+        GbtDecorateElement "$element" "${new_text//$placeholder/${GBT_CAR["model-${element}-Text"]}}"
         local replacement=$GBT__RETVAL
 
         if [ ${GBT_CAR["model-${element}-Text"]+1} ]; then
@@ -278,20 +281,20 @@ function GbtMain() {
     fi
 
     if [[ $right != 1 ]] && [ "$GBT_BEGINNING_TEXT" != '' ]; then
-        GbtGetColor ${GBT_BEGINNING_BG:-default} 0
+        GbtGetColor "${GBT_BEGINNING_BG:-default}" 0
         local beginning_bg=$GBT__RETVAL
-        GbtGetColor ${GBT_BEGINNING_FG:-default} 1
+        GbtGetColor "${GBT_BEGINNING_FG:-default}" 1
         local beginning_fg=$GBT__RETVAL
-        GbtGetFormat ${GBT_BEGINNING_FM:-default} 0
+        GbtGetFormat "${GBT_BEGINNING_FM:-default}" 0
         local beginning_fm=$GBT__RETVAL
 
-        GbtDecorateElement '' $beginning_bg $beginning_fg $beginning_fm $GBT_BEGINNING_TEXT
-        echo -en $GBT__RETVAL
+        GbtDecorateElement '' "$beginning_bg" "$beginning_fg" "$beginning_fm" "$GBT_BEGINNING_TEXT"
+        echo -en "$GBT__RETVAL"
     fi
 
     declare -A GBT_CAR
 
-    for car in $(echo ${GBT_CARS:-status,os,hostname,dir,git,sign} | sed -E 's/,\ */ /g' | tr '[:upper:]' '[:lower:]'); do
+    for car in $(echo "${GBT_CARS:-status,os,hostname,dir,git,sign}" | sed -E 's/,\ */ /g' | tr '[:upper:]' '[:lower:]'); do
         GBT_CAR=()
 
         local unknown=0
@@ -302,7 +305,7 @@ function GbtMain() {
         elif [ "$car" = 'azure' ]; then
             GbtCarAzure
         elif [ "${car:0:6}" = 'custom' ]; then
-            GbtCarCustom ${car:6}
+            GbtCarCustom "${car:6}"
         elif [ "$car" = 'dir' ]; then
             GbtCarDir
         elif [ "$car" = 'exectime' ]; then
@@ -322,7 +325,7 @@ function GbtMain() {
         elif [ "$car" = 'sign' ]; then
             GbtCarSign
         elif [ "$car" = 'status' ]; then
-            GbtCarStatus $@
+            GbtCarStatus "$@"
         elif [ "$car" = 'time' ]; then
             GbtCarTime
         else
@@ -337,12 +340,12 @@ function GbtMain() {
             fi
 
             GbtGetColor 'RESETALL' 0
-            echo -en $GBT__RETVAL
+            echo -en "$GBT__RETVAL"
 
             if [[ $prevBg != "\x00" ]] && [[ $prevDisplay == 1 ]]; then
-                GbtGetColor ${GBT_CAR[model-root-Bg]} 0
+                GbtGetColor "${GBT_CAR[model-root-Bg]}" 0
                 local bg=$GBT__RETVAL
-                GbtGetColor ${GBT_CAR[model-root-Bg]} 1
+                GbtGetColor "${GBT_CAR[model-root-Bg]}" 1
                 local fg=$GBT__RETVAL
                 local fm=''
 
@@ -354,32 +357,32 @@ function GbtMain() {
                 fi
 
                 if [[ $right == 1 ]]; then
-                    GbtGetColor $prevBg 0
+                    GbtGetColor "$prevBg" 0
                     bg=$GBT__RETVAL
                 else
-                    GbtGetColor $prevBg 1
+                    GbtGetColor "$prevBg" 1
                     fg=$GBT__RETVAL
                 fi
 
                 if [[ ${GBT_CAR[model-Sep-Bg]} != "\x00" ]]; then
-                    GbtGetColor ${GBT_CAR[model-Sep-Bg]} 0
+                    GbtGetColor "${GBT_CAR[model-Sep-Bg]}" 0
                     bg=$GBT__RETVAL
                 fi
 
                 if [[ ${GBT_CAR[model-Sep-Fg]} != "\x00" ]]; then
-                    GbtGetColor ${GBT_CAR[model-Sep-Fg]} 1
+                    GbtGetColor "${GBT_CAR[model-Sep-Fg]}" 1
                     fg=$GBT__RETVAL
                 fi
 
                 if [[ ${GBT_CAR[model-Sep-Fm]} != "\x00" ]]; then
-                    GbtGetFormat ${GBT_CAR[model-Sep-Fm]} 0
+                    GbtGetFormat "${GBT_CAR[model-Sep-Fm]}" 0
                     fm=$GBT__RETVAL
                 fi
 
-                GbtDecorateUnicode $separator
+                GbtDecorateUnicode "$separator"
                 separator=$GBT__RETVAL
 
-                GbtDecorateElement '' "$separator" $bg $fg $fm
+                GbtDecorateElement '' "$separator" "$bg" "$fg" "$fm"
                 echo -en "$GBT__RETVAL"
 
                 if [[ ${GBT_CAR[wrap]} == 1 ]]; then
@@ -393,10 +396,11 @@ function GbtMain() {
             # Print the car
             GbtFormatCar
 
+            # shellcheck disable=SC2034
             first=0
         fi
     done
 
     GbtGetColor 'RESETALL' 0
-    echo -en $GBT__RETVAL
+    echo -en "$GBT__RETVAL"
 }

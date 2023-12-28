@@ -1,40 +1,40 @@
 package hostname
 
 import (
-    "os/user"
-    "testing"
+	"os/user"
+	"testing"
 
-    ct "github.com/jtyr/gbt/pkg/core/testing"
+	ct "github.com/jtyr/gbt/pkg/core/testing"
 )
 
 func TestInit(t *testing.T) {
-    ct.ResetEnv()
+	ct.ResetEnv()
 
-    curUser, _ := user.Current()
+	curUser, _ := user.Current()
 
-    tests := []struct {
-        uid string
-        expectedOutput string
-    }{
-        {
-            uid: "12345",
-            expectedOutput: "{{ User }}@{{ Host }}",
-        },
-        {
-            uid: curUser.Uid,
-            expectedOutput: "{{ Admin }}@{{ Host }}",
-        },
-    }
+	tests := []struct {
+		uid            string
+		expectedOutput string
+	}{
+		{
+			uid:            "12345",
+			expectedOutput: "{{ User }}@{{ Host }}",
+		},
+		{
+			uid:            curUser.Uid,
+			expectedOutput: "{{ Admin }}@{{ Host }}",
+		},
+	}
 
-    for i, test := range tests {
-        car := Car{}
+	for i, test := range tests {
+		car := Car{}
 
-        adminUID = test.uid
+		adminUID = test.uid
 
-        car.Init()
+		car.Init()
 
-        if car.Model["UserHost"].Text != test.expectedOutput {
-            t.Errorf("Test [%d]: Expected '%s', found '%s'.", i, test.expectedOutput, car.Model["UserHost"].Text)
-        }
-    }
+		if car.Model["UserHost"].Text != test.expectedOutput {
+			t.Errorf("Test [%d]: Expected '%s', found '%s'.", i, test.expectedOutput, car.Model["UserHost"].Text)
+		}
+	}
 }

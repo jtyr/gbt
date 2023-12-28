@@ -82,7 +82,7 @@ Development
 Use the following command to generate the OS symbols for the `os` car script:
 
 ```shell
-for N in $(grep 'nf-' pkg/cars/os/main.go | sed -r -e 's/",\s+}.*//' -e 's/",.*"/,/' -e 's/":.*"/:/' -e 's/.*"//'); do NAME=${N%%:*}; COLOR=${N##*,}; TMP=${N##*:}; ICON=${TMP%%,*}; echo "    [$NAME]='$(echo -ne $ICON | xxd -plain | sed 's/\(..\)/\\\\x\1/g')'     [${NAME}_color]=$COLOR"; done
+for N in $(grep 'nf-' pkg/cars/os/main.go | sed -r -e 's/"}.*//' -e 's/",.*"/,/' -e 's/":.*"/:/' -e 's/.*"//'); do NAME=${N%%:*}; COLOR=${N##*,}; TMP=${N##*:}; ICON=${TMP%%,*}; echo " [$NAME]='$(echo -ne $ICON | xxd -plain | sed 's/\(..\)/\\\\x\1/g')' [${NAME}_color]=$COLOR"; done | column -t -o' ' | sed 's/^/    /'
 ```
 
 Use the following command to convert Unicode character to code:

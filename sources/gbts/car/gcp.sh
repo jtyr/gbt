@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 function GbtCarGcp() {
     if [[ $GBT_CAR_GCP_DISPLAY == 0 ]]; then
         return
@@ -13,28 +14,29 @@ function GbtCarGcp() {
     local defaultProjectText=$CLOUDSDK_CORE_PROJECT
     local defaultSep="\x00"
 
-    if [[ -n $CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE ]]; then
-        defaultAccountText=$(grep -Eo '"client_email":\s*".[^"]+"' $CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE | sed -e 's/.*://' -e 's/"$//' -e 's/.*"//')
+    if [ -n "$CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE" ]; then
+        defaultAccountText=$(grep -Eo '"client_email":\s*".[^"]+"' "$CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE" | sed -e 's/.*://' -e 's/"$//' -e 's/.*"//')
 
         # Indicate a problem if the client_email not found in the file
-        if [[ -z $defaultAccountText ]]; then
+        if [ -z "$defaultAccountText" ]; then
             defaultAccountText='???'
         fi
     fi
 
-    configDir=${CLOUDSDK_CONFIG:-$HOME/.config/gcloud}
-    defaultConfigText=$(cat $configDir/active_config)
-    configFile="$configDir/configurations/config_$defaultConfigText"
+    local configDir=${CLOUDSDK_CONFIG:-$HOME/.config/gcloud}
+    local defaultConfigText
+    defaultConfigText=$(cat "$configDir/active_config")
+    local configFile="$configDir/configurations/config_$defaultConfigText"
 
-    if [[ -z $defaultAccountText ]]; then
-        defaultAccountText=$(sed -nr "/^\[core\]/ { :l /^account[ ]*=/ { s/.*=[ ]*//; p; q;}; n; b l;}" $configFile)
+    if [ -z "$defaultAccountText" ]; then
+        defaultAccountText=$(sed -nr "/^\[core\]/ { :l /^account[ ]*=/ { s/.*=[ ]*//; p; q;}; n; b l;}" "$configFile")
     fi
 
-    if [[ -z $defaultProjectText ]]; then
-        defaultProjectText=$(sed -nr "/^\[core\]/ { :l /^project[ ]*=/ { s/.*=[ ]*//; p; q;}; n; b l;}" $configFile)
+    if [ -z "$defaultProjectText" ]; then
+        defaultProjectText=$(sed -nr "/^\[core\]/ { :l /^project[ ]*=/ { s/.*=[ ]*//; p; q;}; n; b l;}" "$configFile")
     fi
 
-    if [[ -n $GBT_CAR_GCP_PROJECT_ALIASES ]]; then
+    if [ -n "$GBT_CAR_GCP_PROJECT_ALIASES" ]; then
         orig_IFS=$IFS
         IFS=','
 
@@ -45,7 +47,7 @@ function GbtCarGcp() {
             for k in $pair; do
                 k=${k//[[:space:]]/}
 
-                if [[ $k == $defaultProjectText ]]; then
+                if [[ $k == "$defaultProjectText" ]]; then
                     breakLoop=1
 
                     continue
@@ -64,9 +66,10 @@ function GbtCarGcp() {
         IFS=$orig_IFS
     fi
 
-    GbtDecorateUnicode ${GBT_CAR_GCP_ICON_TEXT-'\xee\x9e\xb2'}
+    GbtDecorateUnicode "${GBT_CAR_GCP_ICON_TEXT-'\xee\x9e\xb2'}"
     local defaultIconText=$GBT__RETVAL
 
+    # shellcheck disable=SC2034
     GBT_CAR=(
         [model-root-Bg]=${GBT_CAR_GCP_BG:-$defaultRootBg}
         [model-root-Fg]=${GBT_CAR_GCP_FG:-$defaultRootFg}
